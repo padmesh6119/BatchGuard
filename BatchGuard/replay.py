@@ -13,6 +13,7 @@ import time
 from batchguard_engine import historical_priorities, load_dataset
 from inspection_stream import (InspectionStream, ReferenceIndex, POLICY_VERSION,
                                ScanEvent, digest, make_scenarios)
+from snapshot_store import ROOT
 
 
 def write_json(path, value):
@@ -21,7 +22,7 @@ def write_json(path, value):
 
 def environment():
     packages = {}
-    for name in ("pandas", "openpyxl", "streamlit", "snapml"):
+    for name in ("numpy", "pandas", "openpyxl", "scikit-learn", "streamlit", "snapml"):
         try:
             packages[name] = importlib.metadata.version(name)
         except importlib.metadata.PackageNotFoundError:
@@ -107,7 +108,7 @@ def run_replay(events, truth, reference, database, capacity):
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("command", choices=["demo", "replay", "platform"])
-    parser.add_argument("--output", type=Path, default=Path("reports/inspection_replay"))
+    parser.add_argument("--output", type=Path, default=ROOT / "reports" / "inspection_replay")
     parser.add_argument("--database", type=Path)
     parser.add_argument("--events", type=Path)
     parser.add_argument("--truth", type=Path)
@@ -115,6 +116,8 @@ def main():
     parser.add_argument("--seed", type=int, default=2026)
     parser.add_argument("--capacity", type=int, default=2)
     parser.add_argument("--require-s390x", action="store_true")
+    parser.add_argument("--resume", action="store_true",
+                        help="Continue an existing event database instead of requiring a fresh one.")
     args = parser.parse_args()
     if args.capacity < 0:
         parser.error("capacity must be nonnegative")
@@ -141,6 +144,9 @@ def main():
     for event in events:
         ScanEvent.parse(event)
     database = args.database or args.output / "events.sqlite"
+    if database.exists() and not args.resume:
+        parser.error(f"{database} already holds events; rerunning would count every delivery as a duplicate. "
+                     "Use a new --output/--database, delete it, or pass --resume.")
     database.parent.mkdir(parents=True, exist_ok=True)
     report, queues = run_replay(events, truth, reference, database, args.capacity)
     write_json(args.output / "report.json", report)

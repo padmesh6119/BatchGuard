@@ -1,19 +1,25 @@
-BatchGuard integration verification
-==================================
+BatchGuard verification, 17 October 2026 (laptop, x86_64, i5-1240P, Python 3.12.3)
+==================================================================================
 
-Verified in an isolated copy of the uploaded project:
-- All 11 supplied monthly workbooks processed successfully through the existing ingestion scripts.
-- Combined master: 1,901 records.
-- Analytical dataset: 1,898 records (3 previously verified exact duplicate copies excluded).
-- Manufacturer and failure-derived datasets have matching row counts and build_record_id sets.
-- Source counts: 591 central NSQ, 1,265 state NSQ, 42 spurious reports.
-- Historical priority engine executed and returned 1,438 manufacturer-text signatures.
-- Synthetic scan engine generated 60 events and produced anomaly flags, including a spurious-report reference flag.
-- Python syntax compilation passed for app.py, batchguard_engine.py, and refresh_data.py.
+Environment: clean venv from requirements.txt -> pandas 3.0.6, numpy 2.5.4, openpyxl 3.1.5,
+scikit-learn 1.9.1, streamlit 1.66.0; plus snapml 1.17.2.
 
-Limitations:
-- The Streamlit package is not installed in the build environment, so the browser UI itself was not launched here. The PowerShell launcher installs dependencies on the target Windows machine.
-- The synthetic scan stream is a demonstration, not live market telemetry.
-- Historical priority is a descriptive heuristic, not a calibrated probability or validated counterfeit detector.
-- Manufacturer grouping is by normalized full text, often including addresses; it is not verified legal-entity resolution.
-- The refresh process ingests official workbooks placed in data/raw; it does not automatically scrape CDSCO websites.
+- python -m unittest discover -s tests: 39 tests OK (31 existing + 8 new).
+- Previous requirements (openpyxl>=3.1) allowed openpyxl 3.1.2 with pandas 3.x: 4 refresh tests errored
+  with "Pandas requires version '3.1.5' or newer of 'openpyxl'". Fixed by openpyxl>=3.1.5.
+- model_foundation.py refactor: regenerating the bundle reproduces every file of
+  data/training/foundation-ready-v1 byte for byte (same snapshot 6e881f22...).
+- train_models.py is deterministic: two sklearn runs gave model version layer-ab-sklearn-dd7cc2b52ba5
+  and identical metrics; linuxone_run.sh rehearsal compare -> max prediction difference 0.0.
+- replay.py demo rerun into the same output previously reported accepted 0 / retries 89; it now exits
+  with an explicit error unless --resume is given (test_demo_refuses_to_reuse_an_event_database).
+- Streamlit AppTest on app.py: no exceptions or errors; capacity, NSQ/spurious, earliest month,
+  June 2026 (no spurious sheet) and evaluation K interactions run. No use_container_width warnings.
+  One earlier AppTest invocation hit a 600 s tool timeout; three reruns of the same steps finished in
+  under 30 s each, so the cause was not reproduced.
+- linuxone_run.sh with ALLOW_NON_S390X=1 completed end to end (rehearsal only, not a LinuxONE run).
+
+Measured results are in models/*/model_card.json and reports/benchmarks/*.json; see ../CHANGELOG.md.
+
+Not verified here: any LinuxONE/s390x execution, browser appearance of the dashboard, PDF-month
+integration, real-world counterfeit detection or inspection yield.

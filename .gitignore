@@ -4,8 +4,9 @@
 *.sqlite
 *.sqlite-wal
 *.sqlite-shm
-**/data/snapshots/
-**/data/CURRENT
+**/data/snapshots/*
+!**/data/snapshots/6e881f22c3016444c02b49d2fc852b2b81975aaa57d24879da0453ee404698f5/
+**/data/review_actions.jsonl
 **/data/.refresh.lock
 # Environment secrets
 .env

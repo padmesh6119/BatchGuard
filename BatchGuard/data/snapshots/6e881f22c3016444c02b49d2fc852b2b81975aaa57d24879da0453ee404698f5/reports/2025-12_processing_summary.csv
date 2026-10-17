@@ -1,0 +1,4 @@
+month,source_category,record_count
+2025-12,central_nsq,71
+2025-12,spurious,10
+2025-12,state_nsq,104

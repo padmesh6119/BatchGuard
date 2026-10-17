@@ -1,3 +1,2 @@
-pandas>=2.0
-openpyxl>=3.1
-streamlit>=1.35
+-r requirements-core.txt
+streamlit>=1.50

@@ -1,0 +1,2 @@
+﻿month,workbook,central_sheet_present,state_sheet_present,spurious_sheet_present,spurious_data_status,spurious_record_count
+2026-06,2026-06_all.xlsx,True,True,False,source_sheet_missing,0

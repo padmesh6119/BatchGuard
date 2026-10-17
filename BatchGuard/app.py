@@ -20,7 +20,7 @@ st.info(
 with st.sidebar:
     st.header("Official workbook data")
     st.caption("Add monthly YYYY-MM_all.xlsx workbooks to data/raw/.")
-    if st.button("Refresh workbook data", type="primary", use_container_width=True):
+    if st.button("Refresh workbook data", type="primary", width="stretch"):
         with st.spinner("Building and validating a complete snapshot..."):
             result = subprocess.run([sys.executable, str(ROOT / "refresh_data.py")],
                                     cwd=ROOT, capture_output=True, text=True)
@@ -86,7 +86,7 @@ with priorities_tab:
     else:
         st.dataframe(queue[["rank", "product", "batch_no", "historical_priority_index", "prior_nsq_records",
                             "prior_months_observed", "history_status", "failure_categories", "reason"]],
-                     use_container_width=True, hide_index=True)
+                     width="stretch", hide_index=True)
         st.download_button("Download follow-up queue", queue.to_csv(index=False).encode("utf-8-sig"),
                            "batchguard_followup_queue.csv", "text/csv")
         st.subheader("Evidence for a selected candidate")
@@ -100,7 +100,7 @@ with priorities_tab:
                             "manufacturer_raw", "manufacturer_name_raw", "manufacture_date_raw", "expiry_date_raw",
                             "failure_type", "failure_categories", "failure_mapping_status", "nsq_remark", "firm_reply",
                             "reporting_lab", "source_file"]
-        st.dataframe(evidence[evidence_columns], use_container_width=True, hide_index=True)
+        st.dataframe(evidence[evidence_columns], width="stretch", hide_index=True)
         st.download_button("Download candidate evidence", evidence.assign(snapshot_id=identity).to_csv(index=False).encode("utf-8-sig"),
                            "batchguard_candidate_evidence.csv", "text/csv")
         for source in sorted(evidence["source_file"].unique()):
@@ -116,9 +116,9 @@ with history_tab:
     st.write("Snapshot-wide descriptive context. The follow-up queue uses earlier months only.")
     historical, monthly = get_historical_context(token, df)
     st.bar_chart(monthly.set_index("collection_month")[["central_nsq", "state_nsq"]])
-    st.dataframe(monthly, use_container_width=True, hide_index=True)
+    st.dataframe(monthly, width="stretch", hide_index=True)
     st.caption("Index weights: record recurrence 60, months observed 25, distinct products 15; each component is min-max scaled.")
-    st.dataframe(historical.head(50), use_container_width=True, hide_index=True)
+    st.dataframe(historical.head(50), width="stretch", hide_index=True)
     st.download_button("Download historical manufacturer context", historical.to_csv(index=False).encode("utf-8-sig"),
                        "batchguard_historical_context.csv", "text/csv")
 
@@ -132,7 +132,7 @@ with evaluation_tab:
         "K counts manufacturer signatures here; the follow-up queue capacity counts product/batch candidates."
     )
     if not coverage.empty:
-        st.dataframe(coverage, use_container_width=True, hide_index=True)
+        st.dataframe(coverage, width="stretch", hide_index=True)
         st.download_button("Download chronological coverage check", coverage.to_csv(index=False).encode("utf-8-sig"),
                            "batchguard_chronological_coverage.csv", "text/csv")
     st.warning(
@@ -146,17 +146,17 @@ with quality_tab:
     availability_files = sorted((location / "reports").glob("????-??_source_availability.csv"))
     if availability_files:
         availability = pd.concat([pd.read_csv(p) for p in availability_files], ignore_index=True)
-        st.dataframe(availability, use_container_width=True, hide_index=True)
+        st.dataframe(availability, width="stretch", hide_index=True)
         if availability["spurious_data_status"].eq("source_sheet_missing").any():
             st.warning("An absent spurious sheet means unavailable source data, not zero incidents.")
     fields = ["product", "batch_no", "manufacturer_name_normalized", "manufacture_date_raw", "expiry_date_raw"]
     st.subheader("Missing evidence")
     st.dataframe(pd.DataFrame([{"field": field, "missing_records": int(df[field].str.strip().eq("").sum())}
-                               for field in fields]), use_container_width=True, hide_index=True)
+                               for field in fields]), width="stretch", hide_index=True)
     st.caption("Normalized manufacturer text is not a verified legal manufacturer identity. Do not merge company/address variants without review.")
     st.subheader("Failure mapping review")
     st.dataframe(df["failure_mapping_status"].value_counts().rename_axis("status").reset_index(name="records"),
-                 use_container_width=True, hide_index=True)
+                 width="stretch", hide_index=True)
     st.download_button("Download analytical evidence snapshot", df.to_csv(index=False).encode("utf-8-sig"),
                        "batchguard_analytical_snapshot.csv", "text/csv")
 

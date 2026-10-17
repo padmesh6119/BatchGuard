@@ -26,39 +26,58 @@ SEEN_SCENARIOS = ["benign_repeat", "legitimate_distribution", "legitimate_travel
 HELDOUT_SCENARIOS = ["delayed_sync", "slow_copy"]
 
 
+def nsq_records(df):
+    return df[df["source_category"].isin(["central_nsq", "state_nsq"])]
+
+
+def history_features(df, cutoff):
+    """Layer A features per previously observed manufacturer text, from NSQ records through cutoff only.
+
+    Training preparation and live scoring share this function.
+    """
+    past = nsq_records(df)
+    past = past[past["collection_month"].le(cutoff)]
+    priorities = historical_priorities(past).set_index("manufacturer_key")["priority_index"].to_dict()
+    recent_start = str(pd.Period(cutoff, freq="M")-2)
+    rows = []
+    for manufacturer, group in past.groupby("manufacturer_name_normalized", sort=True):
+        if not str(manufacturer).strip():
+            continue
+        last = group["collection_month"].max()
+        rows.append({
+            "manufacturer_key": manufacturer, "feature_cutoff_month": cutoff,
+            "prior_records": len(group), "prior_months": group["collection_month"].nunique(),
+            "prior_products": group["product"].str.strip().replace("", pd.NA).nunique(),
+            "records_last_month": int(group["collection_month"].eq(cutoff).sum()),
+            "records_last_3_months": int(group["collection_month"].ge(recent_start).sum()),
+            "months_since_last_report": pd.Period(cutoff, freq="M").ordinal-pd.Period(last, freq="M").ordinal,
+            "unresolved_failure_records": int(group["failure_mapping_status"].isin(["missing", "manual_review_required"]).sum()),
+            "baseline_priority_index": float(priorities.get(manufacturer, 0)),
+        })
+    return pd.DataFrame(rows, columns=["manufacturer_key", "feature_cutoff_month", *HISTORY_FEATURES,
+                                       "baseline_priority_index"])
+
+
 def history_examples(df):
-    nsq = df[df["source_category"].isin(["central_nsq", "state_nsq"])].copy()
+    nsq = nsq_records(df).copy()
     months = sorted(nsq["collection_month"].unique())
     if len(months) < 6:
         raise ValueError("Need at least six collection months for chronological training/validation/test splits.")
     target_months = months[2:]
     split_for = {month: "test" if month in target_months[-2:] else
                  "validation" if month == target_months[-3] else "train" for month in target_months}
-    rows = []
+    frames = []
     for target in target_months:
         cutoff = str(pd.Period(target, freq="M")-1)
-        past = nsq[nsq["collection_month"].le(cutoff)]
         future_counts = nsq[nsq["collection_month"].eq(target)]["manufacturer_name_normalized"].value_counts()
-        priorities = historical_priorities(past).set_index("manufacturer_key")["priority_index"].to_dict()
-        for manufacturer, group in past.groupby("manufacturer_name_normalized", sort=True):
-            if not str(manufacturer).strip():
-                continue
-            recent_start = str(pd.Period(cutoff, freq="M")-2)
-            last = group["collection_month"].max()
-            rows.append({
-                "example_id": digest([manufacturer, target])[:24], "manufacturer_key": manufacturer,
-                "split": split_for[target], "feature_cutoff_month": cutoff, "target_month": target,
-                "prior_records": len(group), "prior_months": group["collection_month"].nunique(),
-                "prior_products": group["product"].str.strip().replace("", pd.NA).nunique(),
-                "records_last_month": int(group["collection_month"].eq(cutoff).sum()),
-                "records_last_3_months": int(group["collection_month"].ge(recent_start).sum()),
-                "months_since_last_report": pd.Period(cutoff, freq="M").ordinal-pd.Period(last, freq="M").ordinal,
-                "unresolved_failure_records": int(group["failure_mapping_status"].isin(["missing", "manual_review_required"]).sum()),
-                "baseline_priority_index": float(priorities.get(manufacturer, 0)),
-                "target_report_count": int(future_counts.get(manufacturer, 0)),
-                "label": int(future_counts.get(manufacturer, 0) > 0),
-            })
-    return pd.DataFrame(rows)
+        part = history_features(nsq, cutoff)
+        part.insert(0, "example_id", [digest([m, target])[:24] for m in part["manufacturer_key"]])
+        part.insert(2, "split", split_for[target])
+        part.insert(4, "target_month", target)
+        part["target_report_count"] = part["manufacturer_key"].map(future_counts).fillna(0).astype(int)
+        part["label"] = part["target_report_count"].gt(0).astype(int)
+        frames.append(part)
+    return pd.concat(frames, ignore_index=True)
 
 
 def recurrence_finding(df, cutoff="2026-01"):

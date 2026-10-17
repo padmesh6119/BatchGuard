@@ -55,8 +55,10 @@ Use validation data for model and threshold selection. Test access requires `fin
 - Fusion: `decision_core.build_decision_queue` returns separate historical, scan, and evidence values. Its declared untrained baseline is 50% history + 35% scan + 15% corroboration when a scan signal exists. The source-count index is not authenticated independence. Evaluate these weights rather than presenting them as optimal.
 - Sample status stays unknown unless observed; the backend does not invent “no sample yet.” Manufacturer state also stays unknown unless supported by source data. Synthetic district metadata must remain labeled synthetic.
 
-## Next stage
+## Training (17 October 2026)
 
-Install and verify the chosen training backend, fit the two baselines, select parameters on validation data, then evaluate/export final model artifacts. Snap ML compatibility must be checked on the assigned LinuxONE environment. Neither sklearn nor Snap ML is installed in the current workspace environment.
+`train_models.py` fits small fixed grids (logistic regression C∈{0.1,1,10}; gradient boosting depth 2/3) with scikit-learn or Snap ML, selects by validation average precision (ties keep the simpler model), picks the Layer B alert threshold by validation F1, selects the fusion policy on the validation month, and only then reads the test split once. Results for `models/baseline-v1` and `models/snapml-v1` are in their `model_card.json` and summarized in [README.md](README.md). Layer A beats every baseline on held-out July–August 2026; the Layer B model does not beat the rule on held-out families. The test split of this bundle is now spent: new model ideas need a new bundle version with validation-only hard families, not re-tuning against these test results.
 
-No model has been fitted by preparation. Seven-point dashboard integration, actual LinuxONE execution, manufacturer identity verification, complete official download provenance, and prospective real-world validation remain separate work. No medicine-safety probability or real counterfeit-detection accuracy is established by these inputs.
+`history_features` and `extract_scan_features` are the only feature builders; preparation, training and live scoring all call them. Regenerating this bundle with the refactored code reproduces every file byte for byte.
+
+Preparation itself fits no model. Seven-point dashboard integration, actual LinuxONE execution, manufacturer identity verification, complete official download provenance, and prospective real-world validation remain separate work. No medicine-safety probability or real counterfeit-detection accuracy is established by these inputs.

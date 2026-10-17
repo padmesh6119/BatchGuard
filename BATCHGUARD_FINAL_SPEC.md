@@ -58,11 +58,13 @@ A persistent banner states this on every screen: *Layer A REAL, Layer B SIMULATE
   - The same workload hash runs on laptop and on LinuxONE: per-scan decision p50/p99, events/s, queue rebuild time.
   - Acceleration is claimed only if measured.
 
-## Dashboard (`app/app.py`)
-- Banner; capacity slider; the stream of arriving simulated scans (step through it).
+## Dashboard (`python -m app.dashboard` → `outputs/dashboard.html`)
+- One self-contained HTML file. The queue after every arriving scan is computed by `rank_candidates` at build time, for each backend.
+- Banner; capacity stepper; the stream of arriving simulated scans (play, step, scrub).
 - Ranked queue with the three signals, priority, model probabilities and reasons.
 - Batch evidence: scan timeline, map of synthetic locations, packs and sources, real manufacturer history with source files, and published reports of the exact batch.
-- Inspector decision log.
+- Priority shown with its formula and the actual numbers.
+- Inspector decision log, kept in the browser and exported as CSV.
 - Tabs: Evaluation, Platform (laptop and LinuxONE), Data quality.
 
 ## Not claimed

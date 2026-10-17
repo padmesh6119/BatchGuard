@@ -6,7 +6,7 @@
     "scan_test_predictions.csv": "86be866d58874e6e5b7117a338fc0333013cbd803a81f1a7b170e8c8573ac1a7"
   },
   "backend": "sklearn",
-  "created_at": "2026-10-17T09:52:07.310664+00:00",
+  "created_at": "2026-10-17T10:38:42.018673+00:00",
   "environment": {
     "cpu": {
       "affinity_cpus": 16,
@@ -18,13 +18,13 @@
     "host": "laptop",
     "machine": "x86_64",
     "packages": {
+      "matplotlib": "3.11.2",
       "numpy": "2.5.4",
       "openpyxl": "3.1.5",
       "pandas": "3.0.6",
       "scikit-learn": "1.9.1",
       "scipy": "1.18.1",
-      "snapml": "1.17.2",
-      "streamlit": "1.66.0"
+      "snapml": "1.17.2"
     },
     "platform": "Linux-6.17.0-35-generic-x86_64-with-glibc2.39",
     "python": "3.12.3",
@@ -35,7 +35,7 @@
     "history": "4733cabf0d43349123f358644a3b38def6a2fbd7d938bbc1f99531642912be99",
     "scan": "2213cd9bb03114a394ca5d2fc322c86119e5e5651505a861d417b4dec233b551"
   },
-  "fit_and_selection_seconds": 3.7486510400012776,
+  "fit_and_selection_seconds": 1.932369355999981,
   "fusion": {
     "clone_label": "simulated",
     "recurrence_label": "real: manufacturer text reported in the target month",
@@ -1094,11 +1094,11 @@
       "unresolved_failure_records"
     ],
     "fit_seconds": {
-      "hist_gbm_d2": 0.525920206999217,
-      "hist_gbm_d3": 0.639180240999849,
-      "logistic_c0.1": 0.014116796999587677,
-      "logistic_c1.0": 0.01565039699926274,
-      "logistic_c10.0": 0.015669201999116922
+      "hist_gbm_d2": 0.27358534400013923,
+      "hist_gbm_d3": 0.1647337750000588,
+      "logistic_c0.1": 0.011595620000207418,
+      "logistic_c1.0": 0.00867799599996033,
+      "logistic_c10.0": 0.008103225000013481
     },
     "label": "reported again in the target month",
     "selected": "logistic_c0.1",
@@ -1218,11 +1218,11 @@
       "retry_fraction"
     ],
     "fit_seconds": {
-      "hist_gbm_d2": 0.5380904909998208,
-      "hist_gbm_d3": 0.5480628339992109,
-      "logistic_c0.1": 0.025459858001340763,
-      "logistic_c1.0": 0.01621488899945689,
-      "logistic_c10.0": 0.012479230999815627
+      "hist_gbm_d2": 0.22524753099992267,
+      "hist_gbm_d3": 0.14875658300002215,
+      "logistic_c0.1": 0.0073127260000092065,
+      "logistic_c1.0": 0.008703129999958037,
+      "logistic_c10.0": 0.0060474670001440245
     },
     "model": {
       "average_precision": 0.8611001700735966,

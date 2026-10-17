@@ -1,0 +1,896 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>BatchGuard</title>
+<style>
+:root {
+  color-scheme: light;
+  --page: #f9f9f7; --surface: #fcfcfb; --surface-2: #f3f2ee; --surface-3: #ebeae4;
+  --border: rgba(11,11,11,.10); --grid: #e1e0d9; --axis: #c3c2b7;
+  --ink: #0b0b0b; --ink-2: #52514e; --muted: #898781;
+  --real: #2a78d6; --sim: #eb6834; --qual: #1baf7a; --s4: #eda100; --violet: #6250d6; --neutral: #b5b3ab; --neutral-2: #d6d4cc;
+  --real-wash: rgba(42,120,214,.10); --sim-wash: rgba(235,104,52,.12);
+  --critical: #d03b3b; --critical-wash: rgba(208,59,59,.09); --good: #006300; --warning: #b07800;
+  --shadow: 0 1px 2px rgba(11,11,11,.06), 0 4px 16px rgba(11,11,11,.04);
+}
+@media (prefers-color-scheme: dark) {
+  :root:where(:not([data-theme="light"])) {
+    color-scheme: dark;
+    --page: #0d0d0d; --surface: #1a1a19; --surface-2: #222220; --surface-3: #2c2c2a;
+    --border: rgba(255,255,255,.10); --grid: #2c2c2a; --axis: #383835;
+    --ink: #f0efec; --ink-2: #c3c2b7; --muted: #898781;
+    --real: #3987e5; --sim: #d95926; --qual: #199e70; --s4: #c98500; --violet: #9085e9; --neutral: #5f5e5a; --neutral-2: #45443f;
+    --real-wash: rgba(57,135,229,.16); --sim-wash: rgba(217,89,38,.18);
+    --critical: #e66767; --critical-wash: rgba(230,103,103,.13); --good: #0ca30c; --warning: #fab219;
+    --shadow: 0 1px 2px rgba(0,0,0,.4);
+  }
+}
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --page: #0d0d0d; --surface: #1a1a19; --surface-2: #222220; --surface-3: #2c2c2a;
+  --border: rgba(255,255,255,.10); --grid: #2c2c2a; --axis: #383835;
+  --ink: #f0efec; --ink-2: #c3c2b7; --muted: #898781;
+  --real: #3987e5; --sim: #d95926; --qual: #199e70; --s4: #c98500; --violet: #9085e9; --neutral: #5f5e5a; --neutral-2: #45443f;
+  --real-wash: rgba(57,135,229,.16); --sim-wash: rgba(217,89,38,.18);
+  --critical: #e66767; --critical-wash: rgba(230,103,103,.13); --good: #0ca30c; --warning: #fab219;
+  --shadow: 0 1px 2px rgba(0,0,0,.4);
+}
+* { box-sizing: border-box; }
+html, body { margin: 0; }
+body { background: var(--page); color: var(--ink); font: 14px/1.45 system-ui, -apple-system, "Segoe UI", sans-serif; }
+button, input, textarea, select { font: inherit; color: inherit; }
+.num, td.n, .tnum { font-variant-numeric: tabular-nums; }
+a { color: var(--real); }
+
+/* banner + header */
+.banner { position: sticky; top: 0; z-index: 30; display: flex; flex-wrap: wrap; gap: 6px 18px; align-items: center;
+  padding: 8px 20px; background: var(--ink); color: var(--surface); font-size: 13px; }
+.banner .layer { display: inline-flex; align-items: center; gap: 7px; font-weight: 600; letter-spacing: .01em; }
+.banner .dot { width: 9px; height: 9px; border-radius: 50%; }
+.banner .note { opacity: .82; }
+header.top { display: flex; flex-wrap: wrap; align-items: center; gap: 12px 24px; padding: 16px 20px 0; max-width: 1480px; margin: 0 auto; }
+.brand { display: flex; align-items: center; gap: 10px; margin-right: auto; }
+.brand svg { flex: none; }
+.brand h1 { font-size: 20px; margin: 0; letter-spacing: -.01em; }
+.brand p { margin: 0; color: var(--ink-2); font-size: 13px; }
+.seg { display: inline-flex; background: var(--surface-2); border: 1px solid var(--border); border-radius: 8px; padding: 2px; }
+.seg button { border: 0; background: transparent; padding: 5px 12px; border-radius: 6px; cursor: pointer; color: var(--ink-2); }
+.seg button[aria-pressed="true"] { background: var(--surface); color: var(--ink); box-shadow: var(--shadow); font-weight: 600; }
+.meta { color: var(--ink-2); font-size: 13px; }
+.meta b { color: var(--ink); font-weight: 600; }
+.icon-btn { border: 1px solid var(--border); background: var(--surface); border-radius: 8px; padding: 5px 9px; cursor: pointer; }
+nav.tabs { display: flex; gap: 4px; padding: 12px 20px 0; max-width: 1480px; margin: 0 auto; border-bottom: 1px solid var(--border); }
+nav.tabs button { border: 0; background: none; padding: 9px 14px; cursor: pointer; color: var(--ink-2); border-bottom: 2px solid transparent; margin-bottom: -1px; font-weight: 500; }
+nav.tabs button[aria-selected="true"] { color: var(--ink); border-bottom-color: var(--ink); font-weight: 600; }
+main { max-width: 1480px; margin: 0 auto; padding: 16px 20px 40px; }
+section[hidden] { display: none; }
+
+/* cards */
+.card { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; box-shadow: var(--shadow); }
+.card > h2, .card-h { display: flex; align-items: baseline; gap: 10px; margin: 0; padding: 14px 16px 10px; font-size: 15px; }
+.card-h h2 { font-size: 15px; margin: 0; }
+.card-h .sub, .sub { color: var(--muted); font-size: 12.5px; font-weight: 400; }
+.card-b { padding: 0 16px 16px; }
+.grow { margin-left: auto; }
+h3 { font-size: 13px; margin: 18px 0 8px; color: var(--ink-2); text-transform: uppercase; letter-spacing: .05em; }
+.section-title { display: flex; align-items: center; gap: 10px; margin: 26px 0 12px; }
+.section-title h2 { margin: 0; font-size: 17px; }
+.tag { display: inline-flex; align-items: center; gap: 6px; font-size: 11.5px; font-weight: 600; padding: 2px 8px; border-radius: 999px; border: 1px solid var(--border); color: var(--ink-2); background: var(--surface-2); white-space: nowrap; }
+.tag .dot { width: 7px; height: 7px; border-radius: 50%; }
+.tag.real .dot { background: var(--real); } .tag.sim .dot { background: var(--sim); }
+.tag.crit { color: var(--critical); border-color: color-mix(in srgb, var(--critical) 40%, transparent); background: var(--critical-wash); }
+.muted { color: var(--muted); } .ink2 { color: var(--ink-2); }
+.callout { border-left: 3px solid var(--real); background: var(--real-wash); padding: 10px 14px; border-radius: 0 8px 8px 0; margin: 12px 0; }
+.callout.sim { border-color: var(--sim); background: var(--sim-wash); }
+.callout.plain { border-color: var(--axis); background: var(--surface-2); }
+
+/* controls */
+.controls { display: flex; flex-wrap: wrap; align-items: center; gap: 12px 22px; padding: 12px 16px; }
+.controls .group { display: flex; align-items: center; gap: 8px; }
+.controls label { color: var(--ink-2); font-size: 13px; }
+.ctrl { border: 1px solid var(--border); background: var(--surface-2); border-radius: 8px; height: 32px; min-width: 34px; padding: 0 10px; cursor: pointer; display: inline-flex; align-items: center; justify-content: center; gap: 6px; }
+.ctrl:hover { background: var(--surface-3); }
+.ctrl.primary { background: var(--ink); color: var(--surface); border-color: var(--ink); font-weight: 600; min-width: 92px; }
+input[type="range"] { accent-color: var(--ink); }
+#scanRange { width: min(340px, 42vw); }
+.stepper { display: inline-flex; align-items: center; border: 1px solid var(--border); border-radius: 8px; overflow: hidden; }
+.stepper button { border: 0; background: var(--surface-2); width: 30px; height: 32px; cursor: pointer; }
+.stepper output { min-width: 40px; text-align: center; font-weight: 700; font-size: 15px; }
+.clock { font-weight: 600; }
+
+/* KPIs */
+.kpis { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; margin: 12px 0; }
+.kpi { padding: 12px 16px; }
+.kpi .label { color: var(--ink-2); font-size: 12.5px; }
+.kpi .value { font-size: 26px; font-weight: 650; letter-spacing: -.01em; margin-top: 2px; display: flex; align-items: center; gap: 8px; }
+.kpi .value .small { font-size: 14px; font-weight: 500; color: var(--ink-2); }
+.kpi .foot { color: var(--muted); font-size: 12px; margin-top: 2px; }
+.kpi.alert .value { color: var(--critical); }
+
+/* decision grid */
+.grid { display: grid; grid-template-columns: minmax(0, 1.9fr) minmax(320px, 1fr); gap: 12px; align-items: start; }
+.side { display: grid; gap: 12px; }
+.scroll-x { overflow-x: auto; }
+table { border-collapse: collapse; width: 100%; }
+th { text-align: left; font-size: 11.5px; font-weight: 600; color: var(--muted); text-transform: uppercase; letter-spacing: .04em; padding: 8px 8px; border-bottom: 1px solid var(--grid); white-space: nowrap; }
+td { padding: 8px; border-bottom: 1px solid var(--grid); vertical-align: middle; }
+td.n, th.n { text-align: right; }
+.queue tbody tr.row { cursor: pointer; transition: background .15s; }
+.queue tbody tr.row:hover { background: var(--surface-2); }
+.queue tbody tr.row:focus-visible { outline: 2px solid var(--real); outline-offset: -2px; }
+.queue tr.row.selected { background: var(--real-wash); }
+.queue tr.row.alert td:first-child { box-shadow: inset 3px 0 0 var(--critical); }
+.queue tr.row.below { opacity: .55; }
+.queue tr.row.below:hover, .queue tr.row.below.selected { opacity: .9; }
+.queue tr.row.fresh { animation: fresh 1.4s ease-out; }
+@keyframes fresh { from { background: var(--sim-wash); } to { background: transparent; } }
+.rank { font-size: 17px; font-weight: 700; width: 44px; white-space: nowrap; }
+.delta { font-size: 11px; font-weight: 600; margin-left: 2px; }
+.delta.up { color: var(--good); } .delta.down { color: var(--muted); } .delta.new { color: var(--sim); }
+.bt { font-weight: 650; }
+.pd { color: var(--ink-2); font-size: 12.5px; max-width: 280px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.mf { color: var(--muted); font-size: 11.5px; max-width: 280px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.meter { display: flex; align-items: center; gap: 7px; min-width: 96px; }
+.meter .track { flex: 1; height: 6px; border-radius: 3px; background: var(--surface-3); overflow: hidden; min-width: 50px; }
+.meter .fill { height: 100%; border-radius: 0 3px 3px 0; }
+.meter .v { width: 24px; text-align: right; font-size: 12.5px; color: var(--ink-2); font-variant-numeric: tabular-nums; }
+.prio { font-weight: 700; font-size: 15px; text-align: right; font-variant-numeric: tabular-nums; }
+.chips { display: flex; flex-wrap: wrap; gap: 4px; margin-top: 5px; }
+td.who { min-width: 230px; max-width: 320px; }
+.chip { font-size: 11px; padding: 1px 7px; border-radius: 999px; background: var(--surface-2); border: 1px solid var(--border); color: var(--ink-2); white-space: nowrap; }
+.chip.crit { color: var(--critical); background: var(--critical-wash); border-color: transparent; font-weight: 600; }
+.chip.real { color: var(--ink-2); box-shadow: inset 2px 0 0 var(--real); }
+.status { font-size: 11.5px; padding: 2px 8px; border-radius: 999px; background: var(--surface-2); color: var(--muted); white-space: nowrap; }
+.status.s1 { background: var(--real-wash); color: var(--ink); } .status.s3 { background: var(--critical-wash); color: var(--critical); } .status.s2 { color: var(--ink-2); }
+tr.cap td { padding: 6px 8px; background: var(--surface-2); color: var(--ink-2); font-size: 12px; font-weight: 600; border-top: 2px dashed var(--axis); }
+
+/* map + feed */
+.map svg { width: 100%; max-width: 360px; height: auto; display: block; margin: 0 auto; }
+.map .land { fill: var(--surface-2); stroke: var(--axis); stroke-width: 1; }
+.map .grat { stroke: var(--grid); stroke-width: 1; fill: none; }
+.map .city text { font-size: 11px; fill: var(--ink-2); }
+.map .pulse { animation: pulse 1.6s ease-out infinite; transform-box: fill-box; transform-origin: center; }
+@keyframes pulse { from { opacity: .8; transform: scale(1); } to { opacity: 0; transform: scale(3.2); } }
+.feed { max-height: 420px; overflow-y: auto; }
+.feed ol { list-style: none; margin: 0; padding: 0 8px 8px; }
+.feed li { display: grid; grid-template-columns: 62px 1fr auto; gap: 2px 10px; padding: 7px 8px; border-radius: 8px; cursor: pointer; align-items: center; }
+.feed li:hover { background: var(--surface-2); }
+.feed li.latest { background: var(--sim-wash); }
+.feed li.retry { opacity: .6; }
+.feed .t { font-size: 12px; color: var(--ink-2); font-variant-numeric: tabular-nums; }
+.feed .w { font-size: 13px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.feed .w .p { color: var(--muted); font-size: 11.5px; }
+.legend { display: flex; flex-wrap: wrap; gap: 6px 14px; font-size: 12px; color: var(--ink-2); padding: 0 16px 12px; }
+.legend span { display: inline-flex; align-items: center; gap: 6px; }
+.key { width: 14px; height: 0; border-top: 2px solid; display: inline-block; }
+.sw { width: 10px; height: 10px; border-radius: 3px; display: inline-block; }
+
+/* evidence */
+.evidence { margin-top: 12px; }
+.ev-head { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 14px; padding: 16px; border-bottom: 1px solid var(--grid); }
+.ev-head .rk { font-size: 28px; font-weight: 750; color: var(--ink-2); }
+.ev-head .bt { font-size: 19px; }
+.ev-body { padding: 16px; display: grid; grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr); gap: 20px; }
+.signals { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; }
+.signal { border: 1px solid var(--border); border-radius: 10px; padding: 12px; position: relative; overflow: hidden; }
+.signal::before { content: ""; position: absolute; inset: 0 auto 0 0; width: 3px; background: var(--c); }
+.signal .k { font-size: 12px; color: var(--ink-2); display: flex; align-items: center; gap: 6px; }
+.signal .v { font-size: 26px; font-weight: 700; margin: 2px 0 4px; }
+.signal .why { font-size: 12.5px; color: var(--ink-2); }
+.formula { margin-top: 10px; padding: 10px 12px; background: var(--surface-2); border-radius: 8px; font-size: 13px; color: var(--ink-2); }
+.formula b { color: var(--ink); }
+.reasons { margin: 0; padding: 0; list-style: none; display: grid; gap: 6px; }
+.reasons li { display: grid; grid-template-columns: auto 1fr; gap: 10px; align-items: baseline; font-size: 13px; }
+.reasons code { font-size: 11px; background: var(--surface-2); padding: 1px 6px; border-radius: 4px; color: var(--ink-2); }
+.timeline { list-style: none; margin: 0; padding: 0 0 0 14px; border-left: 2px solid var(--grid); }
+.timeline li { position: relative; padding: 4px 0 8px 10px; font-size: 13px; }
+.timeline li::before { content: ""; position: absolute; left: -20px; top: 9px; width: 8px; height: 8px; border-radius: 50%; background: var(--sim); box-shadow: 0 0 0 2px var(--surface); }
+.timeline li.retry::before { background: var(--neutral); }
+.timeline .t { font-variant-numeric: tabular-nums; color: var(--ink-2); margin-right: 6px; }
+.tbl-wrap { max-height: 300px; overflow: auto; border: 1px solid var(--grid); border-radius: 8px; }
+.tbl-wrap table th { position: sticky; top: 0; background: var(--surface); }
+.small-tbl td, .small-tbl th { font-size: 12.5px; padding: 6px 8px; }
+.decide { display: flex; flex-wrap: wrap; gap: 6px; margin: 8px 0; }
+.decide button { border: 1px solid var(--border); background: var(--surface-2); border-radius: 8px; padding: 6px 12px; cursor: pointer; }
+.decide button[aria-pressed="true"] { background: var(--ink); color: var(--surface); border-color: var(--ink); }
+textarea { width: 100%; min-height: 54px; border: 1px solid var(--border); border-radius: 8px; padding: 8px; background: var(--surface); resize: vertical; }
+.saved { color: var(--good); font-size: 12.5px; margin-left: 8px; }
+
+/* charts */
+.charts2 { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+.charts3 { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; }
+.chart svg { width: 100%; height: auto; display: block; overflow: visible; }
+.chart .gridline { stroke: var(--grid); stroke-width: 1; }
+.chart .baseline { stroke: var(--axis); stroke-width: 1; }
+.chart text { fill: var(--muted); font-size: 11px; font-variant-numeric: tabular-nums; }
+.chart text.lbl { fill: var(--ink-2); font-size: 12px; }
+.chart text.val { fill: var(--ink); font-size: 12px; font-weight: 600; }
+.chart .mark { transition: opacity .12s; }
+.chart .mark:hover, .chart .mark:focus { opacity: .78; outline: none; }
+.chart .xhair { stroke: var(--axis); stroke-width: 1; }
+details.tv { margin-top: 8px; font-size: 12.5px; }
+details.tv summary { cursor: pointer; color: var(--ink-2); }
+#tip { position: fixed; z-index: 50; pointer-events: none; background: var(--surface); border: 1px solid var(--border); box-shadow: 0 6px 24px rgba(0,0,0,.14); border-radius: 8px; padding: 8px 10px; font-size: 12.5px; min-width: 120px; display: none; }
+#tip .h { color: var(--ink-2); margin-bottom: 4px; }
+#tip .r { display: flex; align-items: center; gap: 8px; }
+#tip .r b { margin-left: auto; padding-left: 12px; font-variant-numeric: tabular-nums; }
+.stats { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; }
+.hosts { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+.host dl { display: grid; grid-template-columns: auto 1fr; gap: 4px 14px; margin: 0; font-size: 13px; }
+.host dt { color: var(--muted); } .host dd { margin: 0; }
+.empty { padding: 24px 16px; color: var(--ink-2); text-align: center; }
+code.cmd { background: var(--surface-2); padding: 2px 6px; border-radius: 4px; font-size: 12.5px; }
+footer { max-width: 1480px; margin: 0 auto; padding: 0 20px 32px; color: var(--muted); font-size: 12px; }
+@media (max-width: 1100px) { .grid, .ev-body, .charts2, .charts3, .hosts { grid-template-columns: minmax(0, 1fr); } .kpis, .stats { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 640px) { .signals { grid-template-columns: minmax(0, 1fr); } .kpis, .stats { grid-template-columns: minmax(0, 1fr); } header.top, nav.tabs, main { padding-left: 16px; padding-right: 16px; } }
+@media (prefers-reduced-motion: reduce) { * { animation: none !important; transition: none !important; } }
+</style>
+</head>
+<body>
+<div class="banner" role="note">
+  <span class="layer"><span class="dot" style="background:#5598e7"></span>Layer A · REAL CDSCO data</span>
+  <span class="layer"><span class="dot" style="background:#ff8a5c"></span>Layer B · SIMULATED scans</span>
+  <span class="note">A scan anomaly is not proof of counterfeit. Inspectors decide; nothing is blocked automatically.</span>
+</div>
+<header class="top">
+  <div class="brand">
+    <svg width="34" height="34" viewBox="0 0 34 34" aria-hidden="true"><path d="M17 2 L30 7 V16 C30 24 24 30 17 32 C10 30 4 24 4 16 V7 Z" fill="var(--ink)"/><path d="M11 17 l4 4 l8 -9" stroke="var(--surface)" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    <div><h1>BatchGuard</h1><p>Which batches to sample first within this week's capacity</p></div>
+  </div>
+  <span class="meta" id="clockMeta"></span>
+  <span class="meta">Backend <span class="seg" id="backendSeg"></span></span>
+  <button class="icon-btn" id="themeBtn" title="Toggle light/dark">◐</button>
+</header>
+<nav class="tabs" role="tablist">
+  <button role="tab" data-tab="decision" aria-selected="true">Decision</button>
+  <button role="tab" data-tab="evaluation" aria-selected="false">Evaluation</button>
+  <button role="tab" data-tab="platform" aria-selected="false">Platform</button>
+  <button role="tab" data-tab="data" aria-selected="false">Data</button>
+</nav>
+<main>
+  <section id="decision"></section>
+  <section id="evaluation" hidden></section>
+  <section id="platform" hidden></section>
+  <section id="data" hidden></section>
+</main>
+<footer id="foot"></footer>
+<div id="tip" role="tooltip"></div>
+<script id="bg-data" type="application/json">/*__BATCHGUARD_DATA__*/null</script>
+<script>
+"use strict";
+const D = JSON.parse(document.getElementById("bg-data").textContent);
+const NS = "http://www.w3.org/2000/svg";
+const STATUSES = [["unreviewed", "Unreviewed"], ["sample requested", "Sample requested"], ["reviewed - no sample", "Reviewed, no sample"], ["escalated to laboratory", "Escalated to lab"]];
+const REASONS = {
+  CLONE_PATTERN_TRAVEL_REVIEW: ["Impossible travel", "One pack seen at least 100 km apart faster than 900 km/h (simulated scans).", "crit"],
+  REPEATED_PACK_BURST_REVIEW: ["Repeated-pack burst", "Ten or more scans of one pack within 5 minutes (simulated scans).", "crit"],
+  SCAN_MODEL_ALERT: ["Scan model alert", "Trained scan model is above its validation threshold. Shown only; the rule drives alerts.", ""],
+  PRIOR_NSQ_RECORDS: ["prior NSQ", "Earlier NSQ records with this manufacturer text (real CDSCO lists).", "real"],
+  REPORTED_IN_LAST_3_MONTHS: ["in last 3 mo", "NSQ records in the three months before the decision (real).", "real"],
+  MANUFACTURER_HISTORY: ["Has history", "Manufacturer text appears in earlier CDSCO lists.", ""],
+  NO_EARLIER_MANUFACTURER_HISTORY: ["No history", "No earlier record for this manufacturer text. Absence of history is not evidence of quality.", ""],
+  BATCH_REPORT_REFERENCE: ["Batch reported before", "This exact product and batch appear in an earlier published report.", "real"],
+  SPURIOUS_REPORT_REFERENCE: ["Spurious report", "This exact batch appears in an earlier spurious-drug report.", "crit"],
+  REFERENCE_COVERAGE_UNKNOWN: ["No batch report", "No earlier published report of this exact batch.", ""],
+  FOLLOWUP_SAMPLE_STATUS_UNKNOWN: ["Sample status unknown", "Whether a follow-up sample was already drawn is not known.", ""],
+};
+const HIDDEN_CHIPS = new Set(["MANUFACTURER_HISTORY", "REFERENCE_COVERAGE_UNKNOWN", "FOLLOWUP_SAMPLE_STATUS_UNKNOWN"]);
+const RANKERS = { trained_model: "Trained model", legacy_60_25_15_index: "Legacy 60/25/15 index", most_past_records: "Most past records", most_recent_3_months: "Most records, last 3 months", random_expectation: "Random (expected)" };
+const POLICY = { fused: ["BatchGuard fused queue", "--ink"], history_only: ["History only", "--real"], scan_rule_only: ["Scan rule only", "--sim"], scan_model_only: ["Scan model only", "--qual"], random_expectation: ["Random (expected)", "--neutral"] };
+const STAGES = { per_scan_decision_ms: "Per-scan decision", queue_rebuild_with_cached_context_ms: "Queue rebuild (cached context)", scan_inference_single_ms: "Scan model, one row", scan_inference_batch_total_ms: "Scan model, all episodes", feature_extraction_ms: "Feature extraction, per episode", event_validation_total_ms: "Validate every event", decision_context_build_ms: "Decision context build (monthly)" };
+
+const store = {
+  get(key, fallback) { try { const v = localStorage.getItem("batchguard." + key); return v === null ? fallback : JSON.parse(v); } catch (e) { return fallback; } },
+  set(key, value) { try { localStorage.setItem("batchguard." + key, JSON.stringify(value)); } catch (e) { /* storage unavailable */ } },
+};
+const S = {
+  backend: D.backends.includes(store.get("backend")) ? store.get("backend") : D.backends[0],
+  k: D.feed.length, capacity: Math.min(30, Math.max(1, store.get("capacity", 10))), selected: null, timer: null, tab: "decision",
+  reviews: store.get("reviews", {}), lastSaved: null,
+};
+
+/* ---------- helpers ---------- */
+function el(tag, attrs, ...kids) {
+  const node = document.createElement(tag);
+  for (const [k, v] of Object.entries(attrs || {})) {
+    if (v === null || v === undefined || v === false) continue;
+    if (k === "class") node.className = v;
+    else if (k === "text") node.textContent = v;
+    else if (k === "style") node.style.cssText = v;
+    else if (k.startsWith("on")) node.addEventListener(k.slice(2), v);
+    else node.setAttribute(k, v === true ? "" : v);
+  }
+  for (const kid of kids.flat()) if (kid !== null && kid !== undefined && kid !== false) node.append(kid instanceof Node ? kid : document.createTextNode(String(kid)));
+  return node;
+}
+function sv(tag, attrs, ...kids) {
+  const node = document.createElementNS(NS, tag);
+  for (const [k, v] of Object.entries(attrs || {})) {
+    if (v === null || v === undefined) continue;
+    if (k === "text") node.textContent = v; else if (k.startsWith("on")) node.addEventListener(k.slice(2), v); else node.setAttribute(k, v);
+  }
+  for (const kid of kids.flat()) if (kid) node.append(kid);
+  return node;
+}
+const css = name => getComputedStyle(document.documentElement).getPropertyValue(name).trim();
+const fmt = (v, d = 0) => v === null || v === undefined ? "–" : Number(v).toLocaleString("en-IN", { minimumFractionDigits: d, maximumFractionDigits: d });
+const pct = (v, d = 0) => v === null || v === undefined ? "–" : fmt(100 * v, d) + "%";
+const time = iso => iso.slice(11, 19);
+const MONTHS = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+const monthName = m => `${MONTHS[+m.slice(5, 7) - 1]} ’${m.slice(2, 4)}`;
+const monthLong = m => `${MONTHS[+m.slice(5, 7) - 1]} ${m.slice(0, 4)}`;
+function niceStep(max, n = 4) { const raw = max / n || 1, p = 10 ** Math.floor(Math.log10(raw)), f = raw / p; return (f <= 1 ? 1 : f <= 2 ? 2 : f <= 2.5 ? 2.5 : f <= 5 ? 5 : 10) * p; }
+function chartWidth(half) {
+  const main = Math.min(1480, document.documentElement.clientWidth) - 40, full = main - 34;
+  return Math.max(300, half && innerWidth > 1100 ? (main - 12) / 2 - 34 : full);
+}
+function km(a, b) {
+  const r = Math.PI / 180, la = a.lat * r, lb = b.lat * r;
+  const h = Math.sin((lb - la) / 2) ** 2 + Math.cos(la) * Math.cos(lb) * Math.sin((b.lon - a.lon) * r / 2) ** 2;
+  return 6371 * 2 * Math.asin(Math.min(1, Math.sqrt(h)));
+}
+function reasonParts(code) { const [base, n] = code.split("="); return { base, n }; }
+function chipFor(code) {
+  const { base, n } = reasonParts(code), meta = REASONS[base] || [base, base, ""];
+  const label = n !== undefined ? `${n} ${meta[0]}` : meta[0];
+  return el("span", { class: "chip " + meta[2], title: meta[1] }, meta[2] === "crit" ? "⚠ " + label : label);
+}
+const tip = document.getElementById("tip");
+function showTip(event, head, rows) {
+  tip.replaceChildren(el("div", { class: "h", text: head }), ...rows.map(([name, value, color]) =>
+    el("div", { class: "r" }, color ? el("span", { class: "key", style: `border-color:${color}` }) : null, el("span", { text: name }), el("b", { text: value }))));
+  tip.style.display = "block";
+  const box = tip.getBoundingClientRect(), r = event.target.getBoundingClientRect ? event.target.getBoundingClientRect() : null;
+  const x = event.clientX || (r ? r.right : 0), y = event.clientY || (r ? r.top : 0);
+  tip.style.left = Math.min(window.innerWidth - box.width - 8, x + 14) + "px";
+  tip.style.top = Math.max(8, y - box.height - 10) + "px";
+}
+function hideTip() { tip.style.display = "none"; }
+function hoverable(node, head, rows) {
+  node.setAttribute("tabindex", "0");
+  node.classList.add("mark");
+  node.addEventListener("pointermove", e => showTip(e, head, rows()));
+  node.addEventListener("focus", e => showTip(e, head, rows()));
+  node.addEventListener("pointerleave", hideTip);
+  node.addEventListener("blur", hideTip);
+  return node;
+}
+function tableView(headers, rows, summary = "Table view") {
+  return el("details", { class: "tv" }, el("summary", { text: summary }),
+    el("div", { class: "scroll-x" }, el("table", { class: "small-tbl" },
+      el("thead", {}, el("tr", {}, headers.map((h, i) => el("th", { class: i ? "n" : "", text: h })))),
+      el("tbody", {}, rows.map(r => el("tr", {}, r.map((c, i) => el("td", { class: i ? "n" : "", text: c }))))))));
+}
+function card(title, sub, ...body) {
+  return el("div", { class: "card" }, el("div", { class: "card-h" }, el("h2", { text: title }), sub ? el("span", { class: "sub", text: sub }) : null), el("div", { class: "card-b" }, ...body));
+}
+
+/* ---------- derived scan facts (same rules as src/detector.py) ---------- */
+const TAGS = (() => {
+  const ids = new Set(), packs = new Set();
+  return D.feed.map(e => {
+    const pk = e.cand + "|" + e.pack;
+    const tag = ids.has(e.id) ? "retry" : packs.has(pk) ? "repeat" : "new";
+    ids.add(e.id); packs.add(pk);
+    return tag;
+  });
+})();
+function scanFacts(cid, k) {
+  const unique = new Map(); let deliveries = 0;
+  for (let i = 0; i < k; i++) { const e = D.feed[i]; if (e.cand !== cid) continue; deliveries++; unique.set(e.id, e); }
+  const events = [...unique.values()].sort((a, b) => a.time < b.time ? -1 : a.time > b.time ? 1 : a.id < b.id ? -1 : 1);
+  const packs = new Map();
+  for (const e of events) { if (!packs.has(e.pack)) packs.set(e.pack, []); packs.get(e.pack).push(e); }
+  let maxKm = 0, maxKmh = 0, max5 = 0, maxSources = 0, travel = null, burst = null;
+  const packRows = [];
+  for (const [pack, list] of packs) {
+    const sources = new Set(list.map(e => e.source)), cities = new Set(list.map(e => `${e.city}, ${e.state}`));
+    maxSources = Math.max(maxSources, sources.size);
+    let packMax5 = 0;
+    list.forEach((e, i) => {
+      const t = Date.parse(e.time);
+      const recent = list.slice(0, i + 1).filter(p => t - Date.parse(p.time) <= 300000).length;
+      packMax5 = Math.max(packMax5, recent);
+      for (const p of list.slice(0, i)) {
+        const d = km(e, p), s = (t - Date.parse(p.time)) / 1000, v = s > 0 ? Math.min(100000, d * 3600 / s) : (d ? 100000 : 0);
+        maxKm = Math.max(maxKm, d); maxKmh = Math.max(maxKmh, v);
+        if (d >= 100 && (!travel || v > travel.kmh)) travel = { pack, from: p, to: e, km: d, kmh: v, minutes: s / 60 };
+      }
+    });
+    if (packMax5 > max5) { max5 = packMax5; burst = { pack, count: packMax5 }; }
+    packRows.push({ pack, scans: list.length, sources: sources.size, cities: [...cities].join(" / ") });
+  }
+  return { events, deliveries, retries: deliveries - events.length, packs: packRows, maxSources, travelHit: maxKm >= 100 && maxKmh > 900, travel, burstHit: max5 >= 10, burst };
+}
+function stepRows(k = S.k, backend = S.backend) {
+  return D.steps[backend][k - 1].map((r, i) => ({ cid: r[0], priority: r[1], hist: r[2], scan: r[3], qual: r[4], sp: r[5], hp: r[6], reasons: r[7].map(x => D.codes[x]), rank: i + 1 }));
+}
+
+/* ---------- header / tabs / theme ---------- */
+function renderHeader() {
+  const e = D.feed[S.k - 1], d = new Date(e.time);
+  document.getElementById("clockMeta").replaceChildren("Decision time ", el("b", { text: d.toLocaleString("en-GB", { day: "numeric", month: "short", year: "numeric", hour: "2-digit", minute: "2-digit", timeZone: "UTC" }) + " UTC" }));
+  const seg = document.getElementById("backendSeg");
+  seg.replaceChildren(...D.backends.map(b => el("button", { "aria-pressed": String(b === S.backend), text: b === "snapml" ? "IBM Snap ML" : b === "sklearn" ? "scikit-learn" : b,
+    onclick: () => { S.backend = b; store.set("backend", b); renderAll(); } })));
+}
+document.querySelectorAll("nav.tabs button").forEach(b => b.addEventListener("click", () => {
+  S.tab = b.dataset.tab;
+  document.querySelectorAll("nav.tabs button").forEach(x => x.setAttribute("aria-selected", String(x === b)));
+  document.querySelectorAll("main > section").forEach(s => { s.hidden = s.id !== S.tab; });
+  if (S.tab !== "decision") pause();
+}));
+document.getElementById("themeBtn").addEventListener("click", () => {
+  const dark = document.documentElement.dataset.theme ? document.documentElement.dataset.theme === "dark" : matchMedia("(prefers-color-scheme: dark)").matches;
+  document.documentElement.dataset.theme = dark ? "light" : "dark";
+  store.set("theme", document.documentElement.dataset.theme);
+  renderAll();
+});
+if (store.get("theme")) document.documentElement.dataset.theme = store.get("theme");
+
+/* ---------- playback ---------- */
+function setK(k) { S.k = Math.max(1, Math.min(D.feed.length, k)); renderHeader(); renderDecision(); }
+function pause() { if (S.timer) { clearInterval(S.timer); S.timer = null; } const b = document.getElementById("playBtn"); if (b) b.textContent = "▶ Play"; }
+function play() {
+  if (S.timer) return pause();
+  if (S.k >= D.feed.length) setK(1);
+  S.timer = setInterval(() => { if (S.k >= D.feed.length) return pause(); setK(S.k + 1); }, 650);
+  document.getElementById("playBtn").textContent = "❚❚ Pause";
+}
+document.addEventListener("keydown", e => {
+  const tag = document.activeElement.tagName;
+  if (S.tab !== "decision" || /INPUT|TEXTAREA|SELECT/.test(tag)) return;
+  if (e.key === " ") { if (tag === "BUTTON") return; e.preventDefault(); play(); }
+  else if (e.key === "ArrowRight") setK(S.k + 1);
+  else if (e.key === "ArrowLeft") setK(S.k - 1);
+  else if (e.key === "Home") setK(1);
+  else if (e.key === "End") setK(D.feed.length);
+});
+
+/* ---------- decision view ---------- */
+function measuredAt(n) {
+  const ev = D.evaluation[S.backend];
+  if (!ev) return null;
+  const budgets = Object.keys(ev.fusion.test_by_budget).map(Number);
+  const b = budgets.reduce((a, x) => Math.abs(x - n) < Math.abs(a - n) ? x : a, budgets[0]);
+  const row = ev.fusion.test_by_budget[b], fused = row["fused_" + ev.fusion.selected_on_validation];
+  return { b, fused, history: row.history_only, random: row.random_expectation, policy: ev.fusion.selected_on_validation };
+}
+function meter(value, color, label) {
+  return el("div", { class: "meter", title: label + ": " + fmt(value) },
+    el("div", { class: "track" }, el("div", { class: "fill", style: `width:${Math.max(0, Math.min(100, value))}%;background:${color}` })),
+    el("span", { class: "v", text: fmt(value) }));
+}
+let UI = null;
+function buildDecision() {
+  UI = {
+    range: el("input", { type: "range", id: "scanRange", min: 1, max: D.feed.length, value: S.k, "aria-label": "Simulated scans received", oninput: e => { pause(); setK(+e.target.value); } }),
+    counter: el("span", { class: "num clock" }), clock: el("span", { class: "muted num" }), cap: el("output"),
+    play: el("button", { class: "ctrl primary", id: "playBtn", onclick: play }, "▶ Play"),
+    kpis: el("div", { class: "kpis" }), queue: el("div", { class: "card queue" }), map: el("div", { class: "card map" }),
+    feed: el("div", { class: "card feed" }), evidence: el("div"),
+  };
+  const controls = el("div", { class: "card controls" },
+    el("div", { class: "group" },
+      el("button", { class: "ctrl", title: "Start of feed (Home)", onclick: () => { pause(); setK(1); } }, "⏮"),
+      UI.play,
+      el("button", { class: "ctrl", title: "Next scan (→)", onclick: () => setK(S.k + 1) }, "+1"),
+      el("button", { class: "ctrl", title: "Ten more scans", onclick: () => setK(S.k + 10) }, "+10"),
+      el("button", { class: "ctrl", title: "End of feed (End)", onclick: () => { pause(); setK(D.feed.length); } }, "⏭")),
+    el("div", { class: "group" }, el("label", { for: "scanRange", text: "Simulated scans received" }), UI.range, UI.counter, UI.clock),
+    el("div", { class: "group grow" },
+      el("label", { text: "This week's capacity" }),
+      el("span", { class: "stepper" },
+        el("button", { "aria-label": "Fewer", onclick: () => setCapacity(S.capacity - 1) }, "−"), UI.cap,
+        el("button", { "aria-label": "More", onclick: () => setCapacity(S.capacity + 1) }, "+")),
+      el("span", { class: "muted", text: "batches" })));
+  document.getElementById("decision").replaceChildren(controls, UI.kpis, el("div", { class: "grid" }, UI.queue, el("div", { class: "side" }, UI.map, UI.feed)), UI.evidence);
+}
+function renderDecision() {
+  if (!UI) buildDecision();
+  const scroll = UI.feed.querySelector("ol") ? UI.feed.scrollTop : 0;
+  const rows = stepRows(), prev = S.k > 1 ? new Map(stepRows(S.k - 1).map(r => [r.cid, r.rank])) : new Map();
+  const alerts = rows.filter(r => r.scan > 0).length;
+  if (!S.selected || !rows.some(r => r.cid === S.selected)) S.selected = rows[0] ? rows[0].cid : null;
+  const latest = D.feed[S.k - 1], m = measuredAt(S.capacity);
+  if (+UI.range.value !== S.k) UI.range.value = S.k;
+  UI.counter.textContent = `${S.k} / ${D.feed.length}`;
+  UI.clock.textContent = time(latest.time) + " UTC";
+  UI.cap.textContent = S.capacity;
+  UI.play.textContent = S.timer ? "❚❚ Pause" : "▶ Play";
+
+  UI.kpis.replaceChildren(
+    el("div", { class: "card kpi" }, el("div", { class: "label", text: "Batches in the 6-hour scan window" }), el("div", { class: "value", text: fmt(rows.length) }),
+      el("div", { class: "foot", text: "One row per product · batch · manufacturer text" })),
+    el("div", { class: "card kpi" + (alerts ? " alert" : "") }, el("div", { class: "label", text: "Scan alerts (declared rule)" }),
+      el("div", { class: "value" }, alerts ? "⚠" : "", fmt(alerts)), el("div", { class: "foot", text: "Impossible travel or repeated-pack burst" })),
+    el("div", { class: "card kpi" }, el("div", { class: "label", text: "Selected for sampling" }),
+      el("div", { class: "value" }, fmt(Math.min(S.capacity, rows.length)), el("span", { class: "small", text: `of ${S.capacity} slots` })),
+      el("div", { class: "foot", text: "Capacity is a maximum, not a quota" })),
+    el("div", { class: "card kpi" }, el("div", { class: "label", text: m ? `Measured on held-out months at N=${m.b}` : "Measured coverage" }),
+      m ? el("div", { class: "value" }, pct(m.fused.clone), el("span", { class: "small", text: "clones" }), pct(m.fused.recurrence), el("span", { class: "small", text: "recurring" })) : el("div", { class: "value", text: "–" }),
+      el("div", { class: "foot", text: m ? `Fused queue, Jul–Aug 2026. History only ${pct(m.history.clone)} · ${pct(m.history.recurrence)}; random ${pct(m.random.clone)}` : "Run python -m src.fusion run" })));
+
+  const tbody = el("tbody");
+  rows.forEach(r => {
+    const c = D.candidates[r.cid], was = prev.get(r.cid), status = (S.reviews[r.cid] || {}).status || "unreviewed";
+    const delta = S.k === 1 ? null : was === undefined ? el("span", { class: "delta new", text: "new" }) : was > r.rank ? el("span", { class: "delta up", text: "▲" + (was - r.rank) }) : was < r.rank ? el("span", { class: "delta down", text: "▼" + (r.rank - was) }) : null;
+    const si = STATUSES.findIndex(s => s[0] === status);
+    const tr = el("tr", { class: ["row", r.scan > 0 ? "alert" : "", r.rank > S.capacity ? "below" : "", r.cid === S.selected ? "selected" : "", was === undefined && S.k > 1 && S.timer ? "fresh" : ""].join(" "), tabindex: 0,
+      onclick: () => select(r.cid), onkeydown: e => { if (e.key === "Enter") select(r.cid); } },
+      el("td", { class: "rank" }, String(r.rank), delta),
+      el("td", { class: "who" }, el("div", { class: "bt", text: c.batch }), el("div", { class: "pd", text: c.product, title: c.product }), el("div", { class: "mf", text: c.manufacturer, title: c.manufacturer }),
+        el("div", { class: "chips" }, si > 0 ? el("span", { class: "status s" + si, text: "✓ " + STATUSES[si][1] }) : null,
+          r.reasons.filter(x => !HIDDEN_CHIPS.has(reasonParts(x).base)).map(chipFor))),
+      el("td", {}, meter(r.hist, "var(--real)", "Historical risk")),
+      el("td", {}, meter(r.scan, "var(--sim)", "Scan anomaly")),
+      el("td", {}, meter(r.qual, "var(--qual)", "Evidence quality")),
+      el("td", { class: "prio", text: fmt(r.priority, 1) }));
+    tbody.append(tr);
+    if (r.rank === S.capacity && rows.length > S.capacity) tbody.append(el("tr", { class: "cap" }, el("td", { colspan: 6, text: `▲ Capacity: ${S.capacity} batches this week · ${rows.length - S.capacity} below wait for the next cycle` })));
+  });
+  UI.queue.replaceChildren(
+    el("div", { class: "card-h" }, el("h2", { text: "Ranked batches" }), el("span", { class: "sub", text: `policy ${D.models[S.backend].policy} · ${D.models[S.backend].version}` }),
+      el("button", { class: "ctrl grow", onclick: exportDecisions, title: "Inspector decisions saved in this browser" }, "⤓ Export decisions")),
+    el("div", { class: "scroll-x" }, el("table", {},
+      el("thead", {}, el("tr", {}, el("th", { text: "#" }), el("th", { text: "Batch · reasons" }),
+        el("th", {}, el("span", { class: "tag real" }, el("span", { class: "dot" }), "Historical risk")),
+        el("th", {}, el("span", { class: "tag sim" }, el("span", { class: "dot" }), "Scan anomaly")),
+        el("th", { text: "Evidence quality" }), el("th", { class: "n", text: "Priority" }))),
+      tbody)));
+
+  const feedList = el("ol");
+  for (let i = S.k - 1; i >= Math.max(0, S.k - 60); i--) {
+    const e = D.feed[i], c = D.candidates[e.cand], tag = TAGS[i];
+    const alerted = rows.some(r => r.cid === e.cand && r.scan > 0);
+    feedList.append(el("li", { class: (i === S.k - 1 ? "latest " : "") + (tag === "retry" ? "retry" : ""), onclick: () => select(e.cand), title: c.product },
+      el("span", { class: "t", text: time(e.time) }),
+      el("span", { class: "w" }, el("b", { text: c.batch }), " · ", e.city, el("div", { class: "p", text: `${e.pack} · ${e.source}` })),
+      el("span", {}, alerted ? el("span", { class: "chip crit", text: "⚠ alert" }) : el("span", { class: "chip", text: tag === "retry" ? "↺ retry, ignored" : tag === "repeat" ? "same pack" : "new pack" }))));
+  }
+  UI.map.replaceChildren(el("div", { class: "card-h" }, el("h2", { text: "Where scans arrive" }), el("span", { class: "sub", text: "synthetic city centroids" })), renderMap(rows),
+    el("div", { class: "legend" }, el("span", {}, el("span", { class: "sw", style: "background:var(--sim);border-radius:50%" }), "scans, last 6 h"),
+      el("span", {}, el("span", { class: "key", style: "border-color:var(--critical)" }), "same pack, impossible travel"),
+      el("span", {}, el("span", { class: "sw", style: "background:transparent;border:2px solid var(--real);border-radius:50%" }), "selected batch")));
+  UI.feed.replaceChildren(el("div", { class: "card-h" }, el("h2", { text: "Arriving simulated scans" }), el("span", { class: "sub", text: "newest first" })), feedList);
+  UI.feed.scrollTop = scroll;
+  UI.evidence.replaceChildren(renderEvidence(rows));
+}
+function setCapacity(n) { S.capacity = Math.max(1, Math.min(30, n)); store.set("capacity", S.capacity); renderDecision(); }
+function select(cid) { S.selected = cid; S.lastSaved = null; renderDecision(); const ev = document.querySelector(".evidence"); if (ev && ev.getBoundingClientRect().top > innerHeight) ev.scrollIntoView({ behavior: "smooth", block: "start" }); }
+
+/* ---------- map ---------- */
+const INDIA = [[68.2,23.6],[68.8,22.3],[70.1,20.8],[71.6,21.0],[72.6,21.5],[72.9,20.2],[72.8,18.9],[73.3,17.0],[73.9,15.4],[74.6,13.6],[75.2,12.0],[75.9,10.9],[76.4,9.3],[77.0,8.3],[77.5,8.1],[78.2,8.9],[78.9,9.4],[79.3,10.3],[79.8,10.6],[79.9,11.9],[80.3,13.3],[80.1,15.0],[80.6,15.9],[81.6,16.3],[82.4,16.8],[83.4,17.8],[84.8,19.2],[85.9,19.8],[86.8,20.6],[87.0,21.5],[88.2,21.6],[89.0,21.9],[88.9,22.9],[88.6,24.2],[88.0,24.6],[88.4,25.5],[89.0,25.9],[89.9,25.3],[90.5,25.2],[92.2,25.0],[92.4,24.2],[91.6,23.4],[91.4,22.9],[91.9,22.9],[92.6,22.0],[93.2,22.2],[93.4,23.9],[94.2,23.9],[94.7,25.0],[95.2,26.0],[95.9,27.2],[97.0,27.6],[97.3,28.2],[96.4,29.2],[95.0,29.3],[93.9,28.8],[92.5,27.8],[91.6,27.8],[89.8,26.8],[88.9,27.3],[88.1,27.9],[88.0,27.2],[86.0,26.6],[84.1,27.4],[83.3,27.4],[81.9,27.9],[80.1,28.8],[80.6,29.9],[79.2,31.0],[78.7,31.8],[78.9,32.6],[79.5,32.8],[79.4,34.3],[78.3,35.5],[77.0,35.6],[75.8,35.6],[74.6,35.0],[73.9,34.6],[74.0,33.2],[74.7,32.5],[74.6,31.6],[74.5,30.9],[73.9,30.2],[73.3,29.9],[72.4,28.4],[71.0,27.7],[70.2,27.2],[69.6,26.6],[70.1,25.9],[70.7,25.6],[71.1,24.4],[69.5,24.3],[68.8,24.2]];
+const proj = (lon, lat) => [(lon - 67.6) * 0.927 * 10 + 6, (36.2 - lat) * 10 + 6];
+function renderMap(rows) {
+  const svg = sv("svg", { viewBox: "0 0 292 306", role: "img", "aria-label": "Schematic map of India with simulated scan locations" });
+  for (const lat of [10, 15, 20, 25, 30, 35]) { const [x1, y] = proj(68, lat), [x2] = proj(97.5, lat); svg.append(sv("line", { class: "grat", x1, y1: y, x2, y2: y })); }
+  svg.append(sv("path", { class: "land", d: "M" + INDIA.map(p => proj(...p).join(",")).join("L") + "Z" }));
+  const windowEvents = D.feed.slice(0, S.k), counts = new Map();
+  windowEvents.forEach((e, i) => { if (TAGS[i] !== "retry") counts.set(e.city, (counts.get(e.city) || 0) + 1); });
+  const alerted = new Set(rows.filter(r => r.scan >= 100).map(r => r.cid));
+  const lines = new Map();
+  for (const cid of new Set(windowEvents.map(e => e.cand))) {
+    const f = scanFacts(cid, S.k);
+    if (f.travel) lines.set(cid, f.travel);
+  }
+  for (const [cid, t] of lines) {
+    const [x1, y1] = proj(t.from.lon, t.from.lat), [x2, y2] = proj(t.to.lon, t.to.lat);
+    const hit = alerted.has(cid);
+    svg.append(sv("line", { x1, y1, x2, y2, stroke: hit ? "var(--critical)" : "var(--axis)", "stroke-width": hit ? 2.5 : 1.5, "stroke-linecap": "round" }));
+    if (hit) svg.append(sv("text", { x: (x1 + x2) / 2 + 6, y: (y1 + y2) / 2, "font-size": 11, fill: "var(--critical)", "font-weight": 600, text: `${fmt(t.km)} km in ${fmt(t.minutes)} min` }));
+  }
+  const sel = S.selected ? new Set(scanFacts(S.selected, S.k).events.map(e => e.city)) : new Set();
+  const latest = D.feed[S.k - 1];
+  const west = new Set(["Bengaluru", "Coimbatore"]);
+  for (const c of D.cities) {
+    const [x, y] = proj(c.lon, c.lat), n = counts.get(c.city) || 0, r = n ? 3 + Math.sqrt(n) * 1.05 : 3;
+    const g = sv("g", { class: "city" });
+    if (c.city === latest.city) g.append(sv("circle", { class: "pulse", cx: x, cy: y, r, fill: "var(--sim)" }));
+    g.append(sv("circle", { cx: x, cy: y, r, fill: n ? "var(--sim)" : "var(--neutral)", stroke: sel.has(c.city) ? "var(--real)" : "var(--surface)", "stroke-width": sel.has(c.city) ? 3 : 2 }));
+    const left = west.has(c.city), dy = c.city === "Coimbatore" ? 12 : c.city === "Bengaluru" ? -4 : 4;
+    g.append(sv("text", { x: left ? x - r - 5 : x + r + 5, y: y + dy, "text-anchor": left ? "end" : "start", text: `${c.city} · ${n}` }));
+    svg.append(hoverable(g, `${c.city}, ${c.state}`, () => [["Unique scans in window", fmt(n)]]));
+  }
+  return svg;
+}
+
+/* ---------- evidence ---------- */
+function renderEvidence(rows) {
+  const r = rows.find(x => x.cid === S.selected);
+  if (!r) return el("div", { class: "card evidence empty", text: "No scans in the window yet." });
+  const c = D.candidates[r.cid], f = scanFacts(r.cid, S.k), model = D.models[S.backend];
+  const prior = r.reasons.map(reasonParts).find(x => x.base === "PRIOR_NSQ_RECORDS");
+  const histWhy = r.hp === null ? "No earlier NSQ record for this manufacturer text. A zero means no history, not a safe medicine."
+    : `Recurrence model ${pct(r.hp, 1)} puts this text at percentile ${fmt(r.hist)} of ${fmt(model.history_universe)} earlier manufacturer texts${prior ? `; ${prior.n} earlier NSQ record${prior.n === "1" ? "" : "s"}` : ""}.`;
+  const scanWhy = f.travelHit && f.travel ? `${f.travel.pack} scanned in ${f.travel.from.city}, then ${f.travel.to.city} ${fmt(f.travel.minutes)} min later: ${fmt(f.travel.km)} km, about ${fmt(f.travel.kmh)} km/h.`
+    : f.burstHit ? `${f.burst.pack} scanned ${f.burst.count} times within 5 minutes.` : `No rule pattern in ${f.events.length} unique scan${f.events.length === 1 ? "" : "s"} over the last 6 hours.`;
+  const modelWhy = r.sp === null ? "" : ` Scan model ${pct(r.sp, 1)} (threshold ${pct(model.threshold, 1)}), shown, not used for alerts.`;
+  const qualWhy = `${f.maxSources} asserted source${f.maxSources === 1 ? "" : "s"} on one pack. Independence is not verified.`;
+  const alert = r.scan > 0;
+  const formula = model.policy === "tiered"
+    ? (alert ? [`50 + scan/2 = 50 + ${fmt(r.scan)}/2`, `= ${fmt(r.priority, 1)}`] : [`history/2 = ${fmt(r.hist)}/2`, `= ${fmt(r.priority, 1)}`])
+    : [`0.50 × ${fmt(r.hist, 1)} + 0.35 × ${fmt(r.scan)} + 0.15 × ${fmt(r.qual)} × ${alert ? 1 : 0}`, `= ${fmt(r.priority, 1)}`];
+  const signal = (label, cls, color, value, why) => el("div", { class: "signal", style: `--c:${color}` },
+    el("div", { class: "k" }, cls ? el("span", { class: "tag " + cls }, el("span", { class: "dot" }), cls === "real" ? "real" : "simulated") : null, label),
+    el("div", { class: "v", text: fmt(value) }), el("div", { class: "why", text: why }));
+
+  const review = S.reviews[r.cid] || {};
+  let pending = review.status || "unreviewed";
+  const decideButtons = el("div", { class: "decide" }, STATUSES.map(([key, label]) => el("button", { "aria-pressed": String(key === pending), text: label,
+    onclick: e => { pending = key; e.target.parentNode.querySelectorAll("button").forEach(b => b.setAttribute("aria-pressed", String(b === e.target))); } })));
+  const note = el("textarea", { placeholder: "Note for the record (optional)", onfocus: pause }); note.value = review.note || "";
+  const save = () => {
+    S.reviews[r.cid] = { status: pending, note: note.value, batch: c.batch, product: c.product, manufacturer: c.manufacturer, priority: r.priority, rank: r.rank, model_version: model.version, saved_at: new Date().toISOString() };
+    store.set("reviews", S.reviews); S.lastSaved = r.cid; renderDecision();
+  };
+
+  const recordTable = list => list.length ? el("div", { class: "tbl-wrap" }, el("table", { class: "small-tbl" },
+    el("thead", {}, el("tr", {}, ["Month", "List", "Product", "Batch", "Failure", "Reported in", "Source file"].map(h => el("th", { text: h })))),
+    el("tbody", {}, list.map(x => el("tr", {}, el("td", { class: "num", text: x.collection_month }), el("td", { text: (x.source_category || "").replace("_nsq", " NSQ").replace("central", "Central").replace("state", "State").replace("spurious", "Spurious") }),
+      el("td", { text: x.product }), el("td", { text: x.batch_no }), el("td", { text: x.failure_type }), el("td", { text: x.reporting_state || x.reporting_lab }), el("td", { class: "muted", text: x.source_file })))))) : null;
+
+  return el("div", { class: "card evidence" },
+    el("div", { class: "ev-head" }, el("span", { class: "rk", text: "#" + r.rank }),
+      el("div", {}, el("div", { class: "bt", text: `${c.batch} · ${c.product}` }), el("div", { class: "muted", text: c.manufacturer })),
+      el("span", { class: "grow" }), alert ? el("span", { class: "tag crit", text: "⚠ Scan alert: review, not a verdict" }) : el("span", { class: "tag", text: "No scan alert" }),
+      el("span", { class: "tag", text: r.rank <= S.capacity ? "Within capacity" : "Below capacity line" })),
+    el("div", { class: "ev-body" },
+      el("div", {},
+        el("div", { class: "signals" },
+          signal("Historical risk", "real", "var(--real)", r.hist, histWhy),
+          signal("Scan anomaly", "sim", "var(--sim)", r.scan, scanWhy + modelWhy),
+          signal("Evidence quality", "sim", "var(--qual)", r.qual, qualWhy)),
+        el("div", { class: "formula" }, `Priority (${model.policy} policy, chosen on the June 2026 validation queue): `, formula[0], " ", el("b", { text: formula[1] })),
+        el("h3", { text: "Why it is here" }),
+        el("ul", { class: "reasons" }, r.reasons.map(code => { const { base, n } = reasonParts(code), meta = REASONS[base] || [base, ""]; return el("li", {}, el("code", { text: code }), el("span", { text: meta[1] + (n !== undefined ? ` (${n})` : "") })); })),
+        el("h3", { text: `Manufacturer history · real CDSCO records before ${D.decision_month} (${c.history.length})` }),
+        recordTable(c.history) || el("div", { class: "callout plain", text: "No earlier record with this manufacturer text. Absence of history is not evidence of quality." }),
+        el("p", { class: "sub", text: "Matched on normalized manufacturer text, which is not a verified legal identity." }),
+        el("h3", { text: `Published reports of this exact batch (${c.reports.length})` }),
+        recordTable(c.reports) || el("div", { class: "callout plain", text: "This exact batch has no earlier published report." })),
+      el("div", {},
+        el("h3", { text: `Scan timeline · ${f.events.length} unique scans${f.retries ? `, ${f.retries} retried deliver${f.retries === 1 ? "y" : "ies"} ignored` : ""}` }),
+        el("ol", { class: "timeline" }, f.events.map(e => el("li", {}, el("span", { class: "t", text: time(e.time) }), el("b", { text: `${e.city}, ${e.state}` }), el("div", { class: "muted", text: `${e.pack} · ${e.source}` })))),
+        el("h3", { text: "Packs, asserted sources and districts" }),
+        el("table", { class: "small-tbl" }, el("thead", {}, el("tr", {}, el("th", { text: "Pack" }), el("th", { class: "n", text: "Scans" }), el("th", { class: "n", text: "Sources" }), el("th", { text: "Seen in" }))),
+          el("tbody", {}, f.packs.map(p => el("tr", {}, el("td", { text: p.pack }), el("td", { class: "n", text: p.scans }), el("td", { class: "n", text: p.sources }), el("td", { text: p.cities }))))),
+        el("h3", { text: "Inspector decision" }),
+        decideButtons, note,
+        el("div", { style: "margin-top:8px;display:flex;align-items:center" }, el("button", { class: "ctrl primary", onclick: save }, "Save decision"),
+          S.lastSaved === r.cid ? el("span", { class: "saved", text: "✓ Saved in this browser" }) : review.saved_at ? el("span", { class: "muted", style: "margin-left:8px;font-size:12.5px", text: "Last saved " + review.saved_at.slice(0, 16).replace("T", " ") + " UTC" }) : null),
+        el("p", { class: "sub", text: "Decisions stay in this browser until exported. BatchGuard never blocks a medicine or declares it counterfeit." }))));
+}
+function exportDecisions() {
+  const cols = ["batch", "product", "manufacturer", "status", "note", "priority", "rank", "model_version", "saved_at"];
+  const q = v => `"${String(v === undefined || v === null ? "" : v).replace(/"/g, '""')}"`;
+  const lines = [["candidate_id", ...cols].join(","), ...Object.entries(S.reviews).map(([cid, r]) => [cid, ...cols.map(k => r[k])].map(q).join(","))];
+  const a = el("a", { href: URL.createObjectURL(new Blob(["﻿" + lines.join("\n")], { type: "text/csv" })), download: "batchguard_decisions.csv" });
+  document.body.append(a); a.click(); a.remove();
+}
+
+/* ---------- charts ---------- */
+function hBars(items, { max, format = v => fmt(v, 3), label = 190, width = chartWidth(true) } = {}) {
+  label = Math.min(label, width * .4);
+  const bar = 18, gap = 12, h = items.length * (bar + gap) + 8, x0 = label, x1 = width - 64;
+  const top = max || Math.max(...items.map(i => i.value)) || 1;
+  const svg = sv("svg", { viewBox: `0 0 ${width} ${h}`, role: "img" });
+  svg.append(sv("line", { class: "baseline", x1: x0, x2: x0, y1: 0, y2: h - 4 }));
+  items.forEach((it, i) => {
+    const y = 4 + i * (bar + gap), w = Math.max(0, (x1 - x0) * it.value / top), r = Math.min(4, w);
+    svg.append(sv("text", { class: "lbl", x: x0 - 10, y: y + bar / 2 + 4, "text-anchor": "end", text: it.label }));
+    const path = sv("path", { d: `M${x0},${y} H${x0 + w - r} Q${x0 + w},${y} ${x0 + w},${y + r} V${y + bar - r} Q${x0 + w},${y + bar} ${x0 + w - r},${y + bar} H${x0} Z`, fill: it.color });
+    svg.append(hoverable(path, it.label, () => [[it.metric || "Value", format(it.value)], ...(it.extra || [])]));
+    svg.append(sv("text", { class: "val", x: x0 + w + 6, y: y + bar / 2 + 4, text: format(it.value) }));
+  });
+  return el("div", { class: "chart" }, svg);
+}
+function lineChart({ xs, series, yMax = 1, yFormat = v => pct(v), xLabel, title, height = 250, width = chartWidth(true) }) {
+  const W = width, H = height, m = { l: 42, r: 14, t: 10, b: 34 };
+  const x = v => m.l + (W - m.l - m.r) * (v - xs[0]) / (xs[xs.length - 1] - xs[0]);
+  const y = v => H - m.b - (H - m.t - m.b) * v / yMax;
+  const svg = sv("svg", { viewBox: `0 0 ${W} ${H}`, role: "img", "aria-label": title });
+  for (let t = 0; t <= 4; t++) { const v = yMax * t / 4; svg.append(sv("line", { class: t ? "gridline" : "baseline", x1: m.l, x2: W - m.r, y1: y(v), y2: y(v) }), sv("text", { x: m.l - 6, y: y(v) + 4, "text-anchor": "end", text: yFormat(v) })); }
+  xs.forEach(v => svg.append(sv("text", { x: x(v), y: H - m.b + 16, "text-anchor": "middle", text: v })));
+  if (xLabel) svg.append(sv("text", { x: (m.l + W - m.r) / 2, y: H - 2, "text-anchor": "middle", text: xLabel }));
+  series.forEach(s => {
+    svg.append(sv("polyline", { points: s.values.map((v, i) => `${x(xs[i])},${y(v)}`).join(" "), fill: "none", stroke: s.color, "stroke-width": s.width || 2, "stroke-linejoin": "round", "stroke-linecap": "round", opacity: s.faint ? .8 : 1 }));
+    s.values.forEach((v, i) => svg.append(sv("circle", { cx: x(xs[i]), cy: y(v), r: 4, fill: s.color, stroke: "var(--surface)", "stroke-width": 2 })));
+  });
+  const hair = sv("line", { class: "xhair", y1: m.t, y2: H - m.b, x1: -10, x2: -10 });
+  svg.append(hair);
+  const overlay = sv("rect", { x: m.l, y: m.t, width: W - m.l - m.r, height: H - m.t - m.b, fill: "transparent", tabindex: 0 });
+  const nearest = e => {
+    const box = svg.getBoundingClientRect(), px = (e.clientX - box.left) * W / box.width;
+    return xs.reduce((best, v, i) => Math.abs(x(v) - px) < Math.abs(x(xs[best]) - px) ? i : best, 0);
+  };
+  overlay.addEventListener("pointermove", e => {
+    const i = nearest(e); hair.setAttribute("x1", x(xs[i])); hair.setAttribute("x2", x(xs[i]));
+    showTip(e, `${xLabel || "x"} ${xs[i]}`, [...series].sort((a, b) => b.values[i] - a.values[i]).map(s => [s.name, yFormat(s.values[i]), s.color]));
+  });
+  overlay.addEventListener("pointerleave", () => { hideTip(); hair.setAttribute("x1", -10); hair.setAttribute("x2", -10); });
+  svg.append(overlay);
+  return el("div", { class: "chart" }, svg);
+}
+function legend(items, line = true) {
+  return el("div", { class: "legend", style: "padding:4px 0 8px" }, items.map(([name, color]) => el("span", {}, line ? el("span", { class: "key", style: `border-color:${color}` }) : el("span", { class: "sw", style: `background:${color}` }), name)));
+}
+function groupedBars(groups, series, { format = v => pct(v), width = chartWidth(true), label = 200 } = {}) {
+  label = Math.min(label, width * .42);
+  const bar = 10, inner = 2, gap = 14, h = groups.length * (series.length * (bar + inner) + gap) + 6, x0 = label, x1 = width - 56;
+  const svg = sv("svg", { viewBox: `0 0 ${width} ${h}`, role: "img" });
+  svg.append(sv("line", { class: "baseline", x1: x0, x2: x0, y1: 0, y2: h - 4 }));
+  groups.forEach((g, gi) => {
+    const y0 = 4 + gi * (series.length * (bar + inner) + gap);
+    svg.append(sv("text", { class: "lbl", x: x0 - 10, y: y0 + series.length * (bar + inner) / 2 + 3, "text-anchor": "end", text: g.label }));
+    if (g.note) svg.append(sv("text", { x: x0 - 10, y: y0 + series.length * (bar + inner) / 2 + 16, "text-anchor": "end", text: g.note }));
+    series.forEach((s, si) => {
+      const v = g.values[si], w = Math.max(0, (x1 - x0) * v), r = Math.min(3, w), y = y0 + si * (bar + inner);
+      const p = sv("path", { d: `M${x0},${y} H${x0 + w - r} Q${x0 + w},${y} ${x0 + w},${y + r} V${y + bar - r} Q${x0 + w},${y + bar} ${x0 + w - r},${y + bar} H${x0} Z`, fill: s[1] });
+      svg.append(hoverable(p, g.label, () => series.map((t, ti) => [t[0], format(g.values[ti]), t[1]])));
+      svg.append(sv("text", { x: x0 + w + 5, y: y + bar - 1, text: format(v) }));
+    });
+  });
+  return el("div", { class: "chart" }, svg);
+}
+function stackedColumns(cols, series, { height = 260, width = chartWidth(false) } = {}) {
+  const m = { l: 36, r: 8, t: 10, b: 28 }, max = Math.max(...cols.map(c => c.values.reduce((a, b) => a + b, 0)));
+  const step = niceStep(max), top = Math.ceil(max / step) * step, band = (width - m.l - m.r) / cols.length, bw = Math.min(24, band * .62);
+  const y = v => height - m.b - (height - m.t - m.b) * v / top;
+  const svg = sv("svg", { viewBox: `0 0 ${width} ${height}`, role: "img" });
+  for (let v = 0; v <= top; v += step) svg.append(sv("line", { class: v ? "gridline" : "baseline", x1: m.l, x2: width - m.r, y1: y(v), y2: y(v) }), sv("text", { x: m.l - 6, y: y(v) + 4, "text-anchor": "end", text: fmt(v) }));
+  cols.forEach((c, i) => {
+    const cx = m.l + band * i + band / 2, g = sv("g");
+    let acc = 0;
+    const total = c.values.reduce((a, b) => a + b, 0), lastIndex = c.values.map(v => v > 0).lastIndexOf(true);
+    c.values.forEach((v, si) => {
+      if (!v) return;
+      const y1 = y(acc + v), y0 = y(acc), hgt = Math.max(0, y0 - y1 - (acc ? 2 : 0)), x = cx - bw / 2, r = si === lastIndex ? Math.min(4, hgt) : 0;
+      g.append(sv("path", { d: `M${x},${y1 + hgt} V${y1 + r} Q${x},${y1} ${x + r},${y1} H${x + bw - r} Q${x + bw},${y1} ${x + bw},${y1 + r} V${y1 + hgt} Z`, fill: series[si][1] }));
+      acc += v;
+    });
+    g.append(sv("rect", { x: cx - band / 2, y: m.t, width: band, height: height - m.t - m.b, fill: "transparent" }));
+    svg.append(hoverable(g, c.label, () => [...series.map((s, si) => [s[0], fmt(c.values[si]), s[1]]), ["Total", fmt(total)]]));
+    svg.append(sv("text", { x: cx, y: height - m.b + 15, "text-anchor": "middle", text: c.label }));
+  });
+  return el("div", { class: "chart" }, svg);
+}
+
+/* ---------- evaluation ---------- */
+function renderEvaluation() {
+  const root = document.getElementById("evaluation"), ev = D.evaluation[S.backend];
+  if (!ev) { root.replaceChildren(el("div", { class: "card empty", text: "No evaluation yet. Run python -m src.fusion run, then rebuild the dashboard." })); return; }
+  const A = ev.layer_a, B = ev.layer_b, F = ev.fusion, gain = A.ap_gain_vs_strongest_baseline, rec = D.recurrence;
+  const apItems = Object.entries(A.average_precision).sort((a, b) => b[1] - a[1]).map(([k, v]) => ({ label: RANKERS[k] || k, value: v, metric: "Average precision", color: k === "trained_model" ? "var(--real)" : "var(--neutral)" }));
+  const budgets = Object.keys(A.reports_captured_by_budget).map(Number).sort((a, b) => a - b);
+  const capture = budgets.map(b => {
+    const row = A.reports_captured_by_budget[b];
+    const best = Object.entries(row).filter(([k]) => k !== "trained_model" && k !== "random_expectation").sort((a, c) => c[1] - a[1])[0];
+    return { label: `Top ${b}`, values: [row.trained_model, best[1], row.random_expectation], note: `best baseline: ${RANKERS[best[0]].toLowerCase()}` };
+  });
+  const capMax = Math.max(...capture.flatMap(c => c.values));
+  const fusionBudgets = Object.keys(F.test_by_budget).map(Number).sort((a, b) => a - b);
+  const fusedKey = "fused_" + F.selected_on_validation;
+  const pol = Object.entries(POLICY).map(([k, [name, color]]) => ({ key: k === "fused" ? fusedKey : k, name: k === "fused" ? `${name} (${F.selected_on_validation})` : name, color: `var(${color})` }));
+  const fusionSeries = what => pol.map(p => ({ name: p.name, color: p.color, values: fusionBudgets.map(n => F.test_by_budget[n][p.key][what]), width: p.key === fusedKey ? 3 : 2 }));
+  const fams = ev.families.map(f => ({ label: f.scenario.replace(/_/g, " "), note: `${f.clone_label ? "clone" : "benign"}${f.held_out_family ? " · held out" : ""}`, values: [f.rule_alert_rate, f.model_alert_rate] }));
+  const conf = (name, v) => [name, pct(v.precision, 1), pct(v.recall, 1), fmt(v.true_positives), fmt(v.false_positives), fmt(v.false_negatives)];
+  const months = ev.fusion_months;
+
+  root.replaceChildren(
+    el("div", { class: "section-title" }, el("span", { class: "tag real" }, el("span", { class: "dot" }), "real data"), el("h2", { text: "Layer A · Will this manufacturer be reported again next month?" })),
+    el("p", { class: "ink2", text: `Held-out test months ${A.test_months.join(" and ")}: ${fmt(A.test_examples)} earlier manufacturer texts, ${A.test_positives} reported again. Model ${A.selected} was chosen on the June 2026 validation month; the test months were read once.` }),
+    el("div", { class: "charts2" },
+      card("Average precision on held-out months", "higher is better",
+        hBars(apItems, { format: v => fmt(v, 3) }),
+        el("div", { class: "callout" }, `AP gain over the strongest validation baseline (${(RANKERS[A.strongest_baseline] || "").toLowerCase()}): `, el("b", { text: `+${fmt(gain.mean, 3)}` }), `, bootstrap 95% CI ${fmt(gain.ci95[0], 3)} to ${fmt(gain.ci95[1], 3)} (${gain.rounds} resamples, ${pct(gain.share_above_zero, 1)} above zero).`),
+        tableView(["Ranker", "Average precision"], apItems.map(i => [i.label, fmt(i.value, 4)]))),
+      card("Later NSQ reports captured at equal budget", "Jul + Aug 2026, top-K manufacturers per month",
+        legend([["Trained model", "var(--real)"], ["Best baseline at that budget", "var(--neutral)"], ["Random (expected)", "var(--neutral-2)"]], false),
+        groupedBars(capture.map(c => ({ ...c, values: c.values.map(v => v / capMax) })), [["Trained model", "var(--real)"], ["Best baseline", "var(--neutral)"], ["Random", "var(--neutral-2)"]], { format: v => fmt(v * capMax, 1), label: 210 }),
+        el("p", { class: "sub", text: `${A.reachable_reports} of ${A.all_reports} test-month NSQ reports came from manufacturer texts seen earlier; new texts cannot be ranked from history.` }),
+        tableView(["Budget", ...Object.keys(RANKERS).map(k => RANKERS[k])], budgets.map(b => [`Top ${b}`, ...Object.keys(RANKERS).map(k => fmt(A.reports_captured_by_budget[b][k], 2))])))),
+    rec ? el("div", { class: "callout plain" }, el("b", { text: "Recurrence finding. " }), `With history through ${rec.history_through}, ${fmt(rec.previously_seen_pct, 1)}% (${fmt(rec.previously_seen_text_records)} of ${fmt(rec.later_records)}) of later NSQ records carried exact manufacturer text seen earlier. This is one measured split, not a prediction ceiling, and says nothing about scan detection.`) : null,
+
+    el("div", { class: "section-title" }, el("span", { class: "tag sim" }, el("span", { class: "dot" }), "simulated data"), el("h2", { text: "Layer B · Does a scan pattern look like a copied pack?" })),
+    el("div", { class: "charts2" },
+      card("Rule vs trained model on test episodes", `${B.model.true_positives + B.model.false_negatives} simulated clone episodes`,
+        el("table", { class: "small-tbl" }, el("thead", {}, el("tr", {}, ["Detector", "Precision", "Recall", "TP", "FP", "FN"].map((h, i) => el("th", { class: i ? "n" : "", text: h })))),
+          el("tbody", {}, [conf("Declared rule (drives alerts)", B.rule), conf(`Trained ${B.selected}`, B.model)].map(r => el("tr", {}, r.map((c, i) => el("td", { class: i ? "n" : "", text: c })))))),
+        el("div", { class: "callout sim" }, "The trained model did not beat the rule on families it never saw, so ", el("b", { text: "the rule drives alerts" }), ". The model's probability is shown beside it in the queue.")),
+      card("Alert rate by scenario family", "clone families should alert; benign ones should not",
+        legend([["Declared rule", "var(--sim)"], ["Trained model", "var(--qual)"]], false),
+        groupedBars(fams, [["Declared rule", "var(--sim)"], ["Trained model", "var(--qual)"]], { label: 190 }),
+        tableView(["Family", "Label", "Episodes", "Rule alert", "Model alert"], ev.families.map(f => [f.scenario, (f.clone_label ? "clone" : "benign") + (f.held_out_family ? ", held out" : ""), fmt(f.episodes), pct(f.rule_alert_rate, 1), pct(f.model_alert_rate, 1)])))),
+
+    el("div", { class: "section-title" }, el("h2", { text: "Fusion · One queue, two risks" })),
+    el("p", { class: "ink2", text: `Held-out queues built through the live ranking code. Only batches published before each month enter its queue (${months.map(x => `${monthLong(x.month)}: ${x.candidates} batches, ${x.clones} simulated clones, ${x.recurring} real recurring-manufacturer batches`).join("; ")}). Policy ${F.selected_on_validation} was chosen on the ${ev.validation_month} validation queue.` }),
+    legend(pol.map(p => [p.name, p.color])),
+    el("div", { class: "charts2" },
+      card("Simulated clones captured", "share of clones inside the queue's top N", lineChart({ xs: fusionBudgets, series: fusionSeries("clone"), xLabel: "queue size N", title: "Clones captured" })),
+      card("Real recurring-manufacturer batches captured", "share inside the queue's top N", lineChart({ xs: fusionBudgets, series: fusionSeries("recurrence"), xLabel: "queue size N", title: "Recurring batches captured" }))),
+    tableView(["N", ...pol.flatMap(p => [`${p.name}: clones`, "recurring"])], fusionBudgets.map(n => [n, ...pol.flatMap(p => [pct(F.test_by_budget[n][p.key].clone, 1), pct(F.test_by_budget[n][p.key].recurrence, 1)])]), "Table view of both charts"),
+    el("div", { class: "callout plain" }, el("b", { text: "Read with care. " }), `Recurring batches per month are few (${months.map(x => x.recurring).join(" and ")}), so those shares move in large steps. Scans alone miss recurring manufacturers; history alone misses clones. The fused queue keeps most of both.`),
+    D.limits.length ? el("ul", { class: "ink2" }, D.limits.map(l => el("li", { text: l }))) : null);
+}
+
+/* ---------- platform ---------- */
+function renderPlatform() {
+  const root = document.getElementById("platform"), B = D.benchmarks;
+  const hostCard = (key, title) => {
+    const b = B[key];
+    if (!b) return el("div", { class: "card host" }, el("div", { class: "card-h" }, el("h2", { text: title }), el("span", { class: "tag", text: "not measured yet" })),
+      el("div", { class: "card-b" }, el("p", { class: "ink2", text: "No run recorded on this host. On LinuxONE:" }),
+        el("p", {}, el("code", { class: "cmd", text: "python3 -m src.fusion run && python3 -m src.fusion benchmark" })),
+        el("p", { class: "sub", text: "Then commit outputs/benchmark_linuxone.json and rebuild this page with python -m app.dashboard." })));
+    return el("div", { class: "card host" }, el("div", { class: "card-h" }, el("h2", { text: title }), el("span", { class: "tag", text: b.machine })),
+      el("div", { class: "card-b" }, el("dl", {},
+        el("dt", { text: "CPU" }), el("dd", { text: `${b.cpu}${b.cpus ? ` · ${b.cpus} CPUs available` : ""}` }),
+        el("dt", { text: "NNPA facility listed" }), el("dd", { text: b.nnpa_listed ? "yes (listed only; no use is claimed)" : "no" }),
+        el("dt", { text: "Python" }), el("dd", { text: b.python }),
+        el("dt", { text: "Packages" }), el("dd", { text: Object.entries(b.packages).filter(([, v]) => v !== "not installed").map(([k, v]) => `${k} ${v}`).join(" · ") }),
+        el("dt", { text: "Workload" }), el("dd", { text: `${fmt(b.workload.events)} events, ${fmt(b.workload.episodes)} episodes, ${b.workload.repeats} repeats · sha ${b.workload_sha256}` }),
+        el("dt", { text: "Measured" }), el("dd", { text: b.created_at.slice(0, 16).replace("T", " ") + " UTC" }))));
+  };
+  const runs = [];
+  for (const host of ["laptop", "linuxone"]) if (B[host]) for (const [backend, v] of Object.entries(B[host].backends)) runs.push({ host, backend, v, color: host === "linuxone" ? "var(--violet)" : "var(--neutral)" });
+  const name = r => `${r.host === "linuxone" ? "LinuxONE" : "Laptop"} · ${r.backend === "snapml" ? "Snap ML" : "scikit-learn"}`;
+  const stageRows = Object.keys(STAGES).map(s => [STAGES[s], ...runs.map(r => r.v.stages[s] ? `${fmt(r.v.stages[s].p50, 2)} / ${fmt(r.v.stages[s].p99, 2)}` : "–")]);
+  root.replaceChildren(
+    el("div", { class: "section-title" }, el("h2", { text: "Same workload, measured on each machine" })),
+    el("p", { class: "ink2", text: B.laptop ? B.laptop.scope : "Single process, sequential, in memory, data preloaded." }),
+    el("div", { class: "hosts" }, hostCard("laptop", "Laptop"), hostCard("linuxone", "IBM LinuxONE")),
+    runs.length ? el("div", { class: "charts2", style: "margin-top:12px" },
+      card("Per-scan decision latency", "median (p50), milliseconds; lower is better",
+        hBars(runs.map(r => ({ label: name(r), value: r.v.stages.per_scan_decision_ms.p50, color: r.color, metric: "p50 ms", extra: [["p99 ms", fmt(r.v.stages.per_scan_decision_ms.p99, 2)]] })), { format: v => fmt(v, 2) + " ms", label: 170 })),
+      card("Throughput", "events per second, end to end; higher is better",
+        hBars(runs.map(r => ({ label: name(r), value: r.v.events_per_second, color: r.color, metric: "events/s" })), { format: v => fmt(v), label: 170 }))) : null,
+    runs.length ? card("Stage timings", "p50 / p99 milliseconds", el("div", { class: "scroll-x" }, el("table", { class: "small-tbl" },
+      el("thead", {}, el("tr", {}, el("th", { text: "Stage" }), runs.map(r => el("th", { class: "n", text: name(r) })))),
+      el("tbody", {}, stageRows.map(r => el("tr", {}, r.map((c, i) => el("td", { class: i ? "n" : "", text: c })))))))) : null,
+    el("div", { class: "callout plain", style: "margin-top:12px" }, "Machines differ in allocation, so no speedup is claimed from these numbers alone. Hardware acceleration is claimed only from a separately configured and measured run."));
+}
+
+/* ---------- data ---------- */
+function renderData() {
+  const root = document.getElementById("data"), d = D.data, s = d.summary || {}, cats = s.categories || {};
+  const months = d.monthly.map(r => r.collection_month);
+  const cols = d.monthly.map(r => ({ label: monthName(r.collection_month), values: [r.central_nsq || 0, r.state_nsq || 0, d.spurious_monthly[r.collection_month] || 0] }));
+  const series = [["Central NSQ", "var(--real)"], ["State NSQ", "var(--qual)"], ["Spurious", "var(--s4)"]];
+  const stat = (label, value, foot) => el("div", { class: "card kpi" }, el("div", { class: "label", text: label }), el("div", { class: "value", text: value }), foot ? el("div", { class: "foot", text: foot }) : null);
+  const avail = d.availability;
+  root.replaceChildren(
+    el("div", { class: "section-title" }, el("span", { class: "tag real" }, el("span", { class: "dot" }), "real data"), el("h2", { text: "CDSCO monthly lists" })),
+    el("div", { class: "stats" },
+      stat("Analytical records", fmt(s.analytical_records), months.length ? `${monthLong(months[0])} to ${monthLong(months[months.length - 1])}` : ""),
+      stat("Central NSQ", fmt(cats.central_nsq), "Not of Standard Quality, central list"),
+      stat("State NSQ", fmt(cats.state_nsq), "Not of Standard Quality, state lists"),
+      stat("Spurious-drug records", fmt(cats.spurious), "Allegations; manufacturer may deny")),
+    el("div", { style: "margin-top:12px" }, card("Records per collection month", "stacked by list",
+      legend(series, false), stackedColumns(cols, series),
+      tableView(["Month", "Central NSQ", "State NSQ", "Spurious"], cols.map(c => [c.label, ...c.values.map(v => fmt(v))])))),
+    el("div", { class: "charts2", style: "margin-top:12px" },
+      card("Missing evidence", "share of records with an empty field",
+        hBars(d.missing.map(m => ({ label: m.field.replace(/_/g, " "), value: m.missing / m.records, color: "var(--neutral)", metric: "Missing", extra: [["Records", `${fmt(m.missing)} of ${fmt(m.records)}`]] })), { format: v => pct(v, 1), max: 1, label: 200 }),
+        el("p", { class: "sub", text: "Normalized manufacturer text is not a verified legal identity; variants are not merged without review." })),
+      card("Failure-type mapping", "how each failure text was classified",
+        hBars(d.mapping.map(m => ({ label: m.status.replace(/_/g, " "), value: m.records, color: "var(--neutral)", metric: "Records" })), { format: v => fmt(v), label: 200 }))),
+    avail.length ? el("div", { style: "margin-top:12px" }, card("Source availability", "one row per monthly workbook", el("div", { class: "scroll-x" }, el("table", { class: "small-tbl" },
+      el("thead", {}, el("tr", {}, Object.keys(avail[0]).map(k => el("th", { text: k.replace(/_/g, " ") })))),
+      el("tbody", {}, avail.map(r => el("tr", {}, Object.values(r).map(v => el("td", { text: v }))))))),
+      el("p", { class: "sub", text: "An absent spurious sheet means unavailable source data, not zero incidents." }))) : null,
+    el("p", { class: "sub", text: `Processed data manifest sha256 ${d.manifest_sha256.slice(0, 16)}… · every file is hash-checked when the pipeline loads it.` }));
+}
+
+function renderAll() {
+  renderHeader(); renderDecision(); renderEvaluation(); renderPlatform(); renderData();
+  document.getElementById("foot").textContent = `Generated ${D.generated_at.replace("T", " ")} from the BatchGuard pipeline · models ${D.backends.map(b => D.models[b].version).join(", ")} · Layer A real CDSCO data, Layer B simulated scans · humans decide.`;
+}
+let resizeTimer = null;
+addEventListener("resize", () => { clearTimeout(resizeTimer); resizeTimer = setTimeout(() => { renderEvaluation(); renderPlatform(); renderData(); }, 200); });
+renderAll();
+</script>
+</body>
+</html>

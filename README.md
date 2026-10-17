@@ -13,14 +13,18 @@ Product spec: [BATCHGUARD_FINAL_SPEC.md](BATCHGUARD_FINAL_SPEC.md).
 ```bash
 python3 -m venv .venv && . .venv/bin/activate
 pip install -r requirements.txt            # optional second backend: pip install snapml
-python -m src.ingest                       # optional: rebuild data/processed from data/raw (identical hashes)
+python -m src.ingest                       # optional: rebuild data/processed from data/raw (identical CSVs; new manifest timestamp)
 python -m src.fusion run                   # train + evaluate both layers -> outputs/
 python -m src.fusion benchmark             # stream benchmark -> outputs/benchmark_<laptop|linuxone>.json
 python -m unittest discover -s tests       # 17 tests
-streamlit run app/app.py                   # dashboard (local)
+python -m app.dashboard                    # dashboard -> outputs/dashboard.html (open in any browser)
 ```
 
 `run` takes about 75 s on a laptop. It writes `outputs/results.json`, `outputs/inspector_queue.csv`, `outputs/charts/` and `outputs/models/<backend>/` (pickled models with hashes, a model card and test predictions).
+
+**Dashboard.** `outputs/dashboard.html` is one self-contained file: no server, no network, no external assets. The builder replays the simulated scan feed through the live ranking code after every scan, for each trained backend, so the page plays back exactly what the queue decided.
+- **Decision:** play the feed; set the week's capacity; see the ranked batches with historical risk, scan anomaly and evidence quality kept separate; open a batch's evidence (scan timeline, map, packs and sources, real manufacturer history and source files); record an inspector decision (kept in the browser; export as CSV).
+- **Other tabs:** Evaluation, Platform (laptop vs LinuxONE) and Data.
 
 ## Measured results (laptop, x86_64; held-out test months July and August 2026)
 
@@ -43,12 +47,12 @@ The same commands run on s390x. PyPI has no s390x wheels for numpy, scipy, panda
 ```bash
 git clone https://github.com/padmesh6119/BatchGuard.git && cd BatchGuard
 python3 -m pip install "openpyxl>=3.1.5" && python3 -m pip install --no-deps snapml
-python3 -m unittest discover -s tests      # the app test is skipped if streamlit is absent
+python3 -m unittest discover -s tests
 python3 -m src.fusion run
 python3 -m src.fusion benchmark            # writes outputs/benchmark_linuxone.json
 ```
 
-Commit `outputs/benchmark_linuxone.json` and the dashboard's Platform tab shows it next to the laptop numbers. `git diff outputs/results.json` shows whether the metrics match the laptop run. `nnpa_facility_listed` only reports that the CPU advertises the accelerator facility. Claim acceleration only from a measured run.
+Commit `outputs/benchmark_linuxone.json`, then run `python -m app.dashboard` again. The Platform tab then shows the LinuxONE numbers next to the laptop numbers. `git diff outputs/results.json` shows whether the metrics match the laptop run. Timestamps, environment and fit times always differ. `nnpa_facility_listed` only reports that the CPU advertises the accelerator facility. Claim acceleration only from a measured run.
 
 ## Layout
 
@@ -58,7 +62,7 @@ data/processed/   cleaned CSVs + hash manifest      src/ingest.py     workbooks 
 outputs/          results, queue, models, charts    src/layer_a.py    M1 history features, baselines, evaluation
 evidence/         environment and version lists     src/simulator.py  M2 simulated scan events
 docs/             abstract, pitch notes, script     src/detector.py   M2 rule, model, corroboration
-app/app.py        Streamlit dashboard               src/fusion.py     M3 signals, capacity queue, run, benchmark
+app/              dashboard builder + template      src/fusion.py     M3 signals, capacity queue, run, benchmark
 ```
 
 ## Limits

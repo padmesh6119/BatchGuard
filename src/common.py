@@ -68,7 +68,7 @@ def cpu_facts():
 
 def environment():
     packages = {}
-    for name in ("numpy", "scipy", "pandas", "openpyxl", "scikit-learn", "snapml", "streamlit"):
+    for name in ("numpy", "scipy", "pandas", "openpyxl", "scikit-learn", "snapml", "matplotlib"):
         try:
             packages[name] = importlib.metadata.version(name)
         except importlib.metadata.PackageNotFoundError:

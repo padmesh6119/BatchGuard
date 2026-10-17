@@ -6,7 +6,7 @@
     "scan_test_predictions.csv": "8c33d677ba1796295b33e8ccecb5ae1d9c3d3110efec954d7cebfde0f4b4f458"
   },
   "backend": "snapml",
-  "created_at": "2026-10-17T09:52:34.160041+00:00",
+  "created_at": "2026-10-17T10:38:58.298048+00:00",
   "environment": {
     "cpu": {
       "affinity_cpus": 16,
@@ -18,13 +18,13 @@
     "host": "laptop",
     "machine": "x86_64",
     "packages": {
+      "matplotlib": "3.11.2",
       "numpy": "2.5.4",
       "openpyxl": "3.1.5",
       "pandas": "3.0.6",
       "scikit-learn": "1.9.1",
       "scipy": "1.18.1",
-      "snapml": "1.17.2",
-      "streamlit": "1.66.0"
+      "snapml": "1.17.2"
     },
     "platform": "Linux-6.17.0-35-generic-x86_64-with-glibc2.39",
     "python": "3.12.3",
@@ -35,7 +35,7 @@
     "history": "4733cabf0d43349123f358644a3b38def6a2fbd7d938bbc1f99531642912be99",
     "scan": "2213cd9bb03114a394ca5d2fc322c86119e5e5651505a861d417b4dec233b551"
   },
-  "fit_and_selection_seconds": 0.7127800510006637,
+  "fit_and_selection_seconds": 0.5829784079999172,
   "fusion": {
     "clone_label": "simulated",
     "recurrence_label": "real: manufacturer text reported in the target month",
@@ -1094,11 +1094,11 @@
       "unresolved_failure_records"
     ],
     "fit_seconds": {
-      "snap_boosting_d2": 0.07701376499971957,
-      "snap_boosting_d3": 0.07180342100036796,
-      "snap_logistic_r0.1": 0.3191909110009874,
-      "snap_logistic_r1.0": 0.08877418900010525,
-      "snap_logistic_r10.0": 0.017881465999380453
+      "snap_boosting_d2": 0.05461988599995493,
+      "snap_boosting_d3": 0.0630689730000995,
+      "snap_logistic_r0.1": 0.26151478099995984,
+      "snap_logistic_r1.0": 0.07176049800000328,
+      "snap_logistic_r10.0": 0.01710925500015037
     },
     "label": "reported again in the target month",
     "selected": "snap_logistic_r10.0",
@@ -1218,11 +1218,11 @@
       "retry_fraction"
     ],
     "fit_seconds": {
-      "snap_boosting_d2": 0.012223296000229311,
-      "snap_boosting_d3": 0.016950381001151982,
-      "snap_logistic_r0.1": 0.0030691199990542373,
-      "snap_logistic_r1.0": 0.0025911689990607556,
-      "snap_logistic_r10.0": 0.0028801640000892803
+      "snap_boosting_d2": 0.00914353400003165,
+      "snap_boosting_d3": 0.012998242000094251,
+      "snap_logistic_r0.1": 0.0020682210001723433,
+      "snap_logistic_r1.0": 0.0019343290000506386,
+      "snap_logistic_r10.0": 0.0018614479999996547
     },
     "model": {
       "average_precision": 0.8610384944660288,

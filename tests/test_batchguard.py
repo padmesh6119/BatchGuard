@@ -1,6 +1,7 @@
 import copy
 from datetime import datetime, timedelta
 import importlib.util
+import json
 from pathlib import Path
 import shutil
 import tempfile
@@ -11,7 +12,7 @@ import numpy as np
 import pandas as pd
 
 from src import detector, ingest, layer_a, simulator
-from src.common import DATA_RAW, OUTPUTS, ROOT, selection_weights
+from src.common import DATA_RAW, OUTPUTS, selection_weights
 from src.fusion import TrainedModels, build_decision_queue, fuse, rank_candidates, train_backend
 
 
@@ -208,15 +209,22 @@ class EndToEndTests(unittest.TestCase):
 
 
 @unittest.skipUnless((OUTPUTS / "models" / "sklearn" / "model_card.json").is_file(), "run python -m src.fusion run first")
-class AppTests(unittest.TestCase):
-    def test_inspector_screen_renders_and_steps_through_scans(self):
-        from streamlit.testing.v1 import AppTest
-        at = AppTest.from_file(str(ROOT / "app" / "app.py"), default_timeout=300).run()
-        self.assertFalse(at.exception)
-        self.assertIn("SIMULATED", at.warning[0].value)
-        self.assertEqual((at.metric[0].value, at.metric[1].value), ("24", "2"))
-        at.button(key="start").click().run()
-        self.assertEqual((at.metric[0].value, at.metric[1].value), ("1", "0"))
+class DashboardTests(unittest.TestCase):
+    def test_dashboard_replays_the_live_queue(self):
+        from app.dashboard import build
+        with tempfile.TemporaryDirectory() as directory:
+            html = build(Path(directory) / "dashboard.html").read_text()
+        self.assertIn("SIMULATED scans", html)
+        payload = html.split('<script id="bg-data" type="application/json">')[1].split("</script>")[0]
+        self.assertNotIn("</", payload)
+        data = json.loads(payload)
+        steps = data["steps"]["sklearn"]
+        self.assertEqual(len(steps), len(data["feed"]))
+        self.assertEqual((len(steps[0]), sum(r[3] > 0 for r in steps[0])), (1, 0))
+        self.assertEqual(sum(r[3] > 0 for r in steps[-1]), 2)
+        self.assertEqual({data["codes"][i] for r in steps[-1][:2] for i in r[7][:1]},
+                         {"CLONE_PATTERN_TRAVEL_REVIEW", "REPEATED_PACK_BURST_REVIEW"})
+        self.assertTrue(all(c["history"] is not None for c in data["candidates"].values()))
 
 
 if __name__ == "__main__":

@@ -1,0 +1,146 @@
+{
+  "backend": "sklearn",
+  "benchmark_version": "decision-workload-v1",
+  "cpu": {
+    "affinity_cpus": 16,
+    "logical_cpus": 16,
+    "model name": "12th Gen Intel(R) Core(TM) i5-1240P",
+    "nnpa_facility_listed": false,
+    "vendor_id": "GenuineIntel"
+  },
+  "created_at": "2026-10-17T09:27:53.002254+00:00",
+  "environment": {
+    "linuxone_run_verified": false,
+    "logical_cpu_count": 16,
+    "machine": "x86_64",
+    "packages": {
+      "numpy": "2.5.4",
+      "openpyxl": "3.1.5",
+      "pandas": "3.0.6",
+      "scikit-learn": "1.9.1",
+      "snapml": "1.17.2",
+      "streamlit": "1.66.0"
+    },
+    "platform_note": "Architecture is recorded automatically; operator must verify host allocation. No acceleration claim.",
+    "python": "3.12.3",
+    "release": "6.17.0-35-generic",
+    "system": "Linux"
+  },
+  "fusion_policy": "weighted",
+  "label": "x86_64 host",
+  "max_rss_mb": 228.81640625,
+  "model_version": "layer-ab-sklearn-dd7cc2b52ba5",
+  "python_platform": "Linux-6.17.0-35-generic-x86_64-with-glibc2.39",
+  "repeats": [
+    {
+      "episodes": 896,
+      "events": 8862,
+      "events_per_second_end_to_end": 810.5465371025555,
+      "seconds": 10.933363594000184
+    },
+    {
+      "episodes": 896,
+      "events": 8862,
+      "events_per_second_end_to_end": 795.5289217818455,
+      "seconds": 11.139758414000426
+    },
+    {
+      "episodes": 896,
+      "events": 8862,
+      "events_per_second_end_to_end": 824.996701325821,
+      "seconds": 10.74186113199994
+    },
+    {
+      "episodes": 896,
+      "events": 8862,
+      "events_per_second_end_to_end": 828.6464640809943,
+      "seconds": 10.694548741999824
+    },
+    {
+      "episodes": 896,
+      "events": 8862,
+      "events_per_second_end_to_end": 814.1380087482714,
+      "seconds": 10.885132378999515
+    }
+  ],
+  "scope": "Single process, sequential, in memory; data already loaded. Excludes network, UI and disk persistence. Accelerator use is not claimed unless separately configured and evidenced.",
+  "snapshot_id": "6e881f22c3016444c02b49d2fc852b2b81975aaa57d24879da0453ee404698f5",
+  "stages_ms": {
+    "decision_context_build_ms": {
+      "count": 5,
+      "max": 8501.156338999863,
+      "mean": 8193.852677800169,
+      "p50": 8152.053454000452,
+      "p95": 8445.519529000012,
+      "p99": 8490.028976999893
+    },
+    "event_validation_total_ms": {
+      "count": 5,
+      "max": 84.66904000033537,
+      "mean": 81.51759820029838,
+      "p50": 80.67169600053603,
+      "p95": 84.18853500024852,
+      "p99": 84.572939000318
+    },
+    "feature_extraction_ms": {
+      "count": 4480,
+      "max": 3.6312800002633594,
+      "mean": 0.45610791718136817,
+      "p50": 0.17665900031715864,
+      "p95": 1.8972750503962743,
+      "p99": 2.4909462698178686
+    },
+    "per_scan_decision_ms": {
+      "count": 2035,
+      "max": 48.74797399952513,
+      "mean": 2.09046885159249,
+      "p50": 1.9294020003144396,
+      "p95": 3.0885374000718,
+      "p99": 3.794167719952386
+    },
+    "queue_rebuild_with_cached_context_ms": {
+      "count": 5,
+      "max": 35.63628700067056,
+      "mean": 32.33322980013327,
+      "p50": 31.349621000117622,
+      "p95": 35.47145240045211,
+      "p99": 35.60332008062687
+    },
+    "scan_inference_batch_total_ms": {
+      "count": 5,
+      "max": 3.980533000685682,
+      "mean": 2.8027698002915713,
+      "p50": 2.5652800004536402,
+      "p95": 3.7177346004682477,
+      "p99": 3.927973320642195
+    },
+    "scan_inference_single_ms": {
+      "count": 4480,
+      "max": 2.7861520002261386,
+      "mean": 1.4531946287905027,
+      "p50": 1.3945734999651904,
+      "p95": 1.8611989496548635,
+      "p99": 2.177327889812659
+    }
+  },
+  "total_seconds": 54.44018731399956,
+  "window_sha256": "a7a843f47750df016239609775174717cb2dafdcdd0c124a9425ac6414e5c513",
+  "workload": {
+    "episodes": 896,
+    "events": 8862,
+    "repeats": 5,
+    "warmup": "one reduced pass excluded",
+    "window_episodes": 50,
+    "window_events": 407,
+    "window_scenarios": [
+      "benign_repeat",
+      "clone_burst",
+      "clone_copy",
+      "delayed_sync",
+      "legitimate_distribution",
+      "legitimate_travel",
+      "slow_copy"
+    ]
+  },
+  "workload_sha256": "16d405ef57dedaa0313f7581419791405a3d7237877ef600efd92985070c15cf"
+}

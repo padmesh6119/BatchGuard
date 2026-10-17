@@ -1,4 +1,0 @@
-﻿collection_month,source_category,product,batch_no,retained_record_id,excluded_record_id,reason
-2025-07,central_nsq,Telmisartan Tablets IP 40 mg,TLL-505,2025-07:0013,2025-07:0033,Exact match across all canonical master columns; verified against original workbook
-2025-10,state_nsq,Nitrazepam I.P. 10mg tablets(NITRVET 10),AXZ24003P,2025-10:0076,2025-10:0077,Exact match across all canonical master columns; verified against original workbook
-2025-10,state_nsq,Paracetamol I.P 500 mg (PARA 500),NBRT-018,2025-10:0079,2025-10:0082,Exact match across all canonical master columns; verified against original workbook

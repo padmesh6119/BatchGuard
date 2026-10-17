@@ -71,6 +71,16 @@ def load_models(directory=DEFAULT_MODELS):
     return TrainedModels(directory) if (Path(directory) / "model_card.json").is_file() else None
 
 
+def decision_context(df, month, models=None):
+    """Everything that depends only on the snapshot and decision month; build once, reuse per scan."""
+    historical_df = df[df["collection_month"].lt(month)]
+    context = {"month": month, "models": None if models is None else models.version,
+               "reference": ReferenceIndex(historical_df, historical_priorities(historical_df))}
+    if models is not None:
+        context["history"] = history_scores(models.history, df, str(pd.Period(month, freq="M")-1))
+    return context
+
+
 def history_scores(model, df, cutoff):
     """Layer A probability and percentile among every previously observed manufacturer signature."""
     features = history_features(df, cutoff)
@@ -79,10 +89,12 @@ def history_scores(model, df, cutoff):
     return features.set_index(features["manufacturer_key"].str.strip().str.casefold())
 
 
-def rank_candidates(df, payloads, as_of=None, models=None):
+def rank_candidates(df, payloads, as_of=None, models=None, context=None):
     """Rank every candidate observed in the scan window; humans decide which to sample.
 
-    Training and inference share extract_scan_features and history_features.
+    Training and inference share extract_scan_features and history_features. The scan alert is the
+    declared rule: the trained scan model lost to it on held-out families, so its probability is shown
+    alongside for comparison and does not drive priority.
     No manufacturer identity is inferred from unverified free text; states come only from scan coordinates.
     """
     events = [ScanEvent.parse(payload) for payload in payloads]
@@ -94,8 +106,9 @@ def rank_candidates(df, payloads, as_of=None, models=None):
         raise ValueError("as_of must be a finite timestamp.")
     # Do not attach historical context from collection months after the scan decision.
     month = datetime.fromtimestamp(as_of, timezone.utc).strftime("%Y-%m")
-    historical_df = df[df["collection_month"].lt(month)]
-    reference = ReferenceIndex(historical_df, historical_priorities(historical_df))
+    if context is None or context["month"] != month or context["models"] != (None if models is None else models.version):
+        context = decision_context(df, month, models)
+    reference = context["reference"]
     groups, seen_ids = defaultdict(list), {}
     for payload, event in zip(payloads, events):
         if event.event_id in seen_ids and seen_ids[event.event_id] != event:
@@ -109,7 +122,7 @@ def rank_candidates(df, payloads, as_of=None, models=None):
     features = [extract_scan_features([p for p, _ in groups[cid]], as_of) for cid in cids]
     if models is not None:
         scan_probabilities = probability(models.scan, features, SCAN_FEATURES)
-        history = history_scores(models.history, df, str(pd.Period(month, freq="M")-1))
+        history = context["history"]
         policy, version = models.policy, models.version
     else:
         policy, version = "weighted", FUSION_VERSION
@@ -127,21 +140,21 @@ def rank_candidates(df, payloads, as_of=None, models=None):
             reasons.append("CLONE_PATTERN_TRAVEL_REVIEW")
         if burst:
             reasons.append("REPEATED_PACK_BURST_REVIEW")
+        scan_score, alert = rule, rule > 0
         if models is not None:
             scan_probability = float(scan_probabilities[index])
-            scan_score, alert = round(100*scan_probability, 1), scan_probability >= models.threshold
+            model_alert = scan_probability >= models.threshold
             row = history.loc[key] if key and key in history.index else None
             history_probability = None if row is None else float(row["probability"])
             history_score = 0.0 if row is None else round(float(row["percentile"]), 1)
-            if alert:
+            if model_alert:
                 reasons.append("SCAN_MODEL_ALERT")
             if row is not None:
                 reasons.append(f"PRIOR_NSQ_RECORDS={int(row['prior_records'])}")
                 if row["records_last_3_months"]:
                     reasons.append(f"REPORTED_IN_LAST_3_MONTHS={int(row['records_last_3_months'])}")
         else:
-            scan_probability, history_probability = None, None
-            scan_score, alert = rule, rule > 0
+            scan_probability, history_probability, model_alert = None, None, None
             history_score = round(historical["historical_priority"], 2)
         if key in reference.scores:
             reasons.append("MANUFACTURER_HISTORY")
@@ -162,7 +175,7 @@ def rank_candidates(df, payloads, as_of=None, models=None):
             "historical_risk": history_score, "scan_anomaly": scan_score,
             "evidence_quality": quality, "asserted_sources": int(values["max_sources_per_pack"]),
             "history_probability": history_probability, "scan_probability": scan_probability,
-            "scan_alert": bool(alert), "rule_scan_score": rule,
+            "scan_alert": bool(alert), "model_scan_alert": None if model_alert is None else bool(model_alert),
             "priority_score": round(fuse(policy, history_score, scan_score, quality, alert), 2),
             "reason_codes": reasons, "historical_record_ids": historical["record_ids"],
             "scan_features": values,
@@ -178,8 +191,8 @@ def rank_candidates(df, payloads, as_of=None, models=None):
     return output
 
 
-def build_decision_queue(df, payloads, capacity=10, as_of=None, models=None):
+def build_decision_queue(df, payloads, capacity=10, as_of=None, models=None, context=None):
     """Return at most capacity unique candidates; capacity is a maximum, not an obligation to sample."""
     if isinstance(capacity, bool) or not isinstance(capacity, int) or capacity < 0:
         raise ValueError("capacity must be a nonnegative integer.")
-    return rank_candidates(df, payloads, as_of, models)[:capacity]
+    return rank_candidates(df, payloads, as_of, models, context)[:capacity]

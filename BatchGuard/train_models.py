@@ -1,6 +1,6 @@
 """Fit Layer A/B models, select on validation only, then evaluate once on the reserved test split."""
 import argparse
-from datetime import datetime, timezone
+from datetime import datetime, timedelta, timezone
 import json
 from pathlib import Path
 import pickle
@@ -8,6 +8,7 @@ import platform
 import shutil
 import tempfile
 import time
+from types import SimpleNamespace
 
 import numpy as np
 import pandas as pd
@@ -18,8 +19,8 @@ from sklearn.pipeline import make_pipeline
 from sklearn.preprocessing import StandardScaler
 
 from batchguard_engine import load_dataset
-from decision_core import FUSION_POLICIES, corroboration, fuse, history_scores, rule_scan_score
-from inspection_stream import digest
+from decision_core import FUSION_POLICIES, fuse, rank_candidates
+from inspection_stream import ScanEvent, digest
 from model_foundation import HISTORY_FEATURES, HISTORY_TASK, SCAN_FEATURES, SCAN_TASK, load_model_inputs
 from replay import environment
 from snapshot_store import ROOT, file_hash
@@ -186,38 +187,44 @@ def evaluate_scan(model, bundle, heldout):
 
 
 def queue_pool(df, bundle, split, month, history_model, scan_model, threshold):
-    """Candidates: one simulated episode per real CDSCO reference batch, scored as of the target month.
+    """Score a split's episodes through the live queue on the 15th of the target month.
 
-    Two labels per candidate: the simulated clone scenario, and whether its manufacturer text is
-    actually reported in that month's real NSQ lists. They measure different risks in different units.
+    Episodes are re-timed to end together, so each keeps its own six-hour window; episodes sharing a
+    real CDSCO reference batch merge into one candidate, exactly as the queue would merge them. Two labels
+    per candidate: simulated clone (any merged episode) and whether its manufacturer text is really
+    reported in that month's NSQ lists. They measure different risks.
     """
-    x, y, metadata = load_model_inputs(bundle, SCAN_TASK, split, final_evaluation=split == "test")
-    episodes = {}
+    _, y, metadata = load_model_inputs(bundle, SCAN_TASK, split, final_evaluation=split == "test")
+    labels = dict(zip(metadata["episode_id"], y))
+    end = datetime.fromisoformat(f"{month}-15T12:00:00+00:00")
+    events, clone = [], {}
     with (Path(bundle) / "scan_episodes.jsonl").open() as stream:
         for line in stream:
             episode = json.loads(line)
-            if episode["split"] == split:
-                episodes[episode["episode_id"]] = episode
-    percentile = history_scores(history_model, df, str(pd.Period(month, freq="M")-1))["percentile"].to_dict()
+            if episode["split"] != split:
+                continue
+            shift = timedelta(seconds=end.timestamp()-max(ScanEvent.parse(p).timestamp for p in episode["events"]))
+            events.extend(dict(p, event_id=f"{episode['episode_id']}:{p['event_id']}",
+                               event_time=(datetime.fromisoformat(p["event_time"])+shift).isoformat())
+                          for p in episode["events"])
+            cid = ScanEvent.parse(episode["events"][0]).candidate
+            clone[cid] = max(clone.get(cid, 0), int(labels[episode["episode_id"]]))
+    models = SimpleNamespace(history=history_model, scan=scan_model, threshold=threshold,
+                             policy="weighted", version=f"evaluation-{split}")
     reported = set(df.loc[df["source_category"].isin(["central_nsq", "state_nsq"]) & df["collection_month"].eq(month),
                           "manufacturer_name_normalized"].str.strip().str.casefold()) - {""}
-    scan = probability(scan_model, x)
-    rows = []
-    for index, row in metadata.iterrows():
-        values = x.iloc[index].to_dict()
-        key = episodes[row["episode_id"]]["events"][0]["manufacturer_key"].strip().casefold()
-        rows.append({"clone": int(y.iloc[index]), "recurrence": int(key in reported),
-                     "history": float(percentile.get(key, 0.0)), "scan": 100*float(scan[index]),
-                     "alert": bool(scan[index] >= threshold), "rule": rule_scan_score(values)[0],
-                     "quality": corroboration(values)})
-    return pd.DataFrame(rows)
+    return pd.DataFrame([{"clone": clone[c["candidate_id"]], "recurrence": int(c["manufacturer"].strip().casefold() in reported),
+                          "history": c["historical_risk"], "rule": c["scan_anomaly"], "scan": 100*c["scan_probability"],
+                          "quality": c["evidence_quality"]}
+                         for c in rank_candidates(df, events, end.timestamp(), models)])
 
 
 def queue_policies(pool):
+    """Fused policies use the rule alert, as the live queue does."""
     return {"history_only": pool["history"],
             "scan_rule_only": pool["rule"],
             "scan_model_only": pool["scan"],
-            **{f"fused_{policy}": pool.apply(lambda r: fuse(policy, r["history"], r["scan"], r["quality"], r["alert"]), axis=1)
+            **{f"fused_{policy}": pool.apply(lambda r: fuse(policy, r["history"], r["rule"], r["quality"], r["rule"] > 0), axis=1)
                for policy in FUSION_POLICIES},
             "random_expectation": pd.Series(0.0, index=pool.index)}
 
@@ -248,7 +255,7 @@ def evaluate_queue(df, bundle, history_model, scan_model, threshold):
         test.extend({"target_month": month, "candidates": len(pool), "clones": int(pool["clone"].sum()),
                      "recurring_manufacturer_candidates": int(pool["recurrence"].sum()), **row}
                     for row in queue_metrics(pool))
-    return {"unit": "batch candidate (one simulated episode on a real CDSCO reference batch)",
+    return {"unit": "unique batch candidate in the live queue (episodes on the same real reference batch merged)",
             "clone_label": "simulated clone scenario", "recurrence_label": "real: manufacturer text reported in the target month",
             "validation_month": validation_month, "validation": validation,
             "validation_mean_balanced_capture": {k: float(v) for k, v in means.items()},

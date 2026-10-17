@@ -1,0 +1,2 @@
+- [Reply style: short](reply-style-short.md) — keep chat replies brief; detail goes in files
+- [BatchGuard state](batchguard-state.md) — Datathon progress, next steps, env gotchas

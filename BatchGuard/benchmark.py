@@ -13,7 +13,8 @@ import numpy as np
 import pandas as pd
 
 from batchguard_engine import load_dataset
-from decision_core import TrainedModels, corroboration, fuse, history_scores, probability, rank_candidates
+from decision_core import (TrainedModels, corroboration, decision_context, fuse, probability, rank_candidates,
+                           rule_scan_score)
 from inspection_stream import ScanEvent, digest
 from scan_features import SCAN_FEATURES, extract_scan_features
 from replay import environment
@@ -45,20 +46,22 @@ def cpu_facts():
 
 
 def load_workload(bundle):
-    episodes = [json.loads(line) for line in (Path(bundle) / "scan_episodes.jsonl").read_text().splitlines() if line.strip()]
-    return [episode["events"] for episode in episodes]
+    return [json.loads(line) for line in (Path(bundle) / "scan_episodes.jsonl").read_text().splitlines() if line.strip()]
 
 
 def live_window(episodes, end=datetime(2026, 9, 15, 12, tzinfo=timezone.utc)):
-    """Re-time the first WINDOW_CANDIDATES episodes into one six-hour decision window."""
+    """Test-split episodes taken round-robin across scenario families, re-timed to end together."""
+    families = defaultdict(list)
+    for episode in episodes:
+        if episode["split"] == "test":
+            families[episode["scenario"]].append(episode)
+    chosen = [family[i] for i in range(WINDOW_CANDIDATES) for family in families.values() if i < len(family)][:WINDOW_CANDIDATES]
     events = []
-    for index, payloads in enumerate(episodes[:WINDOW_CANDIDATES]):
-        last = max(ScanEvent.parse(p).timestamp for p in payloads)
-        shift = end.timestamp() - last - index*60
-        for payload in payloads:
-            moved = datetime.fromisoformat(payload["event_time"]) + timedelta(seconds=shift)
-            events.append(dict(payload, event_id=f"W{index}-{payload['event_id']}", event_time=moved.isoformat()))
-    return events
+    for index, episode in enumerate(chosen):
+        shift = timedelta(seconds=end.timestamp() - max(ScanEvent.parse(p).timestamp for p in episode["events"]))
+        events.extend(dict(p, event_id=f"W{index}-{p['event_id']}", event_time=(datetime.fromisoformat(p["event_time"])+shift).isoformat())
+                      for p in episode["events"])
+    return events, sorted({e["scenario"] for e in chosen})
 
 
 def timed(function, *args):
@@ -82,8 +85,10 @@ def run_once(df, models, episodes, window):
         stages["scan_inference_single_ms"].append(ms)
     _, ms = timed(probability, models.scan, features, SCAN_FEATURES)
     stages["scan_inference_batch_total_ms"].append(ms)
-    history, ms = timed(history_scores, models.history, df, max(df["collection_month"]))
-    stages["history_features_and_inference_total_ms"].append(ms)
+    month = max(p["event_time"] for p in window)[:7]
+    context, ms = timed(decision_context, df, month, models)
+    stages["decision_context_build_ms"].append(ms)
+    history = context["history"]
     # Per delivery: re-derive that candidate's pack features, score it and fuse with cached history.
     by_candidate = defaultdict(list)
     ordered = sorted(window, key=lambda p: (p["event_time"], p["event_id"]))
@@ -95,10 +100,11 @@ def run_once(df, models, episodes, window):
         scan = float(probability(models.scan, [values], SCAN_FEATURES)[0])
         key = event.manufacturer_key.strip().casefold()
         history_score = float(history["percentile"].get(key, 0.0)) if key else 0.0
-        fuse(models.policy, history_score, 100*scan, corroboration(values), scan >= models.threshold)
+        rule = rule_scan_score(values)[0]
+        fuse(models.policy, history_score, rule, corroboration(values), rule > 0)
         stages["per_scan_decision_ms"].append((time.perf_counter()-start)*1000)
-    _, ms = timed(rank_candidates, df, window, None, models)
-    stages["full_queue_rebuild_ms"].append(ms)
+    _, ms = timed(rank_candidates, df, window, None, models, context)
+    stages["queue_rebuild_with_cached_context_ms"].append(ms)
     return stages, len(flat)
 
 
@@ -110,7 +116,8 @@ def run(args):
     snapshot = models.card["bundle"]["snapshot_id"]
     df = load_dataset((ROOT / "data" / "snapshots" / snapshot, snapshot))
     episodes = load_workload(bundle)
-    window = live_window(episodes)
+    window, window_scenarios = live_window(episodes)
+    episodes = [episode["events"] for episode in episodes]
     run_once(df, models, episodes[:20], window[:50])
     pooled, repeats = defaultdict(list), []
     wall = time.perf_counter()
@@ -129,7 +136,7 @@ def run(args):
         "model_version": models.version, "backend": models.card["backend"], "fusion_policy": models.policy,
         "snapshot_id": snapshot, "workload_sha256": digest(episodes), "window_sha256": digest(window),
         "workload": {"episodes": len(episodes), "events": sum(map(len, episodes)), "window_events": len(window),
-                     "window_candidates": WINDOW_CANDIDATES, "repeats": args.repeats, "warmup": "one reduced pass excluded"},
+                     "window_episodes": WINDOW_CANDIDATES, "window_scenarios": window_scenarios, "repeats": args.repeats, "warmup": "one reduced pass excluded"},
         "stages_ms": {name: percentiles(samples) for name, samples in pooled.items()},
         "repeats": repeats, "total_seconds": time.perf_counter()-wall,
         "max_rss_mb": resource.getrusage(resource.RUSAGE_SELF).ru_maxrss/1024,

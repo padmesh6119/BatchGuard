@@ -38,6 +38,8 @@ python -m streamlit run app.py
 python -m unittest discover -s tests -v
 ```
 
+With unchanged raw workbooks, refresh reproduces the committed snapshot `6e881f22…` (verified). Changed workbooks create a new snapshot; it then needs a new bundle and models, and its ID added to `.gitignore` before committing.
+
 Training refuses to overwrite an existing model directory, checks that `scan_features.py` matches the bundle, selects models and thresholds on validation data only, and evaluates the reserved test split once. `decision_core.rank_candidates(..., models=load_models())` scores live scans with the same feature code used in training.
 
 ## Data reliability

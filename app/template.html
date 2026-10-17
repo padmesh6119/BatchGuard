@@ -276,7 +276,7 @@ const STATUSES = [["unreviewed", "Unreviewed"], ["sample requested", "Sample req
 const REASONS = {
   CLONE_PATTERN_TRAVEL_REVIEW: ["Impossible travel", "One pack seen at least 100 km apart faster than 900 km/h (simulated scans).", "crit"],
   REPEATED_PACK_BURST_REVIEW: ["Repeated-pack burst", "Ten or more scans of one pack within 5 minutes (simulated scans).", "crit"],
-  SCAN_MODEL_ALERT: ["Scan model alert", "Trained scan model is above its validation threshold. Shown only; the rule drives alerts.", ""],
+  SCAN_CAUSE_UNVERIFIED: ["Cause unverified", "A scan pattern can also result from GPS, clock, or repeated-scan errors. Verify the source and pack before drawing conclusions.", ""],
   PRIOR_NSQ_RECORDS: ["prior NSQ", "Earlier NSQ records with this manufacturer text (real CDSCO lists).", "real"],
   REPORTED_IN_LAST_3_MONTHS: ["in last 3 mo", "NSQ records in the three months before the decision (real).", "real"],
   MANUFACTURER_HISTORY: ["Has history", "Manufacturer text appears in earlier CDSCO lists.", ""],
@@ -642,7 +642,7 @@ function renderEvidence(rows) {
     : `Recurrence model ${pct(r.hp, 1)} puts this text at percentile ${fmt(r.hist)} of ${fmt(model.history_universe)} earlier manufacturer texts${prior ? `; ${prior.n} earlier NSQ record${prior.n === "1" ? "" : "s"}` : ""}.`;
   const scanWhy = f.travelHit && f.travel ? `${f.travel.pack} scanned in ${f.travel.from.city}, then ${f.travel.to.city} ${fmt(f.travel.minutes)} min later: ${fmt(f.travel.km)} km, about ${fmt(f.travel.kmh)} km/h.`
     : f.burstHit ? `${f.burst.pack} scanned ${f.burst.count} times within 5 minutes.` : `No rule pattern in ${f.events.length} unique scan${f.events.length === 1 ? "" : "s"} over the last 6 hours.`;
-  const modelWhy = r.sp === null ? "" : ` Scan model ${pct(r.sp, 1)} (threshold ${pct(model.threshold, 1)}), shown, not used for alerts.`;
+  const modelWhy = r.sp === null ? "" : ` Synthetic model score ${pct(r.sp, 1)} (scripted validation threshold ${pct(model.threshold, 1)}); diagnostic only, not a counterfeit probability or alert.`;
   const qualWhy = `${f.maxSources} asserted source${f.maxSources === 1 ? "" : "s"} on one pack. Independence is not verified.`;
   const alert = r.scan > 0;
   const formula = model.policy === "tiered"
@@ -834,11 +834,15 @@ function renderEvaluation() {
       card("Rule vs trained model on test episodes", `${B.model.true_positives + B.model.false_negatives} simulated clone episodes`,
         el("table", { class: "small-tbl" }, el("thead", {}, el("tr", {}, ["Detector", "Precision", "Recall", "TP", "FP", "FN"].map((h, i) => el("th", { class: i ? "n" : "", text: h })))),
           el("tbody", {}, [conf("Declared rule (drives alerts)", B.rule), conf(`Trained ${B.selected}`, B.model)].map(r => el("tr", {}, r.map((c, i) => el("td", { class: i ? "n" : "", text: c })))))),
-        el("div", { class: "callout sim" }, "The trained model did not beat the rule on families it never saw, so ", el("b", { text: "the rule drives alerts" }), ". The model's probability is shown beside it in the queue.")),
+        el("div", { class: "callout sim" }, "The trained model did not beat the rule on families it never saw, and a separate nuisance challenge exposed many benign alerts. ", el("b", { text: "Only the declared rule drives scan review flags." }), " The model's synthetic score is diagnostic, not a counterfeit probability.")),
       card("Alert rate by scenario family", "clone families should alert; benign ones should not",
         legend([["Declared rule", "var(--sim)"], ["Trained model", "var(--qual)"]], false),
         groupedBars(fams, [["Declared rule", "var(--sim)"], ["Trained model", "var(--qual)"]], { label: 190 }),
         tableView(["Family", "Label", "Episodes", "Rule alert", "Model alert"], ev.families.map(f => [f.scenario, (f.clone_label ? "clone" : "benign") + (f.held_out_family ? ", held out" : ""), fmt(f.episodes), pct(f.rule_alert_rate, 1), pct(f.model_alert_rate, 1)])))),
+    D.scan_learning_curve ? card("Does more scripted training help?", `${D.scan_learning_curve.fixed_test_episodes} fixed scripted test episodes · ${D.scan_learning_curve.challenge_cases} stress cases`,
+      tableView(["Train episodes", "Fixed test AP", "Benign stress alerts", "Missed copied IDs"],
+        D.scan_learning_curve.rows.map(r => [fmt(r.training_episodes), fmt(r.fixed_test_ap, 3), fmt(r.challenge_fp), fmt(r.challenge_fn)])),
+      el("p", { class: "sub", text: "More examples of the same scripts did not resolve the stress cases. These are artificial mixtures, not field accuracy. The model does not add operational alerts." })) : null,
 
     el("div", { class: "section-title" }, el("h2", { text: "Fusion · One queue, two risks" })),
     el("p", { class: "ink2", text: `Held-out queues built through the live ranking code. Only batches published before each month enter its queue (${months.map(x => `${monthLong(x.month)}: ${x.candidates} batches, ${x.clones} simulated clones, ${x.recurring} real recurring-manufacturer batches`).join("; ")}). Policy ${F.selected_on_validation} was chosen on the ${ev.validation_month} validation queue.` }),

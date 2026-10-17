@@ -101,6 +101,7 @@ def build(output=OUTPUTS / "dashboard.html"):
                "state": CITY[(e["latitude"], e["longitude"])][1],
                "cand": simulator.candidate_id(e["product"], e["batch_no"], e["manufacturer_key"])} for e in feed]
     manifest = read_json(DATA_PROCESSED / "manifest.json")
+    learning_curve = read_json(OUTPUTS / "scan_learning_curve.json")
     availability = DATA_PROCESSED / "review" / "source_availability.csv"
     data = {
         "generated_at": datetime.now(timezone.utc).isoformat(timespec="seconds"), "banner": BANNER, "decision_month": month,
@@ -109,6 +110,14 @@ def build(output=OUTPUTS / "dashboard.html"):
         "evaluation": {b: evaluation(results["backends"][b], read_json(OUTPUTS / "models" / b / "model_card.json"))
                        for b in steps if b in results["backends"]},
         "recurrence": results.get("recurrence_finding"), "limits": results.get("limits", []),
+        "scan_learning_curve": None if learning_curve is None else {
+            "fixed_test_episodes": learning_curve["fixed_test_episodes"],
+            "challenge_cases": learning_curve["challenge_cases"],
+            "rows": [{"training_episodes": row["training_episodes"],
+                      "fixed_test_ap": row["fixed_test"]["model"]["average_precision"],
+                      "challenge_fp": row["challenge"]["model"]["false_positives"],
+                      "challenge_fn": row["challenge"]["model"]["false_negatives"]}
+                     for row in learning_curve["results"]]},
         "benchmarks": {host: benchmark(host) for host in ("laptop", "linuxone")},
         "data": {"summary": manifest["summary"] if manifest else {}, "manifest_sha256": results.get("data", {}).get("processed_manifest_sha256", ""),
                  "monthly": layer_a.monthly_summary(df).astype({"collection_month": str}).to_dict("records"),

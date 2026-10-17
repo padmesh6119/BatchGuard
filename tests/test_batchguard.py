@@ -220,6 +220,8 @@ class EndToEndTests(unittest.TestCase):
         self.assertEqual(alerts, {"CLONE_PATTERN_TRAVEL_REVIEW", "REPEATED_PACK_BURST_REVIEW"})
         self.assertEqual([c["rank"] for c in ranked], list(range(1, len(ranked)+1)))
         self.assertTrue(all(c["scan_simulated"] and "(simulated scans)" in c["state"] for c in ranked))
+        self.assertTrue(all("SCAN_MODEL_ALERT" not in c["reason_codes"] for c in ranked))
+        self.assertTrue(all(("SCAN_CAUSE_UNVERIFIED" in c["reason_codes"]) == c["scan_alert"] for c in ranked))
         for item in ranked:
             for name in ("historical_risk", "scan_anomaly", "evidence_quality", "priority_score"):
                 self.assertIn(name, item)
@@ -244,6 +246,9 @@ class DashboardTests(unittest.TestCase):
         payload = html.split('<script id="bg-data" type="application/json">')[1].split("</script>")[0]
         self.assertNotIn("</", payload)
         data = json.loads(payload)
+        self.assertEqual([r["training_episodes"] for r in data["scan_learning_curve"]["rows"]], [150, 500, 1500, 4500])
+        self.assertNotIn("SCAN_MODEL_ALERT", data["codes"])
+        self.assertIn("Synthetic model score", html)
         steps = data["steps"]["sklearn"]
         self.assertEqual(len(steps), len(data["feed"]))
         self.assertEqual((len(steps[0]), sum(r[3] > 0 for r in steps[0])), (1, 0))

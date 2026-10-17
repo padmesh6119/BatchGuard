@@ -15,7 +15,7 @@ Every week an inspector can sample only N batches. BatchGuard ranks which N to s
 
 ## Why LinuxONE
 - The workload is a regulator's audit-grade queue: hash-checked data and models, deterministic seeds, and one test read per run. A platform built for regulated, always-on transaction processing fits that work.
-- Snap ML ships s390x wheels, so the same training code runs on the laptop and on LinuxONE. We report both machines' timings from the same workload hash.
+- The scale workload is deterministic and records its hash so it can be replayed on LinuxONE. Only x86 laptop timings are recorded so far; a LinuxONE performance comparison remains to be done.
 - We do **not** claim the on-chip AI accelerator sped anything up. We report only whether the CPU lists the NNPA facility, and we claim only what we measured.
 
 ## The hard question: "Would this have caught Coldrif?"

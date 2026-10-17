@@ -11,6 +11,6 @@ BatchGuard combines two clearly separated layers:
 
 The queue shows historical risk, scan anomaly and evidence quality as separate columns, with reason codes and source documents. At a budget of 100 out of about 190 batches per month, the fused queue captures 85% of simulated clones and 79% of real recurring-manufacturer batches. Ranking on scans alone captures 87% and 37%; ranking on history alone captures 62% and 100%.
 
-The full pipeline runs on IBM LinuxONE (s390x) with scikit-learn and IBM Snap ML. Laptop and LinuxONE timings come from the same workload hash. Per-scan decisions take 1.9 ms at the median on a laptop.
+The pipeline has a reproducible workload for comparison on an IBM LinuxONE (s390x) host with scikit-learn and IBM Snap ML. No LinuxONE result has been recorded yet; current timing results are from an x86 laptop only. The synthetic scale test reaches about 600 to 730 events per second on that laptop, depending on the workload profile and backend.
 
-Every result here was measured. Layer B data is simulated. The real label is report recurrence, not medicine safety. Humans make every sampling decision.
+The reported laptop results were measured. Layer B data and traffic volumes are simulated. The real label is report recurrence, not medicine safety. Humans make every sampling decision.

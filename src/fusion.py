@@ -140,7 +140,8 @@ def rank_candidates(df, payloads, as_of=None, models=None, context=None):
             row = history.loc[key] if key and key in history.index else None
             history_probability = None if row is None else float(row["probability"])
             history_score = 0.0 if row is None else round(float(row["percentile"]), 1)
-            reasons += ["SCAN_MODEL_ALERT"] if model_alert else []
+            # The model has only synthetic labels and fails the separate nuisance challenge.
+            # Keep its score for research, never add an operational alert or reason from it.
             if row is not None:
                 reasons.append(f"PRIOR_NSQ_RECORDS={int(row['prior_records'])}")
                 if row["records_last_3_months"]:
@@ -148,6 +149,8 @@ def rank_candidates(df, payloads, as_of=None, models=None, context=None):
         else:
             scan_probability, history_probability, model_alert = None, None, None
             history_score = round(historical["historical_priority"], 2)
+        if rule > 0:
+            reasons.append("SCAN_CAUSE_UNVERIFIED")
         reasons.append("MANUFACTURER_HISTORY" if key in reference.scores else "NO_EARLIER_MANUFACTURER_HISTORY")
         reasons += ["BATCH_REPORT_REFERENCE"] if historical["record_ids"] else []
         reasons += ["SPURIOUS_REPORT_REFERENCE"] if historical["spurious_report_match"] else []

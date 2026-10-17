@@ -9,6 +9,8 @@ One inspector screen: **which medicine batches to sample first within this week'
 Product spec: [BATCHGUARD_FINAL_SPEC.md](BATCHGUARD_FINAL_SPEC.md).
 Current flaw review: [docs/REVIEW_STATUS.md](docs/REVIEW_STATUS.md).
 Synthetic scan audit and frozen challenge: [docs/SYNTHETIC_DATASET.md](docs/SYNTHETIC_DATASET.md).
+Why extra scripted training does not fix the scan model: [docs/MODEL_DEPENDABILITY.md](docs/MODEL_DEPENDABILITY.md).
+IBM Z scale experiment and measured laptop baseline: [docs/IBM_Z_SCALE.md](docs/IBM_Z_SCALE.md).
 
 ## Run, in order
 
@@ -19,7 +21,9 @@ python -m src.ingest                       # optional: rebuild data/processed fr
 python -m src.fusion run                   # train + evaluate both layers -> outputs/
 python -m src.fusion benchmark             # stream benchmark -> outputs/benchmark_<laptop|linuxone>.json
 python -m src.synthetic_challenge           # separate scan stress set -> data/synthetic/
-python -m unittest discover -s tests       # 24 tests
+python -m src.scan_learning_curve            # fixed-test learning curve -> outputs/scan_learning_curve.json
+python -m src.scale_benchmark --events 5000 --profile routine --backend sklearn
+python -m unittest discover -s tests       # 27 tests
 python -m app.dashboard                    # dashboard -> outputs/dashboard.html (open in any browser)
 ```
 
@@ -41,19 +45,23 @@ The demo feed includes two simulated scans on published spurious-list batches wh
 | Layer B: clone-pattern recall / precision (simulated) | declared rule **80.8% / 100%** | trained model 72.7% / 98.6% |
 | Layer B: held-out `slow_copy` family alert rate | rule 42% | model 18% |
 | Fusion at N=100 of 177 to 197 batches: simulated clones / real recurring batches | fused **85% / 79%** | rule only 87% / 37%, history only 62% / 100%, random 54% / 54% |
-| Per-scan decision latency, p50 / p99 | 1.9 ms / 5.3 ms | 778 events/s; queue rebuild ≈29 ms with a cached monthly context |
+| Existing staged benchmark, per-scan decision p50 / p99 | 1.5 ms / 3.1 ms | 1,291 events/s across its staged workload; cached queue rebuild ≈27 ms |
 
-The trained scan model does not beat the rule, so **the rule drives alerts** and the model's probability is shown alongside it. Each test month has only 7 to 8 real recurring-manufacturer batches in the fusion queue, so the recurrence shares move in large steps. With history through January 2026, 9.1% (122 of 1,341) of later NSQ records carried manufacturer text seen earlier. This is one measured split, not a prediction ceiling.
+The trained scan model does not beat the rule, so **the rule drives alerts** and the model's synthetic score is shown for diagnosis only. Each test month has only 7 to 8 real recurring-manufacturer batches in the fusion queue, so the recurrence shares move in large steps. With history through January 2026, 9.1% (122 of 1,341) of later NSQ records carried manufacturer text seen earlier. This is one measured split, not a prediction ceiling.
 
 **Synthetic-data challenge:** The original scan test has 42.9% generated positives and no benign GPS/clock-error cases. On a separate fixed challenge of 1,100 synthetic cases, the rule flags 200/400 copied IDs and 300/700 benign cases; the frozen trained model flags 300/400 and 400/700 respectively. Four copied-ID mechanisms have benign counterparts with identical scan features. These are diagnostic stress results, not field accuracy estimates; see [the dataset audit](docs/SYNTHETIC_DATASET.md).
 
-Building that monthly history context still takes about 4.8 seconds on the measured laptop. The ≈29 ms rebuild assumes it is already cached; the benchmark lists both stages separately.
+**Training sufficiency:** Increasing the scripted training set from 150 to 4,500 episodes left fixed-test average precision near 0.83 and still produced 300–400 benign alerts on the stress cases. The trained score is now diagnostic only and cannot add an inspector alert. See [the learning-curve audit](docs/MODEL_DEPENDABILITY.md).
+
+**Scale experiment:** A separate label-free stream exercises the current per-scan decision path. On one x86 laptop process, 5,000-event routine and repeat-heavy profiles measured about 666 and 611 events/s with scikit-learn, and 713 and 671 events/s with Snap ML. A 100,000-event routine replay measured about 607 events/s, with bounded six-hour active state. These are in-memory synthetic workloads, not a LinuxONE result or proof that IBM Z is required. The [scale report](docs/IBM_Z_SCALE.md) gives workload assumptions and comparison commands.
+
+Building that monthly history context still takes about 4.8 seconds on the measured laptop. The ≈27 ms rebuild assumes it is already cached; the benchmark lists both stages separately. Its staged-workload throughput and the new per-event scale replay use different work definitions and should not be compared as if they measured the same pipeline.
 
 At N=10 in the held-out fusion queues, the combined policy captures 0% of the recurring-manufacturer batches versus 33% for history-only ranking. The dashboard makes this capacity trade-off visible; it is not evidence of better real inspection yield.
 
 ## IBM LinuxONE
 
-The same commands run on s390x. PyPI has no s390x wheels for numpy, scipy, pandas or scikit-learn, so use the OS or preinstalled environment for those:
+The commands are prepared for s390x, but this repository has no recorded LinuxONE run. Depending on the host image, install scientific Python dependencies from the OS or a preinstalled environment:
 
 ```bash
 git clone https://github.com/padmesh6119/BatchGuard.git && cd BatchGuard
@@ -61,9 +69,10 @@ python3 -m pip install "openpyxl>=3.1.5" && python3 -m pip install --no-deps sna
 python3 -m unittest discover -s tests
 python3 -m src.fusion run
 python3 -m src.fusion benchmark            # writes outputs/benchmark_linuxone.json
+python3 -m src.scale_benchmark --events 5000 --repeats 2 --profile routine --backend sklearn
 ```
 
-Commit `outputs/benchmark_linuxone.json`, then run `python -m app.dashboard` again. The Platform tab then shows the LinuxONE numbers next to the laptop numbers. `git diff outputs/results.json` shows whether the metrics match the laptop run. Timestamps, environment and fit times always differ. `nnpa_facility_listed` only reports that the CPU advertises the accelerator facility. Claim acceleration only from a measured run.
+Commit `outputs/benchmark_linuxone.json`, then run `python -m app.dashboard` again. The Platform tab then shows the LinuxONE numbers next to the laptop numbers. Compare scale reports with `python -m src.scale_compare <laptop.json> <linuxone.json>` only when their workload and model fields match. `nnpa_facility_listed` only reports that the CPU advertises the accelerator facility. Claim acceleration only from measured hardware use.
 
 ## Layout
 

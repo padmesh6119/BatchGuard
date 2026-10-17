@@ -77,8 +77,11 @@ class TrainedModels:
 
 
 def load_models(backend="sklearn", root=MODELS):
+    """None when the backend was never trained or its package (sklearn, snapml) is not installed here."""
     directory = Path(root) / backend
-    return TrainedModels(directory) if (directory / "model_card.json").is_file() else None
+    if not (directory / "model_card.json").is_file() or importlib.util.find_spec(backend) is None:
+        return None
+    return TrainedModels(directory)
 
 
 def decision_context(df, month, models=None):
@@ -432,7 +435,8 @@ def _benchmark_pass(df, models, workload, window):
 def benchmark(backends=None, repeats=5, output=OUTPUTS):
     """Same workload on any host: stage timings in one process, data preloaded; no network, UI or disk."""
     output = Path(output)
-    backends = backends or [b for b in ("sklearn", "snapml") if (output / "models" / b / "model_card.json").is_file()]
+    backends = backends or [b for b in ("sklearn", "snapml")
+                            if (output / "models" / b / "model_card.json").is_file() and importlib.util.find_spec(b)]
     if not backends:
         raise FileNotFoundError("No trained models; run run_all() first.")
     df = layer_a.load_dataset()

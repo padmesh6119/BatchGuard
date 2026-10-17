@@ -125,4 +125,6 @@ def build(output=OUTPUTS / "dashboard.html"):
 
 
 if __name__ == "__main__":
-    print(build())
+    path = build()
+    skipped = [b for b in ("sklearn", "snapml") if (OUTPUTS / "models" / b).is_dir() and load_models(b) is None]
+    print(path, f"(skipped {', '.join(skipped)}: package not installed)" if skipped else "")

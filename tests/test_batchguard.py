@@ -13,7 +13,7 @@ import pandas as pd
 
 from src import detector, ingest, layer_a, simulator
 from src.common import DATA_RAW, OUTPUTS, selection_weights
-from src.fusion import TrainedModels, build_decision_queue, fuse, rank_candidates, train_backend
+from src.fusion import TrainedModels, build_decision_queue, fuse, load_models, rank_candidates, train_backend
 
 
 def fixture():
@@ -177,6 +177,11 @@ class EndToEndTests(unittest.TestCase):
         self.assertEqual({f["scenario"] for f in self.card["scan"]["families"] if f["held_out_family"]}, {"delayed_sync", "slow_copy"})
         self.assertIn(self.card["fusion"]["selected_policy"], ("weighted", "tiered"))
         self.assertTrue(self.card["fusion"]["test"])
+
+    def test_backend_without_its_package_is_skipped(self):
+        self.assertIsNotNone(load_models("sklearn", self.root))
+        with patch("src.fusion.importlib.util.find_spec", return_value=None):
+            self.assertIsNone(load_models("sklearn", self.root))
 
     def test_tampered_model_is_rejected(self):
         copy_dir = self.root / "tampered"

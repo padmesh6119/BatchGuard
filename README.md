@@ -11,8 +11,8 @@ Product spec: [BATCHGUARD_FINAL_SPEC.md](BATCHGUARD_FINAL_SPEC.md).
 ## Run, in order
 
 ```bash
-python3 -m venv .venv && . .venv/bin/activate
-pip install -r requirements.txt            # optional second backend: pip install snapml
+python3 -m venv .venv && . .venv/bin/activate   # fish: source .venv/bin/activate.fish
+pip install -r requirements.txt snapml     # snapml optional; without it the Snap ML backend is skipped
 python -m src.ingest                       # optional: rebuild data/processed from data/raw (identical CSVs; new manifest timestamp)
 python -m src.fusion run                   # train + evaluate both layers -> outputs/
 python -m src.fusion benchmark             # stream benchmark -> outputs/benchmark_<laptop|linuxone>.json

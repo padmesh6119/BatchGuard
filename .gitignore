@@ -1,20 +1,25 @@
-.firecrawl/
-**/.venv/
-**/__pycache__/
-*.sqlite
-*.sqlite-wal
-*.sqlite-shm
-**/data/snapshots/*
-!**/data/snapshots/6e881f22c3016444c02b49d2fc852b2b81975aaa57d24879da0453ee404698f5/
-**/data/review_actions.jsonl
-**/data/.refresh.lock
-# Environment secrets
-.env
-.env.*
-
-# Python cache and test artifacts
+.venv/
+__pycache__/
 *.py[cod]
 .pytest_cache/
+.ipynb_checkpoints/
+.firecrawl/
+.claude/
 
-# Streamlit secrets
+# secrets: keys, tokens, env files
+*.pem
+*.key
+*.token
+*token*.txt
+.env
+.env.*
 .streamlit/secrets.toml
+
+# local state and build leftovers
+data/review_actions.jsonl
+data/.build-*/
+data/.processed-previous/
+
+# large binaries
+*.gguf
+*.zip

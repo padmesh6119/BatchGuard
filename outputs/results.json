@@ -1,0 +1,580 @@
+{
+  "backends": {
+    "sklearn": {
+      "backend": "sklearn",
+      "fusion": {
+        "selected_on_validation": "weighted",
+        "test_by_budget": {
+          "10": {
+            "fused_weighted": {
+              "clone": 0.1263,
+              "recurrence": 0.0
+            },
+            "history_only": {
+              "clone": 0.0185,
+              "recurrence": 0.3304
+            },
+            "random_expectation": {
+              "clone": 0.0537,
+              "recurrence": 0.0537
+            },
+            "scan_model_only": {
+              "clone": 0.1263,
+              "recurrence": 0.0625
+            },
+            "scan_rule_only": {
+              "clone": 0.1263,
+              "recurrence": 0.0
+            }
+          },
+          "25": {
+            "fused_weighted": {
+              "clone": 0.3159,
+              "recurrence": 0.0625
+            },
+            "history_only": {
+              "clone": 0.1129,
+              "recurrence": 0.5893
+            },
+            "random_expectation": {
+              "clone": 0.1341,
+              "recurrence": 0.1341
+            },
+            "scan_model_only": {
+              "clone": 0.3159,
+              "recurrence": 0.0625
+            },
+            "scan_rule_only": {
+              "clone": 0.3159,
+              "recurrence": 0.0
+            }
+          },
+          "50": {
+            "fused_weighted": {
+              "clone": 0.632,
+              "recurrence": 0.125
+            },
+            "history_only": {
+              "clone": 0.2713,
+              "recurrence": 0.6607
+            },
+            "random_expectation": {
+              "clone": 0.2681,
+              "recurrence": 0.2681
+            },
+            "scan_model_only": {
+              "clone": 0.632,
+              "recurrence": 0.125
+            },
+            "scan_rule_only": {
+              "clone": 0.632,
+              "recurrence": 0.0741
+            }
+          },
+          "100": {
+            "fused_weighted": {
+              "clone": 0.8515,
+              "recurrence": 0.7857
+            },
+            "history_only": {
+              "clone": 0.6174,
+              "recurrence": 1.0
+            },
+            "random_expectation": {
+              "clone": 0.5363,
+              "recurrence": 0.5363
+            },
+            "scan_model_only": {
+              "clone": 0.7684,
+              "recurrence": 0.1965
+            },
+            "scan_rule_only": {
+              "clone": 0.8743,
+              "recurrence": 0.3692
+            }
+          },
+          "150": {
+            "fused_weighted": {
+              "clone": 0.9416,
+              "recurrence": 1.0
+            },
+            "history_only": {
+              "clone": 0.8397,
+              "recurrence": 1.0
+            },
+            "random_expectation": {
+              "clone": 0.8044,
+              "recurrence": 0.8044
+            },
+            "scan_model_only": {
+              "clone": 0.8325,
+              "recurrence": 0.6697
+            },
+            "scan_rule_only": {
+              "clone": 0.9469,
+              "recurrence": 0.7277
+            }
+          }
+        }
+      },
+      "layer_a": {
+        "all_reports": 459,
+        "ap_gain_vs_strongest_baseline": {
+          "ci95": [
+            0.004976576579870484,
+            0.0676482359125471
+          ],
+          "mean": 0.03217143864491606,
+          "rounds": 1000,
+          "share_above_zero": 0.991
+        },
+        "average_precision": {
+          "legacy_60_25_15_index": 0.0674,
+          "most_past_records": 0.0551,
+          "most_recent_3_months": 0.046,
+          "random_expectation": 0.0181,
+          "trained_model": 0.0984
+        },
+        "reachable_reports": 76,
+        "reports_captured_by_budget": {
+          "10": {
+            "legacy_60_25_15_index": 3.0,
+            "most_past_records": 1.0,
+            "most_recent_3_months": 8.93,
+            "random_expectation": 0.45,
+            "trained_model": 11.0
+          },
+          "25": {
+            "legacy_60_25_15_index": 9.5,
+            "most_past_records": 11.96,
+            "most_recent_3_months": 13.06,
+            "random_expectation": 1.11,
+            "trained_model": 21.0
+          },
+          "50": {
+            "legacy_60_25_15_index": 14.0,
+            "most_past_records": 17.71,
+            "most_recent_3_months": 16.5,
+            "random_expectation": 2.23,
+            "trained_model": 25.0
+          },
+          "100": {
+            "legacy_60_25_15_index": 24.55,
+            "most_past_records": 25.03,
+            "most_recent_3_months": 19.94,
+            "random_expectation": 4.45,
+            "trained_model": 27.73
+          }
+        },
+        "selected": "logistic_c0.1",
+        "strongest_baseline": "legacy_60_25_15_index",
+        "test_examples": 3370,
+        "test_months": [
+          "2026-07",
+          "2026-08"
+        ],
+        "test_positives": 61
+      },
+      "layer_b": {
+        "held_out_families": [
+          {
+            "clone_label": 0,
+            "episodes": 33,
+            "held_out_family": true,
+            "model_alert_rate": 0.030303030303030304,
+            "rule_alert_rate": 0.0,
+            "scenario": "delayed_sync"
+          },
+          {
+            "clone_label": 1,
+            "episodes": 33,
+            "held_out_family": true,
+            "model_alert_rate": 0.18181818181818182,
+            "rule_alert_rate": 0.42424242424242425,
+            "scenario": "slow_copy"
+          }
+        ],
+        "model": {
+          "average_precision": 0.8611001700735966,
+          "false_negatives": 27,
+          "false_positives": 1,
+          "precision": 0.9863013698630136,
+          "recall": 0.7272727272727273,
+          "true_negatives": 131,
+          "true_positives": 72
+        },
+        "rule": {
+          "false_negatives": 19,
+          "false_positives": 0,
+          "precision": 1.0,
+          "recall": 0.8080808080808081,
+          "true_negatives": 132,
+          "true_positives": 80
+        },
+        "selected": "logistic_c0.1",
+        "threshold": 0.17191900312900543
+      },
+      "model_version": "layer-ab-sklearn-28ff11c97cdb"
+    },
+    "snapml": {
+      "backend": "snapml",
+      "fusion": {
+        "selected_on_validation": "weighted",
+        "test_by_budget": {
+          "10": {
+            "fused_weighted": {
+              "clone": 0.1263,
+              "recurrence": 0.0
+            },
+            "history_only": {
+              "clone": 0.0185,
+              "recurrence": 0.3304
+            },
+            "random_expectation": {
+              "clone": 0.0537,
+              "recurrence": 0.0537
+            },
+            "scan_model_only": {
+              "clone": 0.1263,
+              "recurrence": 0.0
+            },
+            "scan_rule_only": {
+              "clone": 0.1263,
+              "recurrence": 0.0
+            }
+          },
+          "25": {
+            "fused_weighted": {
+              "clone": 0.3159,
+              "recurrence": 0.0625
+            },
+            "history_only": {
+              "clone": 0.1187,
+              "recurrence": 0.5893
+            },
+            "random_expectation": {
+              "clone": 0.1341,
+              "recurrence": 0.1341
+            },
+            "scan_model_only": {
+              "clone": 0.3159,
+              "recurrence": 0.0625
+            },
+            "scan_rule_only": {
+              "clone": 0.3159,
+              "recurrence": 0.0
+            }
+          },
+          "50": {
+            "fused_weighted": {
+              "clone": 0.632,
+              "recurrence": 0.125
+            },
+            "history_only": {
+              "clone": 0.2781,
+              "recurrence": 0.6607
+            },
+            "random_expectation": {
+              "clone": 0.2681,
+              "recurrence": 0.2681
+            },
+            "scan_model_only": {
+              "clone": 0.632,
+              "recurrence": 0.125
+            },
+            "scan_rule_only": {
+              "clone": 0.632,
+              "recurrence": 0.0741
+            }
+          },
+          "100": {
+            "fused_weighted": {
+              "clone": 0.8515,
+              "recurrence": 0.7857
+            },
+            "history_only": {
+              "clone": 0.6211,
+              "recurrence": 1.0
+            },
+            "random_expectation": {
+              "clone": 0.5363,
+              "recurrence": 0.5363
+            },
+            "scan_model_only": {
+              "clone": 0.781,
+              "recurrence": 0.3304
+            },
+            "scan_rule_only": {
+              "clone": 0.8743,
+              "recurrence": 0.3692
+            }
+          },
+          "150": {
+            "fused_weighted": {
+              "clone": 0.9409,
+              "recurrence": 1.0
+            },
+            "history_only": {
+              "clone": 0.8397,
+              "recurrence": 1.0
+            },
+            "random_expectation": {
+              "clone": 0.8044,
+              "recurrence": 0.8044
+            },
+            "scan_model_only": {
+              "clone": 0.8325,
+              "recurrence": 0.6697
+            },
+            "scan_rule_only": {
+              "clone": 0.9469,
+              "recurrence": 0.7277
+            }
+          }
+        }
+      },
+      "layer_a": {
+        "all_reports": 459,
+        "ap_gain_vs_strongest_baseline": {
+          "ci95": [
+            0.0071697682184593756,
+            0.06823076988037687
+          ],
+          "mean": 0.03301694072700947,
+          "rounds": 1000,
+          "share_above_zero": 0.994
+        },
+        "average_precision": {
+          "legacy_60_25_15_index": 0.0674,
+          "most_past_records": 0.0551,
+          "most_recent_3_months": 0.046,
+          "random_expectation": 0.0181,
+          "trained_model": 0.0991
+        },
+        "reachable_reports": 76,
+        "reports_captured_by_budget": {
+          "10": {
+            "legacy_60_25_15_index": 3.0,
+            "most_past_records": 1.0,
+            "most_recent_3_months": 8.93,
+            "random_expectation": 0.45,
+            "trained_model": 11.0
+          },
+          "25": {
+            "legacy_60_25_15_index": 9.5,
+            "most_past_records": 11.96,
+            "most_recent_3_months": 13.06,
+            "random_expectation": 1.11,
+            "trained_model": 21.0
+          },
+          "50": {
+            "legacy_60_25_15_index": 14.0,
+            "most_past_records": 17.71,
+            "most_recent_3_months": 16.5,
+            "random_expectation": 2.23,
+            "trained_model": 25.0
+          },
+          "100": {
+            "legacy_60_25_15_index": 24.55,
+            "most_past_records": 25.03,
+            "most_recent_3_months": 19.94,
+            "random_expectation": 4.45,
+            "trained_model": 26.57
+          }
+        },
+        "selected": "snap_logistic_r10.0",
+        "strongest_baseline": "legacy_60_25_15_index",
+        "test_examples": 3370,
+        "test_months": [
+          "2026-07",
+          "2026-08"
+        ],
+        "test_positives": 61
+      },
+      "layer_b": {
+        "held_out_families": [
+          {
+            "clone_label": 0,
+            "episodes": 33,
+            "held_out_family": true,
+            "model_alert_rate": 0.0,
+            "rule_alert_rate": 0.0,
+            "scenario": "delayed_sync"
+          },
+          {
+            "clone_label": 1,
+            "episodes": 33,
+            "held_out_family": true,
+            "model_alert_rate": 0.0,
+            "rule_alert_rate": 0.42424242424242425,
+            "scenario": "slow_copy"
+          }
+        ],
+        "model": {
+          "average_precision": 0.8610384944660288,
+          "false_negatives": 33,
+          "false_positives": 0,
+          "precision": 1.0,
+          "recall": 0.6666666666666666,
+          "true_negatives": 132,
+          "true_positives": 66
+        },
+        "rule": {
+          "false_negatives": 19,
+          "false_positives": 0,
+          "precision": 1.0,
+          "recall": 0.8080808080808081,
+          "true_negatives": 132,
+          "true_positives": 80
+        },
+        "selected": "snap_logistic_r0.1",
+        "threshold": 0.966044
+      },
+      "model_version": "layer-ab-snapml-599ac257566e"
+    }
+  },
+  "banner": "Layer A: REAL CDSCO data. Layer B: SIMULATED scans. Scan anomalies are not proof of counterfeit.",
+  "charts": [
+    "layer_a_capture.png",
+    "fusion_tradeoff.png"
+  ],
+  "created_at": "2026-10-17T09:52:44.288326+00:00",
+  "data": {
+    "analytical_records": 2551,
+    "categories": {
+      "central_nsq": 686,
+      "spurious": 44,
+      "state_nsq": 1821
+    },
+    "months": [
+      "2025-07",
+      "2025-08",
+      "2025-09",
+      "2025-10",
+      "2025-11",
+      "2025-12",
+      "2026-01",
+      "2026-02",
+      "2026-03",
+      "2026-04",
+      "2026-05",
+      "2026-06",
+      "2026-07",
+      "2026-08"
+    ],
+    "processed_manifest_sha256": "f70bfd94d1a004c50191b2a58747e69b2c4d8279ea91a8339fbf88f59348ce9d"
+  },
+  "environment": {
+    "cpu": {
+      "affinity_cpus": 16,
+      "logical_cpus": 16,
+      "model name": "12th Gen Intel(R) Core(TM) i5-1240P",
+      "nnpa_facility_listed": false,
+      "vendor_id": "GenuineIntel"
+    },
+    "host": "laptop",
+    "machine": "x86_64",
+    "packages": {
+      "numpy": "2.5.4",
+      "openpyxl": "3.1.5",
+      "pandas": "3.0.6",
+      "scikit-learn": "1.9.1",
+      "scipy": "1.18.1",
+      "snapml": "1.17.2",
+      "streamlit": "1.66.0"
+    },
+    "platform": "Linux-6.17.0-35-generic-x86_64-with-glibc2.39",
+    "python": "3.12.3",
+    "release": "6.17.0-35-generic",
+    "system": "Linux"
+  },
+  "inspector_queue": {
+    "candidates": 24,
+    "capacity": 10,
+    "scan_alerts": 2,
+    "top": [
+      {
+        "batch_no": "T240628",
+        "priority": 73.8,
+        "product": "Lorazepam Tablets I.P. 2 mg",
+        "rank": 1,
+        "reasons": "CLONE_PATTERN_TRAVEL_REVIEW; PRIOR_NSQ_RECORDS=1; MANUFACTURER_HISTORY; BATCH_REPORT_REFERENCE; FOLLOWUP_SAMPLE_STATUS_UNKNOWN"
+      },
+      {
+        "batch_no": "NPL-5105",
+        "priority": 61.8,
+        "product": "Paracetamol, Diclofenac Sodium & Chlorzoxazone Tablets IP",
+        "rank": 2,
+        "reasons": "REPEATED_PACK_BURST_REVIEW; PRIOR_NSQ_RECORDS=1; MANUFACTURER_HISTORY; BATCH_REPORT_REFERENCE; FOLLOWUP_SAMPLE_STATUS_UNKNOWN"
+      },
+      {
+        "batch_no": "PAK-637",
+        "priority": 50.0,
+        "product": "Paracetamol Tablets IP 500 mg",
+        "rank": 3,
+        "reasons": "PRIOR_NSQ_RECORDS=11; REPORTED_IN_LAST_3_MONTHS=11; MANUFACTURER_HISTORY; BATCH_REPORT_REFERENCE; FOLLOWUP_SAMPLE_STATUS_UNKNOWN"
+      },
+      {
+        "batch_no": "1725-230",
+        "priority": 49.95,
+        "product": "Itraconazole Capsule IP 100mg",
+        "rank": 4,
+        "reasons": "SCAN_MODEL_ALERT; PRIOR_NSQ_RECORDS=11; REPORTED_IN_LAST_3_MONTHS=1; MANUFACTURER_HISTORY; BATCH_REPORT_REFERENCE; FOLLOWUP_SAMPLE_STATUS_UNKNOWN"
+      },
+      {
+        "batch_no": "MD24120",
+        "priority": 49.95,
+        "product": "Rabeprazole Sodium Injection IP",
+        "rank": 5,
+        "reasons": "PRIOR_NSQ_RECORDS=12; REPORTED_IN_LAST_3_MONTHS=1; MANUFACTURER_HISTORY; BATCH_REPORT_REFERENCE; FOLLOWUP_SAMPLE_STATUS_UNKNOWN"
+      },
+      {
+        "batch_no": "F01TE055",
+        "priority": 49.5,
+        "product": "Folic Acid Tablets IP 0.4 mg",
+        "rank": 6,
+        "reasons": "PRIOR_NSQ_RECORDS=3; REPORTED_IN_LAST_3_MONTHS=2; MANUFACTURER_HISTORY; BATCH_REPORT_REFERENCE; FOLLOWUP_SAMPLE_STATUS_UNKNOWN"
+      },
+      {
+        "batch_no": "FN25003",
+        "priority": 49.4,
+        "product": "Fentanyl Citrate Injection I.P.",
+        "rank": 7,
+        "reasons": "SCAN_MODEL_ALERT; PRIOR_NSQ_RECORDS=4; REPORTED_IN_LAST_3_MONTHS=1; MANUFACTURER_HISTORY; BATCH_REPORT_REFERENCE; FOLLOWUP_SAMPLE_STATUS_UNKNOWN"
+      },
+      {
+        "batch_no": "GTA1355",
+        "priority": 49.25,
+        "product": "CALXIA Calcium Carbonate 500 MG + VIT. D3 250 IU Tablets IP",
+        "rank": 8,
+        "reasons": "PRIOR_NSQ_RECORDS=16; MANUFACTURER_HISTORY; BATCH_REPORT_REFERENCE; FOLLOWUP_SAMPLE_STATUS_UNKNOWN"
+      },
+      {
+        "batch_no": "TPC26003",
+        "priority": 48.3,
+        "product": "Obelow-60 (Orlistat Capsules USP 60 mg",
+        "rank": 9,
+        "reasons": "PRIOR_NSQ_RECORDS=4; REPORTED_IN_LAST_3_MONTHS=2; MANUFACTURER_HISTORY; BATCH_REPORT_REFERENCE; FOLLOWUP_SAMPLE_STATUS_UNKNOWN"
+      },
+      {
+        "batch_no": "BGL250915",
+        "priority": 47.85,
+        "product": "Sucralate & Oxetacaine suspension",
+        "rank": 10,
+        "reasons": "SCAN_MODEL_ALERT; PRIOR_NSQ_RECORDS=1; REPORTED_IN_LAST_3_MONTHS=1; MANUFACTURER_HISTORY; BATCH_REPORT_REFERENCE; FOLLOWUP_SAMPLE_STATUS_UNKNOWN"
+      }
+    ]
+  },
+  "limits": [
+    "Layer A label is next-month report recurrence of earlier manufacturer text, not medicine safety.",
+    "Layer B labels, packs, sources and locations are simulated.",
+    "Manufacturer text is not verified legal identity; source independence is asserted, not verified."
+  ],
+  "primary_backend": "sklearn",
+  "recurrence_finding": {
+    "history_through": "2026-01",
+    "later_records": 1341,
+    "previously_seen_pct": 9.097688292319164,
+    "previously_seen_text_records": 122
+  }
+}

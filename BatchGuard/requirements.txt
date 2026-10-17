@@ -1,2 +1,0 @@
--r requirements-core.txt
-streamlit>=1.50

@@ -1,0 +1,62 @@
+{
+  "builder_sha256": "3e977895bc836b294bd69641c9e6438ba99f40e0e0dda991cc18b2da2cb567af",
+  "created_at": "2026-10-17T09:35:51.451493+00:00",
+  "limits": [
+    "Local workbook hashes, not verified download origins.",
+    "Manufacturer text is not verified legal identity.",
+    "Collection months stand in for publication dates."
+  ],
+  "outputs": {
+    "all_months_analytical.csv": "50b2a8450f979a420f9ad3a0d0718c4d440653c48e5b2d9df3eba912b948f748",
+    "all_months_failure_normalized.csv": "1a21a9fb222a88614d063cdd3d1ce34b394bc52fdeae71b43c382159b0750c52",
+    "all_months_manufacturer_normalized.csv": "d6cf78309186f68ebae6f95c68cb93a93bd7b3c2dcf5095e01187a73f7582bfb",
+    "all_months_provenance.csv": "16aa9fec02712ca56ed82f4720034618818ab863670b496e626e3272a62bf158",
+    "review/all_months_dataset_summary.csv": "6c7c36d018957a0d21bd49204634fca7d4960b05b7a21cadaae8026108d1da2a",
+    "review/all_months_manufacturer_normalization_review.csv": "de571d0ad62545a3befb490a4fb37cb51b017a6ee8013babf400cc4723a33277",
+    "review/confirmed_duplicate_exclusions.csv": "6960a036230b5fdf98c5aaeb949829ef39fcaa89c22556ad9c488c2c778242eb",
+    "review/december_sorbitol_manual_review.csv": "b8a728fc41501061f85a86478982eaf5fe9accd172bf41de4906c9b3c6d81f79",
+    "review/failure_type_manual_review.csv": "9cfd59b6e1b5f2d3d2207c19545fdc3015ae7c0ef845910f5435f5841edf11fc",
+    "review/parse_review.csv": "fcdad00d42b397798df012131f2ca176db0a381a955a0e940b69383d77ae8f72",
+    "review/source_availability.csv": "d97ffd5193998b51d461b9b1c5339817dfae1538689526858ea5b5b7d6d86e04"
+  },
+  "sources": {
+    "2025-07_all.xlsx": "e402d643072ab815a84ffcf7276bfb361e369972e55ed4e844f496f0c36ff3c8",
+    "2025-08_all.xlsx": "50b158bce30e2ca0e67239030398f505addb076c5b8a76ce52610b43afb168dd",
+    "2025-09_all.xlsx": "8d70ae3d38527fcb18c615443702fedf98a14000bb8ed98a8c40d14290ef24f3",
+    "2025-10_all.xlsx": "0ca7fe7508701d507b6268c32b26dd73c51c25e12ff2bbf7f63311909bd52db2",
+    "2025-11_all.xlsx": "dc120005aa12f88142852cd81239e8c8d2453df393af8d068d64377ea3c81b95",
+    "2025-12_all.xlsx": "f98dcc74f6104fe3b202f4b8bebc73af310231a1781318744596448538831737",
+    "2026-01_all.xlsx": "d92d3dbf9a62433381599a630ce811e4d310ce08a4270a2d18529abb514af6dd",
+    "2026-02_all.xlsx": "e9541a3486cfb9199d907277972f799f6f9e067655309faf681be3968c9ed4c3",
+    "2026-03_all.xlsx": "b71ee6fdf94c30c632d41415e5a65dd1144008daeff640f3409970abcf701583",
+    "2026-04_all.xlsx": "2af626bf02e4652f02ab5398c4dca1f9a6cd90d02b37b505c6e3582cae94614b",
+    "2026-05_all.xlsx": "28b36096f001ce209166bd54e83a23a11dca91a7eda0adc25a6a40b6a7ccddd4",
+    "2026-06_all.xlsx": "efa148c8f5bd4495b8c679b0ebdc7f64128bb152d8a521da12e1e23970f01f9c",
+    "2026-07_all.xlsx": "600494ff59bb25cd4870be8d9ec0728787fb70de1656d56645c6d09603057832",
+    "2026-08_all.xlsx": "a038176f5437b1e8e177a00b7b86d53d34eac1f24e219811ebe60071fd9a81d8"
+  },
+  "summary": {
+    "analytical_records": 2551,
+    "categories": {
+      "central_nsq": 686,
+      "spurious": 44,
+      "state_nsq": 1821
+    },
+    "months": [
+      "2025-07",
+      "2025-08",
+      "2025-09",
+      "2025-10",
+      "2025-11",
+      "2025-12",
+      "2026-01",
+      "2026-02",
+      "2026-03",
+      "2026-04",
+      "2026-05",
+      "2026-06",
+      "2026-07",
+      "2026-08"
+    ]
+  }
+}

@@ -23,7 +23,7 @@ python -m src.fusion run                   # train + evaluate both layers -> out
 python -m src.fusion benchmark             # stream benchmark -> outputs/benchmark_<laptop|linuxone>.json
 python -m src.synthetic_challenge           # separate scan stress set -> data/synthetic/
 python -m src.scan_learning_curve            # fixed-test learning curve -> outputs/scan_learning_curve.json
-python -m src.field_model --help              # separate field-case train/score commands
+python -m src.field_model --help              # template, train, and score commands; field data is not included
 python -m src.scale_benchmark --events 5000 --profile routine --backend sklearn
 python -m unittest discover -s tests       # 34 tests
 python -m app.dashboard                    # dashboard -> outputs/dashboard.html (open in any browser)

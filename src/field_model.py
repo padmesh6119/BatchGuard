@@ -359,9 +359,42 @@ def score(path, model_directory, output):
     return output_rows
 
 
+def write_template(path):
+    """Write one deliberately non-trainable schema example for data integration."""
+    path = Path(path)
+    if path.exists():
+        raise FileExistsError(f"Refusing to overwrite existing file: {path}")
+    stamp = "2026-09-01T10:00:00+00:00"
+    observations = []
+    for index, (latitude, longitude, source) in enumerate(
+            ((13.08, 80.27, "REPLACE-SCANNER-A"), (28.61, 77.21, "REPLACE-SCANNER-B"))):
+        event_id = f"REPLACE-EVENT-{index + 1}"
+        observations.append({
+            "event": {"event_id": event_id, "pack_id": "REPLACE-OBSERVED-CODE",
+                      "product": "REPLACE-PRODUCT", "batch_no": "REPLACE-BATCH",
+                      "manufacturer_key": "REPLACE-MANUFACTURER",
+                      "event_time": stamp if index == 0 else "2026-09-01T10:04:00+00:00",
+                      "source_id": source, "latitude": latitude, "longitude": longitude,
+                      "simulated": True},
+            "received_at": stamp if index == 0 else "2026-09-01T10:04:03+00:00",
+            "location_accuracy_m": 12.0, "clock_offset_seconds": 0.0,
+            "scanner_authenticated": True})
+    example = {"case_id": "REPLACE-CASE-ID", "site_id": "REPLACE-SITE-ID", "split": "train",
+               "observations": observations,
+               "physical_pack_ids": {"REPLACE-EVENT-1": "REPLACE-VERIFIED-PHYSICAL-PACK-A",
+                                     "REPLACE-EVENT-2": "REPLACE-VERIFIED-PHYSICAL-PACK-B"},
+               "adjudication": {"method": "physical_inspection", "evidence_ref": "REPLACE-PRIVATE-EVIDENCE-REF",
+                                "reviewer_id": "REPLACE-REVIEWER-ID", "adjudicated_at": "2026-09-02T09:00:00+00:00"}}
+    path.parent.mkdir(parents=True, exist_ok=True)
+    path.write_text(json.dumps(example, separators=(",", ":")) + "\n")
+    return path
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     commands = parser.add_subparsers(dest="command", required=True)
+    template = commands.add_parser("template", help="write a non-trainable schema example")
+    template.add_argument("--output", type=Path, required=True)
     training = commands.add_parser("train", help="fit from adjudicated field JSONL")
     training.add_argument("cases", type=Path)
     training.add_argument("--output", type=Path, required=True)
@@ -371,12 +404,26 @@ def main():
     scoring.add_argument("--model", type=Path, required=True)
     scoring.add_argument("--output", type=Path, required=True)
     args = parser.parse_args()
-    if args.command == "train":
-        card = train(args.cases, args.output, args.backend)
-        print(json.dumps({"field_review_ready": card["field_review_ready"],
-                          "readiness_reasons": card["readiness_reasons"], "test": card["test"]}, indent=2))
-    else:
-        print(f"Scored {len(score(args.cases, args.model, args.output))} cases into {args.output}")
+    try:
+        if args.command == "template":
+            print(f"Wrote schema example to {write_template(args.output)}. Replace every placeholder with audited field data.")
+        elif args.command == "train":
+            if not args.cases.is_file():
+                raise FileNotFoundError(
+                    f"Training dataset not found: {args.cases}. The repository has no adjudicated scan data. "
+                    "Collect real cases first; 'template' creates a placeholder, not training data.")
+            card = train(args.cases, args.output, args.backend)
+            print(json.dumps({"field_review_ready": card["field_review_ready"],
+                              "readiness_reasons": card["readiness_reasons"], "test": card["test"]}, indent=2))
+        else:
+            if not args.cases.is_file():
+                raise FileNotFoundError(f"Scoring input not found: {args.cases}; provide unlabeled field cases")
+            card_path = args.model / "field_model_card.json"
+            if not card_path.is_file():
+                raise FileNotFoundError(f"No trained field model at {args.model}; train successfully before scoring")
+            print(f"Scored {len(score(args.cases, args.model, args.output))} cases into {args.output}")
+    except (FileNotFoundError, FileExistsError, ValueError, OSError) as exc:
+        parser.error(str(exc))
 
 
 if __name__ == "__main__":

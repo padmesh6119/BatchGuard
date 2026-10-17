@@ -4,7 +4,15 @@ The repository has **no adjudicated field scans yet**. The current dashboard's s
 
 ## Input contract
 
-Supply newline-delimited JSON, one *six-hour, single-batch candidate* per line. Each training case has `case_id`, `site_id`, `split` (`train`, `validation`, or `test`), `observations`, `physical_pack_ids`, and `adjudication`. Each observation contains an `event` with the documented `ScanEvent` fields (`simulated: false`), plus `received_at` (server timestamp), `location_accuracy_m`, `clock_offset_seconds`, and `scanner_authenticated`. `clock_offset_seconds` is **scanner clock minus trusted synchronized time**; scan time is corrected by subtracting it before feature extraction. The four telemetry fields must come from the collection system, not an investigator's guess. `physical_pack_ids` maps each unique event ID to a separately verified physical-pack identity. The adjudication record contains `method` (`physical_inspection` or `independent_pack_authentication`), `evidence_ref`, `reviewer_id`, and `adjudicated_at`.
+Supply newline-delimited JSON, one *six-hour, single-batch candidate* per line. The paths `private/adjudicated_cases.jsonl` and `private/new_cases.jsonl` below are examples; these files are not shipped with the repository. Training requires data collected and adjudicated by the project team. The repository does not contain it, and the starter template is deliberately rejected by the trainer.
+
+Create a non-trainable example to edit or use when building an export:
+
+```bash
+python -m src.field_model template --output private/field_case_template.jsonl
+```
+
+This writes one example line with `simulated: true` and `REPLACE-...` placeholders. Replace it with actual events; create enough cases for every split and site; never treat the example as training data. Each training case has `case_id`, `site_id`, `split` (`train`, `validation`, or `test`), `observations`, `physical_pack_ids`, and `adjudication`. Each observation contains an `event` with the documented `ScanEvent` fields (`simulated: false`), plus `received_at` (server timestamp), `location_accuracy_m`, `clock_offset_seconds`, and `scanner_authenticated`. `clock_offset_seconds` is **scanner clock minus trusted synchronized time**; scan time is corrected by subtracting it before feature extraction. The four telemetry fields must come from the collection system, not an investigator's guess. `physical_pack_ids` maps each unique event ID to a separately verified physical-pack identity. The adjudication record contains `method` (`physical_inspection` or `independent_pack_authentication`), `evidence_ref`, `reviewer_id`, and `adjudicated_at`.
 
 The label is derived: an observed pack ID is copied if its events are linked to more than one verified physical pack. Outcome evidence is **never** supplied to the model at scoring time. The input validator rejects simulated events, missing provenance, incomplete telemetry, conflicting event IDs, overlapping sites or pack identities across cases, and non-chronological train/validation/test periods. Chronology uses server receipt timestamps rather than scanner clocks. The validator checks that evidence references are present; it cannot independently authenticate a claimed inspection, scanner, or evidence file. A deployment must verify those upstream.
 
@@ -60,8 +68,8 @@ One training line has this shape (replace every placeholder with an audited valu
 ## Commands
 
 ```bash
-python -m src.field_model train private/adjudicated_cases.jsonl --output outputs/field_model
-python -m src.field_model score private/new_cases.jsonl --model outputs/field_model --output private/field_scores.json
+python -m src.field_model train private/adjudicated_cases.jsonl --output outputs/field_model && \
+  python -m src.field_model score private/new_cases.jsonl --model outputs/field_model --output private/field_scores.json
 python -m app.dashboard
 ```
 

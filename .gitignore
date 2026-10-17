@@ -1,0 +1,19 @@
+.firecrawl/
+**/.venv/
+**/__pycache__/
+*.sqlite
+*.sqlite-wal
+*.sqlite-shm
+**/data/snapshots/
+**/data/CURRENT
+**/data/.refresh.lock
+# Environment secrets
+.env
+.env.*
+
+# Python cache and test artifacts
+*.py[cod]
+.pytest_cache/
+
+# Streamlit secrets
+.streamlit/secrets.toml

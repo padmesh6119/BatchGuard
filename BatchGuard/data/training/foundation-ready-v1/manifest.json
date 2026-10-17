@@ -1,0 +1,135 @@
+{
+  "builder_sha256": "6031922c39e6886fafcb74e44c96debe3f7f7bca2f052a79e9e2c092bb1fdd18",
+  "dependency_code": {
+    "batchguard_engine.py": "a7bb476c2593352ae6379720c6017babd087345023fbc60273e709a68c7b033e",
+    "decision_core.py": "80f95019caa23c59e5f75ebc8b595f7cc9b16d2fd7ca61d2a349ef20e6f86a99",
+    "inspection_stream.py": "899e8375a55313266731444c0fbb2378031a89477d0a01cbb57c73834920e03b",
+    "scan_features.py": "0f275dd992f1fbf22731dbd41aeac41325d25dc2d690ab142cf2c63025fec058"
+  },
+  "environment": {
+    "machine": "x86_64",
+    "pandas": "3.0.6",
+    "python": "3.14.7"
+  },
+  "features_sha256": "0f275dd992f1fbf22731dbd41aeac41325d25dc2d690ab142cf2c63025fec058",
+  "files": {
+    "next_month_report_recurrence/test_X.csv": "09338f878addef1d466d194d64c8aafa0c4233305bcf0a3b31bde2c2faee6a85",
+    "next_month_report_recurrence/test_metadata.csv": "e565d2c25d15765677c7783af3461eb0e0c63c1fd1a0733f4ababce98555c59c",
+    "next_month_report_recurrence/test_y.csv": "37ef64cbeeb6f354aebf02ec915f1ff54135f23d25c455b80cc9a043b73670a2",
+    "next_month_report_recurrence/train_X.csv": "bd80a78fb88977c4d0884f8f8c07fb43cfd3344f3759af726634d26ebfff4ca3",
+    "next_month_report_recurrence/train_metadata.csv": "34df46b525a6dfd1747ef8f015de30ff8a250c3296258ac57845edee0bb1726f",
+    "next_month_report_recurrence/train_y.csv": "bb13d170234f981aa2e817fb6caa18800a0eea8df2586dac6eefcf0304e60913",
+    "next_month_report_recurrence/validation_X.csv": "9f8b62cfe8beb7c1153b1db4a18c4862bd8323bd25c2fe3f9461044501c60944",
+    "next_month_report_recurrence/validation_metadata.csv": "d0c60b04e54c3503370907ef86e6469416015524a4579711aa866520e3375c5b",
+    "next_month_report_recurrence/validation_y.csv": "001648d0beda494d0f7e2f6925dfe1b498e2505462ba35a61e4174c275d10f77",
+    "scan_episodes.jsonl": "b64501a2bcf37eb4df1fa3502824a3b5b4517fb78383d479cacc31bbe84d518a",
+    "simulated_clone_episode/test_X.csv": "aebaf09f7ac69501a635d7063b0c41921fd25d69123dd5e737e37123584d4340",
+    "simulated_clone_episode/test_metadata.csv": "417050df1a0ea805d22019763eb1c79e985229890d824c391c5f1e9e93505445",
+    "simulated_clone_episode/test_y.csv": "4f78fd5cfb92548d311aa0fab989e79241e2269d2914c9a71af2da08dd60994c",
+    "simulated_clone_episode/train_X.csv": "49aa64f1fc283357bf7d678cd585d8e03d7606d89d57d3077a4c9243f6fa071c",
+    "simulated_clone_episode/train_metadata.csv": "69ccf7613abcf55fa70570995d0ddf69fade67b3277dffcde12608c800c62676",
+    "simulated_clone_episode/train_y.csv": "5f4d12e42ee861edab28e801229190c5568efb44758c15193f66ea55c6539c69",
+    "simulated_clone_episode/validation_X.csv": "221e64aed4407c260aaa7aacbca925b053838c2277e0cf037d299ade281e75eb",
+    "simulated_clone_episode/validation_metadata.csv": "78c9208447510f90cf1a867fd0ad1aff006311a3c06882bfb26cad2bba94992d",
+    "simulated_clone_episode/validation_y.csv": "dc95732eed95d439ddaa83c65e12acfb46c6dcc34746d9b590e4823117f0a002"
+  },
+  "foundation_version": "training-foundation-v1",
+  "heldout_scan_families": [
+    "delayed_sync",
+    "slow_copy"
+  ],
+  "limitations": [
+    "Layer A predicts next-month reported recurrence among previously observed manufacturer text signatures.",
+    "A zero recurrence label means no next-month report, not a safe medicine.",
+    "Collection months are proxies, not verified publication dates.",
+    "Layer B labels and all pack/source/location behavior are synthetic.",
+    "Some legitimate travel and slow-copy observations are indistinguishable; perfect detection is not expected.",
+    "Scenario prevalence is a design choice, not real market prevalence.",
+    "Manufacturer identities and source independence are not verified."
+  ],
+  "readiness": "ready_for_baseline_training_with_stated_limits",
+  "recurrence_finding": {
+    "interpretation": "Exact manufacturer-text recurrence among later NSQ reports, not a universal prediction ceiling.",
+    "later_records": 1341,
+    "previously_seen_pct": 9.097688292319164,
+    "previously_seen_text_records": 122,
+    "training_through": "2026-01"
+  },
+  "scan_observation_seconds": 21600,
+  "seed": 2026,
+  "snapshot_id": "6e881f22c3016444c02b49d2fc852b2b81975aaa57d24879da0453ee404698f5",
+  "source_row_provenance_sha256": "16aa9fec02712ca56ed82f4720034618818ab863670b496e626e3272a62bf158",
+  "tasks": {
+    "next_month_report_recurrence": {
+      "feature_columns": [
+        "prior_records",
+        "prior_months",
+        "prior_products",
+        "records_last_month",
+        "records_last_3_months",
+        "months_since_last_report",
+        "unresolved_failure_records"
+      ],
+      "splits": {
+        "test": {
+          "labels": {
+            "0": 3309,
+            "1": 61
+          },
+          "rows": 3370
+        },
+        "train": {
+          "labels": {
+            "0": 6609,
+            "1": 151
+          },
+          "rows": 6760
+        },
+        "validation": {
+          "labels": {
+            "0": 1417,
+            "1": 21
+          },
+          "rows": 1438
+        }
+      }
+    },
+    "simulated_clone_episode": {
+      "feature_columns": [
+        "unique_events",
+        "unique_packs",
+        "max_events_per_pack",
+        "max_sources_per_pack",
+        "max_pack_distance_km",
+        "max_pack_speed_kmh",
+        "max_events_per_pack_5min",
+        "observation_span_minutes",
+        "retry_fraction"
+      ],
+      "splits": {
+        "test": {
+          "labels": {
+            "0": 132,
+            "1": 99
+          },
+          "rows": 231
+        },
+        "train": {
+          "labels": {
+            "0": 300,
+            "1": 200
+          },
+          "rows": 500
+        },
+        "validation": {
+          "labels": {
+            "0": 99,
+            "1": 66
+          },
+          "rows": 165
+        }
+      }
+    }
+  },
+  "training_performed": false
+}

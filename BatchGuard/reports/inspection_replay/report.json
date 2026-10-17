@@ -1,0 +1,128 @@
+{
+  "accepted_new_events": 88,
+  "active_unique_candidates": 6,
+  "benchmark": {
+    "accepted_new_events_per_second": 663.9736398876734,
+    "deliveries_per_second": 671.5187948863969,
+    "duration_seconds": 0.13253538199933246,
+    "latency_ms": {
+      "mean": 1.484039483125599,
+      "p50": 1.2603249997482635,
+      "p95": 2.7280145965050906,
+      "p99": 3.3931835155817685
+    },
+    "queue_evaluation_seconds": 0.017860501000541262,
+    "scope": "Sequential local validation, SQLite transaction, pack features and audit persistence per delivery. Excludes reference loading, network and UI; queue timing separate. No warmup excluded."
+  },
+  "budget_comparison": {
+    "fused": {
+      "capture_fraction": 0.6666666666666666,
+      "labeled_selected": 2,
+      "selected_candidates": 2,
+      "simulated_clone_candidates_captured": 2
+    },
+    "history_only": {
+      "capture_fraction": 0.0,
+      "labeled_selected": 2,
+      "selected_candidates": 2,
+      "simulated_clone_candidates_captured": 0
+    },
+    "raw_volume": {
+      "capture_fraction": 0.3333333333333333,
+      "labeled_selected": 2,
+      "selected_candidates": 2,
+      "simulated_clone_candidates_captured": 1
+    },
+    "scan_only": {
+      "capture_fraction": 0.6666666666666666,
+      "labeled_selected": 2,
+      "selected_candidates": 2,
+      "simulated_clone_candidates_captured": 2
+    }
+  },
+  "capacity": 2,
+  "detector": {
+    "evaluation_unit": "active sampling candidate; threshold evidence_tier >= 2",
+    "false_negatives": 1,
+    "false_positives": 0,
+    "precision": 1.0,
+    "recall": 0.6666666666666666,
+    "true_positives": 2
+  },
+  "duplicate_deliveries": 1,
+  "environment": {
+    "linuxone_run_verified": false,
+    "logical_cpu_count": 8,
+    "machine": "x86_64",
+    "packages": {
+      "openpyxl": "3.1.5",
+      "pandas": "3.0.6",
+      "snapml": "not installed",
+      "streamlit": "1.66.0"
+    },
+    "platform_note": "Architecture is recorded automatically; operator must verify host allocation. No acceleration claim.",
+    "python": "3.14.7",
+    "release": "6.12.108-1-MANJARO",
+    "system": "Linux"
+  },
+  "input_deliveries": 89,
+  "labeled_active_candidates": 6,
+  "limitations": [
+    "Synthetic behavior only; no commercial competitor was benchmarked.",
+    "Source independence is assumed, not authenticated; Sybil attacks are not solved.",
+    "Thresholds and scenarios are hand-designed; no trained AI or unseen-family generalization claim.",
+    "Slow clones outside the 30-minute window remain a known miss.",
+    "Queue and metrics use the last 30 minutes of event time, not wall-clock freshness.",
+    "All candidates, including weak evidence, can fill the requested budget; N is a maximum, not an obligation to act.",
+    "No real defect probability or real-world counterfeit accuracy is measured."
+  ],
+  "policy_version": "corroboration-v1",
+  "scenario_results": [
+    {
+      "candidate_id": "cfb158542ebef69a5a1f15ee",
+      "clone": true,
+      "detected": true,
+      "evidence_tier": 3,
+      "scenario": "clone_spread"
+    },
+    {
+      "candidate_id": "148588bac37dd6d0e55819df",
+      "clone": true,
+      "detected": true,
+      "evidence_tier": 2,
+      "scenario": "clone_burst"
+    },
+    {
+      "candidate_id": "e3656feaf993119bc64c35c7",
+      "clone": false,
+      "detected": false,
+      "evidence_tier": 1,
+      "scenario": "single_source_flood"
+    },
+    {
+      "candidate_id": "0b09c24356e3e0d4b5233ddc",
+      "clone": false,
+      "detected": false,
+      "evidence_tier": 0,
+      "scenario": "benign_distribution"
+    },
+    {
+      "candidate_id": "39dec5d037b745fd9325f792",
+      "clone": true,
+      "detected": false,
+      "evidence_tier": 0,
+      "scenario": "slow_clone_known_miss"
+    },
+    {
+      "candidate_id": "7051db67bbf7fa2820f18264",
+      "clone": false,
+      "detected": false,
+      "evidence_tier": 0,
+      "scenario": "benign_repeat"
+    }
+  ],
+  "simulated_clone_candidates": 3,
+  "snapshot_id": "0f8b77c5b560abd5ba175b22ae7029f27800b062e5f3f7aed16614a58d6c7589",
+  "truth_sha256": "d3b6782f2355f9d35fc2a24297a5ede3999f91e8abf6507c7b2bace98aee0b15",
+  "workload_sha256": "fb58ca593fbb29d4a871e3f1f1f06a07701484ffe1595b28458e924f319b81b0"
+}

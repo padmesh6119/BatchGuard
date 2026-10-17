@@ -1,0 +1,124 @@
+{
+  "builder_sha256": "7d3dd0926040c4f5fb4898a056c2a4d062ec7d4708baee7649c4fd20f5693a59",
+  "features_sha256": "0f275dd992f1fbf22731dbd41aeac41325d25dc2d690ab142cf2c63025fec058",
+  "files": {
+    "next_month_report_recurrence/test_X.csv": "09338f878addef1d466d194d64c8aafa0c4233305bcf0a3b31bde2c2faee6a85",
+    "next_month_report_recurrence/test_metadata.csv": "e565d2c25d15765677c7783af3461eb0e0c63c1fd1a0733f4ababce98555c59c",
+    "next_month_report_recurrence/test_y.csv": "37ef64cbeeb6f354aebf02ec915f1ff54135f23d25c455b80cc9a043b73670a2",
+    "next_month_report_recurrence/train_X.csv": "bd80a78fb88977c4d0884f8f8c07fb43cfd3344f3759af726634d26ebfff4ca3",
+    "next_month_report_recurrence/train_metadata.csv": "34df46b525a6dfd1747ef8f015de30ff8a250c3296258ac57845edee0bb1726f",
+    "next_month_report_recurrence/train_y.csv": "bb13d170234f981aa2e817fb6caa18800a0eea8df2586dac6eefcf0304e60913",
+    "next_month_report_recurrence/validation_X.csv": "9f8b62cfe8beb7c1153b1db4a18c4862bd8323bd25c2fe3f9461044501c60944",
+    "next_month_report_recurrence/validation_metadata.csv": "d0c60b04e54c3503370907ef86e6469416015524a4579711aa866520e3375c5b",
+    "next_month_report_recurrence/validation_y.csv": "001648d0beda494d0f7e2f6925dfe1b498e2505462ba35a61e4174c275d10f77",
+    "scan_episodes.jsonl": "02343f5c637453a725316d5db7eebef07bd6f68c6a6c0d061d171f02c94445ab",
+    "simulated_clone_episode/test_X.csv": "68451671eb8b3c4ea9f79cbd2ecb33179e2550d019e7f8e5f282ec69290faab8",
+    "simulated_clone_episode/test_metadata.csv": "1e9e0bc889b5efba5f1cecd0addce0ac896f2b78959d27fb9d42199382d08ded",
+    "simulated_clone_episode/test_y.csv": "69c8391e19d811af12255b523c9a2b14623d2b724d47421f9e615cd6356510e2",
+    "simulated_clone_episode/train_X.csv": "ba0ad762fb6d4c0610cc3f66490384f0931be25f7380b6404a8edd1d59147e8b",
+    "simulated_clone_episode/train_metadata.csv": "df21d3c3d92902c59542d8041a7937650a0896aacb9f47f6a09783b96f8875f9",
+    "simulated_clone_episode/train_y.csv": "df70e9a2923d3d7013543475db64b60f037de2d0458100e34d0bc04df7b5c86f",
+    "simulated_clone_episode/validation_X.csv": "01cb14c3900dc2464f915dbc2e8430f291ee0da9d7d2eda46891199298049f72",
+    "simulated_clone_episode/validation_metadata.csv": "4dd5da6aae897fbd3e13df5d9addad16f9d4a8664b2e90bd5589947470592e03",
+    "simulated_clone_episode/validation_y.csv": "47796c689ac3bfebb06ab5eab0f84a611749a579b53e8e9e78a6ad907d7f9a61"
+  },
+  "foundation_version": "training-foundation-v1",
+  "heldout_scan_families": [
+    "delayed_sync",
+    "slow_copy"
+  ],
+  "limitations": [
+    "Layer A predicts next-month reported recurrence among previously observed manufacturer text signatures.",
+    "A zero recurrence label means no next-month report, not a safe medicine.",
+    "Collection months are proxies, not verified publication dates.",
+    "Layer B labels and all pack/source/location behavior are synthetic.",
+    "Some legitimate travel and slow-copy observations are indistinguishable; perfect detection is not expected.",
+    "Scenario prevalence is a design choice, not real market prevalence.",
+    "Manufacturer identities and source independence are not verified."
+  ],
+  "readiness": "ready_for_baseline_training_with_stated_limits",
+  "recurrence_finding": {
+    "interpretation": "Exact manufacturer-text recurrence among later NSQ reports, not a universal prediction ceiling.",
+    "later_records": 1341,
+    "previously_seen_pct": 9.097688292319164,
+    "previously_seen_text_records": 122,
+    "training_through": "2026-01"
+  },
+  "scan_observation_seconds": 21600,
+  "seed": 2026,
+  "snapshot_id": "3603d24a6a4951fb453574b65b9205a4a640f207d907f15cddd37d75c02cfc58",
+  "source_row_provenance_sha256": "16aa9fec02712ca56ed82f4720034618818ab863670b496e626e3272a62bf158",
+  "tasks": {
+    "next_month_report_recurrence": {
+      "feature_columns": [
+        "prior_records",
+        "prior_months",
+        "prior_products",
+        "records_last_month",
+        "records_last_3_months",
+        "months_since_last_report",
+        "unresolved_failure_records"
+      ],
+      "splits": {
+        "test": {
+          "labels": {
+            "0": 3309,
+            "1": 61
+          },
+          "rows": 3370
+        },
+        "train": {
+          "labels": {
+            "0": 6609,
+            "1": 151
+          },
+          "rows": 6760
+        },
+        "validation": {
+          "labels": {
+            "0": 1417,
+            "1": 21
+          },
+          "rows": 1438
+        }
+      }
+    },
+    "simulated_clone_episode": {
+      "feature_columns": [
+        "unique_events",
+        "unique_packs",
+        "max_events_per_pack",
+        "max_sources_per_pack",
+        "max_pack_distance_km",
+        "max_pack_speed_kmh",
+        "max_events_per_pack_5min",
+        "observation_span_minutes",
+        "retry_fraction"
+      ],
+      "splits": {
+        "test": {
+          "labels": {
+            "0": 40,
+            "1": 30
+          },
+          "rows": 70
+        },
+        "train": {
+          "labels": {
+            "0": 90,
+            "1": 60
+          },
+          "rows": 150
+        },
+        "validation": {
+          "labels": {
+            "0": 30,
+            "1": 20
+          },
+          "rows": 50
+        }
+      }
+    }
+  },
+  "training_performed": false
+}

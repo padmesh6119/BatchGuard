@@ -1,0 +1,33 @@
+﻿source_pdf,sha256,page_count,report_month,category,revision_status,official_url,release_date,verification_status,notes
+2024-09_central.pdf,de338eeabfae7599252f4a72ee93c4b4b8d5711bb3fbf421bdf5d4247c347fd5,9,2024-09,central_nsq,original_report,,,local_verified_copy,Standard monthly report table.
+2024-09_spurious.pdf,c85f6e2bb4f7cbfbeaa6def6d1c90db88e5ec82d66c1bf9cedab71d2fd441054,2,2024-09,spurious,original_report,,,local_verified_copy,Standard monthly report table.
+2024-09_state.pdf,59ec86edf034612c0ab8da5c83b78c7ab63b6753eca1a1f3372e64012b3ad55a,5,2024-09,state_nsq,original_report,,,local_verified_copy,Non-reporting state footer references August 2024 instead of September 2024.
+2024-10_central.pdf,c173178404be7982adf000cf5a0513fb1bdfc70ae5ea16ad58c4535ecb98b3a1,9,2024-10,central_nsq,original_report,,,local_verified_copy,Standard monthly report table.
+2024-10_spurious.pdf,109f95ba2162ecfee6cc5295abed634c4bf7dd4ddf7385a7b257a44032d43b64,2,2024-10,spurious,original_report,,,local_verified_copy,Page 2 contains trailing wrapped text from page 1 S.No 3 Firm's reply.
+2024-10_state.pdf,2ad616ccf78650e02a29a9ddf42532ef3edf9865961c6088f468e42254e19190,9,2024-10,state_nsq,original_report,,,local_verified_copy,Standard monthly report table.
+2024-11_central.pdf,54c9c632840c23df9679bfca97ec89b54662e9a474639104849684234564f44f,8,2024-11,central_nsq,original_report,,,local_verified_copy,Standard monthly report table.
+2024-11_revised.pdf,67f41777ed98a9773f990952b61625b5221cc315efff1cccfa0b957234b18b56,1,2024-11,revision,revision_document,,,local_verified_copy,Standalone revision document modifying prior published record; extracted to evidence/revision_records.xlsx.
+2024-11_spurious.pdf,e1951ead85b45629e9471b04c1a571e4b8a76be4aa2e4bf900235fc2c62f16fd,2,2024-11,spurious,original_report,,,local_verified_copy,Page 2 contains statutory definition of Spurious Drug under Section 17-B; no tabular drug records on page 2.
+2024-11_state.pdf,f582691ff96bedf82f541b272e6633ac761e40e8b711f93acafee6044fc6d391,18,2024-11,state_nsq,original_report,,,local_verified_copy,Standard monthly report table.
+2024-12_central.pdf,84a032123daeadabfb159111c9a053f0a608c7fd8a0d620911403ab636e34ddb,9,2024-12,central_nsq,original_report,,,local_verified_copy,Standard monthly report table.
+2024-12_state.pdf,e86b0d9dcffe66f624447322efec9c24d591abb7a53312a350d4888855e25bf5,18,2024-12,state_nsq,original_report,,,local_verified_copy,Standard monthly report table.
+2025-01_central.pdf,2507e55b9aeac5d2ea2ad74675ee99a01d37f37ab6bb283430b6351b5296497f,10,2025-01,central_nsq,original_report,,,local_verified_copy,Standard monthly report table.
+2025-01_revised-1.pdf,ef05f7369d23ef5140330e8d94187689567431be3c15fdea31d6b1a2bc7e8ec1,1,2025-01,revision,revision_document,,,local_verified_copy,Standalone revision document modifying prior published record; extracted to evidence/revision_records.xlsx.
+2025-01_revised.pdf,c1df83663689a1190df821ff46a2d522d35ded54a213474b728b50063024c954,1,2025-01,revision,revision_document,,,local_verified_copy,Standalone revision document modifying prior published record; extracted to evidence/revision_records.xlsx.
+2025-01_state.pdf,db4fd6b5eb485d04d4c879e3f9f9d22f0b58f6fc0c1fd4732cf26da0b01be7aa,22,2025-01,state_nsq,original_report,,,local_verified_copy,Standard monthly report table.
+2025-02_central.pdf,167371d7ead3be9724f89f9714e2e5a7ac7a06e9303704edd6d37e4bada50064,6,2025-02,central_nsq,original_report,,,local_verified_copy,Standard monthly report table.
+2025-02_spurious.pdf,5d53f397889321163e89831f85fe2006c1f12d8f9486e945ed32ad2df362cda8,1,2025-02,spurious,original_report,,,local_verified_copy,Standard monthly report table.
+2025-02_state.pdf,288824ec597a07f31db931a849b20ab7e46ee404cba10abacc4cd2e873ee0109,16,2025-02,state_nsq,original_report,,,local_verified_copy,Standard monthly report table.
+2025-03_central.pdf,55187790a0bec8596a6275fc05433a52a8adbe98cf46e524f40132833c238fae,9,2025-03,central_nsq,original_report,,,local_verified_copy,Page 9 is a blank trailing page without text or table elements.
+2025-03_spurious.pdf,34d18af4c554787c9453ba804dad871ce9b139b7c08df54cdce3ebed8fd4c18d,1,2025-03,spurious,original_report,,,local_verified_copy,Standard monthly report table.
+2025-03_state.pdf,13936dbae6b67edb4834d620dd02e0fa45fb086bc6521420d40262d7ccbc97b5,9,2025-03,state_nsq,original_report,,,local_verified_copy,Standard monthly report table.
+2025-04_central.pdf,0b97f83719198cf8202c5caba4a5feecfd20f49175732cd6ebeef4944e612c82,7,2025-04,central_nsq,original_report,,,local_verified_copy,Standard monthly report table.
+2025-04_spurious.pdf,593446c0d2142fedd7977696b7a9c38db92ffb4edc986f17ad0af1250220b36a,1,2025-04,spurious,original_report,,,local_verified_copy,Standard monthly report table.
+2025-04_state.pdf,4008fb24706217375e0205f11221fe9981552979baf8c3d9e8ab9715157ffb93,22,2025-04,state_nsq,original_report,,,local_verified_copy,Standard monthly report table.
+2025-05_central.pdf,ea2b9aecce6dcd1073c83dcaa661b87265c648e1096036b9e53f12cb6f727b2a,7,2025-05,central_nsq,original_report,,,local_verified_copy,Standard monthly report table.
+2025-05_revised.pdf,0ba4117374cfb2bb778fdc80191c2c352dcc3eb755734adff3437de232d60ff0,1,2025-05,revision,revision_document,,,local_verified_copy,Title heading specifies May 2025 (Revised) but subtitle specifies January 2025 (Revised); linked to 2025-05_central S.No 19.
+2025-05_spurious.pdf,8b0877f57cee6fd2e9ea7174be7124250dd565daaccb03d6116fc9c4d7aea15b,2,2025-05,spurious,original_report,,,local_verified_copy,Page 2 contains statutory definition of Spurious Drug under Section 17-B; no tabular drug records on page 2.
+2025-05_state.pdf,86f85691de1bcac94c6f2d88e570782f32419314f9ee80c0ff812ca353cc0a7d,19,2025-05,state_nsq,original_report,,,local_verified_copy,Standard monthly report table.
+2025-06_central.pdf,e4d55f085dcfb29bb808c55ddd89a374c1f256c4a620af95a2c50144ce410509,6,2025-06,central_nsq,original_report,,,local_verified_copy,Standard monthly report table.
+2025-06_spurious.pdf,7ddd0c43d13b56f76ed1a4097c992a963e71f45430c52f25429d389c28c85e0b,2,2025-06,spurious,original_report,,,local_verified_copy,Page 1 contains S.No 1-3 with split columns; Page 2 contains S.No 4.
+2025-06_state.pdf,43de100540526f71bd7555afeecb84ffc64c308e1a564d37c91e0446c2b307c3,15,2025-06,state_nsq,original_report,,,local_verified_copy,Standard monthly report table.

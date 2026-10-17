@@ -1,0 +1,13 @@
+test_bad_overflow_repair_is_rejected (test_review_integrity.ReviewIntegrityTests.test_bad_overflow_repair_is_rejected) ... ok
+test_corrected_staging_passes (test_review_integrity.ReviewIntegrityTests.test_corrected_staging_passes) ... ok
+test_duplicate_mapping_with_same_row_count_is_rejected (test_review_integrity.ReviewIntegrityTests.test_duplicate_mapping_with_same_row_count_is_rejected) ... ok
+test_fabricated_raw_evidence_is_rejected (test_review_integrity.ReviewIntegrityTests.test_fabricated_raw_evidence_is_rejected) ... ok
+test_hash_mismatch_is_rejected (test_review_integrity.ReviewIntegrityTests.test_hash_mismatch_is_rejected) ... ok
+test_missing_review_links_are_rejected (test_review_integrity.ReviewIntegrityTests.test_missing_review_links_are_rejected) ... ok
+test_unresolved_record_cannot_be_marked_clean (test_review_integrity.ReviewIntegrityTests.test_unresolved_record_cannot_be_marked_clean) ... ok
+test_wrong_product_in_review_report_is_rejected (test_review_integrity.ReviewIntegrityTests.test_wrong_product_in_review_report_is_rejected) ... ok
+
+----------------------------------------------------------------------
+Ran 8 tests in 38.046s
+
+OK

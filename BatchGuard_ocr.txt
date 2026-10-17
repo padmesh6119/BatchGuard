@@ -1,0 +1,6 @@
+=== page_bg-1.png ===
+=== page_bg-2.png ===
+=== page_bg-3.png ===
+=== page_bg-4.png ===
+=== page_bg-5.png ===
+=== page_bg-6.png ===

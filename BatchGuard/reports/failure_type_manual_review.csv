@@ -1,0 +1,179 @@
+﻿build_record_id,collection_month,source_category,product,batch_no,failure_type,failure_categories,failure_mapping_status
+2025-07:0012,2025-07,central_nsq,Absorbent Cotton Wool IP To be Sterilized before use,2096,"Test of Foreign Fibres, Sinking time",other_or_unclassified,manual_review_required
+2025-07:0038,2025-07,central_nsq,Absorbent Cotton Wool IP To be Sterilized before use,2079,Test of Foreign Fibres,other_or_unclassified,manual_review_required
+2025-07:0070,2025-07,state_nsq,ORAL REHYDRATION SALTS IP (VENTOLYTE ORS),Z-25447,NET WEIGHT/SACHET FOUND TO BE 21.1921GM. AGAINST CLAIM OF 21.8GM/SACHET.,other_or_unclassified,manual_review_required
+2025-07:0072,2025-07,state_nsq,Luliconazole Lotion 1 % w/v?Lunix?Lotion,SPE240414,Mis-Branded,other_or_unclassified,manual_review_required
+2025-08:0069,2025-08,state_nsq,Cholecalciferol (Vitamin D3) Oral Solution USP 400 IU/ml,VAM-2501,The Product is not labeled in the prescribed manner as per USP monograph,other_or_unclassified,manual_review_required
+2025-09:0001,2025-09,central_nsq,Glimepiride Tablets IP 1 mg,12800524,sample does not conform to I.P with respect to the test for Related substances.,other_or_unclassified,manual_review_required
+2025-09:0056,2025-09,state_nsq,Amoxycillin & Potassium Clavulana Tablet I.P,MFK0722,Spurious.,other_or_unclassified,manual_review_required
+2025-09:0067,2025-09,state_nsq,Clobetasol Propionate Neomycin Sulphate and Miconazole Nitrate Cream,18241408A,Spourios,other_or_unclassified,manual_review_required
+2025-09:0076,2025-09,state_nsq,Ventrozole-1500,EMVB-24222,,missing_failure_type,missing
+2025-10:0053,2025-10,central_nsq,Cinchocaine Hydrochloride EP,DH/001/01/24,The sample received does not conform to EP-11 with respect to the test for Related substances..,other_or_unclassified,manual_review_required
+2025-10:0068,2025-10,state_nsq,Neckline Lip Fashion Lipstick [Neckline Ultima III Lip color (on carton)],NL05,Test For Break Load Value.,other_or_unclassified,manual_review_required
+2025-10:0089,2025-10,state_nsq,Nimuris Cold & Flu Tablets,GT027502,NSQ,other_or_unclassified,manual_review_required
+2025-10:0090,2025-10,state_nsq,Amyclox TM-LB Capsules,BC002411,NSQ,other_or_unclassified,manual_review_required
+2025-10:0094,2025-10,state_nsq,Shicold-Plus,RL23222,NSQ,other_or_unclassified,manual_review_required
+2025-10:0126,2025-10,state_nsq,"Coldrif Syrup (Paracetamol, Phenylephrine Hydrochloride, Chlorpheniramine Syrup)",SR-13,Adulterated,other_or_unclassified,manual_review_required
+2025-10:0188,2025-10,state_nsq,Dicyclomine hydrochloride & Mefenamic Acid Tablets IP,WT-1025,The cited product is official in I.P which is not printed on the strips of above refered sample.,other_or_unclassified,manual_review_required
+2025-10:0189,2025-10,state_nsq,Dicyclomine hydrochloride & Mefenamic Acid Tablets,WT-1026,The cited product is official in I.P which is not Printed on the strips of above refered sample.,other_or_unclassified,manual_review_required
+2025-10:0190,2025-10,state_nsq,Lindane Lotion USP 1%,LNE-1020,The above product is official in IP 2022 (Addendum 2024 W.e.f july 2024) but it is claimed as USP as on Manufacturing date.,other_or_unclassified,manual_review_required
+2025-10:0211,2025-10,state_nsq,Levocetirizine Dihydrochloride Tab (Wineet-L),YLT25023,The sample does not conform to the IP as it does not contain Levocetirizine Dihydrochloride,other_or_unclassified,manual_review_required
+2025-11:0062,2025-11,central_nsq,Atropine Sulphate Ophthalmic Solution USP 1%,AP-120,The sample received does not conform to I.P. 2022 with respect to the test for Relatee substances.,other_or_unclassified,manual_review_required
+2025-11:0086,2025-11,state_nsq,Cefixime Dispersible Tablets IP,BT2506033,Cefixime content 20.54 %,other_or_unclassified,manual_review_required
+2025-11:0087,2025-11,state_nsq,Rabeprazole Sodium (EC)n & Dompoeridone SR Capsule,C011H03,Rabeprazole content-75.01 %,other_or_unclassified,manual_review_required
+2025-11:0094,2025-11,state_nsq,Clopidogrel and Aspirin Capsules (75mg +75mg,HSP25006,Related substances,other_or_unclassified,manual_review_required
+2025-11:0157,2025-11,state_nsq,Dexamethasone Tablets IP 0.5mg,TA24660,Definition,other_or_unclassified,manual_review_required
+2025-11:0176,2025-11,state_nsq,EMIZ PLUS,GT-25017,Orally disintegrating tablets (ODT),other_or_unclassified,manual_review_required
+2025-12:0006,2025-12,central_nsq,Hydroxyzine Oral Solution I.P.,HO1LF002,The sample does not conform to claim as per IP 2022 in respect to The test of Related Substance,other_or_unclassified,manual_review_required
+2025-12:0040,2025-12,central_nsq,LEVTARY - 500,AA250585A,The sample does not conform to claim as per Patent and Proprietary in respect to The Test of Free drug,other_or_unclassified,manual_review_required
+2025-12:0044,2025-12,central_nsq,"Ambroxol,Terbutaline,Guaiphenesin and Menthol syrup AMBROLET-LS",OS-12095,The sample does not conform to claim as per Patent and Proprietary in respect to The Test of Total yeast and mould count.,other_or_unclassified,manual_review_required
+2025-12:0047,2025-12,central_nsq,Ondansetron Tablets IP Anset Tablets,RBMT-921,The sample does not conform to I.P. 2022 with respect to The test for Related substances.,other_or_unclassified,manual_review_required
+2025-12:0050,2025-12,central_nsq,Tigecycline Injection IP 50 mg Tigelite Injection 50mg),LAA139,The sample does not conform to I.P. 2022 with respect to test for Related substances .,other_or_unclassified,manual_review_required
+2025-12:0052,2025-12,central_nsq,Luliconazole Lotion IP 1% W/V LUZORAN Lotion 30ml,R09GE2518B,The sample received does not conform to I.P. 2022 with respect to The test for Related substance.,other_or_unclassified,manual_review_required
+2025-12:0054,2025-12,central_nsq,Glycerin IP,3F/RG/24/0054,The sample received does not conform to I.P. 2022 with respect to The test for Aldehydes.,other_or_unclassified,manual_review_required
+2025-12:0057,2025-12,central_nsq,"Neosorb 70/70B-Sirop De Sorbitol (Sorbitol Liquid, Crystallising USP/NF)",599646,The sample received does not conform to as per IP in respect to The test for angle of Rotation only.,other_or_unclassified,manual_review_required
+2025-12:0059,2025-12,central_nsq,Sorbitol Solution 70% IP Non Crystallizing,2526010,The sample does not conform to as Per IP in respect to The test for angle of Rotation.,other_or_unclassified,manual_review_required
+2025-12:0069,2025-12,central_nsq,Cotton Bandage,940,"The sample does not conform in respect to The Test of Threads per dm, Weight In Gm/sq.m, Foreign Matter, Fluorescence.",other_or_unclassified,manual_review_required
+2025-12:0070,2025-12,central_nsq,Cotton Bandage,937,"The sample does not conform to The test of weight in Gm/sq.m, threads per dm, Fluorescence, Foreign Matter",other_or_unclassified,manual_review_required
+2025-12:0071,2025-12,central_nsq,X-Plus Gold,VBX-044,The sample does not conform to claim as per Patent and Proprietary in respect to The Test of Tadalafil,other_or_unclassified,manual_review_required
+2025-12:0132,2025-12,state_nsq,Aceclofenac Tablets IP 100mg,M25800001,Break up of Tablets,other_or_unclassified,manual_review_required
+2025-12:0166,2025-12,state_nsq,Telmisartan Tablets I.P. 40 mg,GT-2503,The sample does not conform to I.P.,other_or_unclassified,manual_review_required
+2025-12:0172,2025-12,state_nsq,Safe Hand Gloves,SHR0306,SURGICAL GLOVES,other_or_unclassified,manual_review_required
+2025-12:0174,2025-12,state_nsq,My Young Model Foundation,6,Test For Suspended Solids,other_or_unclassified,manual_review_required
+2026-01:0004,2026-01,central_nsq,Suction Catheter,SUBLE01,The sample does not conforms to claim as per IS 8836:2019 with respect to test of 1st eye distance from tip.,other_or_unclassified,manual_review_required
+2026-01:0020,2026-01,central_nsq,"Ambroxol Hydrochloride, I.P-15.0mg Terbutaline Sulphate, I.P-1.25mg Guaiphenesin, I.P- 50.0mg Menthol, I.P -2.5mg",MCPD-189,The sample does not conform to claim with respect to Aassay of Menthol,other_or_unclassified,manual_review_required
+2026-01:0122,2026-01,state_nsq,White Tone Face Powder,CW3858,Test for Heavy Metals(Lead),other_or_unclassified,manual_review_required
+2026-01:0123,2026-01,state_nsq,SANKHA VATI 5g (Ayurvedic),KT-098,The sample does not conform to Standard Quality in respect of the tests for Total Ash value performed.,other_or_unclassified,manual_review_required
+2026-02:0003,2026-02,central_nsq,Absorbent Cotton Wool IP,10,"The sample does not conform to I.P. 2022 with respect to Sinking time, Fluorescence, Water soluble substances and Sulphated ash.",other_or_unclassified,manual_review_required
+2026-02:0042,2026-02,central_nsq,Glycerin IP,G125050095,The sample does not conform to I.P. 2022 with respect to the test for Water.,other_or_unclassified,manual_review_required
+2026-02:0046,2026-02,central_nsq,Sorbitol Solution 70% IP Non-Crystalline,UK252608,The sample received does not conform to I.P. 2022 with respect to the test for water.,other_or_unclassified,manual_review_required
+2026-02:0057,2026-02,central_nsq,Baclofen Tablets IP 10 mg,N2501643,The sample does not conform to I.P with respect to the test for Lactam.,other_or_unclassified,manual_review_required
+2026-02:0058,2026-02,central_nsq,Disinfectant Fluid Black Phenolic Type Normal Grade-1,MCI040,The sample does not conform to claim as per As per Drugs and Cosmetics Act- Schedule O and IS 1061:2017 with respect to Grade and Germicidal Value,other_or_unclassified,manual_review_required
+2026-02:0072,2026-02,state_nsq,Sodium Bicarbonate Tablets USP 1000mg,T-2406004,Sample Shows Category of Tablets (Capping and Brittleness) as described under DCC Guidelines on NSQ Drugs approved in 1993.,other_or_unclassified,manual_review_required
+2026-02:0198,2026-02,state_nsq,Risperidone 3 mg with Trihexyphenidyl Hydrochloride 2 mg Tablets,TYOT-1435,Failed Average Weight,other_or_unclassified,manual_review_required
+2026-02:0201,2026-02,state_nsq,"Sterile Hypodermic Needles (For Single Use Only) Needle Size:0.55x25 mm (24Gx1"")",2428024NA1,"Sample fails the tests Cleanliness and Lubricant"" as specified in the laboratory protocol .",other_or_unclassified,manual_review_required
+2026-02:0203,2026-02,state_nsq,Tablets Paracetamol,2504,The sample does not conform to IP with respect to the Dissolutiion for paracetamol,other_or_unclassified,manual_review_required
+2026-02:0204,2026-02,state_nsq,"Atorvastatin, Aspirin & Clopidogrel Capsules s",ADH24148A,Test free Salycylic Acid,other_or_unclassified,manual_review_required
+2026-02:0206,2026-02,state_nsq,"Coldfresh-P DS Suspension (Phenylephrine HCl, Paracetamol & Chlorpheniramine Maleate Suspension)",SP24193,Suspended Matter/Sedimentation Observed.,other_or_unclassified,manual_review_required
+2026-02:0207,2026-02,state_nsq,Isopropyl Alcohol IP,9190090325,Water : 0.8624% (Limit NMT 0.5%) ?More than prescribed limit.,other_or_unclassified,manual_review_required
+2026-02:0212,2026-02,state_nsq,"Paracetamol, Phenylephrine HCl, Chlorpheniramine Maleate & Sodium Citrate Syrup",BR649,Sedimentation observed on the lower surface of bottle.,other_or_unclassified,manual_review_required
+2026-02:0215,2026-02,state_nsq,"Paracetamol, Diclofenac Sodium & Chlorzoxazone Tablets IP",NPL-5105,Rough surface on tablets,other_or_unclassified,manual_review_required
+2026-03:0001,2026-03,central_nsq,Absorbent Gauze,705,"The sample does not conform to B.P. with respect to threads per stated length, weight per unit area, absorbency, water soluble substances, starch and dextrins, fluorescence and sulphated ash.",other_or_unclassified,manual_review_required
+2026-03:0002,2026-03,central_nsq,Disposable Electrosurgical Control Pencil,CPAP/1124,The sample does not conform to claim as per Patent and Proprietary in respect to the Test of Length of cable,other_or_unclassified,manual_review_required
+2026-03:0056,2026-03,state_nsq,"Paracetamol, Phenyephrine hydrochloride, Chlorpheniramine Maleate, Sodium Citrate & Menthol Suspension",241175,Phenyephrine hydrochloride content,other_or_unclassified,manual_review_required
+2026-03:0057,2026-03,state_nsq,"Levosalbutamol, Ambroxol & Guaiphenesin Syrup",L25071,Guaiphenesin Content,other_or_unclassified,manual_review_required
+2026-03:0059,2026-03,state_nsq,Enteric Coated Rabeprazole Sodium 20 mg & Domperidone Sustained Release 30 mg Capsules,404F004,Rabeprazole Sodium Content,other_or_unclassified,manual_review_required
+2026-03:0060,2026-03,state_nsq,"Paracetamol, Phenyephrine hydrochloride & Chlorpheniramine Maleate Syrup",ML24224,Phenyephrine hydrochloride content,other_or_unclassified,manual_review_required
+2026-03:0063,2026-03,state_nsq,Clavocil-375,BT0124016C,Failed,other_or_unclassified,manual_review_required
+2026-03:0087,2026-03,state_nsq,Aceclofeanc & Paracetamol Tablets,T4276,"The above Product is official in I.P, but is the same mention anywhere on the label",other_or_unclassified,manual_review_required
+2026-03:0157,2026-03,state_nsq,Enrofloxacin Injection IP 10% (Vet),ENIJ25008,Test for Paracetamol matter,other_or_unclassified,manual_review_required
+2026-03:0169,2026-03,state_nsq,Rice water and NIACINAMIDE hybrid sunscreen,GF25,Test for Total Fatty Substance Content,other_or_unclassified,manual_review_required
+2026-03:0184,2026-03,state_nsq,Cloxase-SP,TG25115E,"The sample does not confirm to IP2022 requirement withespect to,""UNIFOR+Q130:Q131MITY OF WEIGHTS""",other_or_unclassified,manual_review_required
+2026-04:0029,2026-04,central_nsq,Disinfectant Fluid Black Phenolic Type Normal Grade-1,MCI040,The sample does not conform to claim as per Drugs and Cosmetics Act - Schedule O and IS 1061:2017 with respect to Grade and Germicidal Value.,other_or_unclassified,manual_review_required
+2026-04:0034,2026-04,central_nsq,Doxylamine Succinate & Pyridoxine Hydrochloride Tablets,DXM2534,The sample received does not conform to Manufacturers specification with respect to the test for Thickness,other_or_unclassified,manual_review_required
+2026-04:0044,2026-04,state_nsq,Telmisartan Tab I.P 40 mg,GT-2508,SAMPLE DOES NOT CONFIRM TO IP.,other_or_unclassified,manual_review_required
+2026-04:0045,2026-04,state_nsq,Metjeel 25 XL ( Metoprolol Succinate Prolonged Released Tablet I.P ),TN - 5974,"1) SAMPLE DOES NOT CONFIRM TO IP. 2) The sample strip shows the product name "" METJEEL 25XL"" where the inspection memo shows it ""Meetjeel 25XL""",other_or_unclassified,manual_review_required
+2026-04:0066,2026-04,state_nsq,"Paracetamol, Phenyephrine hydrochloride, Chlorpheniramine Maleate, Sodium Citrate & Menthol Suspension",241175,Phenyephrine hydrochloride content,other_or_unclassified,manual_review_required
+2026-04:0067,2026-04,state_nsq,"Levosalbutamol, Ambroxol & Guaiphenesin Syrup",L25071,Guaiphenesin Content,other_or_unclassified,manual_review_required
+2026-04:0071,2026-04,state_nsq,Enteric Coated Rabeprazole Sodium 20 mg & Domperidone Sustained Release 30 mg Capsules,404F004,Rabeprazole Sodium Content,other_or_unclassified,manual_review_required
+2026-04:0097,2026-04,state_nsq,Cefpodoxine Proxetil Tablets IP,VT242312,The sample does not conform to the IP as it does not contain Cefpodoxime (Nil),other_or_unclassified,manual_review_required
+2026-04:0104,2026-04,state_nsq,Amoxycillin Potassium Clavulanate & Lactic Acid Bacillus Tablets,VT252296,The sample does not conform to the claim as it does not contain Clavulanic Acid (Nil).,other_or_unclassified,manual_review_required
+2026-04:0112,2026-04,state_nsq,"Rolled Bandage, Schedule F (II)",26,"The sample does not complies for test parameyters1. Length 2,Width 3. Warp and 4.Weight in Grams/Sq.Met",other_or_unclassified,manual_review_required
+2026-04:0114,2026-04,state_nsq,Absorbent Gauze IS 758,183,The sample does not complies for test parameters 1. Threads per dm 2.Length 3. Width and 4.Weight In Gm/Sq.Met.,other_or_unclassified,manual_review_required
+2026-04:0115,2026-04,state_nsq,Liquid Paraffin IP 100 ml,208,The sample fails the test Light Absorption as per IP,other_or_unclassified,manual_review_required
+2026-05:0002,2026-05,central_nsq,Swabs Sterile,14,"The sample does not conform to B.P.C. with respect to thread per stated length, weight per unit area, surface active substance and sulphated ash",other_or_unclassified,manual_review_required
+2026-05:0003,2026-05,central_nsq,Cotton Bandage (Non Sterile),943,"The sample does not conform to claim as per Schedule F-(II) with respect to test for Threads per dm, Weight In Gm/sq.m, Length and Fluorescence",other_or_unclassified,manual_review_required
+2026-05:0006,2026-05,central_nsq,Rosuvastatin Tablets IP 20 mg,RVST-1040,The sample does not conform to I.P with respect to the test for Related substances,other_or_unclassified,manual_review_required
+2026-05:0009,2026-05,central_nsq,Roller Bandage cloth (Non sterile),RBC-10/16,"The sample does not conform to the Schedule F(II) with respect to threads per dm (weft), length and foreign matter",other_or_unclassified,manual_review_required
+2026-05:0014,2026-05,central_nsq,Absorbent Cotton Wool IP,COT100-08-2K25-11,The sample does not conform to I.P. with respect to fluorescence and water soluble substances,other_or_unclassified,manual_review_required
+2026-05:0016,2026-05,central_nsq,Propylene Glycol IP,PG-IP/2024-25/2158,"The sample does not conform to I.P. with respect to the test for ""Water""",other_or_unclassified,manual_review_required
+2026-05:0033,2026-05,central_nsq,Amlodipine Tablets IP 5mg,GAB36,The sample received does not conform to I.P. 2022 with respect to the test for Related substances other test could not be done due to technical reason.,other_or_unclassified,manual_review_required
+2026-05:0034,2026-05,central_nsq,Aspirin Gastro-resistant and Atorvastatin Capsules IP (75mg/10mg),AAC5053,The sample does not conforms to I.P.2022 with respect to the Test for Related substances for Aspirin and Atorvastatin.,other_or_unclassified,manual_review_required
+2026-05:0035,2026-05,central_nsq,Lactulose Solution U.S.P.,HL154,The sample does not conforms to IP addendum-2024 with respect to the tests for Related Substances.,other_or_unclassified,manual_review_required
+2026-05:0036,2026-05,central_nsq,Amlodipine Besylate Tablets IP,AML-2506,The sample received does not conform to I.P. 2022 with respect to the test for Related substances. other test could not be done due to technical reason.,other_or_unclassified,manual_review_required
+2026-05:0039,2026-05,central_nsq,Ofloxacin and Ornidazole Tablets,WT-957,The sample received does not conforms to I.P. 2022 with respect to the test for Related substances,other_or_unclassified,manual_review_required
+2026-05:0041,2026-05,central_nsq,Absorbent Cotton Wool I.P.,C-111,The sample does not conform to IP with respect to test for 'Water soluble substances,other_or_unclassified,manual_review_required
+2026-05:0042,2026-05,central_nsq,Roller Bandage cloth (Non sterile),MD/MRBC 051,"The sample does not conform to the Schedule F(II) with respect to threads per dm (warp), weight in gm/sq.m and length",other_or_unclassified,manual_review_required
+2026-05:0044,2026-05,central_nsq,Absorbent Cotton Wool I.P.,C-115,The sample does not conform to IP with respect to test for Water soluble substances and Sulphated ash,other_or_unclassified,manual_review_required
+2026-05:0047,2026-05,state_nsq,TELMISARTAN TAB I.P. 40 MG.,GT-25044,The sample does not conform to I.P.,other_or_unclassified,manual_review_required
+2026-05:0062,2026-05,state_nsq,"Dextromethorphan Hydrobromide, Cetirizine Dihydrochloride, Ambroxol Hydrochloride & Methol Syrup",DLS5271,Ambroxol Hydrochloride content,other_or_unclassified,manual_review_required
+2026-05:0086,2026-05,state_nsq,Folic Acid Tablets IP. 0.4 mg,FO1TE033,Descriptive,other_or_unclassified,manual_review_required
+2026-05:0098,2026-05,state_nsq,Telmikind Trio 12.5,A50AX026,"Two Intact strips of ten tablets each werereceived for analysis. Whin the stri0ps were opened for analysis, it was observed that the coating of four tyablets adhered to the inner surface fo the strips at the centre and peeled off while remonving out the tablets from strips",other_or_unclassified,manual_review_required
+2026-05:0103,2026-05,state_nsq,Vitamin E Acetate Soft Gelatin Caspules,D26SBM07,The Product is official in USP Which is not Printed on the strips as required under the Act.,other_or_unclassified,manual_review_required
+2026-05:0104,2026-05,state_nsq,Vitamin E Acetate Soft Gelatin Caspules,D26SBM08,The Product is official in USP Which is not Printed on the strips as required under the Act.,other_or_unclassified,manual_review_required
+2026-05:0105,2026-05,state_nsq,Oral Rehydration Salts IP,4042,Average Net Contents per sachet found to be 20.179gm. Per sachet against claim of 20.5gm per sachet.,other_or_unclassified,manual_review_required
+2026-05:0107,2026-05,state_nsq,Oral Rehydration Salts IP,4025,Average Net Contents per sachet found to be 20.0675gm against claim of 20.5gm per sachet.,other_or_unclassified,manual_review_required
+2026-05:0108,2026-05,state_nsq,Vitamin E Acetate Soft Gelatin Caspules,D26SBM05,The Product is official in USP Which is not Printed on the strips as required under the Act.,other_or_unclassified,manual_review_required
+2026-05:0120,2026-05,state_nsq,Oxytocin Injection IP 5 IU/ml,I-7881,The sample does not conform to the IP as it does not contain Oxytocin (Synthetic) Nil.,other_or_unclassified,manual_review_required
+2026-05:0134,2026-05,state_nsq,Clopidogrel and Aspirin Capsules,ND260242,Free Salicylic acid,other_or_unclassified,manual_review_required
+2026-05:0151,2026-05,state_nsq,TELMISARTAN TAB I.P. 40 MG.,GT-25043,The sample does not conform to I.P.,other_or_unclassified,manual_review_required
+2026-05:0152,2026-05,state_nsq,Absorbent Gauze IS 758,177,"Sample does not meets Length, Width, and weight in gm / sq met as per IS 758.",other_or_unclassified,manual_review_required
+2026-06:0018,2026-06,central_nsq,Atorvastatin Tablets IP 20mg,62,The sample does not conform to claim as per IP 2022 in respect to test of Related substances.,other_or_unclassified,manual_review_required
+2026-06:0021,2026-06,central_nsq,Phenytoin Sodium Injection USP 2ml,33P25002,The sample does not conform to U.S.P. 48 with respect to the Test for Alcohol and Propylene Glycol content ( Alcohol content),other_or_unclassified,manual_review_required
+2026-06:0035,2026-06,state_nsq,Oral Rehydration Salts IP,4047,Net Weight,other_or_unclassified,manual_review_required
+2026-06:0038,2026-06,state_nsq,Oral Rehydration Salts IP,4043,Net Weight,other_or_unclassified,manual_review_required
+2026-06:0070,2026-06,state_nsq,"Dextromethorphan Hydrobromide, Chlorpheniramine Maleate & Phenylephrine Hydrochloride Syrup",S-199/25,Dextromethorphan Hydrobromide content,other_or_unclassified,manual_review_required
+2026-06:0071,2026-06,state_nsq,"Dextromethorphan Hydrobromide, Phenylephrine Hydrochloride & Chlorpheniramine Maleate Syrup",OML24074,Phenylephrine Hydrochloride Content,other_or_unclassified,manual_review_required
+2026-06:0072,2026-06,state_nsq,"Terbutaline Sulphate, Ambroxol Hydrochloride, Guaiphenesin & Menthol Expectorant",JLI2586,Ambroxol Hydrochloride content,other_or_unclassified,manual_review_required
+2026-06:0092,2026-06,state_nsq,Paracetamol Paediatric Oral suspension IP,LB5172,The sample does not comply with IP requirement for related substances.,other_or_unclassified,manual_review_required
+2026-06:0099,2026-06,state_nsq,Fungal Diastase (Estimated in terms of amylase activity) Pepsin (Estimated in terms ofvolume of undissolved egg albumin),SR-14,Alpha amylase activity and Pepsin content,other_or_unclassified,manual_review_required
+2026-06:0107,2026-06,state_nsq,ORAL REHYDRATION SALTS IP,4033,Average Net Contents per sachet found to be 20.3532gm against claim of 20.5gm per sachet,other_or_unclassified,manual_review_required
+2026-06:0108,2026-06,state_nsq,Amoxycillin And Potassium Clavunate Tablets,SPAR25007,The contents of Clavulanic Acid found to be 107.16mg/Tablet (85.728%) against claim of 125.0mg/Tablet.,other_or_unclassified,manual_review_required
+2026-06:0157,2026-06,state_nsq,Hingwasht Churna,HC09/24,"The sample does not comply with API requirement for total Ash(i.e 32%) which is more than the permissible limit2. The sample does not found to contain insects, wabbing , Larvae and any other extraneous matter when observed in normal day light with naked eye.",other_or_unclassified,manual_review_required
+2026-07:0001,2026-07,central_nsq,Sodium Chloride Injection IP 0.9%w/v,G2604H025,The sample does not conforms to I.P. 2022 with respect to the test for Particulate contamination.,other_or_unclassified,manual_review_required
+2026-07:0015,2026-07,central_nsq,Diclofenac Gastro-Resistant Tablets IP,250264A,The sample does not conform to I.P 2022 with respect to test for Related substances,other_or_unclassified,manual_review_required
+2026-07:0016,2026-07,central_nsq,Colecalciferol Drops,26-XJFD-098,The sample does not conform to claim with respect to the test for Related substances.,other_or_unclassified,manual_review_required
+2026-07:0040,2026-07,central_nsq,Handloom Rolled Bandages,24,The sample does not conform to claim as per Schedule F-(II) with respect to test for Fluorescence,other_or_unclassified,manual_review_required
+2026-07:0044,2026-07,state_nsq,Oral Rehydration Salts IP,4063,Net Weight,other_or_unclassified,manual_review_required
+2026-07:0045,2026-07,state_nsq,Oral Rehydration Salts IP,4057,Net Weight,other_or_unclassified,manual_review_required
+2026-07:0046,2026-07,state_nsq,Pregabalin Capsules IP 300mg,DMC-260508A,The Contents of Pregabali found to be 211.16mg/Capsule against the claim of 300.0mg/Capsule.,other_or_unclassified,manual_review_required
+2026-07:0062,2026-07,state_nsq,Dynaflex Plus,VGT240120,NSQ,other_or_unclassified,manual_review_required
+2026-07:0065,2026-07,state_nsq,Hajmola Regular,BM1250,"Total 120 Tablets received for analysis,out of 120 Tablets, 13 Tablets are found in broken condition and some powder is found in container when observed in normal day light with unaided eyes.",other_or_unclassified,manual_review_required
+2026-07:0066,2026-07,state_nsq,Ramipril Tablets IP 5mg,R25183701K,Ramipril (64.20%),other_or_unclassified,manual_review_required
+2026-07:0108,2026-07,state_nsq,Culse The Beauty soap papaya Fruit Mix,CT06,Test for Matter Insolubic in Alcohol,other_or_unclassified,manual_review_required
+2026-07:0122,2026-07,state_nsq,Ferrous Ascorbate & Folic Acid Tablets IP,FAM-677,NSQ,other_or_unclassified,manual_review_required
+2026-07:0123,2026-07,state_nsq,Ferrous Ascorbate & Folic Acid Tablets IP,FAM-656,NSQ,other_or_unclassified,manual_review_required
+2026-07:0124,2026-07,state_nsq,Ferrous Ascorbate & Folic Acid Tablets IP,FAM-629,NSQ,other_or_unclassified,manual_review_required
+2026-07:0125,2026-07,state_nsq,Ferrous Ascorbate & Folic Acid Tablets IP,FAM-649,NSQ,other_or_unclassified,manual_review_required
+2026-07:0126,2026-07,state_nsq,Ferrous Ascorbate & Folic Acid Tablets IP,FAM-628,NSQ,other_or_unclassified,manual_review_required
+2026-07:0127,2026-07,state_nsq,Cetin Plus Suspension 60ml,GL027412,NSQ,other_or_unclassified,manual_review_required
+2026-07:0129,2026-07,state_nsq,Flexon Suspension,DPK241894,Suspension does not dispose uniformaly on shaking,other_or_unclassified,manual_review_required
+2026-07:0130,2026-07,state_nsq,Pacimol MF 250 Suspension,INCO14030R,Suspension does not dispose uniformaly on shaking,other_or_unclassified,manual_review_required
+2026-07:0131,2026-07,state_nsq,Pacimol MF 250 Suspension,INCO14035R,Suspension does not dispose uniformaly on shaking,other_or_unclassified,manual_review_required
+2026-07:0132,2026-07,state_nsq,KUFFTUSS-Q Tablets,IGT-0511,Mottled appeareance,other_or_unclassified,manual_review_required
+2026-07:0133,2026-07,state_nsq,Amoxyclllin CapsulesIP 250mg,MBC-111,The sample fails to comply in respect of contains of the drug which is less than the calim,other_or_unclassified,manual_review_required
+2026-07:0137,2026-07,state_nsq,ASPIRIN TABLET IP 75MG,250168,"1. five (5) intact strips of ten (10) tablets each were received for analysis. When the strips were opened for analysis and observed in normal daylight conditions with unaided eyes it was observed that, each pocket of the strip contains off whte,circular tablets with shiny needle shape crystals all over the surface. The tablets are very brittle in nature. 2 The co tent of aspirin in the sample is less (i.e.0.32% oof the labelled amount) than the i.p.limits.",other_or_unclassified,manual_review_required
+2026-07:0166,2026-07,state_nsq,Betamethasone valerate & Salicylic Acid Ointment,BE533,Content (Nil),other_or_unclassified,manual_review_required
+2026-07:0180,2026-07,state_nsq,Dr. Wash Intimate Hygiene,IW-0225,Idetity test Negative for Lactic Acid,other_or_unclassified,manual_review_required
+2026-08:0002,2026-08,central_nsq,Rolled Bandage,AE-RB6-10-2K25-03,The sample does not conform to Schedule F(II) with respect to length.,other_or_unclassified,manual_review_required
+2026-08:0003,2026-08,central_nsq,Absorbent Cotton Wool IP,433,The sample does not conform to I.P. with respect to Surface active substances and water soluble substances.,other_or_unclassified,manual_review_required
+2026-08:0028,2026-08,central_nsq,Losartan Potassium USP,LOP0110526II,The sample does not conform to USP with respect to the test of Water Determination.,other_or_unclassified,manual_review_required
+2026-08:0042,2026-08,state_nsq,Absorbent cotton IS 16468,COT06,"Surface active substances, Neps , Sinking time , sulphated Ash",other_or_unclassified,manual_review_required
+2026-08:0043,2026-08,state_nsq,Absorbent Cotton Wool IP,568,Neps Sulphated Ash,other_or_unclassified,manual_review_required
+2026-08:0045,2026-08,state_nsq,Absorbent Cotton wool IP 500gm (NOT STERILISED) 500g,3265,"Water-holding capacity Fluorescence, Neps Water-soluble substances and Sulphated Ash",other_or_unclassified,manual_review_required
+2026-08:0046,2026-08,state_nsq,Absorbent Cotton Wool IP,R/0500/72,Neps,other_or_unclassified,manual_review_required
+2026-08:0047,2026-08,state_nsq,Absorbent Cotton Wool IP,3284,"Water-holding capacity, Surface active substances, Fluorescence, Neps and Sulphated Ash",other_or_unclassified,manual_review_required
+2026-08:0048,2026-08,state_nsq,Absorbent Cotton Wool I.P. 500g,R/0500/274,Neps,other_or_unclassified,manual_review_required
+2026-08:0049,2026-08,state_nsq,Absorbent Cotton wool IP 500gm (NOT STERILISED) 500g,3263,"Water-holding capacity fluorescence, Neps , water-soluble substances and Sulphated Ash .",other_or_unclassified,manual_review_required
+2026-08:0050,2026-08,state_nsq,Absorbent cotton Gauze IS 758,49,"Mass, Length and Width",other_or_unclassified,manual_review_required
+2026-08:0051,2026-08,state_nsq,Vildagliptin Tablets IP 50 mg,VGT-509,Content- Viladagliptin,other_or_unclassified,manual_review_required
+2026-08:0052,2026-08,state_nsq,Roller Guaze IS 758,38,"Length, width, freedom from optical whitener - does not conform to IS 758 specification",other_or_unclassified,manual_review_required
+2026-08:0121,2026-08,state_nsq,Mefenaic acid and paracetamol Suspension,0l25038,Suspension does not dispose uniformely on shaking,other_or_unclassified,manual_review_required
+2026-08:0122,2026-08,state_nsq,Nimesulide and paracetamol Tablets,SPT-39912,Mottled appeareance,other_or_unclassified,manual_review_required
+2026-08:0123,2026-08,state_nsq,Mefnetra-DS Suspension,S2503039A,Suspension does not dispose uniformely on shaking,other_or_unclassified,manual_review_required
+2026-08:0124,2026-08,state_nsq,MEFROX SPAS-DS Suspension,DLS3672,Suspension does not dispose uniformely on shaking,other_or_unclassified,manual_review_required
+2026-08:0125,2026-08,state_nsq,Pyrimef DS Suspension,APDS-25002,Suspension does not dispose uniformely on shaking,other_or_unclassified,manual_review_required
+2026-08:0128,2026-08,state_nsq,Rabeprazole Sodium & Domperidone Tablets,SPT-41856,The sample does not comply with IP requirements fo the Disintegrarion Test for Enteric Coated Tablets,other_or_unclassified,manual_review_required
+2026-08:0141,2026-08,state_nsq,Fungal Diastase Papain,WHL-02335,Alpha amylase activity,other_or_unclassified,manual_review_required
+2026-08:0144,2026-08,state_nsq,Oral Rehydration Salts IP,4092,Average Net Weight,other_or_unclassified,manual_review_required
+2026-08:0159,2026-08,state_nsq,Co-Trimoxazole oral Suspension IP,585,Content - Trimethoprim and Sulphamethoxazole,other_or_unclassified,manual_review_required
+2026-08:0160,2026-08,state_nsq,"Rosuvastatin, Clopidogrel & Aspirin Capsules",LC26A044H,Free Salicylic Acid,other_or_unclassified,manual_review_required
+2026-08:0161,2026-08,state_nsq,Sucralate & Oxetacaine suspension,BGL250915,Content - Oxetacaine,other_or_unclassified,manual_review_required
+2026-08:0162,2026-08,state_nsq,"Diclofenac Diethylamine, Methyl Salicylate, Menthol & Linseed oil Gel",M006,Content - Diclofenac Diethylamine,other_or_unclassified,manual_review_required
+2026-08:0165,2026-08,state_nsq,"Ambroxol Hydrochloride, levosalbutamol sulphate and Guaiphenesin Syrup",BL-299,Content - Ambroxol Hydrochloride,other_or_unclassified,manual_review_required
+2026-08:0166,2026-08,state_nsq,"Levosalbutamol Sulphate, Ambroxol Hydrochloride Guaiphenesin Syrup",NBVL-07,Content - Levosalbutamol in Levosalbutamol Sulphate,other_or_unclassified,manual_review_required
+2026-08:0170,2026-08,state_nsq,"Levosalbutamol, Ambroxol Hydrochloride, Guaiphenesin & Menthol Syrup",BL25-049A,Content - Levosalbutamol in Levosalbutamol Sulphate and Ambroxol Hydrochloride,other_or_unclassified,manual_review_required
+2026-08:0180,2026-08,state_nsq,"Liquid Paraffin, Milk of Magnesia and sodium Picosulfate Oral Emulsion",85LLX015,General requirements,other_or_unclassified,manual_review_required
+2026-08:0181,2026-08,state_nsq,Povidone - Iodine &Sucralfate oinment,90,Content - Available Iodine in povidone iodine,other_or_unclassified,manual_review_required
+2026-08:0183,2026-08,state_nsq,"Bromhexine, Terbutaline and Guaiphenesin Mentholated Syrup",SL254444,Content - Terbutaline Sulphate,other_or_unclassified,manual_review_required
+2026-08:0197,2026-08,state_nsq,Levcon-M,TG25-2281A,The sample is spurious as it does not contain Montelukast,other_or_unclassified,manual_review_required

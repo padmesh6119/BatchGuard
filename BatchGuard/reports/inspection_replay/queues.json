@@ -1,0 +1,298 @@
+{
+  "fused": [
+    {
+      "asserted_source_count": 2,
+      "batch_no": "R25183701K",
+      "candidate_id": "cfb158542ebef69a5a1f15ee",
+      "event_count": 4,
+      "evidence_event_ids": [
+        "EVENT-2026-3-0",
+        "EVENT-2026-3-1",
+        "EVENT-2026-3-2",
+        "EVENT-2026-3-3"
+      ],
+      "evidence_tier": 3,
+      "historical_priority": 0.0,
+      "manufacturer_key": "RELTSEN HEALTHCARE SPL PLOT NO 9-11 PIPDIC ELECTRONIC PARK THIRUBUVANAI PUDUCHERRY - 605107",
+      "product": "Ramipril Tablets IP 5mg",
+      "rank": 1,
+      "reason_codes": [
+        "PACK_TRAVEL_CONFLICT"
+      ],
+      "record_ids": [
+        "2026-07:0066"
+      ],
+      "reference_status": "historical_report_match",
+      "review_note": "Sampling priority only. Verify source independence and collect evidence.",
+      "scan_anomaly": true,
+      "simulated": true,
+      "snapshot_id": "0f8b77c5b560abd5ba175b22ae7029f27800b062e5f3f7aed16614a58d6c7589",
+      "spurious_report_match": false
+    },
+    {
+      "asserted_source_count": 2,
+      "batch_no": "24441792",
+      "candidate_id": "148588bac37dd6d0e55819df",
+      "event_count": 12,
+      "evidence_event_ids": [
+        "EVENT-2026-4-0",
+        "EVENT-2026-4-1",
+        "EVENT-2026-4-2",
+        "EVENT-2026-4-3",
+        "EVENT-2026-4-4",
+        "EVENT-2026-4-5",
+        "EVENT-2026-4-6",
+        "EVENT-2026-4-7",
+        "EVENT-2026-4-8",
+        "EVENT-2026-4-9",
+        "EVENT-2026-4-10",
+        "EVENT-2026-4-11"
+      ],
+      "evidence_tier": 2,
+      "historical_priority": 0.0,
+      "manufacturer_key": "ALKEM HEALTH SCIENCE A UNIT OF ALKEM LABOLATORIES UNIT-2 SAMARDUNG KAREK BLOCK P O NAMTHANG DIST- NAMCHI SIKKIM 737 137",
+      "product": "Amoxicillin and Potassium Clavulanate Tablet I.P. (Clavam-625)",
+      "rank": 2,
+      "reason_codes": [
+        "PACK_SCAN_BURST"
+      ],
+      "record_ids": [
+        "2025-10:0075"
+      ],
+      "reference_status": "historical_report_match",
+      "review_note": "Sampling priority only. Verify source independence and collect evidence.",
+      "scan_anomaly": true,
+      "simulated": true,
+      "snapshot_id": "0f8b77c5b560abd5ba175b22ae7029f27800b062e5f3f7aed16614a58d6c7589",
+      "spurious_report_match": false
+    }
+  ],
+  "history_only": [
+    {
+      "asserted_source_count": 1,
+      "batch_no": "RC26003",
+      "candidate_id": "e3656feaf993119bc64c35c7",
+      "event_count": 60,
+      "evidence_event_ids": [
+        "EVENT-2026-2-0",
+        "EVENT-2026-2-1",
+        "EVENT-2026-2-2",
+        "EVENT-2026-2-3",
+        "EVENT-2026-2-4",
+        "EVENT-2026-2-5",
+        "EVENT-2026-2-6",
+        "EVENT-2026-2-7",
+        "EVENT-2026-2-8",
+        "EVENT-2026-2-9",
+        "EVENT-2026-2-10",
+        "EVENT-2026-2-11",
+        "EVENT-2026-2-12",
+        "EVENT-2026-2-13",
+        "EVENT-2026-2-14",
+        "EVENT-2026-2-15",
+        "EVENT-2026-2-16",
+        "EVENT-2026-2-17",
+        "EVENT-2026-2-18",
+        "EVENT-2026-2-19"
+      ],
+      "evidence_tier": 1,
+      "historical_priority": 26.0,
+      "manufacturer_key": "MAAN PHARMACEUTICALS LTD PLOT-1 G I D C PHASE-II MODHERA ROAD MEHSANA-384002 GUJARAT INDIA",
+      "product": "Ferric Carboxymaltose Injection 50 mg/ml",
+      "rank": 1,
+      "reason_codes": [
+        "PACK_SCAN_BURST",
+        "SINGLE_SOURCE_REVIEW_ONLY"
+      ],
+      "record_ids": [
+        "2026-07:0028"
+      ],
+      "reference_status": "historical_report_match",
+      "review_note": "Sampling priority only. Verify source independence and collect evidence.",
+      "scan_anomaly": true,
+      "simulated": true,
+      "snapshot_id": "0f8b77c5b560abd5ba175b22ae7029f27800b062e5f3f7aed16614a58d6c7589",
+      "spurious_report_match": false
+    },
+    {
+      "asserted_source_count": 1,
+      "batch_no": "MOD1085D",
+      "candidate_id": "0b09c24356e3e0d4b5233ddc",
+      "event_count": 4,
+      "evidence_event_ids": [
+        "EVENT-2026-1-0",
+        "EVENT-2026-1-1",
+        "EVENT-2026-1-2",
+        "EVENT-2026-1-3"
+      ],
+      "evidence_tier": 0,
+      "historical_priority": 0.0,
+      "manufacturer_key": "PULSE PHARMACEUTICALS PVT LTD KHASRA NO 400 407 KARONDI ROORKEE UTTARAKHAND",
+      "product": "Methylcobalamin Oral Disintegrating Tablets 1500mcg",
+      "rank": 2,
+      "reason_codes": [],
+      "record_ids": [
+        "2026-02:0150"
+      ],
+      "reference_status": "historical_report_match",
+      "review_note": "Sampling priority only. Verify source independence and collect evidence.",
+      "scan_anomaly": false,
+      "simulated": true,
+      "snapshot_id": "0f8b77c5b560abd5ba175b22ae7029f27800b062e5f3f7aed16614a58d6c7589",
+      "spurious_report_match": false
+    }
+  ],
+  "raw_volume": [
+    {
+      "asserted_source_count": 1,
+      "batch_no": "RC26003",
+      "candidate_id": "e3656feaf993119bc64c35c7",
+      "event_count": 60,
+      "evidence_event_ids": [
+        "EVENT-2026-2-0",
+        "EVENT-2026-2-1",
+        "EVENT-2026-2-2",
+        "EVENT-2026-2-3",
+        "EVENT-2026-2-4",
+        "EVENT-2026-2-5",
+        "EVENT-2026-2-6",
+        "EVENT-2026-2-7",
+        "EVENT-2026-2-8",
+        "EVENT-2026-2-9",
+        "EVENT-2026-2-10",
+        "EVENT-2026-2-11",
+        "EVENT-2026-2-12",
+        "EVENT-2026-2-13",
+        "EVENT-2026-2-14",
+        "EVENT-2026-2-15",
+        "EVENT-2026-2-16",
+        "EVENT-2026-2-17",
+        "EVENT-2026-2-18",
+        "EVENT-2026-2-19"
+      ],
+      "evidence_tier": 1,
+      "historical_priority": 26.0,
+      "manufacturer_key": "MAAN PHARMACEUTICALS LTD PLOT-1 G I D C PHASE-II MODHERA ROAD MEHSANA-384002 GUJARAT INDIA",
+      "product": "Ferric Carboxymaltose Injection 50 mg/ml",
+      "rank": 1,
+      "reason_codes": [
+        "PACK_SCAN_BURST",
+        "SINGLE_SOURCE_REVIEW_ONLY"
+      ],
+      "record_ids": [
+        "2026-07:0028"
+      ],
+      "reference_status": "historical_report_match",
+      "review_note": "Sampling priority only. Verify source independence and collect evidence.",
+      "scan_anomaly": true,
+      "simulated": true,
+      "snapshot_id": "0f8b77c5b560abd5ba175b22ae7029f27800b062e5f3f7aed16614a58d6c7589",
+      "spurious_report_match": false
+    },
+    {
+      "asserted_source_count": 2,
+      "batch_no": "24441792",
+      "candidate_id": "148588bac37dd6d0e55819df",
+      "event_count": 12,
+      "evidence_event_ids": [
+        "EVENT-2026-4-0",
+        "EVENT-2026-4-1",
+        "EVENT-2026-4-2",
+        "EVENT-2026-4-3",
+        "EVENT-2026-4-4",
+        "EVENT-2026-4-5",
+        "EVENT-2026-4-6",
+        "EVENT-2026-4-7",
+        "EVENT-2026-4-8",
+        "EVENT-2026-4-9",
+        "EVENT-2026-4-10",
+        "EVENT-2026-4-11"
+      ],
+      "evidence_tier": 2,
+      "historical_priority": 0.0,
+      "manufacturer_key": "ALKEM HEALTH SCIENCE A UNIT OF ALKEM LABOLATORIES UNIT-2 SAMARDUNG KAREK BLOCK P O NAMTHANG DIST- NAMCHI SIKKIM 737 137",
+      "product": "Amoxicillin and Potassium Clavulanate Tablet I.P. (Clavam-625)",
+      "rank": 2,
+      "reason_codes": [
+        "PACK_SCAN_BURST"
+      ],
+      "record_ids": [
+        "2025-10:0075"
+      ],
+      "reference_status": "historical_report_match",
+      "review_note": "Sampling priority only. Verify source independence and collect evidence.",
+      "scan_anomaly": true,
+      "simulated": true,
+      "snapshot_id": "0f8b77c5b560abd5ba175b22ae7029f27800b062e5f3f7aed16614a58d6c7589",
+      "spurious_report_match": false
+    }
+  ],
+  "scan_only": [
+    {
+      "asserted_source_count": 2,
+      "batch_no": "R25183701K",
+      "candidate_id": "cfb158542ebef69a5a1f15ee",
+      "event_count": 4,
+      "evidence_event_ids": [
+        "EVENT-2026-3-0",
+        "EVENT-2026-3-1",
+        "EVENT-2026-3-2",
+        "EVENT-2026-3-3"
+      ],
+      "evidence_tier": 3,
+      "historical_priority": 0.0,
+      "manufacturer_key": "RELTSEN HEALTHCARE SPL PLOT NO 9-11 PIPDIC ELECTRONIC PARK THIRUBUVANAI PUDUCHERRY - 605107",
+      "product": "Ramipril Tablets IP 5mg",
+      "rank": 1,
+      "reason_codes": [
+        "PACK_TRAVEL_CONFLICT"
+      ],
+      "record_ids": [
+        "2026-07:0066"
+      ],
+      "reference_status": "historical_report_match",
+      "review_note": "Sampling priority only. Verify source independence and collect evidence.",
+      "scan_anomaly": true,
+      "simulated": true,
+      "snapshot_id": "0f8b77c5b560abd5ba175b22ae7029f27800b062e5f3f7aed16614a58d6c7589",
+      "spurious_report_match": false
+    },
+    {
+      "asserted_source_count": 2,
+      "batch_no": "24441792",
+      "candidate_id": "148588bac37dd6d0e55819df",
+      "event_count": 12,
+      "evidence_event_ids": [
+        "EVENT-2026-4-0",
+        "EVENT-2026-4-1",
+        "EVENT-2026-4-2",
+        "EVENT-2026-4-3",
+        "EVENT-2026-4-4",
+        "EVENT-2026-4-5",
+        "EVENT-2026-4-6",
+        "EVENT-2026-4-7",
+        "EVENT-2026-4-8",
+        "EVENT-2026-4-9",
+        "EVENT-2026-4-10",
+        "EVENT-2026-4-11"
+      ],
+      "evidence_tier": 2,
+      "historical_priority": 0.0,
+      "manufacturer_key": "ALKEM HEALTH SCIENCE A UNIT OF ALKEM LABOLATORIES UNIT-2 SAMARDUNG KAREK BLOCK P O NAMTHANG DIST- NAMCHI SIKKIM 737 137",
+      "product": "Amoxicillin and Potassium Clavulanate Tablet I.P. (Clavam-625)",
+      "rank": 2,
+      "reason_codes": [
+        "PACK_SCAN_BURST"
+      ],
+      "record_ids": [
+        "2025-10:0075"
+      ],
+      "reference_status": "historical_report_match",
+      "review_note": "Sampling priority only. Verify source independence and collect evidence.",
+      "scan_anomaly": true,
+      "simulated": true,
+      "snapshot_id": "0f8b77c5b560abd5ba175b22ae7029f27800b062e5f3f7aed16614a58d6c7589",
+      "spurious_report_match": false
+    }
+  ]
+}

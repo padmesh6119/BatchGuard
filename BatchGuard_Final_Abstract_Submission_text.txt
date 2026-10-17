@@ -1,0 +1,441 @@
+BatchGuard
+Capacity-aware medicine risk ranking and live clone-scan early warning
+IBM Z Datathon 2026 | Theme 1: Real-Time AI for Critical Decisions | Abstract submission | Team: [Team name]
+
+One-line summary. BatchGuard tells a drug inspector which batch to sample first this week, and why. It
+fuses a risk ranking learned from real CDSCO failure history with a live stream of verification-scan anomalies,
+and returns an explained, ranked queue that fits the inspector's limited testing capacity. A human always
+makes the final call.
+The problem
+Failed and counterfeit medicines are usually found after
+harm has occurred. Regulators cannot test every batch,
+and a copied verification code can make a fake pack look
+genuine.
+
+The solution
+Two evidence layers, one decision: a risk prior from real
+regulatory history and a live clone-suspicion detector,
+fused into a capacity-aware inspection queue with reason
+codes.
+
+What makes it different
+It optimises the scarce resource, inspector sampling
+capacity. Success is measured as failures caught per 100
+samples against simple baselines, not as a dashboard.
+
+What is real and what is simulated
+Layer A uses real CDSCO NSQ and spurious-drug lists.
+Layer B is a simulated, labelled scan stream anchored to
+real manufacturers and batches. Both are labelled
+throughout.
+
+1. The problem
+• Coldrif, September to October 2025. At least 22 children (some reports say 24) died in Madhya Pradesh
+and Rajasthan after taking a cough syrup reported to contain 48.6 percent diethylene glycol against a 0.1
+percent limit.
+
+• Slow detection. Deaths began in September and CDSCO reported the contamination to WHO on 8 October. A
+central team took 19 samples from the children's doctors and nearby shops; only 4 were declared Not of
+Standard Quality (NSQ).
+
+• Nobody can test everything. India has over 10,000 registered drug manufacturers, and enforcement falls
+largely on state drug controllers with limited capacity. The real question is what to test first.
+
+• The data exists, and so do counterfeits. CDSCO publishes NSQ and spurious-drug lists every month (trade
+press reported 157 NSQ and 2 spurious samples for May 2026). A spurious drug is made by an unauthorised
+entity and sold under a legitimate brand.
+The gap. Published lists arrive after the fact and cover only tested samples. A static code can be copied onto
+any number of fake packs. Inspectors have no principled, evidence-based way to decide what to sample first.
+The people harmed are patients (especially children) and honest manufacturers whose names get attached to
+fakes.
+
+2. Our solution
+BatchGuard answers one operational question: which batch should an inspector sample first this week,
+and why? The output is an order, not a verdict, because testing capacity is fixed. Each layer covers the other's
+blind spot.
+Layer alone
+
+What it knows
+
+Blind spot
+
+What the other layer adds
+
+A. Risk prior
+(history)
+
+Which manufacturers, product
+forms and states fail most
+often
+
+Nothing about what is happening
+now; cannot see a first-time failure
+on its own
+
+A live signal that a specific
+batch is being cloned or
+behaving oddly
+
+B. Live scan
+detector
+
+How verification identities
+behave right now
+
+No idea which batches are
+inherently risky, so every alert
+looks equal; can be gamed by
+scan flooding
+
+Prior risk to rank alerts, plus
+independent evidence to
+resist flooding
+
+BatchGuard | IBM Z Datathon 2026 abstract | Theme 1: Real-Time AI for Critical Decisions
+
+Page 1
+
+3. Architecture
+CDSCO monthly lists
+
+Layer A: risk prior
+
+real NSQ + spurious data
+2023 to Aug 2026
+
+Snap ML, time-split backtest
+manufacturer / form / batch
+
+Fusion + decision
+prior x anomaly x evidence
+capacity-aware ranking
+
+Event simulator
+
+Layer B: live detector
+
+real manufacturers + batches
+benign + attack scans
+
+rules + ML, reason codes
+independent-source count
+
+Inspector queue
+per state, explained
+human decides
+
+Verification scans arrive as events
+(SMS, missed call, app, pharmacist scan)
+Teal = real data
+
+Amber = simulated, labelled
+
+Navy = decision output
+
+Component
+
+Job
+
+Deliverable
+
+Data ingestion
+
+Download and parse CDSCO monthly NSQ and spurious lists
+(central and state) into one table
+
+Clean table with source file and
+month; parse rejects counted
+
+A. Risk prior
+
+Score manufacturers, product forms and batches for
+likelihood of failing
+
+Snap ML model, two baselines,
+chronological backtest
+
+Event simulator
+
+Generate scans with real manufacturers, batches and states;
+inject benign and attack behaviour
+
+Seeded, open, labelled generator
+
+B. Live detector
+
+Per-identity features, rule baseline, ML detector, reason
+codes
+
+Streaming service on IBM LinuxONE
+
+Fusion +
+decision
+
+Combine prior risk, live anomaly and evidence quality; rank
+under an inspection budget
+
+Ranked queue per state; action
+ladder
+
+Privacy +
+dashboard
+
+Pseudonymised identities, coarse location, live feed and
+queue view
+
+Inspector dashboard
+
+4. Layer A: the real-data core
+• Data. CDSCO monthly NSQ and spurious-drug lists: product, batch number, manufacturing and expiry dates,
+manufacturer, failure reason, reporting source and month. Fields and at least 12 usable months are confirmed
+in the first two hours of the build.
+
+• Features. Manufacturer failure history (counts, recency), product category and dosage form (for example oral
+liquids against injectables), failure type, state, batch age at test, and a missing-state flag. Rates are used
+wherever a month publishes the number of samples tested.
+
+• Model and split. Snap ML ranking model trained on lists to August 2025 and tested on September 2025 to
+August 2026, a chronological split with no leakage across time.
+
+• Baselines. Random selection and "most past failures". A predictive claim is made only if BatchGuard beats the
+stronger of the two on held-out months.
+
+• First-time failures. A manufacturer with no earlier failure is invisible to history alone. Layer A carries
+product-form risk as a coarse prior for such cases, and the Coldrif backtest reports plainly what history would
+and would not have shown. The live layer exists for exactly this gap.
+
+• Sampling bias. Only tested batches appear, and some states submit nothing in some months. The queue
+shows denominators and flags missing states instead of hiding them.
+
+5. Layer B: live clone-suspicion detection
+• Simulated, labelled stream. Verification scans seeded with real manufacturer and batch identities. No
+simulated result is presented as real-world counterfeit-detection performance.
+
+• Benign behaviour is simulated too. Repeat scans by the same buyer, offline sync delays, pharmacist bulk
+checks and legitimate travel, so an unusual scan is not automatically treated as suspicious.
+
+BatchGuard | IBM Z Datathon 2026 abstract | Theme 1: Real-Time AI for Critical Decisions
+
+Page 2
+
+• Attack patterns. Code copied across distant locations, bursts of scans on one identity, a slow adaptive
+attacker who stays under rate thresholds, and scan flooding to create false alerts. At least one attack type is
+held out from the detector's design and used only for testing.
+
+• Detector. Per-identity features (scan velocity, geographic spread, source diversity, time pattern) feed a rule
+baseline and an ML detector. Every alert carries a reason code.
+
+• Flood resistance. Rate limits, independent-source counts and required corroboration: many scans from one
+source count for little, a few scans from many independent sources count for more.
+
+6. Fusion and the human decision
+Each queue item shows three separate values, not one opaque score: historical risk, scan anomaly and
+evidence quality (how many independent sources, how recent, how consistent). The combined priority is a
+triage aid and always lists its reason codes, for example clone pattern, manufacturer history, no sample yet.
+Capacity-aware ranking. The inspector sets how many samples can be drawn this week. BatchGuard returns
+the best list of that size, and the dashboard shows how much expected coverage each extra sample would add.
+Action
+
+When
+
+Who acts
+
+Accept
+
+Low prior risk, no anomaly, good evidence
+
+Nobody; logged
+
+Warn the buyer
+
+Anomalous scan, weak corroboration
+
+Buyer sees a caution message on
+verification
+
+Add to sampling
+queue
+
+Elevated combined priority
+
+Drug inspector draws and tests a sample
+
+Escalate with
+evidence
+
+High priority with several independent sources
+
+State drug controller, with the
+reason-code evidence pack
+
+Safety rule: BatchGuard never blocks a medicine automatically and never declares a pack counterfeit from a
+score. Doubt sends a human to test a sample.
+
+7. Role of IBM LinuxONE
+• Verification scans run as a continuous event stream through a scoring service on LinuxONE; Snap ML is used for
+training and scoring.
+
+• The same defined workload is run on LinuxONE and on a laptop. We record event count, duration, sustained
+events per second, p95 and p99 latency, and software versions.
+
+• We report only what actually ran on LinuxONE. Platform security features are mentioned only if configured and
+tested, and no speed advantage is claimed beyond what the measurements show.
+
+8. Evaluation plan and success measures
+Area
+
+Measure
+
+Compared against
+
+Layer A ranking
+
+Failures captured per 100 samples; Precision@K and
+Recall@K on held-out Sep 2025 to Aug 2026
+
+Random; "most past failures"
+
+Layer A backtest
+
+Coldrif case: what history alone would have ranked, stated
+honestly
+
+n/a
+
+Layer B detection
+
+Precision, recall, PR-AUC; false alarms per 1,000 genuine
+scans; detection latency
+
+Rule-only baseline; held-out attack
+type; slow adaptive attacker
+
+Fused queue
+
+Failures plus simulated clones captured per 100 samples
+under a fixed budget
+
+Layer A alone; Layer B alone
+
+Streaming
+
+1,000+ generated events end to end; events per second;
+p95 and p99 latency
+
+Laptop run of the same workload
+
+Explainability
+
+Every high-priority item shows reason codes and the three
+separate signal values
+
+n/a
+
+Reproducibility
+
+Documented commands rerun the evaluation and
+reproduce reported numbers
+
+n/a
+
+BatchGuard | IBM Z Datathon 2026 abstract | Theme 1: Real-Time AI for Critical Decisions
+
+Page 3
+
+9. Safety, privacy and honest limits
+• Privacy. Scan identities are pseudonymised and location is coarsened to district level. No personal profile of
+buyers is built.
+
+• Triage, not proof. Scores are triage estimates, not proof of safety, quality failure or counterfeiting. The
+dashboard states this.
+
+• Sampling bias. Published lists reflect tested samples, not all batches. Coverage gaps are shown, not hidden.
+• Simulated scan layer. It tests system behaviour under stated conditions and does not establish real-world
+detection performance.
+
+• Benign anomalies. Repeat or distant scans can be legitimate; corroboration, rate limits and human review
+handle them.
+
+10. Impact and path to a pilot
+• Who acts. State drug controllers and CDSCO inspectors, through a ranked sampling queue, on Monday
+morning.
+
+• Who benefits. Patients, especially children who take liquid medicines; honest manufacturers whose names
+are attached to fakes; and inspectors with limited capacity.
+
+• Pilot path. Run the risk layer on published monthly lists for one state, with inspectors comparing the queue
+against their usual sampling plan. The scan layer would plug into real verification traffic only with regulator and
+manufacturer agreement.
+
+11. 24-hour delivery plan
+Hours
+
+Deliverable
+
+Acceptance check
+
+0 to 2
+
+Data and platform check
+
+Lists parse and labels are understood; minimal service runs on
+LinuxONE
+
+2 to 5
+
+Historical baseline
+
+Chronological split and baseline metrics reproduce
+
+5 to 9
+
+Risk model and scan detector
+
+One model, one detector, reason codes, top-K comparison
+
+9 to 14
+
+API, event stream and queue UI
+
+A new scan event reaches scoring and appears in the queue end
+to end
+
+14 to 18
+
+Deploy and benchmark
+
+1,000 events processed; latency and throughput recorded
+
+18 to 21
+
+Test and evidence capture
+
+Metrics rerun cleanly; normal and attack scenarios work; failure
+cases documented
+
+21 to 24
+
+Freeze and present
+
+Working demo, evaluation chart, architecture, limitations, backup
+recording
+
+Scope control. The smallest complete vertical slice is built first. If batch-level labels prove unreliable, the
+ranking narrows to manufacturer and product-form level rather than overstating batch-level prediction. Optional
+views are cut before the core evaluation.
+
+12. Demo walkthrough
+• Open on the Coldrif timeline: what regulators knew, and when.
+• Show the Layer A chart: failures captured per 100 samples against random and "most past failures".
+• Start the live stream. A benign repeat scan passes quietly; a cloned identity appears from two distant locations
+and rises in the queue with its reason codes.
+
+• Move the inspector-capacity slider and watch the queue and expected coverage change.
+• Close on one honesty slide: what is real, what is simulated, what ran on LinuxONE, and the measured events
+per second and p99 latency.
+
+BatchGuard | IBM Z Datathon 2026 abstract | Theme 1: Real-Time AI for Critical Decisions
+
+Page 4
+
+

@@ -1,0 +1,1370 @@
+{
+  "fused": [
+    {
+      "asserted_source_count": 2,
+      "batch_no": "M24122",
+      "candidate_id": "3ce6c8dd41a2e507377a88a5",
+      "event_count": 4,
+      "evidence_event_ids": [
+        "EVENT-2026-33-0",
+        "EVENT-2026-33-1",
+        "EVENT-2026-33-2",
+        "EVENT-2026-33-3"
+      ],
+      "evidence_tier": 3,
+      "historical_priority": 25.7,
+      "manufacturer_key": "MERCURY PHARMACEUTICALS VILL-BERSON NALAGARH H P -174101",
+      "product": "Calcium & Vitamin D3 Tablets (TISE-CAL)",
+      "rank": 1,
+      "reason_codes": [
+        "PACK_TRAVEL_CONFLICT"
+      ],
+      "record_ids": [
+        "2025-10:0021"
+      ],
+      "reference_status": "historical_report_match",
+      "review_note": "Sampling priority only. Verify source independence and collect evidence.",
+      "scan_anomaly": true,
+      "simulated": true,
+      "snapshot_id": "0f8b77c5b560abd5ba175b22ae7029f27800b062e5f3f7aed16614a58d6c7589",
+      "spurious_report_match": false
+    },
+    {
+      "asserted_source_count": 2,
+      "batch_no": "3315",
+      "candidate_id": "cb080eab93b0216108ecf48c",
+      "event_count": 4,
+      "evidence_event_ids": [
+        "EVENT-2026-87-0",
+        "EVENT-2026-87-1",
+        "EVENT-2026-87-2",
+        "EVENT-2026-87-3"
+      ],
+      "evidence_tier": 3,
+      "historical_priority": 9.7,
+      "manufacturer_key": "SUPER FOMULATIONS PVT LTD 16-B 15-F INDUSTRIAL AREA MAXI ROAD UJJAIN-456010",
+      "product": "Vitamin B -Complex with Vitamin C Capsules Beco-Aid",
+      "rank": 2,
+      "reason_codes": [
+        "PACK_TRAVEL_CONFLICT"
+      ],
+      "record_ids": [
+        "2026-05:0096"
+      ],
+      "reference_status": "historical_report_match",
+      "review_note": "Sampling priority only. Verify source independence and collect evidence.",
+      "scan_anomaly": true,
+      "simulated": true,
+      "snapshot_id": "0f8b77c5b560abd5ba175b22ae7029f27800b062e5f3f7aed16614a58d6c7589",
+      "spurious_report_match": false
+    },
+    {
+      "asserted_source_count": 2,
+      "batch_no": "2408001232",
+      "candidate_id": "34b9ccbb1e8b2117704e546b",
+      "event_count": 4,
+      "evidence_event_ids": [
+        "EVENT-2026-9-0",
+        "EVENT-2026-9-1",
+        "EVENT-2026-9-2",
+        "EVENT-2026-9-3"
+      ],
+      "evidence_tier": 3,
+      "historical_priority": 9.2,
+      "manufacturer_key": "ALEMBIC PHARMACEUTICALS LTD SAMARDUNG BASTI KAREK BLOCK NAMTHANG ILAKA NAMCHI SIKKIM-737126",
+      "product": "Azithromycin Tablets IP 500 mg",
+      "rank": 3,
+      "reason_codes": [
+        "PACK_TRAVEL_CONFLICT"
+      ],
+      "record_ids": [
+        "2026-08:0076"
+      ],
+      "reference_status": "historical_report_match",
+      "review_note": "Sampling priority only. Verify source independence and collect evidence.",
+      "scan_anomaly": true,
+      "simulated": true,
+      "snapshot_id": "0f8b77c5b560abd5ba175b22ae7029f27800b062e5f3f7aed16614a58d6c7589",
+      "spurious_report_match": false
+    },
+    {
+      "asserted_source_count": 2,
+      "batch_no": "L09-2402",
+      "candidate_id": "d6c37ba993ae0ca348718d30",
+      "event_count": 4,
+      "evidence_event_ids": [
+        "EVENT-2026-63-0",
+        "EVENT-2026-63-1",
+        "EVENT-2026-63-2",
+        "EVENT-2026-63-3"
+      ],
+      "evidence_tier": 3,
+      "historical_priority": 4.0,
+      "manufacturer_key": "MACMILLON PHARMACEUTICALS PVT LTD 62-663 VIJAY NAGAR BATALA ROAD AMRITSAR-143001",
+      "product": "METHOTREXATE TABLETS IP 7.5 MG",
+      "rank": 4,
+      "reason_codes": [
+        "PACK_TRAVEL_CONFLICT"
+      ],
+      "record_ids": [
+        "2026-07:0071"
+      ],
+      "reference_status": "historical_report_match",
+      "review_note": "Sampling priority only. Verify source independence and collect evidence.",
+      "scan_anomaly": true,
+      "simulated": true,
+      "snapshot_id": "0f8b77c5b560abd5ba175b22ae7029f27800b062e5f3f7aed16614a58d6c7589",
+      "spurious_report_match": false
+    },
+    {
+      "asserted_source_count": 2,
+      "batch_no": "ST-21941",
+      "candidate_id": "04d21c74473deaead239d613",
+      "event_count": 4,
+      "evidence_event_ids": [
+        "EVENT-2026-105-0",
+        "EVENT-2026-105-1",
+        "EVENT-2026-105-2",
+        "EVENT-2026-105-3"
+      ],
+      "evidence_tier": 3,
+      "historical_priority": 0.0,
+      "manufacturer_key": "SUNVIJ DRUGS PVT LTD 511 GIDC WAGHODIA BARODA BARODA-391760 GUJ",
+      "product": "Prochlorperazine Maleate Tablets IP",
+      "rank": 5,
+      "reason_codes": [
+        "PACK_TRAVEL_CONFLICT"
+      ],
+      "record_ids": [
+        "2026-05:0101"
+      ],
+      "reference_status": "historical_report_match",
+      "review_note": "Sampling priority only. Verify source independence and collect evidence.",
+      "scan_anomaly": true,
+      "simulated": true,
+      "snapshot_id": "0f8b77c5b560abd5ba175b22ae7029f27800b062e5f3f7aed16614a58d6c7589",
+      "spurious_report_match": false
+    },
+    {
+      "asserted_source_count": 2,
+      "batch_no": "R09GL2545A",
+      "candidate_id": "13715499a5a5067ea9ff7d85",
+      "event_count": 4,
+      "evidence_event_ids": [
+        "EVENT-2026-93-0",
+        "EVENT-2026-93-1",
+        "EVENT-2026-93-2",
+        "EVENT-2026-93-3"
+      ],
+      "evidence_tier": 3,
+      "historical_priority": 0.0,
+      "manufacturer_key": "REDNEX PHARMACEUTICALS LIMITED SURVEY NO 586 AND 231 NR SKF BEARING BAVLA BAGODARA N H -8A KERALA TAL BAVLA DIST-AHMEDABAD-382220 GUJARAT",
+      "product": "Hydroxyzine HCL Oral Solution IP 10 mg",
+      "rank": 6,
+      "reason_codes": [
+        "PACK_TRAVEL_CONFLICT"
+      ],
+      "record_ids": [
+        "2025-11:0060"
+      ],
+      "reference_status": "historical_report_match",
+      "review_note": "Sampling priority only. Verify source independence and collect evidence.",
+      "scan_anomaly": true,
+      "simulated": true,
+      "snapshot_id": "0f8b77c5b560abd5ba175b22ae7029f27800b062e5f3f7aed16614a58d6c7589",
+      "spurious_report_match": false
+    },
+    {
+      "asserted_source_count": 2,
+      "batch_no": "VS2538",
+      "candidate_id": "1687cd64b0c41798b8cc5def",
+      "event_count": 4,
+      "evidence_event_ids": [
+        "EVENT-2026-75-0",
+        "EVENT-2026-75-1",
+        "EVENT-2026-75-2",
+        "EVENT-2026-75-3"
+      ],
+      "evidence_tier": 3,
+      "historical_priority": 0.0,
+      "manufacturer_key": "VERTEX PHARMA CHEMICALS PLOT NO 60-A 61-A PIPDIC ELECTRONIC PARK THIRUBHUVANAI PUDUCHERRY- 605 107",
+      "product": "Levocetirizine Hydrochloride & Montelukast Sodium Suspension(LEMONT KID)",
+      "rank": 7,
+      "reason_codes": [
+        "PACK_TRAVEL_CONFLICT"
+      ],
+      "record_ids": [
+        "2025-12:0169"
+      ],
+      "reference_status": "historical_report_match",
+      "review_note": "Sampling priority only. Verify source independence and collect evidence.",
+      "scan_anomaly": true,
+      "simulated": true,
+      "snapshot_id": "0f8b77c5b560abd5ba175b22ae7029f27800b062e5f3f7aed16614a58d6c7589",
+      "spurious_report_match": false
+    },
+    {
+      "asserted_source_count": 2,
+      "batch_no": "T-25111",
+      "candidate_id": "1795525b9f1f0febeb7c77e9",
+      "event_count": 4,
+      "evidence_event_ids": [
+        "EVENT-2026-117-0",
+        "EVENT-2026-117-1",
+        "EVENT-2026-117-2",
+        "EVENT-2026-117-3"
+      ],
+      "evidence_tier": 3,
+      "historical_priority": 0.0,
+      "manufacturer_key": "VITAL FORMULATIONS LIMITED I/146 PHASE-IV GIDC VITHAL UDHYOGNAGAR-388121 DIST ANAND GUJ INDIA",
+      "product": "Paracetamol IP 650 mg Tablet",
+      "rank": 8,
+      "reason_codes": [
+        "PACK_TRAVEL_CONFLICT"
+      ],
+      "record_ids": [
+        "2026-05:0066"
+      ],
+      "reference_status": "historical_report_match",
+      "review_note": "Sampling priority only. Verify source independence and collect evidence.",
+      "scan_anomaly": true,
+      "simulated": true,
+      "snapshot_id": "0f8b77c5b560abd5ba175b22ae7029f27800b062e5f3f7aed16614a58d6c7589",
+      "spurious_report_match": false
+    },
+    {
+      "asserted_source_count": 2,
+      "batch_no": "CPT24039",
+      "candidate_id": "290be534f26b0ee390040c06",
+      "event_count": 4,
+      "evidence_event_ids": [
+        "EVENT-2026-21-0",
+        "EVENT-2026-21-1",
+        "EVENT-2026-21-2",
+        "EVENT-2026-21-3"
+      ],
+      "evidence_tier": 3,
+      "historical_priority": 0.0,
+      "manufacturer_key": "VIVEK PHARMACHEM I LTD NH-8 CHIMANPURA AMER JAIPUR-303102",
+      "product": "Ciprofloxacin Hydrochloride Tablets IP 250mg",
+      "rank": 9,
+      "reason_codes": [
+        "PACK_TRAVEL_CONFLICT"
+      ],
+      "record_ids": [
+        "2025-07:0049"
+      ],
+      "reference_status": "historical_report_match",
+      "review_note": "Sampling priority only. Verify source independence and collect evidence.",
+      "scan_anomaly": true,
+      "simulated": true,
+      "snapshot_id": "0f8b77c5b560abd5ba175b22ae7029f27800b062e5f3f7aed16614a58d6c7589",
+      "spurious_report_match": false
+    },
+    {
+      "asserted_source_count": 2,
+      "batch_no": "MGT24-034",
+      "candidate_id": "3a54e42b9a45c5b13b3788ea",
+      "event_count": 4,
+      "evidence_event_ids": [
+        "EVENT-2026-27-0",
+        "EVENT-2026-27-1",
+        "EVENT-2026-27-2",
+        "EVENT-2026-27-3"
+      ],
+      "evidence_tier": 3,
+      "historical_priority": 0.0,
+      "manufacturer_key": "MEDGLOBE THERAPEUTICS LTD KHASRA NO-311 RAIPUR VILLAGE BHAGWANPUR PARGANA ROORKEE- 247667 UK",
+      "product": "Aceclofenac & Paracetamol Tablets",
+      "rank": 10,
+      "reason_codes": [
+        "PACK_TRAVEL_CONFLICT"
+      ],
+      "record_ids": [
+        "2026-03:0050"
+      ],
+      "reference_status": "historical_report_match",
+      "review_note": "Sampling priority only. Verify source independence and collect evidence.",
+      "scan_anomaly": true,
+      "simulated": true,
+      "snapshot_id": "0f8b77c5b560abd5ba175b22ae7029f27800b062e5f3f7aed16614a58d6c7589",
+      "spurious_report_match": false
+    }
+  ],
+  "history_only": [
+    {
+      "asserted_source_count": 1,
+      "batch_no": "4ATL073",
+      "candidate_id": "03aed6a513d87e24ac945792",
+      "event_count": 4,
+      "evidence_event_ids": [
+        "EVENT-2026-73-0",
+        "EVENT-2026-73-1",
+        "EVENT-2026-73-2",
+        "EVENT-2026-73-3"
+      ],
+      "evidence_tier": 0,
+      "historical_priority": 48.0,
+      "manufacturer_key": "YACCA LIFESCIENCES PVT LTD 156 RAIPUR BHAGWANPUR ROORKEE- 247661 U K",
+      "product": "Calcium Phosphate & Vitamin D3 Suspension",
+      "rank": 1,
+      "reason_codes": [],
+      "record_ids": [
+        "2025-11:0030"
+      ],
+      "reference_status": "historical_report_match",
+      "review_note": "Sampling priority only. Verify source independence and collect evidence.",
+      "scan_anomaly": false,
+      "simulated": true,
+      "snapshot_id": "0f8b77c5b560abd5ba175b22ae7029f27800b062e5f3f7aed16614a58d6c7589",
+      "spurious_report_match": false
+    },
+    {
+      "asserted_source_count": 1,
+      "batch_no": "GTA-2501",
+      "candidate_id": "55e835d13dda40e2846807a1",
+      "event_count": 1,
+      "evidence_event_ids": [
+        "EVENT-2026-35-3"
+      ],
+      "evidence_tier": 0,
+      "historical_priority": 46.2,
+      "manufacturer_key": "APPLE FORMULATIONS PVT LTD PLOT NO 208 KISHANPUR ROORKEE-247667 U K",
+      "product": "Glimepiride Tablets IP 1mg",
+      "rank": 2,
+      "reason_codes": [],
+      "record_ids": [
+        "2026-07:0173"
+      ],
+      "reference_status": "historical_report_match",
+      "review_note": "Sampling priority only. Verify source independence and collect evidence.",
+      "scan_anomaly": false,
+      "simulated": true,
+      "snapshot_id": "0f8b77c5b560abd5ba175b22ae7029f27800b062e5f3f7aed16614a58d6c7589",
+      "spurious_report_match": false
+    },
+    {
+      "asserted_source_count": 1,
+      "batch_no": "CIZ-2604",
+      "candidate_id": "ddef70230f3e9cbf5385395b",
+      "event_count": 60,
+      "evidence_event_ids": [
+        "EVENT-2026-38-0",
+        "EVENT-2026-38-1",
+        "EVENT-2026-38-2",
+        "EVENT-2026-38-3",
+        "EVENT-2026-38-4",
+        "EVENT-2026-38-5",
+        "EVENT-2026-38-6",
+        "EVENT-2026-38-7",
+        "EVENT-2026-38-8",
+        "EVENT-2026-38-9",
+        "EVENT-2026-38-10",
+        "EVENT-2026-38-11",
+        "EVENT-2026-38-12",
+        "EVENT-2026-38-13",
+        "EVENT-2026-38-14",
+        "EVENT-2026-38-15",
+        "EVENT-2026-38-16",
+        "EVENT-2026-38-17",
+        "EVENT-2026-38-18",
+        "EVENT-2026-38-19"
+      ],
+      "evidence_tier": 1,
+      "historical_priority": 46.2,
+      "manufacturer_key": "APPLE FORMULATIONS PVT LTD PLOT NO 208 KISHANPUR ROORKEE-247667 U K",
+      "product": "Cetirizine Syrup IP",
+      "rank": 3,
+      "reason_codes": [
+        "PACK_SCAN_BURST",
+        "SINGLE_SOURCE_REVIEW_ONLY"
+      ],
+      "record_ids": [
+        "2026-06:0034"
+      ],
+      "reference_status": "historical_report_match",
+      "review_note": "Sampling priority only. Verify source independence and collect evidence.",
+      "scan_anomaly": true,
+      "simulated": true,
+      "snapshot_id": "0f8b77c5b560abd5ba175b22ae7029f27800b062e5f3f7aed16614a58d6c7589",
+      "spurious_report_match": false
+    },
+    {
+      "asserted_source_count": 1,
+      "batch_no": "GBC239",
+      "candidate_id": "998c6bf01f0decd5a7521eb6",
+      "event_count": 60,
+      "evidence_event_ids": [
+        "EVENT-2026-98-0",
+        "EVENT-2026-98-1",
+        "EVENT-2026-98-2",
+        "EVENT-2026-98-3",
+        "EVENT-2026-98-4",
+        "EVENT-2026-98-5",
+        "EVENT-2026-98-6",
+        "EVENT-2026-98-7",
+        "EVENT-2026-98-8",
+        "EVENT-2026-98-9",
+        "EVENT-2026-98-10",
+        "EVENT-2026-98-11",
+        "EVENT-2026-98-12",
+        "EVENT-2026-98-13",
+        "EVENT-2026-98-14",
+        "EVENT-2026-98-15",
+        "EVENT-2026-98-16",
+        "EVENT-2026-98-17",
+        "EVENT-2026-98-18",
+        "EVENT-2026-98-19"
+      ],
+      "evidence_tier": 1,
+      "historical_priority": 35.7,
+      "manufacturer_key": "SUPER FORMULATIONS PVT LTD 16-B AND 15-F INDUSTRIAL AREA MAXI ROAD UJJAIN MP -456010",
+      "product": "Vitamin B-Complex Tablets NFI (Prophylactic)",
+      "rank": 4,
+      "reason_codes": [
+        "PACK_SCAN_BURST",
+        "SINGLE_SOURCE_REVIEW_ONLY"
+      ],
+      "record_ids": [
+        "2026-03:0100"
+      ],
+      "reference_status": "historical_report_match",
+      "review_note": "Sampling priority only. Verify source independence and collect evidence.",
+      "scan_anomaly": true,
+      "simulated": true,
+      "snapshot_id": "0f8b77c5b560abd5ba175b22ae7029f27800b062e5f3f7aed16614a58d6c7589",
+      "spurious_report_match": false
+    },
+    {
+      "asserted_source_count": 1,
+      "batch_no": "TG25-1814A",
+      "candidate_id": "85bbbcd5adaae3aa1f782bbf",
+      "event_count": 1,
+      "evidence_event_ids": [
+        "EVENT-2026-59-3"
+      ],
+      "evidence_tier": 0,
+      "historical_priority": 27.7,
+      "manufacturer_key": "ATHENS LIFE SCIENCES MAUZA RAMPUR JATTAN NAHAN ROAD KALA AMB DISTT SIRMOUR H P -173030",
+      "product": "Pantoprazole Gastro Resistant Tablets IP",
+      "rank": 5,
+      "reason_codes": [],
+      "record_ids": [
+        "2026-01:0117"
+      ],
+      "reference_status": "historical_report_match",
+      "review_note": "Sampling priority only. Verify source independence and collect evidence.",
+      "scan_anomaly": false,
+      "simulated": true,
+      "snapshot_id": "0f8b77c5b560abd5ba175b22ae7029f27800b062e5f3f7aed16614a58d6c7589",
+      "spurious_report_match": false
+    },
+    {
+      "asserted_source_count": 1,
+      "batch_no": "TG25-03290",
+      "candidate_id": "d7bdc52f999dd48768102adc",
+      "event_count": 4,
+      "evidence_event_ids": [
+        "EVENT-2026-115-0",
+        "EVENT-2026-115-1",
+        "EVENT-2026-115-2",
+        "EVENT-2026-115-3"
+      ],
+      "evidence_tier": 0,
+      "historical_priority": 27.7,
+      "manufacturer_key": "ATHENS LIFE SCIENCES MAUZA RAMPUR JATTAN NAHAN ROAD KALA AMB DISTT SIRMOUR H P -173030",
+      "product": "Pantoprazole Gastro-resistant Tablets IP",
+      "rank": 6,
+      "reason_codes": [],
+      "record_ids": [
+        "2026-06:0016"
+      ],
+      "reference_status": "historical_report_match",
+      "review_note": "Sampling priority only. Verify source independence and collect evidence.",
+      "scan_anomaly": false,
+      "simulated": true,
+      "snapshot_id": "0f8b77c5b560abd5ba175b22ae7029f27800b062e5f3f7aed16614a58d6c7589",
+      "spurious_report_match": false
+    },
+    {
+      "asserted_source_count": 1,
+      "batch_no": "RC26003",
+      "candidate_id": "e3656feaf993119bc64c35c7",
+      "event_count": 60,
+      "evidence_event_ids": [
+        "EVENT-2026-2-0",
+        "EVENT-2026-2-1",
+        "EVENT-2026-2-2",
+        "EVENT-2026-2-3",
+        "EVENT-2026-2-4",
+        "EVENT-2026-2-5",
+        "EVENT-2026-2-6",
+        "EVENT-2026-2-7",
+        "EVENT-2026-2-8",
+        "EVENT-2026-2-9",
+        "EVENT-2026-2-10",
+        "EVENT-2026-2-11",
+        "EVENT-2026-2-12",
+        "EVENT-2026-2-13",
+        "EVENT-2026-2-14",
+        "EVENT-2026-2-15",
+        "EVENT-2026-2-16",
+        "EVENT-2026-2-17",
+        "EVENT-2026-2-18",
+        "EVENT-2026-2-19"
+      ],
+      "evidence_tier": 1,
+      "historical_priority": 26.0,
+      "manufacturer_key": "MAAN PHARMACEUTICALS LTD PLOT-1 G I D C PHASE-II MODHERA ROAD MEHSANA-384002 GUJARAT INDIA",
+      "product": "Ferric Carboxymaltose Injection 50 mg/ml",
+      "rank": 7,
+      "reason_codes": [
+        "PACK_SCAN_BURST",
+        "SINGLE_SOURCE_REVIEW_ONLY"
+      ],
+      "record_ids": [
+        "2026-07:0028"
+      ],
+      "reference_status": "historical_report_match",
+      "review_note": "Sampling priority only. Verify source independence and collect evidence.",
+      "scan_anomaly": true,
+      "simulated": true,
+      "snapshot_id": "0f8b77c5b560abd5ba175b22ae7029f27800b062e5f3f7aed16614a58d6c7589",
+      "spurious_report_match": false
+    },
+    {
+      "asserted_source_count": 1,
+      "batch_no": "M24098",
+      "candidate_id": "28689de5b389c550cfcfa127",
+      "event_count": 1,
+      "evidence_event_ids": [
+        "EVENT-2026-47-3"
+      ],
+      "evidence_tier": 0,
+      "historical_priority": 25.7,
+      "manufacturer_key": "MERCURY PHARMACEUTICALS VILL-BERSON NALAGARH H P -174101",
+      "product": "Calcium & Vitamin D3 Tablets (TISE-CAL)",
+      "rank": 8,
+      "reason_codes": [],
+      "record_ids": [
+        "2025-10:0025"
+      ],
+      "reference_status": "historical_report_match",
+      "review_note": "Sampling priority only. Verify source independence and collect evidence.",
+      "scan_anomaly": false,
+      "simulated": true,
+      "snapshot_id": "0f8b77c5b560abd5ba175b22ae7029f27800b062e5f3f7aed16614a58d6c7589",
+      "spurious_report_match": false
+    },
+    {
+      "asserted_source_count": 2,
+      "batch_no": "M24122",
+      "candidate_id": "3ce6c8dd41a2e507377a88a5",
+      "event_count": 4,
+      "evidence_event_ids": [
+        "EVENT-2026-33-0",
+        "EVENT-2026-33-1",
+        "EVENT-2026-33-2",
+        "EVENT-2026-33-3"
+      ],
+      "evidence_tier": 3,
+      "historical_priority": 25.7,
+      "manufacturer_key": "MERCURY PHARMACEUTICALS VILL-BERSON NALAGARH H P -174101",
+      "product": "Calcium & Vitamin D3 Tablets (TISE-CAL)",
+      "rank": 9,
+      "reason_codes": [
+        "PACK_TRAVEL_CONFLICT"
+      ],
+      "record_ids": [
+        "2025-10:0021"
+      ],
+      "reference_status": "historical_report_match",
+      "review_note": "Sampling priority only. Verify source independence and collect evidence.",
+      "scan_anomaly": true,
+      "simulated": true,
+      "snapshot_id": "0f8b77c5b560abd5ba175b22ae7029f27800b062e5f3f7aed16614a58d6c7589",
+      "spurious_report_match": false
+    },
+    {
+      "asserted_source_count": 2,
+      "batch_no": "4063",
+      "candidate_id": "3cf3842a02437f7dadea040e",
+      "event_count": 4,
+      "evidence_event_ids": [
+        "EVENT-2026-54-0",
+        "EVENT-2026-54-1",
+        "EVENT-2026-54-2",
+        "EVENT-2026-54-3"
+      ],
+      "evidence_tier": 0,
+      "historical_priority": 24.8,
+      "manufacturer_key": "SUPER FORMULATIONS PVT LTD 16-B AND 15-F INDUSTRIAL AREA MAXI ROAD UJJAIN M P -456010",
+      "product": "Oral Rehydration Salts IP",
+      "rank": 10,
+      "reason_codes": [],
+      "record_ids": [
+        "2026-07:0044"
+      ],
+      "reference_status": "historical_report_match",
+      "review_note": "Sampling priority only. Verify source independence and collect evidence.",
+      "scan_anomaly": false,
+      "simulated": true,
+      "snapshot_id": "0f8b77c5b560abd5ba175b22ae7029f27800b062e5f3f7aed16614a58d6c7589",
+      "spurious_report_match": false
+    }
+  ],
+  "raw_volume": [
+    {
+      "asserted_source_count": 1,
+      "batch_no": "J014",
+      "candidate_id": "237194ddc9c9da8e57f0cd60",
+      "event_count": 60,
+      "evidence_event_ids": [
+        "EVENT-2026-62-0",
+        "EVENT-2026-62-1",
+        "EVENT-2026-62-2",
+        "EVENT-2026-62-3",
+        "EVENT-2026-62-4",
+        "EVENT-2026-62-5",
+        "EVENT-2026-62-6",
+        "EVENT-2026-62-7",
+        "EVENT-2026-62-8",
+        "EVENT-2026-62-9",
+        "EVENT-2026-62-10",
+        "EVENT-2026-62-11",
+        "EVENT-2026-62-12",
+        "EVENT-2026-62-13",
+        "EVENT-2026-62-14",
+        "EVENT-2026-62-15",
+        "EVENT-2026-62-16",
+        "EVENT-2026-62-17",
+        "EVENT-2026-62-18",
+        "EVENT-2026-62-19"
+      ],
+      "evidence_tier": 1,
+      "historical_priority": 0.0,
+      "manufacturer_key": "KARLIN PHARMACEUTICLAS AND EXPORTS PRIVATE LIMITED PLOT NO 15 S F NO 227 SIDCO INDUSTRIAL ESTATE THIRUMUDIVAKKAM KUNDRATHUR TALUK KANCHEEPURAM DISTRICT TAMIL NADU-600044",
+      "product": "Clobetasol Propionate and Salicylic Acid Ointment",
+      "rank": 1,
+      "reason_codes": [
+        "PACK_SCAN_BURST",
+        "SINGLE_SOURCE_REVIEW_ONLY"
+      ],
+      "record_ids": [
+        "2026-06:0123"
+      ],
+      "reference_status": "historical_report_match",
+      "review_note": "Sampling priority only. Verify source independence and collect evidence.",
+      "scan_anomaly": true,
+      "simulated": true,
+      "snapshot_id": "0f8b77c5b560abd5ba175b22ae7029f27800b062e5f3f7aed16614a58d6c7589",
+      "spurious_report_match": false
+    },
+    {
+      "asserted_source_count": 1,
+      "batch_no": "CFB-X25",
+      "candidate_id": "253d7c8750f316451bfc7ce6",
+      "event_count": 60,
+      "evidence_event_ids": [
+        "EVENT-2026-14-0",
+        "EVENT-2026-14-1",
+        "EVENT-2026-14-2",
+        "EVENT-2026-14-3",
+        "EVENT-2026-14-4",
+        "EVENT-2026-14-5",
+        "EVENT-2026-14-6",
+        "EVENT-2026-14-7",
+        "EVENT-2026-14-8",
+        "EVENT-2026-14-9",
+        "EVENT-2026-14-10",
+        "EVENT-2026-14-11",
+        "EVENT-2026-14-12",
+        "EVENT-2026-14-13",
+        "EVENT-2026-14-14",
+        "EVENT-2026-14-15",
+        "EVENT-2026-14-16",
+        "EVENT-2026-14-17",
+        "EVENT-2026-14-18",
+        "EVENT-2026-14-19"
+      ],
+      "evidence_tier": 1,
+      "historical_priority": 13.2,
+      "manufacturer_key": "CYANO PHARMA P LTD 115-C INDUSTRIAL ESTATE POLOGROUND INDORE-452015",
+      "product": "Ferrous Sulphate and Folic Acid Tablets IP",
+      "rank": 2,
+      "reason_codes": [
+        "PACK_SCAN_BURST",
+        "SINGLE_SOURCE_REVIEW_ONLY"
+      ],
+      "record_ids": [
+        "2026-01:0040"
+      ],
+      "reference_status": "historical_report_match",
+      "review_note": "Sampling priority only. Verify source independence and collect evidence.",
+      "scan_anomaly": true,
+      "simulated": true,
+      "snapshot_id": "0f8b77c5b560abd5ba175b22ae7029f27800b062e5f3f7aed16614a58d6c7589",
+      "spurious_report_match": false
+    },
+    {
+      "asserted_source_count": 1,
+      "batch_no": "NR/240715",
+      "candidate_id": "279d09aeaf8ae880f4dec938",
+      "event_count": 60,
+      "evidence_event_ids": [
+        "EVENT-2026-92-0",
+        "EVENT-2026-92-1",
+        "EVENT-2026-92-2",
+        "EVENT-2026-92-3",
+        "EVENT-2026-92-4",
+        "EVENT-2026-92-5",
+        "EVENT-2026-92-6",
+        "EVENT-2026-92-7",
+        "EVENT-2026-92-8",
+        "EVENT-2026-92-9",
+        "EVENT-2026-92-10",
+        "EVENT-2026-92-11",
+        "EVENT-2026-92-12",
+        "EVENT-2026-92-13",
+        "EVENT-2026-92-14",
+        "EVENT-2026-92-15",
+        "EVENT-2026-92-16",
+        "EVENT-2026-92-17",
+        "EVENT-2026-92-18",
+        "EVENT-2026-92-19"
+      ],
+      "evidence_tier": 1,
+      "historical_priority": 0.0,
+      "manufacturer_key": "SBS BIOTECH MOUZA RAMPUR JATTAN NAHAN ROAD KALA AMB DISTT SIRMOUR H P",
+      "product": "Lorazepam Tablets IP (LORAT-1)",
+      "rank": 3,
+      "reason_codes": [
+        "PACK_SCAN_BURST",
+        "SINGLE_SOURCE_REVIEW_ONLY"
+      ],
+      "record_ids": [
+        "2025-07:0137"
+      ],
+      "reference_status": "historical_report_match",
+      "review_note": "Sampling priority only. Verify source independence and collect evidence.",
+      "scan_anomaly": true,
+      "simulated": true,
+      "snapshot_id": "0f8b77c5b560abd5ba175b22ae7029f27800b062e5f3f7aed16614a58d6c7589",
+      "spurious_report_match": false
+    },
+    {
+      "asserted_source_count": 1,
+      "batch_no": "GT31156",
+      "candidate_id": "2adf0fda30dfb88967bb53bc",
+      "event_count": 60,
+      "evidence_event_ids": [
+        "EVENT-2026-32-0",
+        "EVENT-2026-32-1",
+        "EVENT-2026-32-2",
+        "EVENT-2026-32-3",
+        "EVENT-2026-32-4",
+        "EVENT-2026-32-5",
+        "EVENT-2026-32-6",
+        "EVENT-2026-32-7",
+        "EVENT-2026-32-8",
+        "EVENT-2026-32-9",
+        "EVENT-2026-32-10",
+        "EVENT-2026-32-11",
+        "EVENT-2026-32-12",
+        "EVENT-2026-32-13",
+        "EVENT-2026-32-14",
+        "EVENT-2026-32-15",
+        "EVENT-2026-32-16",
+        "EVENT-2026-32-17",
+        "EVENT-2026-32-18",
+        "EVENT-2026-32-19"
+      ],
+      "evidence_tier": 1,
+      "historical_priority": 0.0,
+      "manufacturer_key": "OMEGA PHARMA KHASRA NO 482 VILLAGE SALIYAR ROORKEE-247667 DISTT HARIDWAR UTTARAKHAND",
+      "product": "Ciprofloxacin Tablets I.P. 500 mg",
+      "rank": 4,
+      "reason_codes": [
+        "PACK_SCAN_BURST",
+        "SINGLE_SOURCE_REVIEW_ONLY"
+      ],
+      "record_ids": [
+        "2026-03:0020"
+      ],
+      "reference_status": "historical_report_match",
+      "review_note": "Sampling priority only. Verify source independence and collect evidence.",
+      "scan_anomaly": true,
+      "simulated": true,
+      "snapshot_id": "0f8b77c5b560abd5ba175b22ae7029f27800b062e5f3f7aed16614a58d6c7589",
+      "spurious_report_match": false
+    },
+    {
+      "asserted_source_count": 1,
+      "batch_no": "BAC0005",
+      "candidate_id": "39ea1e90ee7c988a511a5fc7",
+      "event_count": 60,
+      "evidence_event_ids": [
+        "EVENT-2026-68-0",
+        "EVENT-2026-68-1",
+        "EVENT-2026-68-2",
+        "EVENT-2026-68-3",
+        "EVENT-2026-68-4",
+        "EVENT-2026-68-5",
+        "EVENT-2026-68-6",
+        "EVENT-2026-68-7",
+        "EVENT-2026-68-8",
+        "EVENT-2026-68-9",
+        "EVENT-2026-68-10",
+        "EVENT-2026-68-11",
+        "EVENT-2026-68-12",
+        "EVENT-2026-68-13",
+        "EVENT-2026-68-14",
+        "EVENT-2026-68-15",
+        "EVENT-2026-68-16",
+        "EVENT-2026-68-17",
+        "EVENT-2026-68-18",
+        "EVENT-2026-68-19"
+      ],
+      "evidence_tier": 1,
+      "historical_priority": 0.0,
+      "manufacturer_key": "BRAHMANAND AYURVEDA OPC PVT LTD PUNJAB INDIA -144020",
+      "product": "KAAMRAJ Caspules (Suspected to contain Sildenafil and Tadalafil",
+      "rank": 5,
+      "reason_codes": [
+        "PACK_SCAN_BURST",
+        "SINGLE_SOURCE_REVIEW_ONLY"
+      ],
+      "record_ids": [
+        "2025-10:0185"
+      ],
+      "reference_status": "historical_report_match",
+      "review_note": "Sampling priority only. Verify source independence and collect evidence.",
+      "scan_anomaly": true,
+      "simulated": true,
+      "snapshot_id": "0f8b77c5b560abd5ba175b22ae7029f27800b062e5f3f7aed16614a58d6c7589",
+      "spurious_report_match": false
+    },
+    {
+      "asserted_source_count": 1,
+      "batch_no": "UFL250378L",
+      "candidate_id": "5c06b5d09ba769a2143b1281",
+      "event_count": 60,
+      "evidence_event_ids": [
+        "EVENT-2026-80-0",
+        "EVENT-2026-80-1",
+        "EVENT-2026-80-2",
+        "EVENT-2026-80-3",
+        "EVENT-2026-80-4",
+        "EVENT-2026-80-5",
+        "EVENT-2026-80-6",
+        "EVENT-2026-80-7",
+        "EVENT-2026-80-8",
+        "EVENT-2026-80-9",
+        "EVENT-2026-80-10",
+        "EVENT-2026-80-11",
+        "EVENT-2026-80-12",
+        "EVENT-2026-80-13",
+        "EVENT-2026-80-14",
+        "EVENT-2026-80-15",
+        "EVENT-2026-80-16",
+        "EVENT-2026-80-17",
+        "EVENT-2026-80-18",
+        "EVENT-2026-80-19"
+      ],
+      "evidence_tier": 1,
+      "historical_priority": 0.0,
+      "manufacturer_key": "ULTRA DRUGS FORMULATIONS PVT LTD PLOT NO 338/278 VILL MANAKPUR LODHIMAJRA TEHSIL-BADDI DISTT SOLAN H P -173 205",
+      "product": "Levosalbutamol, Guaiphenesin & Ambroxol Hcl Syrup",
+      "rank": 6,
+      "reason_codes": [
+        "PACK_SCAN_BURST",
+        "SINGLE_SOURCE_REVIEW_ONLY"
+      ],
+      "record_ids": [
+        "2026-01:0086"
+      ],
+      "reference_status": "historical_report_match",
+      "review_note": "Sampling priority only. Verify source independence and collect evidence.",
+      "scan_anomaly": true,
+      "simulated": true,
+      "snapshot_id": "0f8b77c5b560abd5ba175b22ae7029f27800b062e5f3f7aed16614a58d6c7589",
+      "spurious_report_match": false
+    },
+    {
+      "asserted_source_count": 1,
+      "batch_no": "AE-RB6-10-2K25-03",
+      "candidate_id": "6c826c3184d2df2f89429f85",
+      "event_count": 60,
+      "evidence_event_ids": [
+        "EVENT-2026-50-0",
+        "EVENT-2026-50-1",
+        "EVENT-2026-50-2",
+        "EVENT-2026-50-3",
+        "EVENT-2026-50-4",
+        "EVENT-2026-50-5",
+        "EVENT-2026-50-6",
+        "EVENT-2026-50-7",
+        "EVENT-2026-50-8",
+        "EVENT-2026-50-9",
+        "EVENT-2026-50-10",
+        "EVENT-2026-50-11",
+        "EVENT-2026-50-12",
+        "EVENT-2026-50-13",
+        "EVENT-2026-50-14",
+        "EVENT-2026-50-15",
+        "EVENT-2026-50-16",
+        "EVENT-2026-50-17",
+        "EVENT-2026-50-18",
+        "EVENT-2026-50-19"
+      ],
+      "evidence_tier": 1,
+      "historical_priority": 0.0,
+      "manufacturer_key": "ARUNACHALA ENTERPRISES D NO 23-4B/278 TO 285 VASAVI PHARMA MARKET COMPLEX 4TH FLOOR OPP AYYAPPA SWAMY TEMPLE GOLLAPUDI VIJAYAWADA 521225 AP",
+      "product": "Rolled Bandage",
+      "rank": 7,
+      "reason_codes": [
+        "PACK_SCAN_BURST",
+        "SINGLE_SOURCE_REVIEW_ONLY"
+      ],
+      "record_ids": [
+        "2026-08:0002"
+      ],
+      "reference_status": "historical_report_match",
+      "review_note": "Sampling priority only. Verify source independence and collect evidence.",
+      "scan_anomaly": true,
+      "simulated": true,
+      "snapshot_id": "0f8b77c5b560abd5ba175b22ae7029f27800b062e5f3f7aed16614a58d6c7589",
+      "spurious_report_match": false
+    },
+    {
+      "asserted_source_count": 1,
+      "batch_no": "SHT-26877",
+      "candidate_id": "70b87983547e43015368d368",
+      "event_count": 60,
+      "evidence_event_ids": [
+        "EVENT-2026-56-0",
+        "EVENT-2026-56-1",
+        "EVENT-2026-56-2",
+        "EVENT-2026-56-3",
+        "EVENT-2026-56-4",
+        "EVENT-2026-56-5",
+        "EVENT-2026-56-6",
+        "EVENT-2026-56-7",
+        "EVENT-2026-56-8",
+        "EVENT-2026-56-9",
+        "EVENT-2026-56-10",
+        "EVENT-2026-56-11",
+        "EVENT-2026-56-12",
+        "EVENT-2026-56-13",
+        "EVENT-2026-56-14",
+        "EVENT-2026-56-15",
+        "EVENT-2026-56-16",
+        "EVENT-2026-56-17",
+        "EVENT-2026-56-18",
+        "EVENT-2026-56-19"
+      ],
+      "evidence_tier": 1,
+      "historical_priority": 0.0,
+      "manufacturer_key": "SUNVET HEALTHCARE VILLAGE SHAMBUWALA PAONTA ROAD DISTT-SIRMOUR H P 173001",
+      "product": "Ofloxacin & Ornidazole Tablets IP",
+      "rank": 8,
+      "reason_codes": [
+        "PACK_SCAN_BURST",
+        "SINGLE_SOURCE_REVIEW_ONLY"
+      ],
+      "record_ids": [
+        "2026-06:0172"
+      ],
+      "reference_status": "historical_report_match",
+      "review_note": "Sampling priority only. Verify source independence and collect evidence.",
+      "scan_anomaly": true,
+      "simulated": true,
+      "snapshot_id": "0f8b77c5b560abd5ba175b22ae7029f27800b062e5f3f7aed16614a58d6c7589",
+      "spurious_report_match": false
+    },
+    {
+      "asserted_source_count": 1,
+      "batch_no": "LBCC2601",
+      "candidate_id": "7d70c577d5783420e9b62b17",
+      "event_count": 60,
+      "evidence_event_ids": [
+        "EVENT-2026-74-0",
+        "EVENT-2026-74-1",
+        "EVENT-2026-74-2",
+        "EVENT-2026-74-3",
+        "EVENT-2026-74-4",
+        "EVENT-2026-74-5",
+        "EVENT-2026-74-6",
+        "EVENT-2026-74-7",
+        "EVENT-2026-74-8",
+        "EVENT-2026-74-9",
+        "EVENT-2026-74-10",
+        "EVENT-2026-74-11",
+        "EVENT-2026-74-12",
+        "EVENT-2026-74-13",
+        "EVENT-2026-74-14",
+        "EVENT-2026-74-15",
+        "EVENT-2026-74-16",
+        "EVENT-2026-74-17",
+        "EVENT-2026-74-18",
+        "EVENT-2026-74-19"
+      ],
+      "evidence_tier": 1,
+      "historical_priority": 0.0,
+      "manufacturer_key": "LINUX LIFE SCIENCES PVT LTD AT E-41 INDUSTRIAL AREA FOCAL POINT DERABASSI DISTRICT SAS NAGAR PUNJAB 140 201 PUNJAB",
+      "product": "Cefpodoxime Proxetil Tablets IP 200mg,",
+      "rank": 9,
+      "reason_codes": [
+        "PACK_SCAN_BURST",
+        "SINGLE_SOURCE_REVIEW_ONLY"
+      ],
+      "record_ids": [
+        "2026-06:0135"
+      ],
+      "reference_status": "historical_report_match",
+      "review_note": "Sampling priority only. Verify source independence and collect evidence.",
+      "scan_anomaly": true,
+      "simulated": true,
+      "snapshot_id": "0f8b77c5b560abd5ba175b22ae7029f27800b062e5f3f7aed16614a58d6c7589",
+      "spurious_report_match": false
+    },
+    {
+      "asserted_source_count": 1,
+      "batch_no": "GBC239",
+      "candidate_id": "998c6bf01f0decd5a7521eb6",
+      "event_count": 60,
+      "evidence_event_ids": [
+        "EVENT-2026-98-0",
+        "EVENT-2026-98-1",
+        "EVENT-2026-98-2",
+        "EVENT-2026-98-3",
+        "EVENT-2026-98-4",
+        "EVENT-2026-98-5",
+        "EVENT-2026-98-6",
+        "EVENT-2026-98-7",
+        "EVENT-2026-98-8",
+        "EVENT-2026-98-9",
+        "EVENT-2026-98-10",
+        "EVENT-2026-98-11",
+        "EVENT-2026-98-12",
+        "EVENT-2026-98-13",
+        "EVENT-2026-98-14",
+        "EVENT-2026-98-15",
+        "EVENT-2026-98-16",
+        "EVENT-2026-98-17",
+        "EVENT-2026-98-18",
+        "EVENT-2026-98-19"
+      ],
+      "evidence_tier": 1,
+      "historical_priority": 35.7,
+      "manufacturer_key": "SUPER FORMULATIONS PVT LTD 16-B AND 15-F INDUSTRIAL AREA MAXI ROAD UJJAIN MP -456010",
+      "product": "Vitamin B-Complex Tablets NFI (Prophylactic)",
+      "rank": 10,
+      "reason_codes": [
+        "PACK_SCAN_BURST",
+        "SINGLE_SOURCE_REVIEW_ONLY"
+      ],
+      "record_ids": [
+        "2026-03:0100"
+      ],
+      "reference_status": "historical_report_match",
+      "review_note": "Sampling priority only. Verify source independence and collect evidence.",
+      "scan_anomaly": true,
+      "simulated": true,
+      "snapshot_id": "0f8b77c5b560abd5ba175b22ae7029f27800b062e5f3f7aed16614a58d6c7589",
+      "spurious_report_match": false
+    }
+  ],
+  "scan_only": [
+    {
+      "asserted_source_count": 2,
+      "batch_no": "ST-21941",
+      "candidate_id": "04d21c74473deaead239d613",
+      "event_count": 4,
+      "evidence_event_ids": [
+        "EVENT-2026-105-0",
+        "EVENT-2026-105-1",
+        "EVENT-2026-105-2",
+        "EVENT-2026-105-3"
+      ],
+      "evidence_tier": 3,
+      "historical_priority": 0.0,
+      "manufacturer_key": "SUNVIJ DRUGS PVT LTD 511 GIDC WAGHODIA BARODA BARODA-391760 GUJ",
+      "product": "Prochlorperazine Maleate Tablets IP",
+      "rank": 1,
+      "reason_codes": [
+        "PACK_TRAVEL_CONFLICT"
+      ],
+      "record_ids": [
+        "2026-05:0101"
+      ],
+      "reference_status": "historical_report_match",
+      "review_note": "Sampling priority only. Verify source independence and collect evidence.",
+      "scan_anomaly": true,
+      "simulated": true,
+      "snapshot_id": "0f8b77c5b560abd5ba175b22ae7029f27800b062e5f3f7aed16614a58d6c7589",
+      "spurious_report_match": false
+    },
+    {
+      "asserted_source_count": 2,
+      "batch_no": "R09GL2545A",
+      "candidate_id": "13715499a5a5067ea9ff7d85",
+      "event_count": 4,
+      "evidence_event_ids": [
+        "EVENT-2026-93-0",
+        "EVENT-2026-93-1",
+        "EVENT-2026-93-2",
+        "EVENT-2026-93-3"
+      ],
+      "evidence_tier": 3,
+      "historical_priority": 0.0,
+      "manufacturer_key": "REDNEX PHARMACEUTICALS LIMITED SURVEY NO 586 AND 231 NR SKF BEARING BAVLA BAGODARA N H -8A KERALA TAL BAVLA DIST-AHMEDABAD-382220 GUJARAT",
+      "product": "Hydroxyzine HCL Oral Solution IP 10 mg",
+      "rank": 2,
+      "reason_codes": [
+        "PACK_TRAVEL_CONFLICT"
+      ],
+      "record_ids": [
+        "2025-11:0060"
+      ],
+      "reference_status": "historical_report_match",
+      "review_note": "Sampling priority only. Verify source independence and collect evidence.",
+      "scan_anomaly": true,
+      "simulated": true,
+      "snapshot_id": "0f8b77c5b560abd5ba175b22ae7029f27800b062e5f3f7aed16614a58d6c7589",
+      "spurious_report_match": false
+    },
+    {
+      "asserted_source_count": 2,
+      "batch_no": "VS2538",
+      "candidate_id": "1687cd64b0c41798b8cc5def",
+      "event_count": 4,
+      "evidence_event_ids": [
+        "EVENT-2026-75-0",
+        "EVENT-2026-75-1",
+        "EVENT-2026-75-2",
+        "EVENT-2026-75-3"
+      ],
+      "evidence_tier": 3,
+      "historical_priority": 0.0,
+      "manufacturer_key": "VERTEX PHARMA CHEMICALS PLOT NO 60-A 61-A PIPDIC ELECTRONIC PARK THIRUBHUVANAI PUDUCHERRY- 605 107",
+      "product": "Levocetirizine Hydrochloride & Montelukast Sodium Suspension(LEMONT KID)",
+      "rank": 3,
+      "reason_codes": [
+        "PACK_TRAVEL_CONFLICT"
+      ],
+      "record_ids": [
+        "2025-12:0169"
+      ],
+      "reference_status": "historical_report_match",
+      "review_note": "Sampling priority only. Verify source independence and collect evidence.",
+      "scan_anomaly": true,
+      "simulated": true,
+      "snapshot_id": "0f8b77c5b560abd5ba175b22ae7029f27800b062e5f3f7aed16614a58d6c7589",
+      "spurious_report_match": false
+    },
+    {
+      "asserted_source_count": 2,
+      "batch_no": "T-25111",
+      "candidate_id": "1795525b9f1f0febeb7c77e9",
+      "event_count": 4,
+      "evidence_event_ids": [
+        "EVENT-2026-117-0",
+        "EVENT-2026-117-1",
+        "EVENT-2026-117-2",
+        "EVENT-2026-117-3"
+      ],
+      "evidence_tier": 3,
+      "historical_priority": 0.0,
+      "manufacturer_key": "VITAL FORMULATIONS LIMITED I/146 PHASE-IV GIDC VITHAL UDHYOGNAGAR-388121 DIST ANAND GUJ INDIA",
+      "product": "Paracetamol IP 650 mg Tablet",
+      "rank": 4,
+      "reason_codes": [
+        "PACK_TRAVEL_CONFLICT"
+      ],
+      "record_ids": [
+        "2026-05:0066"
+      ],
+      "reference_status": "historical_report_match",
+      "review_note": "Sampling priority only. Verify source independence and collect evidence.",
+      "scan_anomaly": true,
+      "simulated": true,
+      "snapshot_id": "0f8b77c5b560abd5ba175b22ae7029f27800b062e5f3f7aed16614a58d6c7589",
+      "spurious_report_match": false
+    },
+    {
+      "asserted_source_count": 2,
+      "batch_no": "CPT24039",
+      "candidate_id": "290be534f26b0ee390040c06",
+      "event_count": 4,
+      "evidence_event_ids": [
+        "EVENT-2026-21-0",
+        "EVENT-2026-21-1",
+        "EVENT-2026-21-2",
+        "EVENT-2026-21-3"
+      ],
+      "evidence_tier": 3,
+      "historical_priority": 0.0,
+      "manufacturer_key": "VIVEK PHARMACHEM I LTD NH-8 CHIMANPURA AMER JAIPUR-303102",
+      "product": "Ciprofloxacin Hydrochloride Tablets IP 250mg",
+      "rank": 5,
+      "reason_codes": [
+        "PACK_TRAVEL_CONFLICT"
+      ],
+      "record_ids": [
+        "2025-07:0049"
+      ],
+      "reference_status": "historical_report_match",
+      "review_note": "Sampling priority only. Verify source independence and collect evidence.",
+      "scan_anomaly": true,
+      "simulated": true,
+      "snapshot_id": "0f8b77c5b560abd5ba175b22ae7029f27800b062e5f3f7aed16614a58d6c7589",
+      "spurious_report_match": false
+    },
+    {
+      "asserted_source_count": 2,
+      "batch_no": "2408001232",
+      "candidate_id": "34b9ccbb1e8b2117704e546b",
+      "event_count": 4,
+      "evidence_event_ids": [
+        "EVENT-2026-9-0",
+        "EVENT-2026-9-1",
+        "EVENT-2026-9-2",
+        "EVENT-2026-9-3"
+      ],
+      "evidence_tier": 3,
+      "historical_priority": 9.2,
+      "manufacturer_key": "ALEMBIC PHARMACEUTICALS LTD SAMARDUNG BASTI KAREK BLOCK NAMTHANG ILAKA NAMCHI SIKKIM-737126",
+      "product": "Azithromycin Tablets IP 500 mg",
+      "rank": 6,
+      "reason_codes": [
+        "PACK_TRAVEL_CONFLICT"
+      ],
+      "record_ids": [
+        "2026-08:0076"
+      ],
+      "reference_status": "historical_report_match",
+      "review_note": "Sampling priority only. Verify source independence and collect evidence.",
+      "scan_anomaly": true,
+      "simulated": true,
+      "snapshot_id": "0f8b77c5b560abd5ba175b22ae7029f27800b062e5f3f7aed16614a58d6c7589",
+      "spurious_report_match": false
+    },
+    {
+      "asserted_source_count": 2,
+      "batch_no": "MGT24-034",
+      "candidate_id": "3a54e42b9a45c5b13b3788ea",
+      "event_count": 4,
+      "evidence_event_ids": [
+        "EVENT-2026-27-0",
+        "EVENT-2026-27-1",
+        "EVENT-2026-27-2",
+        "EVENT-2026-27-3"
+      ],
+      "evidence_tier": 3,
+      "historical_priority": 0.0,
+      "manufacturer_key": "MEDGLOBE THERAPEUTICS LTD KHASRA NO-311 RAIPUR VILLAGE BHAGWANPUR PARGANA ROORKEE- 247667 UK",
+      "product": "Aceclofenac & Paracetamol Tablets",
+      "rank": 7,
+      "reason_codes": [
+        "PACK_TRAVEL_CONFLICT"
+      ],
+      "record_ids": [
+        "2026-03:0050"
+      ],
+      "reference_status": "historical_report_match",
+      "review_note": "Sampling priority only. Verify source independence and collect evidence.",
+      "scan_anomaly": true,
+      "simulated": true,
+      "snapshot_id": "0f8b77c5b560abd5ba175b22ae7029f27800b062e5f3f7aed16614a58d6c7589",
+      "spurious_report_match": false
+    },
+    {
+      "asserted_source_count": 2,
+      "batch_no": "M24122",
+      "candidate_id": "3ce6c8dd41a2e507377a88a5",
+      "event_count": 4,
+      "evidence_event_ids": [
+        "EVENT-2026-33-0",
+        "EVENT-2026-33-1",
+        "EVENT-2026-33-2",
+        "EVENT-2026-33-3"
+      ],
+      "evidence_tier": 3,
+      "historical_priority": 25.7,
+      "manufacturer_key": "MERCURY PHARMACEUTICALS VILL-BERSON NALAGARH H P -174101",
+      "product": "Calcium & Vitamin D3 Tablets (TISE-CAL)",
+      "rank": 8,
+      "reason_codes": [
+        "PACK_TRAVEL_CONFLICT"
+      ],
+      "record_ids": [
+        "2025-10:0021"
+      ],
+      "reference_status": "historical_report_match",
+      "review_note": "Sampling priority only. Verify source independence and collect evidence.",
+      "scan_anomaly": true,
+      "simulated": true,
+      "snapshot_id": "0f8b77c5b560abd5ba175b22ae7029f27800b062e5f3f7aed16614a58d6c7589",
+      "spurious_report_match": false
+    },
+    {
+      "asserted_source_count": 2,
+      "batch_no": "TB251158",
+      "candidate_id": "3eb554d908b254f358bd7889",
+      "event_count": 4,
+      "evidence_event_ids": [
+        "EVENT-2026-51-0",
+        "EVENT-2026-51-1",
+        "EVENT-2026-51-2",
+        "EVENT-2026-51-3"
+      ],
+      "evidence_tier": 3,
+      "historical_priority": 0.0,
+      "manufacturer_key": "AGRON REMEDIES PVT LTD SARVERKHERA MORADABAD ROAD KASHIPUR 244713",
+      "product": "Ondansetron Tablets IP 4 mg",
+      "rank": 9,
+      "reason_codes": [
+        "PACK_TRAVEL_CONFLICT"
+      ],
+      "record_ids": [
+        "2026-07:0010"
+      ],
+      "reference_status": "historical_report_match",
+      "review_note": "Sampling priority only. Verify source independence and collect evidence.",
+      "scan_anomaly": true,
+      "simulated": true,
+      "snapshot_id": "0f8b77c5b560abd5ba175b22ae7029f27800b062e5f3f7aed16614a58d6c7589",
+      "spurious_report_match": false
+    },
+    {
+      "asserted_source_count": 2,
+      "batch_no": "NTT250192",
+      "candidate_id": "6021d396bd1b437a52068778",
+      "event_count": 4,
+      "evidence_event_ids": [
+        "EVENT-2026-69-0",
+        "EVENT-2026-69-1",
+        "EVENT-2026-69-2",
+        "EVENT-2026-69-3"
+      ],
+      "evidence_tier": 3,
+      "historical_priority": 0.0,
+      "manufacturer_key": "NANOCEUT THERAPEUTICS PVT LTD R S NO 104/19A E V R STREET SEDARAPET PUDUCHERRY ? 605 111",
+      "product": "Cefixime Trihydrate With Lactic Acid Bacillus Tablets",
+      "rank": 10,
+      "reason_codes": [
+        "PACK_TRAVEL_CONFLICT"
+      ],
+      "record_ids": [
+        "2025-08:0059"
+      ],
+      "reference_status": "historical_report_match",
+      "review_note": "Sampling priority only. Verify source independence and collect evidence.",
+      "scan_anomaly": true,
+      "simulated": true,
+      "snapshot_id": "0f8b77c5b560abd5ba175b22ae7029f27800b062e5f3f7aed16614a58d6c7589",
+      "spurious_report_match": false
+    }
+  ]
+}

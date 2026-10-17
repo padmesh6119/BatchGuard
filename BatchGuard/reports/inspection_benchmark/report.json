@@ -1,0 +1,926 @@
+{
+  "accepted_new_events": 1760,
+  "active_unique_candidates": 120,
+  "benchmark": {
+    "accepted_new_events_per_second": 613.215911702826,
+    "deliveries_per_second": 620.1842743358127,
+    "duration_seconds": 2.87011469600111,
+    "latency_ms": {
+      "mean": 1.6078411078677655,
+      "p50": 1.359885496640345,
+      "p95": 2.879430301254615,
+      "p99": 3.5542669202550323
+    },
+    "queue_evaluation_seconds": 0.3281220220014802,
+    "scope": "Sequential local validation, SQLite transaction, pack features and audit persistence per delivery. Excludes reference loading, network and UI; queue timing separate. No warmup excluded."
+  },
+  "budget_comparison": {
+    "fused": {
+      "capture_fraction": 0.16666666666666666,
+      "labeled_selected": 10,
+      "selected_candidates": 10,
+      "simulated_clone_candidates_captured": 10
+    },
+    "history_only": {
+      "capture_fraction": 0.06666666666666667,
+      "labeled_selected": 10,
+      "selected_candidates": 10,
+      "simulated_clone_candidates_captured": 4
+    },
+    "raw_volume": {
+      "capture_fraction": 0.0,
+      "labeled_selected": 10,
+      "selected_candidates": 10,
+      "simulated_clone_candidates_captured": 0
+    },
+    "scan_only": {
+      "capture_fraction": 0.16666666666666666,
+      "labeled_selected": 10,
+      "selected_candidates": 10,
+      "simulated_clone_candidates_captured": 10
+    }
+  },
+  "capacity": 10,
+  "detector": {
+    "evaluation_unit": "active sampling candidate; threshold evidence_tier >= 2",
+    "false_negatives": 20,
+    "false_positives": 0,
+    "precision": 1.0,
+    "recall": 0.6666666666666666,
+    "true_positives": 40
+  },
+  "duplicate_deliveries": 20,
+  "environment": {
+    "linuxone_run_verified": false,
+    "logical_cpu_count": 8,
+    "machine": "x86_64",
+    "packages": {
+      "openpyxl": "3.1.5",
+      "pandas": "3.0.6",
+      "snapml": "not installed",
+      "streamlit": "1.66.0"
+    },
+    "platform_note": "Architecture is recorded automatically; operator must verify host allocation. No acceleration claim.",
+    "python": "3.14.7",
+    "release": "6.12.108-1-MANJARO",
+    "system": "Linux"
+  },
+  "input_deliveries": 1780,
+  "labeled_active_candidates": 120,
+  "limitations": [
+    "Synthetic behavior only; no commercial competitor was benchmarked.",
+    "Source independence is assumed, not authenticated; Sybil attacks are not solved.",
+    "Thresholds and scenarios are hand-designed; no trained AI or unseen-family generalization claim.",
+    "Slow clones outside the 30-minute window remain a known miss.",
+    "Queue and metrics use the last 30 minutes of event time, not wall-clock freshness.",
+    "All candidates, including weak evidence, can fill the requested budget; N is a maximum, not an obligation to act.",
+    "No real defect probability or real-world counterfeit accuracy is measured."
+  ],
+  "policy_version": "corroboration-v1",
+  "scenario_results": [
+    {
+      "candidate_id": "3ce6c8dd41a2e507377a88a5",
+      "clone": true,
+      "detected": true,
+      "evidence_tier": 3,
+      "scenario": "clone_spread"
+    },
+    {
+      "candidate_id": "cb080eab93b0216108ecf48c",
+      "clone": true,
+      "detected": true,
+      "evidence_tier": 3,
+      "scenario": "clone_spread"
+    },
+    {
+      "candidate_id": "34b9ccbb1e8b2117704e546b",
+      "clone": true,
+      "detected": true,
+      "evidence_tier": 3,
+      "scenario": "clone_spread"
+    },
+    {
+      "candidate_id": "d6c37ba993ae0ca348718d30",
+      "clone": true,
+      "detected": true,
+      "evidence_tier": 3,
+      "scenario": "clone_spread"
+    },
+    {
+      "candidate_id": "04d21c74473deaead239d613",
+      "clone": true,
+      "detected": true,
+      "evidence_tier": 3,
+      "scenario": "clone_spread"
+    },
+    {
+      "candidate_id": "13715499a5a5067ea9ff7d85",
+      "clone": true,
+      "detected": true,
+      "evidence_tier": 3,
+      "scenario": "clone_spread"
+    },
+    {
+      "candidate_id": "1687cd64b0c41798b8cc5def",
+      "clone": true,
+      "detected": true,
+      "evidence_tier": 3,
+      "scenario": "clone_spread"
+    },
+    {
+      "candidate_id": "1795525b9f1f0febeb7c77e9",
+      "clone": true,
+      "detected": true,
+      "evidence_tier": 3,
+      "scenario": "clone_spread"
+    },
+    {
+      "candidate_id": "290be534f26b0ee390040c06",
+      "clone": true,
+      "detected": true,
+      "evidence_tier": 3,
+      "scenario": "clone_spread"
+    },
+    {
+      "candidate_id": "3a54e42b9a45c5b13b3788ea",
+      "clone": true,
+      "detected": true,
+      "evidence_tier": 3,
+      "scenario": "clone_spread"
+    },
+    {
+      "candidate_id": "3eb554d908b254f358bd7889",
+      "clone": true,
+      "detected": true,
+      "evidence_tier": 3,
+      "scenario": "clone_spread"
+    },
+    {
+      "candidate_id": "6021d396bd1b437a52068778",
+      "clone": true,
+      "detected": true,
+      "evidence_tier": 3,
+      "scenario": "clone_spread"
+    },
+    {
+      "candidate_id": "6603e288254085cbeb711bf1",
+      "clone": true,
+      "detected": true,
+      "evidence_tier": 3,
+      "scenario": "clone_spread"
+    },
+    {
+      "candidate_id": "666404ebbbb8fe76a0d4d075",
+      "clone": true,
+      "detected": true,
+      "evidence_tier": 3,
+      "scenario": "clone_spread"
+    },
+    {
+      "candidate_id": "6d5eba479f0073be23c6b03b",
+      "clone": true,
+      "detected": true,
+      "evidence_tier": 3,
+      "scenario": "clone_spread"
+    },
+    {
+      "candidate_id": "804de8c40e308f4c31686362",
+      "clone": true,
+      "detected": true,
+      "evidence_tier": 3,
+      "scenario": "clone_spread"
+    },
+    {
+      "candidate_id": "83c61c6e3a564e64a948f952",
+      "clone": true,
+      "detected": true,
+      "evidence_tier": 3,
+      "scenario": "clone_spread"
+    },
+    {
+      "candidate_id": "8b753db511b5d8b01d76b8ff",
+      "clone": true,
+      "detected": true,
+      "evidence_tier": 3,
+      "scenario": "clone_spread"
+    },
+    {
+      "candidate_id": "bb46b688f8f1188d448a6f41",
+      "clone": true,
+      "detected": true,
+      "evidence_tier": 3,
+      "scenario": "clone_spread"
+    },
+    {
+      "candidate_id": "cfb158542ebef69a5a1f15ee",
+      "clone": true,
+      "detected": true,
+      "evidence_tier": 3,
+      "scenario": "clone_spread"
+    },
+    {
+      "candidate_id": "d8d088a21df91fa2987bb0d4",
+      "clone": true,
+      "detected": true,
+      "evidence_tier": 2,
+      "scenario": "clone_burst"
+    },
+    {
+      "candidate_id": "6e556161becedce968d12c53",
+      "clone": true,
+      "detected": true,
+      "evidence_tier": 2,
+      "scenario": "clone_burst"
+    },
+    {
+      "candidate_id": "97bda4c5a7ae1f0b7e2e3b8f",
+      "clone": true,
+      "detected": true,
+      "evidence_tier": 2,
+      "scenario": "clone_burst"
+    },
+    {
+      "candidate_id": "d92c3882ab550fc79cdea782",
+      "clone": true,
+      "detected": true,
+      "evidence_tier": 2,
+      "scenario": "clone_burst"
+    },
+    {
+      "candidate_id": "07486e5eba475116a264e455",
+      "clone": true,
+      "detected": true,
+      "evidence_tier": 2,
+      "scenario": "clone_burst"
+    },
+    {
+      "candidate_id": "0a8ef0883094e4b068207d2c",
+      "clone": true,
+      "detected": true,
+      "evidence_tier": 2,
+      "scenario": "clone_burst"
+    },
+    {
+      "candidate_id": "103884687da3264fce3fa758",
+      "clone": true,
+      "detected": true,
+      "evidence_tier": 2,
+      "scenario": "clone_burst"
+    },
+    {
+      "candidate_id": "148588bac37dd6d0e55819df",
+      "clone": true,
+      "detected": true,
+      "evidence_tier": 2,
+      "scenario": "clone_burst"
+    },
+    {
+      "candidate_id": "3656b9508dbe2efe1f534c60",
+      "clone": true,
+      "detected": true,
+      "evidence_tier": 2,
+      "scenario": "clone_burst"
+    },
+    {
+      "candidate_id": "3a77a2dacd8b0d896ebd9677",
+      "clone": true,
+      "detected": true,
+      "evidence_tier": 2,
+      "scenario": "clone_burst"
+    },
+    {
+      "candidate_id": "4d771eeac11d55b291914754",
+      "clone": true,
+      "detected": true,
+      "evidence_tier": 2,
+      "scenario": "clone_burst"
+    },
+    {
+      "candidate_id": "50f0afc9af806d31b166716b",
+      "clone": true,
+      "detected": true,
+      "evidence_tier": 2,
+      "scenario": "clone_burst"
+    },
+    {
+      "candidate_id": "5edb31b68b1a1cc4d7b80f32",
+      "clone": true,
+      "detected": true,
+      "evidence_tier": 2,
+      "scenario": "clone_burst"
+    },
+    {
+      "candidate_id": "6e9a6a44363eba926872fe78",
+      "clone": true,
+      "detected": true,
+      "evidence_tier": 2,
+      "scenario": "clone_burst"
+    },
+    {
+      "candidate_id": "7a8450a442584103eff5f0d3",
+      "clone": true,
+      "detected": true,
+      "evidence_tier": 2,
+      "scenario": "clone_burst"
+    },
+    {
+      "candidate_id": "7c8d0741880cae4eaed11025",
+      "clone": true,
+      "detected": true,
+      "evidence_tier": 2,
+      "scenario": "clone_burst"
+    },
+    {
+      "candidate_id": "8afc5acb1da7ce7c38bec07c",
+      "clone": true,
+      "detected": true,
+      "evidence_tier": 2,
+      "scenario": "clone_burst"
+    },
+    {
+      "candidate_id": "a579216c4004ff9c34d343d7",
+      "clone": true,
+      "detected": true,
+      "evidence_tier": 2,
+      "scenario": "clone_burst"
+    },
+    {
+      "candidate_id": "bea7a1b00af788bfd883aea4",
+      "clone": true,
+      "detected": true,
+      "evidence_tier": 2,
+      "scenario": "clone_burst"
+    },
+    {
+      "candidate_id": "f155c57bc491f29618dff0ae",
+      "clone": true,
+      "detected": true,
+      "evidence_tier": 2,
+      "scenario": "clone_burst"
+    },
+    {
+      "candidate_id": "ddef70230f3e9cbf5385395b",
+      "clone": false,
+      "detected": false,
+      "evidence_tier": 1,
+      "scenario": "single_source_flood"
+    },
+    {
+      "candidate_id": "998c6bf01f0decd5a7521eb6",
+      "clone": false,
+      "detected": false,
+      "evidence_tier": 1,
+      "scenario": "single_source_flood"
+    },
+    {
+      "candidate_id": "e3656feaf993119bc64c35c7",
+      "clone": false,
+      "detected": false,
+      "evidence_tier": 1,
+      "scenario": "single_source_flood"
+    },
+    {
+      "candidate_id": "b91862df97e6332664854f83",
+      "clone": false,
+      "detected": false,
+      "evidence_tier": 1,
+      "scenario": "single_source_flood"
+    },
+    {
+      "candidate_id": "253d7c8750f316451bfc7ce6",
+      "clone": false,
+      "detected": false,
+      "evidence_tier": 1,
+      "scenario": "single_source_flood"
+    },
+    {
+      "candidate_id": "b25422fcca81930a3b3a5b1e",
+      "clone": false,
+      "detected": false,
+      "evidence_tier": 1,
+      "scenario": "single_source_flood"
+    },
+    {
+      "candidate_id": "f106212eb75e92d3290b04f9",
+      "clone": false,
+      "detected": false,
+      "evidence_tier": 1,
+      "scenario": "single_source_flood"
+    },
+    {
+      "candidate_id": "237194ddc9c9da8e57f0cd60",
+      "clone": false,
+      "detected": false,
+      "evidence_tier": 1,
+      "scenario": "single_source_flood"
+    },
+    {
+      "candidate_id": "279d09aeaf8ae880f4dec938",
+      "clone": false,
+      "detected": false,
+      "evidence_tier": 1,
+      "scenario": "single_source_flood"
+    },
+    {
+      "candidate_id": "2adf0fda30dfb88967bb53bc",
+      "clone": false,
+      "detected": false,
+      "evidence_tier": 1,
+      "scenario": "single_source_flood"
+    },
+    {
+      "candidate_id": "39ea1e90ee7c988a511a5fc7",
+      "clone": false,
+      "detected": false,
+      "evidence_tier": 1,
+      "scenario": "single_source_flood"
+    },
+    {
+      "candidate_id": "5c06b5d09ba769a2143b1281",
+      "clone": false,
+      "detected": false,
+      "evidence_tier": 1,
+      "scenario": "single_source_flood"
+    },
+    {
+      "candidate_id": "6c826c3184d2df2f89429f85",
+      "clone": false,
+      "detected": false,
+      "evidence_tier": 1,
+      "scenario": "single_source_flood"
+    },
+    {
+      "candidate_id": "70b87983547e43015368d368",
+      "clone": false,
+      "detected": false,
+      "evidence_tier": 1,
+      "scenario": "single_source_flood"
+    },
+    {
+      "candidate_id": "7d70c577d5783420e9b62b17",
+      "clone": false,
+      "detected": false,
+      "evidence_tier": 1,
+      "scenario": "single_source_flood"
+    },
+    {
+      "candidate_id": "c529dff968d73be86e2c70a5",
+      "clone": false,
+      "detected": false,
+      "evidence_tier": 1,
+      "scenario": "single_source_flood"
+    },
+    {
+      "candidate_id": "dc18776a25ee03c1e733127a",
+      "clone": false,
+      "detected": false,
+      "evidence_tier": 1,
+      "scenario": "single_source_flood"
+    },
+    {
+      "candidate_id": "f894167f5241ad095884c606",
+      "clone": false,
+      "detected": false,
+      "evidence_tier": 1,
+      "scenario": "single_source_flood"
+    },
+    {
+      "candidate_id": "fa612d6d1ea8c87b945f278c",
+      "clone": false,
+      "detected": false,
+      "evidence_tier": 1,
+      "scenario": "single_source_flood"
+    },
+    {
+      "candidate_id": "ff1fdf0d082bfbe58f39d6a2",
+      "clone": false,
+      "detected": false,
+      "evidence_tier": 1,
+      "scenario": "single_source_flood"
+    },
+    {
+      "candidate_id": "03aed6a513d87e24ac945792",
+      "clone": false,
+      "detected": false,
+      "evidence_tier": 0,
+      "scenario": "benign_distribution"
+    },
+    {
+      "candidate_id": "55e835d13dda40e2846807a1",
+      "clone": true,
+      "detected": false,
+      "evidence_tier": 0,
+      "scenario": "slow_clone_known_miss"
+    },
+    {
+      "candidate_id": "85bbbcd5adaae3aa1f782bbf",
+      "clone": true,
+      "detected": false,
+      "evidence_tier": 0,
+      "scenario": "slow_clone_known_miss"
+    },
+    {
+      "candidate_id": "d7bdc52f999dd48768102adc",
+      "clone": false,
+      "detected": false,
+      "evidence_tier": 0,
+      "scenario": "benign_distribution"
+    },
+    {
+      "candidate_id": "28689de5b389c550cfcfa127",
+      "clone": true,
+      "detected": false,
+      "evidence_tier": 0,
+      "scenario": "slow_clone_known_miss"
+    },
+    {
+      "candidate_id": "3cf3842a02437f7dadea040e",
+      "clone": false,
+      "detected": false,
+      "evidence_tier": 0,
+      "scenario": "benign_repeat"
+    },
+    {
+      "candidate_id": "08c6eb337346739ffa0c6505",
+      "clone": true,
+      "detected": false,
+      "evidence_tier": 0,
+      "scenario": "slow_clone_known_miss"
+    },
+    {
+      "candidate_id": "cd9d0a8c23465605f65e7079",
+      "clone": false,
+      "detected": false,
+      "evidence_tier": 0,
+      "scenario": "benign_repeat"
+    },
+    {
+      "candidate_id": "f51510da02178e643a54367f",
+      "clone": false,
+      "detected": false,
+      "evidence_tier": 0,
+      "scenario": "benign_repeat"
+    },
+    {
+      "candidate_id": "0c90af706b3217e8ffaeff20",
+      "clone": false,
+      "detected": false,
+      "evidence_tier": 0,
+      "scenario": "benign_distribution"
+    },
+    {
+      "candidate_id": "865fe5a55c334f72d22c2664",
+      "clone": false,
+      "detected": false,
+      "evidence_tier": 0,
+      "scenario": "benign_repeat"
+    },
+    {
+      "candidate_id": "ab1bde828b29e6b193b8bea0",
+      "clone": true,
+      "detected": false,
+      "evidence_tier": 0,
+      "scenario": "slow_clone_known_miss"
+    },
+    {
+      "candidate_id": "c805d29841c7ecea15fe1825",
+      "clone": false,
+      "detected": false,
+      "evidence_tier": 0,
+      "scenario": "benign_distribution"
+    },
+    {
+      "candidate_id": "fc93c5ffa5408daa9565302d",
+      "clone": true,
+      "detected": false,
+      "evidence_tier": 0,
+      "scenario": "slow_clone_known_miss"
+    },
+    {
+      "candidate_id": "3788e8c987fd156d4a0e990f",
+      "clone": true,
+      "detected": false,
+      "evidence_tier": 0,
+      "scenario": "slow_clone_known_miss"
+    },
+    {
+      "candidate_id": "4bffa727d14971031f55bc8c",
+      "clone": false,
+      "detected": false,
+      "evidence_tier": 0,
+      "scenario": "benign_repeat"
+    },
+    {
+      "candidate_id": "92369c31a925607a88d248f5",
+      "clone": true,
+      "detected": false,
+      "evidence_tier": 0,
+      "scenario": "slow_clone_known_miss"
+    },
+    {
+      "candidate_id": "b4adf9944e5183abd18b953a",
+      "clone": false,
+      "detected": false,
+      "evidence_tier": 0,
+      "scenario": "benign_distribution"
+    },
+    {
+      "candidate_id": "0b09c24356e3e0d4b5233ddc",
+      "clone": false,
+      "detected": false,
+      "evidence_tier": 0,
+      "scenario": "benign_distribution"
+    },
+    {
+      "candidate_id": "0b0fe8e2c9db57d8b5dc3354",
+      "clone": false,
+      "detected": false,
+      "evidence_tier": 0,
+      "scenario": "benign_repeat"
+    },
+    {
+      "candidate_id": "10c17f5642e8a63f6cfc2aec",
+      "clone": false,
+      "detected": false,
+      "evidence_tier": 0,
+      "scenario": "benign_repeat"
+    },
+    {
+      "candidate_id": "123bf20e8c13dda7dd4a6e49",
+      "clone": false,
+      "detected": false,
+      "evidence_tier": 0,
+      "scenario": "benign_repeat"
+    },
+    {
+      "candidate_id": "16a4a7ed152ce226310b43b4",
+      "clone": true,
+      "detected": false,
+      "evidence_tier": 0,
+      "scenario": "slow_clone_known_miss"
+    },
+    {
+      "candidate_id": "1b370930abbffba895343e56",
+      "clone": false,
+      "detected": false,
+      "evidence_tier": 0,
+      "scenario": "benign_distribution"
+    },
+    {
+      "candidate_id": "24f572b99e49e3cd39064149",
+      "clone": false,
+      "detected": false,
+      "evidence_tier": 0,
+      "scenario": "benign_distribution"
+    },
+    {
+      "candidate_id": "36f4ff8aa968f65ef86b28d1",
+      "clone": false,
+      "detected": false,
+      "evidence_tier": 0,
+      "scenario": "benign_distribution"
+    },
+    {
+      "candidate_id": "396552c52da63ade392bd74a",
+      "clone": true,
+      "detected": false,
+      "evidence_tier": 0,
+      "scenario": "slow_clone_known_miss"
+    },
+    {
+      "candidate_id": "39dec5d037b745fd9325f792",
+      "clone": true,
+      "detected": false,
+      "evidence_tier": 0,
+      "scenario": "slow_clone_known_miss"
+    },
+    {
+      "candidate_id": "3ec73064d8213ec529485fc3",
+      "clone": false,
+      "detected": false,
+      "evidence_tier": 0,
+      "scenario": "benign_repeat"
+    },
+    {
+      "candidate_id": "5322c97b2c78880b628a8e47",
+      "clone": true,
+      "detected": false,
+      "evidence_tier": 0,
+      "scenario": "slow_clone_known_miss"
+    },
+    {
+      "candidate_id": "54b53a5b441291888b10d85b",
+      "clone": false,
+      "detected": false,
+      "evidence_tier": 0,
+      "scenario": "benign_distribution"
+    },
+    {
+      "candidate_id": "5b56baff1ff06ccef7b877b2",
+      "clone": false,
+      "detected": false,
+      "evidence_tier": 0,
+      "scenario": "benign_repeat"
+    },
+    {
+      "candidate_id": "662cc49be694d78c1d1abb0d",
+      "clone": false,
+      "detected": false,
+      "evidence_tier": 0,
+      "scenario": "benign_repeat"
+    },
+    {
+      "candidate_id": "7051db67bbf7fa2820f18264",
+      "clone": false,
+      "detected": false,
+      "evidence_tier": 0,
+      "scenario": "benign_repeat"
+    },
+    {
+      "candidate_id": "7f6719af4867858657600682",
+      "clone": false,
+      "detected": false,
+      "evidence_tier": 0,
+      "scenario": "benign_repeat"
+    },
+    {
+      "candidate_id": "8095d53d857f8ebaccb6a9a2",
+      "clone": true,
+      "detected": false,
+      "evidence_tier": 0,
+      "scenario": "slow_clone_known_miss"
+    },
+    {
+      "candidate_id": "823d86d62e444a6dccea376c",
+      "clone": false,
+      "detected": false,
+      "evidence_tier": 0,
+      "scenario": "benign_distribution"
+    },
+    {
+      "candidate_id": "86c7b25c3bb428f0d717b783",
+      "clone": false,
+      "detected": false,
+      "evidence_tier": 0,
+      "scenario": "benign_distribution"
+    },
+    {
+      "candidate_id": "87a2f89ad44779c7ba11d5b1",
+      "clone": false,
+      "detected": false,
+      "evidence_tier": 0,
+      "scenario": "benign_repeat"
+    },
+    {
+      "candidate_id": "9166dcc350402240a14a5a4d",
+      "clone": false,
+      "detected": false,
+      "evidence_tier": 0,
+      "scenario": "benign_distribution"
+    },
+    {
+      "candidate_id": "97f043f67fd1543d4ec08626",
+      "clone": false,
+      "detected": false,
+      "evidence_tier": 0,
+      "scenario": "benign_distribution"
+    },
+    {
+      "candidate_id": "a1c8a6639873ef3b3cecde67",
+      "clone": true,
+      "detected": false,
+      "evidence_tier": 0,
+      "scenario": "slow_clone_known_miss"
+    },
+    {
+      "candidate_id": "a37cb0b5a91ecb9b1092fc77",
+      "clone": true,
+      "detected": false,
+      "evidence_tier": 0,
+      "scenario": "slow_clone_known_miss"
+    },
+    {
+      "candidate_id": "a773b1f20db57a572fcc7b82",
+      "clone": false,
+      "detected": false,
+      "evidence_tier": 0,
+      "scenario": "benign_distribution"
+    },
+    {
+      "candidate_id": "b8aee34c274ba66967baa057",
+      "clone": true,
+      "detected": false,
+      "evidence_tier": 0,
+      "scenario": "slow_clone_known_miss"
+    },
+    {
+      "candidate_id": "b8f608b69a598b14b59c6553",
+      "clone": false,
+      "detected": false,
+      "evidence_tier": 0,
+      "scenario": "benign_repeat"
+    },
+    {
+      "candidate_id": "bd8fc67abfcf1cfda922165e",
+      "clone": false,
+      "detected": false,
+      "evidence_tier": 0,
+      "scenario": "benign_repeat"
+    },
+    {
+      "candidate_id": "bf5006085415f8b4ca102961",
+      "clone": false,
+      "detected": false,
+      "evidence_tier": 0,
+      "scenario": "benign_repeat"
+    },
+    {
+      "candidate_id": "c203b60856e79b324bd813dd",
+      "clone": false,
+      "detected": false,
+      "evidence_tier": 0,
+      "scenario": "benign_distribution"
+    },
+    {
+      "candidate_id": "cc36a78f839ba021141fbf73",
+      "clone": true,
+      "detected": false,
+      "evidence_tier": 0,
+      "scenario": "slow_clone_known_miss"
+    },
+    {
+      "candidate_id": "cf0ad568910f5cf5c3713c3e",
+      "clone": false,
+      "detected": false,
+      "evidence_tier": 0,
+      "scenario": "benign_repeat"
+    },
+    {
+      "candidate_id": "dd5a779abe89df14a90e5d61",
+      "clone": false,
+      "detected": false,
+      "evidence_tier": 0,
+      "scenario": "benign_distribution"
+    },
+    {
+      "candidate_id": "e15ab05e0888810634d1d190",
+      "clone": false,
+      "detected": false,
+      "evidence_tier": 0,
+      "scenario": "benign_distribution"
+    },
+    {
+      "candidate_id": "ebaee1dc403ab0bdca070320",
+      "clone": true,
+      "detected": false,
+      "evidence_tier": 0,
+      "scenario": "slow_clone_known_miss"
+    },
+    {
+      "candidate_id": "ede99efe88939046b03a9010",
+      "clone": false,
+      "detected": false,
+      "evidence_tier": 0,
+      "scenario": "benign_distribution"
+    },
+    {
+      "candidate_id": "f1b83e9119e55fd6b83536c8",
+      "clone": false,
+      "detected": false,
+      "evidence_tier": 0,
+      "scenario": "benign_distribution"
+    },
+    {
+      "candidate_id": "f3ca108dd5c2f2035b033aa5",
+      "clone": true,
+      "detected": false,
+      "evidence_tier": 0,
+      "scenario": "slow_clone_known_miss"
+    },
+    {
+      "candidate_id": "fa304c46276fd5513e072ed6",
+      "clone": false,
+      "detected": false,
+      "evidence_tier": 0,
+      "scenario": "benign_repeat"
+    },
+    {
+      "candidate_id": "facafc8b94ccf16ac4d9d384",
+      "clone": true,
+      "detected": false,
+      "evidence_tier": 0,
+      "scenario": "slow_clone_known_miss"
+    },
+    {
+      "candidate_id": "fe1dc08f5f42ca66bfca5a33",
+      "clone": false,
+      "detected": false,
+      "evidence_tier": 0,
+      "scenario": "benign_repeat"
+    }
+  ],
+  "simulated_clone_candidates": 60,
+  "snapshot_id": "0f8b77c5b560abd5ba175b22ae7029f27800b062e5f3f7aed16614a58d6c7589",
+  "truth_sha256": "d9187ad4536c0c18225b5a12ef326535ba4da08c941eb59141dbd00c8b4c52a7",
+  "workload_sha256": "29f797e1803d44ef1d119cd353828fc4a2d4b51c6f2967ef37c62a2ddd492869"
+}

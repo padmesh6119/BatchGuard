@@ -1,0 +1,19 @@
+BatchGuard integration verification
+==================================
+
+Verified in an isolated copy of the uploaded project:
+- All 11 supplied monthly workbooks processed successfully through the existing ingestion scripts.
+- Combined master: 1,901 records.
+- Analytical dataset: 1,898 records (3 previously verified exact duplicate copies excluded).
+- Manufacturer and failure-derived datasets have matching row counts and build_record_id sets.
+- Source counts: 591 central NSQ, 1,265 state NSQ, 42 spurious reports.
+- Historical priority engine executed and returned 1,438 manufacturer-text signatures.
+- Synthetic scan engine generated 60 events and produced anomaly flags, including a spurious-report reference flag.
+- Python syntax compilation passed for app.py, batchguard_engine.py, and refresh_data.py.
+
+Limitations:
+- The Streamlit package is not installed in the build environment, so the browser UI itself was not launched here. The PowerShell launcher installs dependencies on the target Windows machine.
+- The synthetic scan stream is a demonstration, not live market telemetry.
+- Historical priority is a descriptive heuristic, not a calibrated probability or validated counterfeit detector.
+- Manufacturer grouping is by normalized full text, often including addresses; it is not verified legal-entity resolution.
+- The refresh process ingests official workbooks placed in data/raw; it does not automatically scrape CDSCO websites.

@@ -1,0 +1,118 @@
+{
+  "cases": 1100,
+  "dataset": "synthetic challenge; equal cases per mechanism, not a population sample",
+  "dataset_sha256": "cdfd333d89bdfd7f0ec2743dac921f1511c12e7c8d17fadfd9b50493bb9207b5",
+  "indistinguishable_pairs": [
+    {
+      "identical_feature_pairs": 100,
+      "negative": "location_glitch",
+      "positive": "clone_fast"
+    },
+    {
+      "identical_feature_pairs": 100,
+      "negative": "legitimate_travel",
+      "positive": "clone_slow"
+    },
+    {
+      "identical_feature_pairs": 100,
+      "negative": "benign_handoff",
+      "positive": "clone_same_location"
+    },
+    {
+      "identical_feature_pairs": 100,
+      "negative": "benign_rescan_burst",
+      "positive": "clone_burst"
+    }
+  ],
+  "label": "two physical packs assigned one observed pack ID (synthetic hidden provenance)",
+  "model": {
+    "false_negatives": 100,
+    "false_positives": 400,
+    "precision": 0.42857142857142855,
+    "recall": 0.75,
+    "true_negatives": 300,
+    "true_positives": 300
+  },
+  "model_threshold": 0.17191900312900543,
+  "model_version": "layer-ab-sklearn-28ff11c97cdb",
+  "per_scenario": 100,
+  "positives": 400,
+  "purpose": "diagnostic stress test only; no field accuracy claim",
+  "rule": {
+    "false_negatives": 200,
+    "false_positives": 300,
+    "precision": 0.4,
+    "recall": 0.5,
+    "true_negatives": 400,
+    "true_positives": 200
+  },
+  "scenarios": {
+    "benign_handoff": {
+      "cases": 100,
+      "copied_id": false,
+      "model_alerts": 100,
+      "rule_alerts": 0
+    },
+    "benign_repeat": {
+      "cases": 100,
+      "copied_id": false,
+      "model_alerts": 0,
+      "rule_alerts": 0
+    },
+    "benign_rescan_burst": {
+      "cases": 100,
+      "copied_id": false,
+      "model_alerts": 100,
+      "rule_alerts": 100
+    },
+    "clock_skew": {
+      "cases": 100,
+      "copied_id": false,
+      "model_alerts": 100,
+      "rule_alerts": 100
+    },
+    "clone_burst": {
+      "cases": 100,
+      "copied_id": true,
+      "model_alerts": 100,
+      "rule_alerts": 100
+    },
+    "clone_fast": {
+      "cases": 100,
+      "copied_id": true,
+      "model_alerts": 100,
+      "rule_alerts": 100
+    },
+    "clone_same_location": {
+      "cases": 100,
+      "copied_id": true,
+      "model_alerts": 100,
+      "rule_alerts": 0
+    },
+    "clone_slow": {
+      "cases": 100,
+      "copied_id": true,
+      "model_alerts": 0,
+      "rule_alerts": 0
+    },
+    "legitimate_distribution": {
+      "cases": 100,
+      "copied_id": false,
+      "model_alerts": 0,
+      "rule_alerts": 0
+    },
+    "legitimate_travel": {
+      "cases": 100,
+      "copied_id": false,
+      "model_alerts": 0,
+      "rule_alerts": 0
+    },
+    "location_glitch": {
+      "cases": 100,
+      "copied_id": false,
+      "model_alerts": 100,
+      "rule_alerts": 100
+    }
+  },
+  "seed": 2026
+}

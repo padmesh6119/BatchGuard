@@ -8,6 +8,7 @@ One inspector screen: **which medicine batches to sample first within this week'
 
 Product spec: [BATCHGUARD_FINAL_SPEC.md](BATCHGUARD_FINAL_SPEC.md).
 Current flaw review: [docs/REVIEW_STATUS.md](docs/REVIEW_STATUS.md).
+Synthetic scan audit and frozen challenge: [docs/SYNTHETIC_DATASET.md](docs/SYNTHETIC_DATASET.md).
 
 ## Run, in order
 
@@ -17,7 +18,8 @@ pip install -r requirements.txt snapml     # snapml optional; without it the Sna
 python -m src.ingest                       # optional: rebuild data/processed from data/raw (identical CSVs; new manifest timestamp)
 python -m src.fusion run                   # train + evaluate both layers -> outputs/
 python -m src.fusion benchmark             # stream benchmark -> outputs/benchmark_<laptop|linuxone>.json
-python -m unittest discover -s tests       # 20 tests
+python -m src.synthetic_challenge           # separate scan stress set -> data/synthetic/
+python -m unittest discover -s tests       # 24 tests
 python -m app.dashboard                    # dashboard -> outputs/dashboard.html (open in any browser)
 ```
 
@@ -42,6 +44,8 @@ The demo feed includes two simulated scans on published spurious-list batches wh
 | Per-scan decision latency, p50 / p99 | 1.9 ms / 5.3 ms | 778 events/s; queue rebuild ≈29 ms with a cached monthly context |
 
 The trained scan model does not beat the rule, so **the rule drives alerts** and the model's probability is shown alongside it. Each test month has only 7 to 8 real recurring-manufacturer batches in the fusion queue, so the recurrence shares move in large steps. With history through January 2026, 9.1% (122 of 1,341) of later NSQ records carried manufacturer text seen earlier. This is one measured split, not a prediction ceiling.
+
+**Synthetic-data challenge:** The original scan test has 42.9% generated positives and no benign GPS/clock-error cases. On a separate fixed challenge of 1,100 synthetic cases, the rule flags 200/400 copied IDs and 300/700 benign cases; the frozen trained model flags 300/400 and 400/700 respectively. Four copied-ID mechanisms have benign counterparts with identical scan features. These are diagnostic stress results, not field accuracy estimates; see [the dataset audit](docs/SYNTHETIC_DATASET.md).
 
 Building that monthly history context still takes about 4.8 seconds on the measured laptop. The ≈29 ms rebuild assumes it is already cached; the benchmark lists both stages separately.
 
@@ -68,6 +72,7 @@ data/raw/         original CDSCO workbooks          src/common.py     paths, see
 data/processed/   cleaned CSVs + hash manifest      src/ingest.py     workbooks -> processed data
 outputs/          results, queue, models, charts    src/layer_a.py    M1 history features, baselines, evaluation
 evidence/         environment and version lists     src/simulator.py  M2 simulated scan events
+data/synthetic/   frozen diagnostic scan cases      src/synthetic_challenge.py  stress generator and report
 docs/             abstract, pitch notes, script     src/detector.py   M2 rule, model, corroboration
 app/              dashboard builder + template      src/fusion.py     M3 signals, capacity queue, run, benchmark
 ```

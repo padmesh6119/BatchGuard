@@ -19,6 +19,9 @@ __pycache__/
 data/review_actions.jsonl
 data/.build-*/
 data/.processed-previous/
+/private/
+/outputs/field_model/
+/outputs/field_scores*.json
 
 # large binaries
 *.gguf

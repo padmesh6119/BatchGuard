@@ -15,4 +15,6 @@ The operational change is deliberately conservative: `rank_candidates` still sho
 
 To improve the model itself, the next dataset needs independently verified physical-pack outcomes and richer observations: trusted server receipt time, scanner clock status, location accuracy, authenticated scanner identity, reasons for rescan, and ideally a pack-bound identifier that cannot simply be copied from a printed code. These fields must be collected in the intended workflow and tested on independent sites and times before a model can claim field dependability. IBM Z can process more scans, but it cannot recover information the events never contain.
 
+The separate [field model path](FIELD_MODEL.md) now accepts adjudicated physical-pack cases with scan-quality telemetry, checks site and time separation, trains a new model, and keeps review flags off unless the recorded evidence passes a conservative gate. There are no such cases in this public repository, so this path has no measured field performance yet.
+
 Reproduce the diagnostic experiment with `python -m src.scan_learning_curve`. Do not select a new model or threshold using challenge v1 and then describe its result on v1 as held out.

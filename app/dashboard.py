@@ -11,6 +11,7 @@ import pandas as pd
 
 from src import layer_a, simulator
 from src.common import BANNER, DATA_PROCESSED, OUTPUTS
+from src.field_model import load_card as load_field_card
 from src.fusion import decision_context, load_models, rank_candidates
 from src.simulator import CITIES
 
@@ -102,6 +103,15 @@ def build(output=OUTPUTS / "dashboard.html"):
                "cand": simulator.candidate_id(e["product"], e["batch_no"], e["manufacturer_key"])} for e in feed]
     manifest = read_json(DATA_PROCESSED / "manifest.json")
     learning_curve = read_json(OUTPUTS / "scan_learning_curve.json")
+    field_directory = OUTPUTS / "field_model"
+    if (field_directory / "field_model_card.json").is_file():
+        try:
+            field_card = load_field_card(field_directory)
+        except (ValueError, TypeError, KeyError, OSError) as exc:
+            field_card = {"field_review_ready": False, "readiness_reasons": [f"Field model files invalid: {exc}"],
+                          "validation": None, "test": None, "source_sha256": ""}
+    else:
+        field_card = None
     availability = DATA_PROCESSED / "review" / "source_availability.csv"
     data = {
         "generated_at": datetime.now(timezone.utc).isoformat(timespec="seconds"), "banner": BANNER, "decision_month": month,
@@ -110,6 +120,11 @@ def build(output=OUTPUTS / "dashboard.html"):
         "evaluation": {b: evaluation(results["backends"][b], read_json(OUTPUTS / "models" / b / "model_card.json"))
                        for b in steps if b in results["backends"]},
         "recurrence": results.get("recurrence_finding"), "limits": results.get("limits", []),
+        "field_model": None if field_card is None else {
+            "ready": field_card["field_review_ready"], "reasons": field_card["readiness_reasons"],
+            "validation": None if field_card["validation"] is None else {k: v for k, v in field_card["validation"].items() if k != "by_site"},
+            "test": None if field_card["test"] is None else {k: v for k, v in field_card["test"].items() if k != "by_site"},
+            "source_sha256": field_card["source_sha256"][:16]},
         "scan_learning_curve": None if learning_curve is None else {
             "fixed_test_episodes": learning_curve["fixed_test_episodes"],
             "challenge_cases": learning_curve["challenge_cases"],

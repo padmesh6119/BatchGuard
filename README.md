@@ -10,6 +10,7 @@ Product spec: [BATCHGUARD_FINAL_SPEC.md](BATCHGUARD_FINAL_SPEC.md).
 Current flaw review: [docs/REVIEW_STATUS.md](docs/REVIEW_STATUS.md).
 Synthetic scan audit and frozen challenge: [docs/SYNTHETIC_DATASET.md](docs/SYNTHETIC_DATASET.md).
 Why extra scripted training does not fix the scan model: [docs/MODEL_DEPENDABILITY.md](docs/MODEL_DEPENDABILITY.md).
+Adjudicated field training and scoring contract: [docs/FIELD_MODEL.md](docs/FIELD_MODEL.md).
 IBM Z scale experiment and measured laptop baseline: [docs/IBM_Z_SCALE.md](docs/IBM_Z_SCALE.md).
 
 ## Run, in order
@@ -22,8 +23,9 @@ python -m src.fusion run                   # train + evaluate both layers -> out
 python -m src.fusion benchmark             # stream benchmark -> outputs/benchmark_<laptop|linuxone>.json
 python -m src.synthetic_challenge           # separate scan stress set -> data/synthetic/
 python -m src.scan_learning_curve            # fixed-test learning curve -> outputs/scan_learning_curve.json
+python -m src.field_model --help              # separate field-case train/score commands
 python -m src.scale_benchmark --events 5000 --profile routine --backend sklearn
-python -m unittest discover -s tests       # 27 tests
+python -m unittest discover -s tests       # 34 tests
 python -m app.dashboard                    # dashboard -> outputs/dashboard.html (open in any browser)
 ```
 
@@ -52,6 +54,8 @@ The trained scan model does not beat the rule, so **the rule drives alerts** and
 **Synthetic-data challenge:** The original scan test has 42.9% generated positives and no benign GPS/clock-error cases. On a separate fixed challenge of 1,100 synthetic cases, the rule flags 200/400 copied IDs and 300/700 benign cases; the frozen trained model flags 300/400 and 400/700 respectively. Four copied-ID mechanisms have benign counterparts with identical scan features. These are diagnostic stress results, not field accuracy estimates; see [the dataset audit](docs/SYNTHETIC_DATASET.md).
 
 **Training sufficiency:** Increasing the scripted training set from 150 to 4,500 episodes left fixed-test average precision near 0.83 and still produced 300–400 benign alerts on the stress cases. The trained score is now diagnostic only and cannot add an inspector alert. See [the learning-curve audit](docs/MODEL_DEPENDABILITY.md).
+
+**Field model path:** A separate train/score command now accepts independently adjudicated physical-pack cases with server receipt times and scan-quality telemetry. It enforces disjoint sites, chronological splits, a false-alert budget, and a held-out readiness gate. No such cases exist in this repository, so **no field model is currently ready**; see [the input contract and gate](docs/FIELD_MODEL.md).
 
 **Scale experiment:** A separate label-free stream exercises the current per-scan decision path. On one x86 laptop process, 5,000-event routine and repeat-heavy profiles measured about 666 and 611 events/s with scikit-learn, and 713 and 671 events/s with Snap ML. A 100,000-event routine replay measured about 607 events/s, with bounded six-hour active state. These are in-memory synthetic workloads, not a LinuxONE result or proof that IBM Z is required. The [scale report](docs/IBM_Z_SCALE.md) gives workload assumptions and comparison commands.
 

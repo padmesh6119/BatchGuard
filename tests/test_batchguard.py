@@ -246,6 +246,8 @@ class DashboardTests(unittest.TestCase):
         payload = html.split('<script id="bg-data" type="application/json">')[1].split("</script>")[0]
         self.assertNotIn("</", payload)
         data = json.loads(payload)
+        self.assertIsNone(data["field_model"])
+        self.assertIn("No field training cases have been supplied", html)
         self.assertEqual([r["training_episodes"] for r in data["scan_learning_curve"]["rows"]], [150, 500, 1500, 4500])
         self.assertNotIn("SCAN_MODEL_ALERT", data["codes"])
         self.assertIn("Synthetic model score", html)

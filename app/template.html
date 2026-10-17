@@ -843,6 +843,12 @@ function renderEvaluation() {
       tableView(["Train episodes", "Fixed test AP", "Benign stress alerts", "Missed copied IDs"],
         D.scan_learning_curve.rows.map(r => [fmt(r.training_episodes), fmt(r.fixed_test_ap, 3), fmt(r.challenge_fp), fmt(r.challenge_fn)])),
       el("p", { class: "sub", text: "More examples of the same scripts did not resolve the stress cases. These are artificial mixtures, not field accuracy. The model does not add operational alerts." })) : null,
+    D.field_model ? card("Adjudicated field model", D.field_model.ready ? "Review gate passed for this recorded dataset" : "Research only · review gate failed",
+      D.field_model.validation && D.field_model.test ? tableView(["Holdout", "Cases", "Quality eligible", "Average precision", "False-alert rate", "Recall"],
+        [["Validation", D.field_model.validation], ["Test", D.field_model.test]].map(([name, m]) => [name, fmt(m.cases), `${fmt(m.quality_eligible_cases)} / ${fmt(m.cases)}`, fmt(m.average_precision, 3), pct(m.false_alert_rate, 1), pct(m.recall, 1)])) : null,
+      el("p", { class: "sub", text: (D.field_model.reasons.length ? D.field_model.reasons.join(" · ") : "All recorded gate checks passed. Confirm evidence integrity, site representativeness, and ongoing performance before using scores for review.") + " The field scorer is separate; this demo queue still replays simulated scans." }))
+      : card("Adjudicated field model", "No field training cases have been supplied",
+        el("p", { class: "sub", text: "The displayed scan scores come only from simulated training. Supply independently adjudicated physical-pack cases, then run src.field_model train. No field accuracy is claimed." })),
 
     el("div", { class: "section-title" }, el("h2", { text: "Fusion · One queue, two risks" })),
     el("p", { class: "ink2", text: `Held-out queues built through the live ranking code. Only batches published before each month enter its queue (${months.map(x => `${monthLong(x.month)}: ${x.candidates} batches, ${x.clones} simulated clones, ${x.recurring} real recurring-manufacturer batches`).join("; ")}). Policy ${F.selected_on_validation} was chosen on the ${ev.validation_month} validation queue.` }),

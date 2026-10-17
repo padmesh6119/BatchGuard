@@ -29,7 +29,7 @@ def distance_km(lat1, lon1, lat2, lon2):
 
 @dataclass(frozen=True)
 class ScanEvent:
-    """One delivery. event_id identifies the delivery, pack_id the physical pack, source_id the asserted scanner."""
+    """One delivery. event_id identifies it; pack_id is an observed code, not physical-pack proof."""
     event_id: str
     pack_id: str
     product: str

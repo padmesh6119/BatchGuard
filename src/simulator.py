@@ -164,6 +164,12 @@ def demo_feed(df, seed=SEED, start=datetime(2026, 9, 15, 9, tzinfo=timezone.utc)
     for i, ref in enumerate(batches):
         for k in range(rng.randint(2, 3)):
             scan(ref, rng.randint(0, 150), f"PACK-D{i}-{k}", rng.choice(CITIES), f"PHARMACY-{rng.randint(1, 40):02d}")
+    # Real spurious-list references often lack manufacturer text. Show that evidence gap in the
+    # simulated feed without inventing a manufacturer identity or treating no history as safety.
+    missing_identity = [r for r in references(df) if r["source_category"] == "spurious"
+                        and not r["manufacturer_name_normalized"].strip()]
+    for i, ref in enumerate(rng.sample(missing_identity, min(2, len(missing_identity)))):
+        scan(ref, 70 + 20*i, f"PACK-UNAVAILABLE-{i}", rng.choice(CITIES), f"PHARMACY-{rng.randint(1, 40):02d}")
     repeat_ref, clone_ref, burst_ref = batches[0], batches[12], batches[13]
     chennai, delhi, bengaluru = CITIES[0], CITIES[1], CITIES[2]
     scan(repeat_ref, 160, "PACK-REPEAT", chennai, "PHARMACY-07")

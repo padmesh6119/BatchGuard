@@ -108,6 +108,16 @@ input[type="range"] { accent-color: var(--ink); }
 .kpi .value .small { font-size: 14px; font-weight: 500; color: var(--ink-2); }
 .kpi .foot { color: var(--muted); font-size: 12px; margin-top: 2px; }
 .kpi.alert .value { color: var(--critical); }
+.decision-notes { display: grid; grid-template-columns: minmax(0, 1.35fr) minmax(280px, 1fr); gap: 12px; margin: 0 0 12px; }
+.decision-note { padding: 14px 16px; border-left: 3px solid var(--real); }
+.decision-note.unknown { border-left-color: var(--s4); }
+.decision-note h2 { margin: 0 0 4px; font-size: 14px; }
+.decision-note p { margin: 3px 0 0; color: var(--ink-2); font-size: 12.5px; }
+.strategy-table { width: 100%; margin-top: 8px; font-size: 12.5px; }
+.strategy-table th { font-size: 10.5px; padding: 5px 6px; }
+.strategy-table td { padding: 5px 6px; }
+.strategy-table tr.current { background: var(--real-wash); font-weight: 650; }
+.decision-note .ctrl { margin-top: 9px; height: 30px; font-size: 12px; }
 
 /* decision grid */
 .grid { display: grid; grid-template-columns: minmax(0, 1.9fr) minmax(320px, 1fr); gap: 12px; align-items: start; }
@@ -223,7 +233,7 @@ details.tv summary { cursor: pointer; color: var(--ink-2); }
 .empty { padding: 24px 16px; color: var(--ink-2); text-align: center; }
 code.cmd { background: var(--surface-2); padding: 2px 6px; border-radius: 4px; font-size: 12.5px; }
 footer { max-width: 1480px; margin: 0 auto; padding: 0 20px 32px; color: var(--muted); font-size: 12px; }
-@media (max-width: 1100px) { .grid, .ev-body, .charts2, .charts3, .hosts { grid-template-columns: minmax(0, 1fr); } .kpis, .stats { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 1100px) { .grid, .ev-body, .charts2, .charts3, .hosts, .decision-notes { grid-template-columns: minmax(0, 1fr); } .kpis, .stats { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
 @media (max-width: 640px) { .signals { grid-template-columns: minmax(0, 1fr); } .kpis, .stats { grid-template-columns: minmax(0, 1fr); } header.top, nav.tabs, main { padding-left: 16px; padding-right: 16px; } }
 @media (prefers-reduced-motion: reduce) { * { animation: none !important; transition: none !important; } }
 </style>
@@ -456,7 +466,7 @@ function measuredAt(n) {
   const budgets = Object.keys(ev.fusion.test_by_budget).map(Number);
   const b = budgets.reduce((a, x) => Math.abs(x - n) < Math.abs(a - n) ? x : a, budgets[0]);
   const row = ev.fusion.test_by_budget[b], fused = row["fused_" + ev.fusion.selected_on_validation];
-  return { b, fused, history: row.history_only, random: row.random_expectation, policy: ev.fusion.selected_on_validation };
+  return { b, fused, history: row.history_only, rule: row.scan_rule_only, random: row.random_expectation, policy: ev.fusion.selected_on_validation };
 }
 function meter(value, color, label) {
   return el("div", { class: "meter", title: label + ": " + fmt(value) },
@@ -469,7 +479,7 @@ function buildDecision() {
     range: el("input", { type: "range", id: "scanRange", min: 1, max: D.feed.length, value: S.k, "aria-label": "Simulated scans received", oninput: e => { pause(); setK(+e.target.value); } }),
     counter: el("span", { class: "num clock" }), clock: el("span", { class: "muted num" }), cap: el("output"),
     play: el("button", { class: "ctrl primary", id: "playBtn", onclick: play }, "▶ Play"),
-    kpis: el("div", { class: "kpis" }), queue: el("div", { class: "card queue" }), map: el("div", { class: "card map" }),
+    kpis: el("div", { class: "kpis" }), notes: el("div", { class: "decision-notes" }), queue: el("div", { class: "card queue" }), map: el("div", { class: "card map" }),
     feed: el("div", { class: "card feed" }), evidence: el("div"),
   };
   const controls = el("div", { class: "card controls" },
@@ -486,7 +496,7 @@ function buildDecision() {
         el("button", { "aria-label": "Fewer", onclick: () => setCapacity(S.capacity - 1) }, "−"), UI.cap,
         el("button", { "aria-label": "More", onclick: () => setCapacity(S.capacity + 1) }, "+")),
       el("span", { class: "muted", text: "batches" })));
-  document.getElementById("decision").replaceChildren(controls, UI.kpis, el("div", { class: "grid" }, UI.queue, el("div", { class: "side" }, UI.map, UI.feed)), UI.evidence);
+  document.getElementById("decision").replaceChildren(controls, UI.kpis, UI.notes, el("div", { class: "grid" }, UI.queue, el("div", { class: "side" }, UI.map, UI.feed)), UI.evidence);
 }
 function renderDecision() {
   if (!UI) buildDecision();
@@ -506,12 +516,37 @@ function renderDecision() {
       el("div", { class: "foot", text: "One row per product · batch · manufacturer text" })),
     el("div", { class: "card kpi" + (alerts ? " alert" : "") }, el("div", { class: "label", text: "Scan alerts (declared rule)" }),
       el("div", { class: "value" }, alerts ? "⚠" : "", fmt(alerts)), el("div", { class: "foot", text: "Impossible travel or repeated-pack burst" })),
-    el("div", { class: "card kpi" }, el("div", { class: "label", text: "Selected for sampling" }),
+    el("div", { class: "card kpi" }, el("div", { class: "label", text: "Inside current capacity" }),
       el("div", { class: "value" }, fmt(Math.min(S.capacity, rows.length)), el("span", { class: "small", text: `of ${S.capacity} slots` })),
-      el("div", { class: "foot", text: "Capacity is a maximum, not a quota" })),
+      el("div", { class: "foot", text: "Recommendations; an inspector decides what to sample" })),
     el("div", { class: "card kpi" }, el("div", { class: "label", text: m ? `Measured on held-out months at N=${m.b}` : "Measured coverage" }),
       m ? el("div", { class: "value" }, pct(m.fused.clone), el("span", { class: "small", text: "clones" }), pct(m.fused.recurrence), el("span", { class: "small", text: "recurring" })) : el("div", { class: "value", text: "–" }),
-      el("div", { class: "foot", text: m ? `Fused queue, Jul–Aug 2026. History only ${pct(m.history.clone)} · ${pct(m.history.recurrence)}; random ${pct(m.random.clone)}` : "Run python -m src.fusion run" })));
+      el("div", { class: "foot", text: m ? `Test queue, Jul–Aug 2026 · nearest studied budget N=${m.b}${m.b === S.capacity ? "" : ` (current capacity ${S.capacity})`}` : "Run python -m src.fusion run" })));
+
+  const unknown = rows.filter(r => r.hp === null), unknownInCapacity = unknown.filter(r => r.rank <= S.capacity).length;
+  const nextUnknown = unknown.find(r => r.rank > S.capacity) || unknown[0];
+  const comparison = m ? el("div", { class: "card decision-note" },
+    el("h2", { text: `What a ${m.b}-batch test budget captures` }),
+    el("p", { text: `Average of the July and August held-out queues. Clone labels are simulated; recurrence means a real manufacturer text appeared in that month's NSQ list. This is a test result, not the outcome of today's recommendations.` }),
+    el("table", { class: "strategy-table" },
+      el("thead", {}, el("tr", {}, el("th", { text: "Ranking" }), el("th", { class: "n", text: "Simulated clones" }), el("th", { class: "n", text: "Recurring names" }))),
+      el("tbody", {}, [
+        ["Current combined policy", m.fused, true], ["Scan rule only", m.rule, false], ["History only", m.history, false], ["Random expectation", m.random, false],
+      ].map(([label, value, current]) => el("tr", { class: current ? "current" : "" }, el("td", { text: label }),
+        el("td", { class: "n", text: pct(value.clone, 1) }), el("td", { class: "n", text: pct(value.recurrence, 1) }))))),
+    m.fused.recurrence < m.history.recurrence
+      ? el("p", { text: `At N=${m.b}, the current policy captures fewer recurring names than history-only ranking. Scan alerts can take capacity before historical candidates.` })
+      : el("p", { text: "The two targets trade off as the budget changes; compare both columns before interpreting the priority score." }))
+    : el("div", { class: "card decision-note" }, el("h2", { text: "Evaluation pending" }),
+      el("p", { text: "Run the training and evaluation pipeline to compare this queue with its baselines." }));
+  UI.notes.replaceChildren(comparison,
+    el("div", { class: "card decision-note unknown" },
+      el("h2", { text: "Missing or unseen manufacturer history" }),
+      el("p", {}, el("b", { text: `${unknown.length} of ${rows.length}` }),
+        ` batches have unavailable manufacturer text or no earlier NSQ record for it; ${unknownInCapacity} are inside the current capacity line. Their history score is zero because evidence is absent, not because the medicine is safe.`),
+      nextUnknown ? el("button", { class: "ctrl", onclick: () => select(nextUnknown.cid) },
+        `Inspect a batch with no history · rank ${nextUnknown.rank}`) : null,
+      el("p", { text: "Manufacturer spellings are unverified identities. Scan alerts can still raise an unfamiliar batch's priority." })));
 
   const tbody = el("tbody");
   rows.forEach(r => {
@@ -812,7 +847,7 @@ function renderEvaluation() {
       card("Simulated clones captured", "share of clones inside the queue's top N", lineChart({ xs: fusionBudgets, series: fusionSeries("clone"), xLabel: "queue size N", title: "Clones captured" })),
       card("Real recurring-manufacturer batches captured", "share inside the queue's top N", lineChart({ xs: fusionBudgets, series: fusionSeries("recurrence"), xLabel: "queue size N", title: "Recurring batches captured" }))),
     tableView(["N", ...pol.flatMap(p => [`${p.name}: clones`, "recurring"])], fusionBudgets.map(n => [n, ...pol.flatMap(p => [pct(F.test_by_budget[n][p.key].clone, 1), pct(F.test_by_budget[n][p.key].recurrence, 1)])]), "Table view of both charts"),
-    el("div", { class: "callout plain" }, el("b", { text: "Read with care. " }), `Recurring batches per month are few (${months.map(x => x.recurring).join(" and ")}), so those shares move in large steps. Scans alone miss recurring manufacturers; history alone misses clones. The fused queue keeps most of both.`),
+    el("div", { class: "callout plain" }, el("b", { text: "Read with care. " }), `Recurring batches per month are few (${months.map(x => x.recurring).join(" and ")}), so those shares move in large steps. At small budgets, scan alerts can consume every slot; the combined policy does not improve both targets at every N. Compare the selected policy with both single-signal baselines at the budget you can actually use.`),
     D.limits.length ? el("ul", { class: "ink2" }, D.limits.map(l => el("li", { text: l }))) : null);
 }
 
@@ -850,7 +885,7 @@ function renderPlatform() {
     runs.length ? card("Stage timings", "p50 / p99 milliseconds", el("div", { class: "scroll-x" }, el("table", { class: "small-tbl" },
       el("thead", {}, el("tr", {}, el("th", { text: "Stage" }), runs.map(r => el("th", { class: "n", text: name(r) })))),
       el("tbody", {}, stageRows.map(r => el("tr", {}, r.map((c, i) => el("td", { class: i ? "n" : "", text: c })))))))) : null,
-    el("div", { class: "callout plain", style: "margin-top:12px" }, "Machines differ in allocation, so no speedup is claimed from these numbers alone. Hardware acceleration is claimed only from a separately configured and measured run."));
+    el("div", { class: "callout plain", style: "margin-top:12px" }, "Queue rebuild uses a cached monthly history context; the first context build is measured separately above. Machines differ in allocation, so no speedup is claimed from these numbers alone. Hardware acceleration is claimed only from a separately configured and measured run."));
 }
 
 /* ---------- data ---------- */

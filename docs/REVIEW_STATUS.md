@@ -1,0 +1,16 @@
+# BatchGuard flaw review — 17 October 2026
+
+This checks the issues raised after the first trained-model implementation against the current project. "Resolved" means the current code and checks support the narrow claim stated here. It does not establish real inspection performance.
+
+| Earlier issue | Current status | Evidence |
+|---|---|---|
+| Dashboard only showed historical follow-up | **Resolved.** `app/dashboard.py` replays each simulated scan through `src.fusion.rank_candidates`; `app/template.html` shows the combined queue, three signals, capacity, evidence, evaluation and platform views. | Dashboard integration test and desktop/mobile browser interaction check. |
+| Trained scan model missed more clones than the rule | **Model shortfall remains; decision path corrected.** The rule now drives scan alerts; model probability is shown for comparison. The model still measures 72.7% recall vs the rule's 80.8% on simulated test episodes. | `src/fusion.py:rank_candidates`, `outputs/results.json`. |
+| Fusion gain at small budgets was overstated | **Still a limitation; now shown in the decision screen.** At N=10, the current combined policy captures 12.6% of simulated clones and 0% of real recurring-manufacturer candidates. History-only captures 1.8% and 33.0% respectively. | `outputs/results.json`; capacity comparison in `app/template.html`. |
+| Evaluation counted scan episodes as distinct batches and included future reference batches | **Resolved in implementation.** `queue_pool` filters to batches reported before the target month, merges episodes by candidate, and ranks through the live queue. | New integration test checks duplicate episodes and a future-only batch. |
+| Per-scan benchmark window contained only benign episodes | **Resolved.** `live_window` samples round-robin across the seven test scenario families; the recorded benchmark lists all seven. | New benchmark-family test; `outputs/benchmark_laptop.json`. |
+| Missing manufacturer history was easy to overlook | **Visible, not solved as data.** The decision screen counts unavailable/unseen histories and offers an example to inspect. The demo includes two simulated scans on published spurious-list batches with unavailable manufacturer text. The Layer A model still only ranks earlier manufacturer signatures. | `app/template.html`, `src/simulator.py`, dashboard integration test. |
+| A full queue rebuild was slow | **Partly resolved.** A cached monthly context makes a queue rebuild about 27 ms median on the recorded laptop run; creating that context takes about 4.8 seconds median. The interface and README now separate these timings. | `src/fusion.py:decision_context`; `outputs/benchmark_laptop.json`. |
+| No LinuxONE or real scan validation | **Open.** There is no `outputs/benchmark_linuxone.json`, and Layer B remains simulated. No IBM Z speedup, real counterfeit accuracy or inspection yield is established. | `outputs/`, `README.md`. |
+
+The generated `outputs/dashboard.html` is self-contained. Inspector decisions live in browser storage and can be exported as CSV; they are not a shared operational case system.

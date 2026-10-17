@@ -13,7 +13,7 @@ import pandas as pd
 
 from src import detector, ingest, layer_a, simulator
 from src.common import DATA_RAW, OUTPUTS, selection_weights
-from src.fusion import TrainedModels, build_decision_queue, fuse, load_models, rank_candidates, train_backend
+from src.fusion import TrainedModels, build_decision_queue, fuse, live_window, load_models, queue_pool, rank_candidates, train_backend
 
 
 def fixture():
@@ -144,6 +144,12 @@ class ScanTests(unittest.TestCase):
         with self.assertRaises(ValueError):
             simulator.ScanEvent.parse({**good, "extra": 1})
 
+    def test_benchmark_window_includes_benign_and_clone_families(self):
+        _, scenarios = live_window(self.episodes, count=10)
+        self.assertIn("benign_repeat", scenarios)
+        self.assertIn("clone_copy", scenarios)
+        self.assertIn("slow_copy", scenarios)
+
 
 class SelectionTests(unittest.TestCase):
     def test_ties_share_slots_threshold_and_fusion(self):
@@ -190,6 +196,21 @@ class EndToEndTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, "artifact changed"):
             TrainedModels(copy_dir)
 
+    def test_fusion_pool_merges_episodes_and_excludes_future_references(self):
+        models = TrainedModels(self.root / "sklearn")
+        base = copy.deepcopy(episode(self.episodes, "benign_repeat"))
+        chosen = []
+        for index, (batch, label) in enumerate((("BATCH-2026-01", 0), ("BATCH-2026-01", 1), ("BATCH-2026-07", 1))):
+            item = copy.deepcopy(base)
+            item.update(episode_id=f"pool-case-{index}", split="test", label=label)
+            for event in item["events"]:
+                event.update(product="Product", batch_no=batch, manufacturer_key="CONTINUING",
+                             pack_id=f"PACK-pool-case-{index}")
+            chosen.append(item)
+        pool = queue_pool(self.df, chosen, "test", "2026-07", models.history, models.scan, models.threshold)
+        self.assertEqual(len(pool), 1)
+        self.assertEqual((int(pool.iloc[0]["clone"]), int(pool.iloc[0]["recurrence"])), (1, 1))
+
     def test_demo_feed_alerts_only_clone_and_burst(self):
         models = TrainedModels(self.root / "sklearn")
         feed = simulator.demo_feed(self.df)
@@ -230,6 +251,11 @@ class DashboardTests(unittest.TestCase):
         self.assertEqual({data["codes"][i] for r in steps[-1][:2] for i in r[7][:1]},
                          {"CLONE_PATTERN_TRAVEL_REVIEW", "REPEATED_PACK_BURST_REVIEW"})
         self.assertTrue(all(c["history"] is not None for c in data["candidates"].values()))
+        no_history = [r for r in steps[-1] if r[6] is None]
+        self.assertGreaterEqual(len(no_history), 1)
+        self.assertTrue(all("NO_EARLIER_MANUFACTURER_HISTORY" in {data["codes"][i] for i in r[7]}
+                            for r in no_history))
+        self.assertTrue(any(data["candidates"][r[0]]["reports"] for r in no_history))
 
 
 if __name__ == "__main__":

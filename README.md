@@ -7,6 +7,7 @@ One inspector screen: **which medicine batches to sample first within this week'
 - Humans decide. BatchGuard never blocks medicine or declares counterfeiting.
 
 Product spec: [BATCHGUARD_FINAL_SPEC.md](BATCHGUARD_FINAL_SPEC.md).
+Current flaw review: [docs/REVIEW_STATUS.md](docs/REVIEW_STATUS.md).
 
 ## Run, in order
 
@@ -16,15 +17,17 @@ pip install -r requirements.txt snapml     # snapml optional; without it the Sna
 python -m src.ingest                       # optional: rebuild data/processed from data/raw (identical CSVs; new manifest timestamp)
 python -m src.fusion run                   # train + evaluate both layers -> outputs/
 python -m src.fusion benchmark             # stream benchmark -> outputs/benchmark_<laptop|linuxone>.json
-python -m unittest discover -s tests       # 17 tests
+python -m unittest discover -s tests       # 20 tests
 python -m app.dashboard                    # dashboard -> outputs/dashboard.html (open in any browser)
 ```
 
 `run` takes about 75 s on a laptop. It writes `outputs/results.json`, `outputs/inspector_queue.csv`, `outputs/charts/` and `outputs/models/<backend>/` (pickled models with hashes, a model card and test predictions).
 
 **Dashboard.** `outputs/dashboard.html` is one self-contained file: no server, no network, no external assets. The builder replays the simulated scan feed through the live ranking code after every scan, for each trained backend, so the page plays back exactly what the queue decided.
-- **Decision:** play the feed; set the week's capacity; see the ranked batches with historical risk, scan anomaly and evidence quality kept separate; open a batch's evidence (scan timeline, map, packs and sources, real manufacturer history and source files); record an inspector decision (kept in the browser; export as CSV).
+- **Decision:** play the feed; set the week's capacity; compare the combined policy with scan-only and history-only capture at the nearest tested budget; see how many batches have no earlier manufacturer history; open a batch's evidence (scan timeline, map, packs and sources, real manufacturer history and source files); record an inspector decision (kept in the browser; export as CSV).
 - **Other tabs:** Evaluation, Platform (laptop vs LinuxONE) and Data.
+
+The demo feed includes two simulated scans on published spurious-list batches whose manufacturer text is unavailable. They make the missing-history case visible in the decision screen; they are not new real scan observations.
 
 ## Measured results (laptop, x86_64; held-out test months July and August 2026)
 
@@ -36,9 +39,13 @@ python -m app.dashboard                    # dashboard -> outputs/dashboard.html
 | Layer B: clone-pattern recall / precision (simulated) | declared rule **80.8% / 100%** | trained model 72.7% / 98.6% |
 | Layer B: held-out `slow_copy` family alert rate | rule 42% | model 18% |
 | Fusion at N=100 of 177 to 197 batches: simulated clones / real recurring batches | fused **85% / 79%** | rule only 87% / 37%, history only 62% / 100%, random 54% / 54% |
-| Per-scan decision latency, p50 / p99 | 1.9 ms / 5.3 ms | 778 events/s; queue rebuild 29 ms |
+| Per-scan decision latency, p50 / p99 | 1.9 ms / 5.3 ms | 778 events/s; queue rebuild ≈29 ms with a cached monthly context |
 
 The trained scan model does not beat the rule, so **the rule drives alerts** and the model's probability is shown alongside it. Each test month has only 7 to 8 real recurring-manufacturer batches in the fusion queue, so the recurrence shares move in large steps. With history through January 2026, 9.1% (122 of 1,341) of later NSQ records carried manufacturer text seen earlier. This is one measured split, not a prediction ceiling.
+
+Building that monthly history context still takes about 4.8 seconds on the measured laptop. The ≈29 ms rebuild assumes it is already cached; the benchmark lists both stages separately.
+
+At N=10 in the held-out fusion queues, the combined policy captures 0% of the recurring-manufacturer batches versus 33% for history-only ranking. The dashboard makes this capacity trade-off visible; it is not evidence of better real inspection yield.
 
 ## IBM LinuxONE
 

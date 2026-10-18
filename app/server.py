@@ -7,6 +7,7 @@ import argparse
 from datetime import datetime, timezone
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 import json
+import os
 from pathlib import Path
 import secrets
 import platform
@@ -31,6 +32,11 @@ def make_server(dashboard=OUTPUTS / "dashboard.html", database=ROOT / "private" 
                 live_engine=None, authority=False):
     if authority and platform.machine().lower() != "s390x":
         raise ValueError("Central approval authority requires an actual IBM Z / LinuxONE s390x host")
+    public_origin = os.environ.get("BATCHGUARD_PUBLIC_ORIGIN", "").rstrip("/")
+    if public_origin:
+        parsed = urlsplit(public_origin)
+        if parsed.scheme not in {"http", "https"} or not parsed.netloc or parsed.path or parsed.query or parsed.fragment or parsed.username or parsed.password:
+            raise ValueError("BATCHGUARD_PUBLIC_ORIGIN must be an http(s) origin without a path")
     dashboard = Path(dashboard)
     html = dashboard.read_text()
     payload = html.split('<script id="bg-data" type="application/json">', 1)[1].split("</script>", 1)[0]
@@ -91,10 +97,15 @@ def make_server(dashboard=OUTPUTS / "dashboard.html", database=ROOT / "private" 
 
         def allowed_origin(self):
             host = self.headers.get("Host", "")
-            if host not in {f"127.0.0.1:{self.server.server_port}", f"localhost:{self.server.server_port}"}:
+            local_hosts = {f"127.0.0.1:{self.server.server_port}", f"localhost:{self.server.server_port}"}
+            allowed_hosts = local_hosts | ({urlsplit(public_origin).netloc} if public_origin else set())
+            if host not in allowed_hosts:
                 return False
             origin = self.headers.get("Origin")
-            return origin is None or origin == "http://" + host
+            allowed_origins = {"http://" + item for item in local_hosts}
+            if public_origin:
+                allowed_origins.add(public_origin)
+            return origin is None or origin in allowed_origins
 
         def do_GET(self):
             if not self.allowed_origin():

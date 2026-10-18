@@ -1,0 +1,1777 @@
+{
+  "comparisons": [
+    {
+      "compared_fields": [
+        "product",
+        "batch_no",
+        "manufacture_date_raw",
+        "expiry_date_raw",
+        "manufacturer_raw",
+        "failure_type",
+        "reporting_source_raw",
+        "reporting_lab",
+        "reporting_month"
+      ],
+      "decoding": "utf-8-sig",
+      "discrepancies": [
+        {
+          "exact_identity_candidates": 1,
+          "field_differences": {
+            "failure_type": {
+              "local": "The Sample does not conform to Standard Quality in respect of the test for ?Disintegration?.",
+              "official": "The Sample does not conform to Standard Quality in respect of the test for \u201cDisintegration\u201d."
+            },
+            "manufacturer_raw": {
+              "local": "Torino Laboratories Pvt. Ltd., Fact: Plot No. 65/1, Sector 1, Pithampur ? 454775, Dist. Dhar (INDIA).",
+              "official": "Torino Laboratories Pvt. Ltd., Fact: Plot No. 65/1, Sector 1, Pithampur \u2013 454775, Dist. Dhar (INDIA)."
+            }
+          },
+          "record_id": "2025-07:0062"
+        },
+        {
+          "exact_identity_candidates": 0,
+          "record_id": "2025-07:0072"
+        },
+        {
+          "exact_identity_candidates": 1,
+          "field_differences": {
+            "failure_type": {
+              "local": "The sample does not conform to standard quality in respect of the test for ?Dissolution? performed",
+              "official": "The sample does not conform to standard quality in respect of the test for \u201cDissolution\u201d performed"
+            },
+            "manufacturer_raw": {
+              "local": "Morepen Laboratories Ltd., Plot No. 12-B, Sector -2, Parwanoo, Dist. Solan (H.P) ? 173220.",
+              "official": "Morepen Laboratories Ltd., Plot No. 12-B, Sector -2, Parwanoo, Dist. Solan (H.P) \u2013 173220."
+            }
+          },
+          "record_id": "2025-07:0088"
+        },
+        {
+          "exact_identity_candidates": 0,
+          "record_id": "2025-07:0109"
+        },
+        {
+          "exact_identity_candidates": 1,
+          "field_differences": {
+            "failure_type": {
+              "local": "The sample does not conform to standard quality in respect of the test for ?Dissolution? performed.",
+              "official": "The sample does not conform to standard quality in respect of the test for \u201cDissolution\u201d performed."
+            },
+            "manufacturer_raw": {
+              "local": "Kalpraj Techno Fab Pvt. Ltd., Plot No. 24A & 24B, Sector C, Industrial Area, Mandideep, Dist. Raisen ? 462046 (M.P.), India.",
+              "official": "Kalpraj Techno Fab Pvt. Ltd., Plot No. 24A & 24B, Sector C, Industrial Area, Mandideep, Dist. Raisen \u2013 462046 (M.P.), India."
+            }
+          },
+          "record_id": "2025-07:0111"
+        },
+        {
+          "exact_identity_candidates": 1,
+          "field_differences": {
+            "failure_type": {
+              "local": "The sample does not conform to standard quality in respect of the test for ?Dissolution? performed.",
+              "official": "The sample does not conform to standard quality in respect of the test for \u201cDissolution\u201d performed."
+            },
+            "manufacturer_raw": {
+              "local": "Kalpraj Techno Fab Pvt. Ltd., Plot No. 24A & 24B, Sector C, Industrial Area, Mandideep, Dist. Raisen ? 462046 (M.P.), India.",
+              "official": "Kalpraj Techno Fab Pvt. Ltd., Plot No. 24A & 24B, Sector C, Industrial Area, Mandideep, Dist. Raisen \u2013 462046 (M.P.), India."
+            }
+          },
+          "record_id": "2025-07:0112"
+        },
+        {
+          "exact_identity_candidates": 1,
+          "field_differences": {
+            "failure_type": {
+              "local": "The sample does not conform to standard quality in respect of the test for ?Dissolution? performed",
+              "official": "The sample does not conform to standard quality in respect of the test for \u201cDissolution\u201d performed"
+            },
+            "manufacturer_raw": {
+              "local": "Kalpraj Techno Fab Pvt. Ltd., Plot No. 24A & 24B, Sector C, Industrial Area, Mandideep, Dist. Raisen ? 462046 (M.P.), India.",
+              "official": "Kalpraj Techno Fab Pvt. Ltd., Plot No. 24A & 24B, Sector C, Industrial Area, Mandideep, Dist. Raisen \u2013 462046 (M.P.), India."
+            }
+          },
+          "record_id": "2025-07:0113"
+        },
+        {
+          "exact_identity_candidates": 1,
+          "field_differences": {
+            "failure_type": {
+              "local": "The sample does not conform to IP w.r.to the tests for ? Dissolution? and ?Assay?",
+              "official": "The sample does not conform to IP  w.r.to  the tests for  \u201c Dissolution\u201d and \u201cAssay\u201d"
+            }
+          },
+          "record_id": "2025-07:0123"
+        }
+      ],
+      "exact_field_matches": 134,
+      "kind": "nsq",
+      "local_records": 142,
+      "month": "2025-07",
+      "normalization": "Unicode NFKC, HTML entities, case/whitespace, labeled spurious-cell prefixes/missing markers, and explicit first-of-month Excel timestamps to month precision; no fuzzy identity or batch matching",
+      "official_records": 143,
+      "official_records_not_represented": 9,
+      "response_sha256": "cd5389bfa5b7f79ed53850aa4b6dde92c42368a274331e6ed52bc1a6f6cf09a3",
+      "retrieved_at": "2026-10-18T00:47:19.221369+00:00",
+      "unmatched_local_record_ids": [
+        "2025-07:0062",
+        "2025-07:0072",
+        "2025-07:0088",
+        "2025-07:0109",
+        "2025-07:0111",
+        "2025-07:0112",
+        "2025-07:0113",
+        "2025-07:0123"
+      ],
+      "url": "https://cdscoonline.gov.in/CDSCO/filteredNsqDrugTable?month=JUL-2025&source=All&tab=nsq"
+    },
+    {
+      "compared_fields": [
+        "product",
+        "batch_no",
+        "manufacture_date_raw",
+        "expiry_date_raw",
+        "manufacturer_name_raw",
+        "manufactured_by_raw",
+        "nsq_remark",
+        "firm_reply",
+        "reporting_source_raw",
+        "reporting_lab",
+        "reporting_month"
+      ],
+      "decoding": "utf-8-sig",
+      "discrepancies": [],
+      "exact_field_matches": 8,
+      "kind": "spurious",
+      "local_records": 8,
+      "month": "2025-07",
+      "normalization": "Unicode NFKC, HTML entities, case/whitespace, labeled spurious-cell prefixes/missing markers, and explicit first-of-month Excel timestamps to month precision; no fuzzy identity or batch matching",
+      "official_records": 8,
+      "official_records_not_represented": 0,
+      "response_sha256": "84fa279f234e63957f3b192a8c5d43aa86f59c268d56b30267799545ae789634",
+      "retrieved_at": "2026-10-18T00:47:19.476959+00:00",
+      "unmatched_local_record_ids": [],
+      "url": "https://cdscoonline.gov.in/CDSCO/filteredSpuriousDrugTable?month=JUL-2025&source=All&tab=spurious"
+    },
+    {
+      "compared_fields": [
+        "product",
+        "batch_no",
+        "manufacture_date_raw",
+        "expiry_date_raw",
+        "manufacturer_raw",
+        "failure_type",
+        "reporting_source_raw",
+        "reporting_lab",
+        "reporting_month"
+      ],
+      "decoding": "utf-8-sig",
+      "discrepancies": [
+        {
+          "exact_identity_candidates": 1,
+          "field_differences": {
+            "manufacturer_raw": {
+              "local": "Fabian Life Sciences Phase ?I, Vatva, GIDC, Ahmedabad, Gujarat.",
+              "official": "Fabian Life Sciences Phase \u2013I, Vatva, GIDC,   Ahmedabad, Gujarat."
+            }
+          },
+          "record_id": "2025-08:0039"
+        },
+        {
+          "exact_identity_candidates": 1,
+          "field_differences": {
+            "manufacturer_raw": {
+              "local": "Affy Parenterals Vill.: Gullerwala, P.O. Baddi, Distt. Solan ? 173205 (HP)",
+              "official": "Affy Parenterals Vill.: Gullerwala, P.O. Baddi, Distt. Solan \u2013 173205 (HP)"
+            }
+          },
+          "record_id": "2025-08:0047"
+        },
+        {
+          "exact_identity_candidates": 1,
+          "field_differences": {
+            "manufacturer_raw": {
+              "local": "Maxtra Laboratories, TIF Industrial Park, Plot No. 105, 105A, 105B, 1st,2nd, 3rd Floors, Dandumulakpur (V), Choutuppal (M), Yadadri ? Bhongiri (Dist), T.S ? 508252.",
+              "official": "Maxtra Laboratories, TIF Industrial Park, Plot No. 105, 105A, 105B, 1st,2nd, 3rd Floors, Dandumulakpur (V), Choutuppal (M), Yadadri \u2013 Bhongiri (Dist), T.S \u2013 508252."
+            }
+          },
+          "record_id": "2025-08:0054"
+        },
+        {
+          "exact_identity_candidates": 1,
+          "field_differences": {
+            "manufacturer_raw": {
+              "local": "Nanoceut Therapeutics Pvt. Ltd., R.S.No.104/19A, E.V.R. Street, Sedarapet, Puducherry ? 605 111.",
+              "official": "Nanoceut Therapeutics Pvt. Ltd., R.S.No.104/19A, E.V.R. Street, Sedarapet, Puducherry \u2013 605 111."
+            }
+          },
+          "record_id": "2025-08:0059"
+        }
+      ],
+      "exact_field_matches": 90,
+      "kind": "nsq",
+      "local_records": 94,
+      "month": "2025-08",
+      "normalization": "Unicode NFKC, HTML entities, case/whitespace, labeled spurious-cell prefixes/missing markers, and explicit first-of-month Excel timestamps to month precision; no fuzzy identity or batch matching",
+      "official_records": 94,
+      "official_records_not_represented": 4,
+      "response_sha256": "3065dc901024ec1a58daf38e484bc94ba6dbde867b2f2a3283a806816e56167c",
+      "retrieved_at": "2026-10-18T00:47:19.846106+00:00",
+      "unmatched_local_record_ids": [
+        "2025-08:0039",
+        "2025-08:0047",
+        "2025-08:0054",
+        "2025-08:0059"
+      ],
+      "url": "https://cdscoonline.gov.in/CDSCO/filteredNsqDrugTable?month=AUG-2025&source=All&tab=nsq"
+    },
+    {
+      "compared_fields": [
+        "product",
+        "batch_no",
+        "manufacture_date_raw",
+        "expiry_date_raw",
+        "manufacturer_name_raw",
+        "manufactured_by_raw",
+        "nsq_remark",
+        "firm_reply",
+        "reporting_source_raw",
+        "reporting_lab",
+        "reporting_month"
+      ],
+      "decoding": "utf-8-sig",
+      "discrepancies": [],
+      "exact_field_matches": 3,
+      "kind": "spurious",
+      "local_records": 3,
+      "month": "2025-08",
+      "normalization": "Unicode NFKC, HTML entities, case/whitespace, labeled spurious-cell prefixes/missing markers, and explicit first-of-month Excel timestamps to month precision; no fuzzy identity or batch matching",
+      "official_records": 3,
+      "official_records_not_represented": 0,
+      "response_sha256": "05cd70189e9362b5430e465f16a53b8d31ce22c895caa37a12e93e0eacb4b88c",
+      "retrieved_at": "2026-10-18T00:47:20.106611+00:00",
+      "unmatched_local_record_ids": [],
+      "url": "https://cdscoonline.gov.in/CDSCO/filteredSpuriousDrugTable?month=AUG-2025&source=All&tab=spurious"
+    },
+    {
+      "compared_fields": [
+        "product",
+        "batch_no",
+        "manufacture_date_raw",
+        "expiry_date_raw",
+        "manufacturer_raw",
+        "failure_type",
+        "reporting_source_raw",
+        "reporting_lab",
+        "reporting_month"
+      ],
+      "decoding": "utf-8-sig",
+      "discrepancies": [
+        {
+          "exact_identity_candidates": 0,
+          "record_id": "2025-09:0030"
+        },
+        {
+          "exact_identity_candidates": 1,
+          "field_differences": {
+            "failure_type": {
+              "local": "",
+              "official": "NA"
+            }
+          },
+          "record_id": "2025-09:0076"
+        },
+        {
+          "exact_identity_candidates": 1,
+          "field_differences": {
+            "manufacturer_raw": {
+              "local": "Affy Parenterals Vill.: Gullerwala, P.O. Baddi, Distt. Solan ? 173205 (HP)",
+              "official": "Affy Parenterals Vill.: Gullerwala, P.O. Baddi, Distt. Solan \u2013 173205 (HP)"
+            }
+          },
+          "record_id": "2025-09:0108"
+        },
+        {
+          "exact_identity_candidates": 1,
+          "field_differences": {
+            "manufacturer_raw": {
+              "local": "Affy Parenterals, Vill. Gullerwala, P.O. Baddi, Distt. Solan ? 173205 (H.P.)",
+              "official": "Affy Parenterals, Vill. Gullerwala, P.O. Baddi, Distt. Solan \u2013 173205 (H.P.)"
+            }
+          },
+          "record_id": "2025-09:0110"
+        },
+        {
+          "exact_identity_candidates": 1,
+          "field_differences": {
+            "manufacturer_raw": {
+              "local": "Hindustan Laboratories Ltd., Plot No. 5-9, Survey No. 38/2, Aliyali Palghar (W), Dist ? Palghar 401404 (M.S.).",
+              "official": "Hindustan Laboratories Ltd., Plot No. 5-9, Survey No. 38/2, Aliyali Palghar (W), Dist \u2013 Palghar 401404 (M.S.)."
+            }
+          },
+          "record_id": "2025-09:0111"
+        }
+      ],
+      "exact_field_matches": 107,
+      "kind": "nsq",
+      "local_records": 112,
+      "month": "2025-09",
+      "normalization": "Unicode NFKC, HTML entities, case/whitespace, labeled spurious-cell prefixes/missing markers, and explicit first-of-month Excel timestamps to month precision; no fuzzy identity or batch matching",
+      "official_records": 112,
+      "official_records_not_represented": 5,
+      "response_sha256": "acca71e94d5816922dd6b1b2e7c5b08384f08b6d88d92dd85b57dca386cc8cd9",
+      "retrieved_at": "2026-10-18T00:47:20.496597+00:00",
+      "unmatched_local_record_ids": [
+        "2025-09:0030",
+        "2025-09:0076",
+        "2025-09:0108",
+        "2025-09:0110",
+        "2025-09:0111"
+      ],
+      "url": "https://cdscoonline.gov.in/CDSCO/filteredNsqDrugTable?month=SEP-2025&source=All&tab=nsq"
+    },
+    {
+      "compared_fields": [
+        "product",
+        "batch_no",
+        "manufacture_date_raw",
+        "expiry_date_raw",
+        "manufacturer_name_raw",
+        "manufactured_by_raw",
+        "nsq_remark",
+        "firm_reply",
+        "reporting_source_raw",
+        "reporting_lab",
+        "reporting_month"
+      ],
+      "decoding": "utf-8-sig",
+      "discrepancies": [
+        {
+          "exact_identity_candidates": 0,
+          "record_id": "2025-09:0113"
+        }
+      ],
+      "exact_field_matches": 0,
+      "kind": "spurious",
+      "local_records": 1,
+      "month": "2025-09",
+      "normalization": "Unicode NFKC, HTML entities, case/whitespace, labeled spurious-cell prefixes/missing markers, and explicit first-of-month Excel timestamps to month precision; no fuzzy identity or batch matching",
+      "official_records": 1,
+      "official_records_not_represented": 1,
+      "response_sha256": "7399a791cf92f8d1de11aba13ad324ca84706267ee96bcc3b7586b009b3c2547",
+      "retrieved_at": "2026-10-18T00:47:20.746636+00:00",
+      "unmatched_local_record_ids": [
+        "2025-09:0113"
+      ],
+      "url": "https://cdscoonline.gov.in/CDSCO/filteredSpuriousDrugTable?month=SEP-2025&source=All&tab=spurious"
+    },
+    {
+      "compared_fields": [
+        "product",
+        "batch_no",
+        "manufacture_date_raw",
+        "expiry_date_raw",
+        "manufacturer_raw",
+        "failure_type",
+        "reporting_source_raw",
+        "reporting_lab",
+        "reporting_month"
+      ],
+      "decoding": "utf-8-sig",
+      "discrepancies": [
+        {
+          "exact_identity_candidates": 0,
+          "record_id": "2025-10:0027"
+        },
+        {
+          "exact_identity_candidates": 1,
+          "field_differences": {
+            "failure_type": {
+              "local": "Uniformity of Weight? and ?Test for Dissolution for Amlodipine",
+              "official": "Uniformity of Weight\u201d and \u201cTest for Dissolution for Amlodipine"
+            }
+          },
+          "record_id": "2025-10:0097"
+        },
+        {
+          "exact_identity_candidates": 1,
+          "field_differences": {
+            "manufacturer_raw": {
+              "local": "J.M. Laboratories, (AN ISO, WHO, GMP & GLP, CERTIFIED COMPANY) Village ?Bhanat, P.O-Ghatti, Subathu Road, Solan (H.P) 173211",
+              "official": "J.M. Laboratories, (AN ISO, WHO, GMP & GLP, CERTIFIED COMPANY) Village \u2013Bhanat, P.O-Ghatti, Subathu Road, Solan (H.P) 173211"
+            }
+          },
+          "record_id": "2025-10:0100"
+        },
+        {
+          "exact_identity_candidates": 1,
+          "field_differences": {
+            "failure_type": {
+              "local": "Tests for weight per ml. Total solids and Assay for Total balsamic Acids (as Cinnamic Acid)?",
+              "official": "Tests for weight per ml. Total solids and Assay for Total balsamic Acids (as Cinnamic Acid)\u201d"
+            }
+          },
+          "record_id": "2025-10:0119"
+        },
+        {
+          "exact_identity_candidates": 1,
+          "field_differences": {
+            "failure_type": {
+              "local": "Test for Uniformity of weight? and does not conform to label claim with respect to ?Assay for Vitamin D3",
+              "official": "Test for Uniformity of weight\u201d and does not conform to label claim with respect to \u201cAssay for Vitamin D3"
+            }
+          },
+          "record_id": "2025-10:0122"
+        },
+        {
+          "exact_identity_candidates": 1,
+          "field_differences": {
+            "failure_type": {
+              "local": "Test for Dissolution? only",
+              "official": "Test for Dissolution\u201d only"
+            }
+          },
+          "record_id": "2025-10:0123"
+        },
+        {
+          "exact_identity_candidates": 1,
+          "field_differences": {
+            "failure_type": {
+              "local": "Test for Uniformity of weight? only",
+              "official": "Test for Uniformity of weight\u201d only"
+            }
+          },
+          "record_id": "2025-10:0124"
+        },
+        {
+          "exact_identity_candidates": 1,
+          "field_differences": {
+            "manufacturer_raw": {
+              "local": "Casid Pharmaceuticals Pvt.Ltd., S.F.No. 115/15, Trichy Chennai Trunk Road, Samayapuram, Trichy ? 621 112.",
+              "official": "Casid Pharmaceuticals Pvt.Ltd., S.F.No. 115/15, Trichy Chennai Trunk Road, Samayapuram, Trichy \u2013 621 112."
+            }
+          },
+          "record_id": "2025-10:0154"
+        },
+        {
+          "exact_identity_candidates": 1,
+          "field_differences": {
+            "manufacturer_raw": {
+              "local": "Tulbros Formulations, Plot No. 91, Sector IIDC, IIE Pantnagar, SIDCUL, U.S. Nagar ? 263153 (U.K)",
+              "official": "Tulbros Formulations, Plot No. 91, Sector IIDC, IIE Pantnagar, SIDCUL, U.S. Nagar \u2013 263153 (U.K)"
+            }
+          },
+          "record_id": "2025-10:0161"
+        }
+      ],
+      "exact_field_matches": 200,
+      "kind": "nsq",
+      "local_records": 209,
+      "month": "2025-10",
+      "normalization": "Unicode NFKC, HTML entities, case/whitespace, labeled spurious-cell prefixes/missing markers, and explicit first-of-month Excel timestamps to month precision; no fuzzy identity or batch matching",
+      "official_records": 211,
+      "official_records_not_represented": 11,
+      "response_sha256": "0722ce175ad783c8f0fe00af3e9f65484252aeae88c796cff9a4d51a87fdf0eb",
+      "retrieved_at": "2026-10-18T00:47:21.150943+00:00",
+      "unmatched_local_record_ids": [
+        "2025-10:0027",
+        "2025-10:0097",
+        "2025-10:0100",
+        "2025-10:0119",
+        "2025-10:0122",
+        "2025-10:0123",
+        "2025-10:0124",
+        "2025-10:0154",
+        "2025-10:0161"
+      ],
+      "url": "https://cdscoonline.gov.in/CDSCO/filteredNsqDrugTable?month=OCT-2025&source=All&tab=nsq"
+    },
+    {
+      "compared_fields": [
+        "product",
+        "batch_no",
+        "manufacture_date_raw",
+        "expiry_date_raw",
+        "manufacturer_name_raw",
+        "manufactured_by_raw",
+        "nsq_remark",
+        "firm_reply",
+        "reporting_source_raw",
+        "reporting_lab",
+        "reporting_month"
+      ],
+      "decoding": "utf-8-sig",
+      "discrepancies": [],
+      "exact_field_matches": 5,
+      "kind": "spurious",
+      "local_records": 5,
+      "month": "2025-10",
+      "normalization": "Unicode NFKC, HTML entities, case/whitespace, labeled spurious-cell prefixes/missing markers, and explicit first-of-month Excel timestamps to month precision; no fuzzy identity or batch matching",
+      "official_records": 5,
+      "official_records_not_represented": 0,
+      "response_sha256": "10a6da74dcce96e06b4245b234a7c99897f1a10137e7cc2d8bc40a663df649c3",
+      "retrieved_at": "2026-10-18T00:47:21.392620+00:00",
+      "unmatched_local_record_ids": [],
+      "url": "https://cdscoonline.gov.in/CDSCO/filteredSpuriousDrugTable?month=OCT-2025&source=All&tab=spurious"
+    },
+    {
+      "compared_fields": [
+        "product",
+        "batch_no",
+        "manufacture_date_raw",
+        "expiry_date_raw",
+        "manufacturer_raw",
+        "failure_type",
+        "reporting_source_raw",
+        "reporting_lab",
+        "reporting_month"
+      ],
+      "decoding": "utf-8-sig",
+      "discrepancies": [
+        {
+          "exact_identity_candidates": 0,
+          "record_id": "2025-11:0043"
+        },
+        {
+          "exact_identity_candidates": 0,
+          "record_id": "2025-11:0106"
+        }
+      ],
+      "exact_field_matches": 214,
+      "kind": "nsq",
+      "local_records": 216,
+      "month": "2025-11",
+      "normalization": "Unicode NFKC, HTML entities, case/whitespace, labeled spurious-cell prefixes/missing markers, and explicit first-of-month Excel timestamps to month precision; no fuzzy identity or batch matching",
+      "official_records": 216,
+      "official_records_not_represented": 2,
+      "response_sha256": "3cff16cc33a3e8e6b700bed700347592e90f0e10412a3fa64ff21ed73d2bfdea",
+      "retrieved_at": "2026-10-18T00:47:21.843649+00:00",
+      "unmatched_local_record_ids": [
+        "2025-11:0043",
+        "2025-11:0106"
+      ],
+      "url": "https://cdscoonline.gov.in/CDSCO/filteredNsqDrugTable?month=NOV-2025&source=All&tab=nsq"
+    },
+    {
+      "compared_fields": [
+        "product",
+        "batch_no",
+        "manufacture_date_raw",
+        "expiry_date_raw",
+        "manufacturer_name_raw",
+        "manufactured_by_raw",
+        "nsq_remark",
+        "firm_reply",
+        "reporting_source_raw",
+        "reporting_lab",
+        "reporting_month"
+      ],
+      "decoding": "utf-8-sig",
+      "discrepancies": [],
+      "exact_field_matches": 2,
+      "kind": "spurious",
+      "local_records": 2,
+      "month": "2025-11",
+      "normalization": "Unicode NFKC, HTML entities, case/whitespace, labeled spurious-cell prefixes/missing markers, and explicit first-of-month Excel timestamps to month precision; no fuzzy identity or batch matching",
+      "official_records": 2,
+      "official_records_not_represented": 0,
+      "response_sha256": "6f0f2cb510cf29890c8ff2d504eccd6d559e2ec95c93858ce9a0364e38e4ff8f",
+      "retrieved_at": "2026-10-18T00:47:22.086563+00:00",
+      "unmatched_local_record_ids": [],
+      "url": "https://cdscoonline.gov.in/CDSCO/filteredSpuriousDrugTable?month=NOV-2025&source=All&tab=spurious"
+    },
+    {
+      "compared_fields": [
+        "product",
+        "batch_no",
+        "manufacture_date_raw",
+        "expiry_date_raw",
+        "manufacturer_raw",
+        "failure_type",
+        "reporting_source_raw",
+        "reporting_lab",
+        "reporting_month"
+      ],
+      "decoding": "utf-8-sig",
+      "discrepancies": [
+        {
+          "exact_identity_candidates": 0,
+          "record_id": "2025-12:0081"
+        },
+        {
+          "exact_identity_candidates": 0,
+          "record_id": "2025-12:0090"
+        },
+        {
+          "exact_identity_candidates": 1,
+          "field_differences": {
+            "manufacturer_raw": {
+              "local": "Mancare Laboratories Pvt. Ltd., (A WHO ? GMP Certified Company) Plot No 11 Pharmacity Selaqui Dehradun Uttarakhand 248011",
+              "official": "Mancare Laboratories Pvt. Ltd., (A WHO \u2013 GMP Certified Company)  Plot No 11 Pharmacity Selaqui Dehradun Uttarakhand 248011"
+            }
+          },
+          "record_id": "2025-12:0103"
+        },
+        {
+          "exact_identity_candidates": 1,
+          "field_differences": {
+            "manufacturer_raw": {
+              "local": "Mancare Laboratories Pvt. Ltd., (A WHO ? GMP Certified Company) Plot No 11 Pharmacity Selaqui Dehradun Uttarakhand 248011",
+              "official": "Mancare Laboratories Pvt. Ltd., (A WHO \u2013 GMP Certified Company)  Plot No 11 Pharmacity Selaqui Dehradun Uttarakhand 248011"
+            }
+          },
+          "record_id": "2025-12:0104"
+        },
+        {
+          "exact_identity_candidates": 1,
+          "field_differences": {
+            "manufacturer_raw": {
+              "local": "Mancare Laboratories Pvt. Ltd., (A WHO ? GMP Certified Company) Plot No 11 Pharmacity Selaqui Dehradun Uttarakhand 248011",
+              "official": "Mancare Laboratories Pvt. Ltd., (A WHO \u2013 GMP Certified Company)  Plot No 11 Pharmacity Selaqui Dehradun Uttarakhand 248011"
+            }
+          },
+          "record_id": "2025-12:0105"
+        },
+        {
+          "exact_identity_candidates": 1,
+          "field_differences": {
+            "manufacturer_raw": {
+              "local": "Mancare Laboratories Pvt. Ltd., (A WHO ? GMP Certified Company) Plot No 11 Pharmacity Selaqui Dehradun Uttarakhand 248011",
+              "official": "Mancare Laboratories Pvt. Ltd., (A WHO \u2013 GMP Certified Company)  Plot No 11 Pharmacity Selaqui Dehradun Uttarakhand 248011"
+            }
+          },
+          "record_id": "2025-12:0106"
+        },
+        {
+          "exact_identity_candidates": 1,
+          "field_differences": {
+            "manufacturer_raw": {
+              "local": "Mancare Laboratories Pvt. Ltd., (A WHO ? GMP Certified Company) Plot No 11 Pharmacity Selaqui Dehradun Uttarakhand 248011",
+              "official": "Mancare Laboratories Pvt. Ltd., (A WHO \u2013 GMP Certified Company)  Plot No 11 Pharmacity Selaqui Dehradun Uttarakhand 248011"
+            }
+          },
+          "record_id": "2025-12:0107"
+        },
+        {
+          "exact_identity_candidates": 1,
+          "field_differences": {
+            "manufacturer_raw": {
+              "local": "Mancare Laboratories Pvt. Ltd., (A WHO ? GMP Certified Company) Plot No 11 Pharmacity Selaqui Dehradun Uttarakhand 248011",
+              "official": "Mancare Laboratories Pvt. Ltd., (A WHO \u2013 GMP Certified Company)  Plot No 11 Pharmacity Selaqui Dehradun Uttarakhand 248011"
+            }
+          },
+          "record_id": "2025-12:0108"
+        },
+        {
+          "exact_identity_candidates": 1,
+          "field_differences": {
+            "manufacturer_raw": {
+              "local": "Mancare Laboratories Pvt. Ltd., (A WHO ? GMP Certified Company) Plot No 11 Pharmacity Selaqui Dehradun Uttarakhand 248011",
+              "official": "Mancare Laboratories Pvt. Ltd., (A WHO \u2013 GMP Certified Company)  Plot No 11 Pharmacity Selaqui Dehradun Uttarakhand 248011"
+            }
+          },
+          "record_id": "2025-12:0109"
+        },
+        {
+          "exact_identity_candidates": 1,
+          "field_differences": {
+            "manufacturer_raw": {
+              "local": "Alkem Health Science, A unit of Alkem Laboratories Limited, Unit-2, Samardung, Karek Block, P.O. : Namthang, District ? Namchi, Sikkim ? 737137.",
+              "official": "Alkem Health Science, A unit of Alkem Laboratories Limited, Unit-2, Samardung, Karek Block, P.O. : Namthang, District \u2013 Namchi, Sikkim \u2013 737137."
+            }
+          },
+          "record_id": "2025-12:0164"
+        },
+        {
+          "exact_identity_candidates": 0,
+          "record_id": "2025-12:0165"
+        }
+      ],
+      "exact_field_matches": 164,
+      "kind": "nsq",
+      "local_records": 175,
+      "month": "2025-12",
+      "normalization": "Unicode NFKC, HTML entities, case/whitespace, labeled spurious-cell prefixes/missing markers, and explicit first-of-month Excel timestamps to month precision; no fuzzy identity or batch matching",
+      "official_records": 175,
+      "official_records_not_represented": 11,
+      "response_sha256": "abf1c0157a142085a186e7c275539f1a628653069f6184228d781cb20b83e30f",
+      "retrieved_at": "2026-10-18T00:47:22.506925+00:00",
+      "unmatched_local_record_ids": [
+        "2025-12:0081",
+        "2025-12:0090",
+        "2025-12:0103",
+        "2025-12:0104",
+        "2025-12:0105",
+        "2025-12:0106",
+        "2025-12:0107",
+        "2025-12:0108",
+        "2025-12:0109",
+        "2025-12:0164",
+        "2025-12:0165"
+      ],
+      "url": "https://cdscoonline.gov.in/CDSCO/filteredNsqDrugTable?month=DEC-2025&source=All&tab=nsq"
+    },
+    {
+      "compared_fields": [
+        "product",
+        "batch_no",
+        "manufacture_date_raw",
+        "expiry_date_raw",
+        "manufacturer_name_raw",
+        "manufactured_by_raw",
+        "nsq_remark",
+        "firm_reply",
+        "reporting_source_raw",
+        "reporting_lab",
+        "reporting_month"
+      ],
+      "decoding": "utf-8-sig",
+      "discrepancies": [],
+      "exact_field_matches": 10,
+      "kind": "spurious",
+      "local_records": 10,
+      "month": "2025-12",
+      "normalization": "Unicode NFKC, HTML entities, case/whitespace, labeled spurious-cell prefixes/missing markers, and explicit first-of-month Excel timestamps to month precision; no fuzzy identity or batch matching",
+      "official_records": 10,
+      "official_records_not_represented": 0,
+      "response_sha256": "f409139bb552b2f8e2c31b1f7b60285e612aa8c1151a3ed9c327ba4bbcad2d28",
+      "retrieved_at": "2026-10-18T00:47:22.781184+00:00",
+      "unmatched_local_record_ids": [],
+      "url": "https://cdscoonline.gov.in/CDSCO/filteredSpuriousDrugTable?month=DEC-2025&source=All&tab=spurious"
+    },
+    {
+      "compared_fields": [
+        "product",
+        "batch_no",
+        "manufacture_date_raw",
+        "expiry_date_raw",
+        "manufacturer_raw",
+        "failure_type",
+        "reporting_source_raw",
+        "reporting_lab",
+        "reporting_month"
+      ],
+      "decoding": "utf-8-sig",
+      "discrepancies": [
+        {
+          "exact_identity_candidates": 0,
+          "record_id": "2026-01:0017"
+        },
+        {
+          "exact_identity_candidates": 0,
+          "record_id": "2026-01:0024"
+        },
+        {
+          "exact_identity_candidates": 1,
+          "field_differences": {
+            "manufacturer_raw": {
+              "local": "Aagya Biotech Pvt. Ltd. 1.5 km., Manglour ? Saharanpur Road, Manglour ? 247656, Roorkee, Distt. Haridwar (U.K.), India",
+              "official": "Aagya Biotech Pvt. Ltd. 1.5 km., Manglour \u2013 Saharanpur Road, Manglour \u2013 247656, Roorkee, Distt. Haridwar (U.K.), India"
+            }
+          },
+          "record_id": "2026-01:0078"
+        },
+        {
+          "exact_identity_candidates": 1,
+          "field_differences": {
+            "manufacturer_raw": {
+              "local": "Healthy Life Pharma Pvt. Ltd. Factory : N ? 31/1, M.I.D.C., Tarapur, Boisar ? 401506, Dist. Palghar.",
+              "official": "Healthy Life Pharma Pvt. Ltd. Factory : N \u2013 31/1, M.I.D.C., Tarapur, Boisar \u2013 401506, Dist. Palghar."
+            }
+          },
+          "record_id": "2026-01:0079"
+        },
+        {
+          "exact_identity_candidates": 1,
+          "field_differences": {
+            "manufacturer_raw": {
+              "local": "Linux Life Sciences Pvt Ltd Plot No. 6 biotech park phase ? III, Karkapatla, Markook, Siddipet 502281 Telangana",
+              "official": "Linux Life Sciences Pvt Ltd  Plot No. 6 biotech park phase \u2013 III, Karkapatla, Markook, Siddipet 502281 Telangana"
+            }
+          },
+          "record_id": "2026-01:0100"
+        },
+        {
+          "exact_identity_candidates": 1,
+          "field_differences": {
+            "manufacturer_raw": {
+              "local": "Mayer Lab Chambaghat, Adjacent to Railway crossing, Distt. Solan, HP ? 173 213 Himachal Pradesh",
+              "official": "Mayer Lab  Chambaghat, Adjacent to Railway crossing, Distt. Solan, HP \u2013 173 213 Himachal Pradesh"
+            }
+          },
+          "record_id": "2026-01:0107"
+        },
+        {
+          "exact_identity_candidates": 1,
+          "field_differences": {
+            "manufacturer_raw": {
+              "local": "Aban Pharmaceuticals, Plot No. 1018, Kerala, G.I.D.C, Bavia, Distt. Ahmedabad ? 382220.",
+              "official": "Aban Pharmaceuticals,\n Plot No. 1018, Kerala, G.I.D.C,\n Bavia, Distt. Ahmedabad \u2013 382220."
+            }
+          },
+          "record_id": "2026-01:0109"
+        },
+        {
+          "exact_identity_candidates": 1,
+          "field_differences": {
+            "manufacturer_raw": {
+              "local": "Gnosis Pharmaceuticals Pvt. Ltd., Nahan Road, Village Moginand, Kala-Amb, Distt. Sirmour, H.P. ? 173030.",
+              "official": "Gnosis Pharmaceuticals Pvt. Ltd.,\n Nahan Road, Village Moginand, \nKala-Amb, Distt. Sirmour, \nH.P. \u2013 173030."
+            }
+          },
+          "record_id": "2026-01:0110"
+        },
+        {
+          "exact_identity_candidates": 1,
+          "field_differences": {
+            "manufacturer_raw": {
+              "local": "Karnani Pharmaceuticals (P) Ltd., Fact.: F-67, Industrial Area, Bhiwandi ? 301019 (Raj.) Mfg. Lic. No. : RJ 529-AYU",
+              "official": "Karnani Pharmaceuticals (P) Ltd., \nFact.: F-67, Industrial Area,\nBhiwandi \u2013 301019 (Raj.)\nMfg. Lic. No. : RJ 529-AYU"
+            }
+          },
+          "record_id": "2026-01:0123"
+        },
+        {
+          "exact_identity_candidates": 1,
+          "field_differences": {
+            "failure_type": {
+              "local": "Test for Disintegration? and ?Assay for Methylcobalamin, Alpha Lipoic Acid Pyridoxine Hydrochloride",
+              "official": "Test for Disintegration\u201d and \u201cAssay for Methylcobalamin, Alpha Lipoic Acid Pyridoxine Hydrochloride"
+            }
+          },
+          "record_id": "2026-01:0157"
+        },
+        {
+          "exact_identity_candidates": 0,
+          "record_id": "2026-01:0167"
+        },
+        {
+          "exact_identity_candidates": 1,
+          "field_differences": {
+            "manufacturer_raw": {
+              "local": "Okvik Pharma Pvt. Ltd. 1913-K, HSIIDC, Phase-I, Rai, Industrial Area, Sonepat ? 131029 (Haryana)",
+              "official": "Okvik Pharma Pvt. Ltd. 1913-K, HSIIDC, Phase-I, Rai, Industrial Area, Sonepat \u2013 131029 (Haryana)"
+            }
+          },
+          "record_id": "2026-01:0218"
+        }
+      ],
+      "exact_field_matches": 206,
+      "kind": "nsq",
+      "local_records": 218,
+      "month": "2026-01",
+      "normalization": "Unicode NFKC, HTML entities, case/whitespace, labeled spurious-cell prefixes/missing markers, and explicit first-of-month Excel timestamps to month precision; no fuzzy identity or batch matching",
+      "official_records": 218,
+      "official_records_not_represented": 12,
+      "response_sha256": "1213888f26753ada6c20ecc58bba6c5c462ce1ab74b37b441fb820d14553512c",
+      "retrieved_at": "2026-10-18T00:47:23.272313+00:00",
+      "unmatched_local_record_ids": [
+        "2026-01:0017",
+        "2026-01:0024",
+        "2026-01:0078",
+        "2026-01:0079",
+        "2026-01:0100",
+        "2026-01:0107",
+        "2026-01:0109",
+        "2026-01:0110",
+        "2026-01:0123",
+        "2026-01:0157",
+        "2026-01:0167",
+        "2026-01:0218"
+      ],
+      "url": "https://cdscoonline.gov.in/CDSCO/filteredNsqDrugTable?month=JAN-2026&source=All&tab=nsq"
+    },
+    {
+      "compared_fields": [
+        "product",
+        "batch_no",
+        "manufacture_date_raw",
+        "expiry_date_raw",
+        "manufacturer_name_raw",
+        "manufactured_by_raw",
+        "nsq_remark",
+        "firm_reply",
+        "reporting_source_raw",
+        "reporting_lab",
+        "reporting_month"
+      ],
+      "decoding": "utf-8-sig",
+      "discrepancies": [],
+      "exact_field_matches": 4,
+      "kind": "spurious",
+      "local_records": 4,
+      "month": "2026-01",
+      "normalization": "Unicode NFKC, HTML entities, case/whitespace, labeled spurious-cell prefixes/missing markers, and explicit first-of-month Excel timestamps to month precision; no fuzzy identity or batch matching",
+      "official_records": 4,
+      "official_records_not_represented": 0,
+      "response_sha256": "e3e353b11d0f184154daae507948c2da85530c59f0756806b38781f5e61401e5",
+      "retrieved_at": "2026-10-18T00:47:23.535163+00:00",
+      "unmatched_local_record_ids": [],
+      "url": "https://cdscoonline.gov.in/CDSCO/filteredSpuriousDrugTable?month=JAN-2026&source=All&tab=spurious"
+    },
+    {
+      "compared_fields": [
+        "product",
+        "batch_no",
+        "manufacture_date_raw",
+        "expiry_date_raw",
+        "manufacturer_raw",
+        "failure_type",
+        "reporting_source_raw",
+        "reporting_lab",
+        "reporting_month"
+      ],
+      "decoding": "utf-8-sig",
+      "discrepancies": [
+        {
+          "exact_identity_candidates": 0,
+          "record_id": "2026-02:0003"
+        },
+        {
+          "exact_identity_candidates": 1,
+          "field_differences": {
+            "failure_type": {
+              "local": "Water : 25.9994% (Limit 28.0%-32.0%) ? Less than prescribed limit.",
+              "official": "Water : 25.9994% (Limit 28.0%-32.0%) \u2013 Less than prescribed limit."
+            }
+          },
+          "record_id": "2026-02:0065"
+        },
+        {
+          "exact_identity_candidates": 1,
+          "field_differences": {
+            "failure_type": {
+              "local": "The sample does not conform to I.P.w.r.t. the tests for ?Dissolution?.",
+              "official": "The sample does not conform to I.P.w.r.t. the tests for \u201cDissolution\u201d."
+            }
+          },
+          "record_id": "2026-02:0090"
+        },
+        {
+          "exact_identity_candidates": 1,
+          "field_differences": {
+            "failure_type": {
+              "local": "Tests for ?Uniformity of Weight? and ?Disintegration",
+              "official": "Tests for \u201cUniformity of Weight\u201d and \u201cDisintegration"
+            }
+          },
+          "record_id": "2026-02:0109"
+        },
+        {
+          "exact_identity_candidates": 1,
+          "field_differences": {
+            "failure_type": {
+              "local": "The sample does not conform to standard in respect of the test for ?Assay? performed.",
+              "official": "The sample does not conform to standard in respect of the test for \u201cAssay\u201d performed."
+            }
+          },
+          "record_id": "2026-02:0197"
+        },
+        {
+          "exact_identity_candidates": 1,
+          "field_differences": {
+            "manufacturer_raw": {
+              "local": "Magnus Biotech Pvt. Ltd., Mugal Mazra Road, Village ? Kunjpua, P.O.-Karnal (Haryana)",
+              "official": "Magnus Biotech Pvt. Ltd., Mugal Mazra Road, Village \u2013 Kunjpua, P.O.-Karnal (Haryana)"
+            }
+          },
+          "record_id": "2026-02:0205"
+        },
+        {
+          "exact_identity_candidates": 1,
+          "field_differences": {
+            "failure_type": {
+              "local": "Water : 0.8624% (Limit NMT 0.5%) ?More than prescribed limit.",
+              "official": "Water : 0.8624% (Limit NMT 0.5%) \u2013More than prescribed limit."
+            }
+          },
+          "record_id": "2026-02:0207"
+        }
+      ],
+      "exact_field_matches": 210,
+      "kind": "nsq",
+      "local_records": 217,
+      "month": "2026-02",
+      "normalization": "Unicode NFKC, HTML entities, case/whitespace, labeled spurious-cell prefixes/missing markers, and explicit first-of-month Excel timestamps to month precision; no fuzzy identity or batch matching",
+      "official_records": 217,
+      "official_records_not_represented": 7,
+      "response_sha256": "fdca5d2ffdfffb3c6663bddc9048f5fe65124d1adbf668c9bd452e25c9cca885",
+      "retrieved_at": "2026-10-18T00:47:23.973999+00:00",
+      "unmatched_local_record_ids": [
+        "2026-02:0003",
+        "2026-02:0065",
+        "2026-02:0090",
+        "2026-02:0109",
+        "2026-02:0197",
+        "2026-02:0205",
+        "2026-02:0207"
+      ],
+      "url": "https://cdscoonline.gov.in/CDSCO/filteredNsqDrugTable?month=FEB-2026&source=All&tab=nsq"
+    },
+    {
+      "compared_fields": [
+        "product",
+        "batch_no",
+        "manufacture_date_raw",
+        "expiry_date_raw",
+        "manufacturer_name_raw",
+        "manufactured_by_raw",
+        "nsq_remark",
+        "firm_reply",
+        "reporting_source_raw",
+        "reporting_lab",
+        "reporting_month"
+      ],
+      "decoding": "utf-8-sig",
+      "discrepancies": [],
+      "exact_field_matches": 4,
+      "kind": "spurious",
+      "local_records": 4,
+      "month": "2026-02",
+      "normalization": "Unicode NFKC, HTML entities, case/whitespace, labeled spurious-cell prefixes/missing markers, and explicit first-of-month Excel timestamps to month precision; no fuzzy identity or batch matching",
+      "official_records": 4,
+      "official_records_not_represented": 0,
+      "response_sha256": "30af6f725d0709dcc954c528d6347d0cf0ac358f221a8f45e1f605f07a7bf9ac",
+      "retrieved_at": "2026-10-18T00:47:24.236826+00:00",
+      "unmatched_local_record_ids": [],
+      "url": "https://cdscoonline.gov.in/CDSCO/filteredSpuriousDrugTable?month=FEB-2026&source=All&tab=spurious"
+    },
+    {
+      "compared_fields": [
+        "product",
+        "batch_no",
+        "manufacture_date_raw",
+        "expiry_date_raw",
+        "manufacturer_raw",
+        "failure_type",
+        "reporting_source_raw",
+        "reporting_lab",
+        "reporting_month"
+      ],
+      "decoding": "utf-8-sig",
+      "discrepancies": [
+        {
+          "exact_identity_candidates": 1,
+          "field_differences": {
+            "failure_type": {
+              "local": "The sample received does not conform to manufacturer?s specification with respect to the test for Assay of Paradichlorobenzene content only",
+              "official": "The sample received does not conform to manufacturer\u2019s specification with respect to the test for Assay of Paradichlorobenzene content only"
+            }
+          },
+          "record_id": "2026-03:0046"
+        },
+        {
+          "exact_identity_candidates": 1,
+          "field_differences": {
+            "failure_type": {
+              "local": "The sample received does not conform to manufacturer?s specification with respect to the test for Assay for the contents of Paradichlorobenzene, Chlorbutol and Turpentine OIL only.",
+              "official": "The sample received does not conform to manufacturer\u2019s specification with respect to the test for Assay for the contents of Paradichlorobenzene, Chlorbutol and Turpentine OIL only."
+            }
+          },
+          "record_id": "2026-03:0047"
+        },
+        {
+          "exact_identity_candidates": 1,
+          "field_differences": {
+            "manufacturer_raw": {
+              "local": "JMM Formulation Pvt. Ltd Village Khari, Mouza-Ogli, Suketi Road, Kala Amb Tehsil, Nahan, Distt.: Sirmour, HP ? 173 030 HIMACHAL PRADESH",
+              "official": "JMM Formulation Pvt. Ltd Village Khari, Mouza-Ogli, Suketi Road, Kala Amb Tehsil, Nahan, Distt.: Sirmour, HP \u2013 173 030 HIMACHAL PRADESH"
+            }
+          },
+          "record_id": "2026-03:0114"
+        },
+        {
+          "exact_identity_candidates": 1,
+          "field_differences": {
+            "manufacturer_raw": {
+              "local": "NH Healthcare 16-E-2, APIIC, Kattedan, Rajendranagar, RR Dist. ? 500077. Telangana",
+              "official": "NH Healthcare 16-E-2, APIIC, Kattedan, Rajendranagar, RR Dist. \u2013 500077. Telangana"
+            }
+          },
+          "record_id": "2026-03:0116"
+        },
+        {
+          "exact_identity_candidates": 0,
+          "record_id": "2026-03:0147"
+        },
+        {
+          "exact_identity_candidates": 1,
+          "field_differences": {
+            "manufacturer_raw": {
+              "local": "Sun Pharmaceuticals Ind. Ltd., Acme Plaza, Andheri ? Kurla Road, Andheri (E) , Mumbai ? 400059. At: Plot no. 16, Vardhman Industrial Estate, Vill. Bahadurpur Saini, NH-58, Haridwar (Uttarakhand) ? 247667.",
+              "official": "Sun Pharmaceuticals Ind. Ltd., Acme Plaza, Andheri \u2013 Kurla Road, Andheri (E) , Mumbai \u2013 400059.\nAt: Plot no. 16, Vardhman Industrial Estate, Vill. Bahadurpur Saini, NH-58, Haridwar (Uttarakhand) \u2013 247667."
+            }
+          },
+          "record_id": "2026-03:0178"
+        },
+        {
+          "exact_identity_candidates": 1,
+          "field_differences": {
+            "manufacturer_raw": {
+              "local": "S.DHOLE & Co. IDCO Plot No. 30, Industrial Estate, Angaragadia, Balasore ? 756001, Odisha.",
+              "official": "S.DHOLE & Co.\nIDCO Plot No. 30, Industrial Estate, Angaragadia, Balasore \u2013 756001, Odisha."
+            }
+          },
+          "record_id": "2026-03:0189"
+        }
+      ],
+      "exact_field_matches": 183,
+      "kind": "nsq",
+      "local_records": 190,
+      "month": "2026-03",
+      "normalization": "Unicode NFKC, HTML entities, case/whitespace, labeled spurious-cell prefixes/missing markers, and explicit first-of-month Excel timestamps to month precision; no fuzzy identity or batch matching",
+      "official_records": 190,
+      "official_records_not_represented": 7,
+      "response_sha256": "01b83cbaf9affb7a8f008eb59f975a7131691d7a5bee5ee744718439eceff8ad",
+      "retrieved_at": "2026-10-18T00:47:24.647725+00:00",
+      "unmatched_local_record_ids": [
+        "2026-03:0046",
+        "2026-03:0047",
+        "2026-03:0114",
+        "2026-03:0116",
+        "2026-03:0147",
+        "2026-03:0178",
+        "2026-03:0189"
+      ],
+      "url": "https://cdscoonline.gov.in/CDSCO/filteredNsqDrugTable?month=MAR-2026&source=All&tab=nsq"
+    },
+    {
+      "compared_fields": [
+        "product",
+        "batch_no",
+        "manufacture_date_raw",
+        "expiry_date_raw",
+        "manufacturer_name_raw",
+        "manufactured_by_raw",
+        "nsq_remark",
+        "firm_reply",
+        "reporting_source_raw",
+        "reporting_lab",
+        "reporting_month"
+      ],
+      "decoding": "utf-8-sig",
+      "discrepancies": [],
+      "exact_field_matches": 1,
+      "kind": "spurious",
+      "local_records": 1,
+      "month": "2026-03",
+      "normalization": "Unicode NFKC, HTML entities, case/whitespace, labeled spurious-cell prefixes/missing markers, and explicit first-of-month Excel timestamps to month precision; no fuzzy identity or batch matching",
+      "official_records": 1,
+      "official_records_not_represented": 0,
+      "response_sha256": "5c3ad8e9af70233d4e72be5b0192b308ac89a8baf55bdfc6a6a7cafd10b611c1",
+      "retrieved_at": "2026-10-18T00:47:24.906664+00:00",
+      "unmatched_local_record_ids": [],
+      "url": "https://cdscoonline.gov.in/CDSCO/filteredSpuriousDrugTable?month=MAR-2026&source=All&tab=spurious"
+    },
+    {
+      "compared_fields": [
+        "product",
+        "batch_no",
+        "manufacture_date_raw",
+        "expiry_date_raw",
+        "manufacturer_raw",
+        "failure_type",
+        "reporting_source_raw",
+        "reporting_lab",
+        "reporting_month"
+      ],
+      "decoding": "utf-8-sig",
+      "discrepancies": [
+        {
+          "exact_identity_candidates": 0,
+          "record_id": "2026-04:0074"
+        },
+        {
+          "exact_identity_candidates": 0,
+          "record_id": "2026-04:0108"
+        },
+        {
+          "exact_identity_candidates": 1,
+          "field_differences": {
+            "manufacturer_raw": {
+              "local": "Sun Pharmaceuticals Ind. Ltd., Acme Plaza, Andheri ? Kurla Road, Andheri (E) , Mumbai ? 400059.",
+              "official": "Sun Pharmaceuticals Ind. Ltd., Acme Plaza, Andheri \u2013 Kurla Road, Andheri (E) , Mumbai \u2013 400059."
+            }
+          },
+          "record_id": "2026-04:0109"
+        },
+        {
+          "exact_identity_candidates": 1,
+          "field_differences": {
+            "failure_type": {
+              "local": "The sample does not conform to standard quality in respect of the test for ?Dissolution of Amoxycillin and Assay for Clavulanic Acid performed.",
+              "official": "The sample does not conform to standard quality in respect of the test for \u201cDissolution of Amoxycillin and Assay for Clavulanic Acid performed."
+            }
+          },
+          "record_id": "2026-04:0110"
+        },
+        {
+          "exact_identity_candidates": 1,
+          "field_differences": {
+            "manufacturer_raw": {
+              "local": "PUSHP HENNA PVT. LTD., Regd. Office : Nr. Kushal Krishi Farm, Sojat Road Marg, Sojat City?306104 (Raj.) India",
+              "official": "PUSHP HENNA PVT. LTD., Regd. Office : Nr. Kushal Krishi Farm, Sojat Road Marg, Sojat City\u2013306104 (Raj.) India"
+            }
+          },
+          "record_id": "2026-04:0116"
+        }
+      ],
+      "exact_field_matches": 116,
+      "kind": "nsq",
+      "local_records": 121,
+      "month": "2026-04",
+      "normalization": "Unicode NFKC, HTML entities, case/whitespace, labeled spurious-cell prefixes/missing markers, and explicit first-of-month Excel timestamps to month precision; no fuzzy identity or batch matching",
+      "official_records": 121,
+      "official_records_not_represented": 5,
+      "response_sha256": "889cfd3c2e319c9e31d7dcd1a0e41e9ee602476d1ad498eedf704693bc4d5902",
+      "retrieved_at": "2026-10-18T00:47:25.338473+00:00",
+      "unmatched_local_record_ids": [
+        "2026-04:0074",
+        "2026-04:0108",
+        "2026-04:0109",
+        "2026-04:0110",
+        "2026-04:0116"
+      ],
+      "url": "https://cdscoonline.gov.in/CDSCO/filteredNsqDrugTable?month=APR-2026&source=All&tab=nsq"
+    },
+    {
+      "compared_fields": [
+        "product",
+        "batch_no",
+        "manufacture_date_raw",
+        "expiry_date_raw",
+        "manufacturer_name_raw",
+        "manufactured_by_raw",
+        "nsq_remark",
+        "firm_reply",
+        "reporting_source_raw",
+        "reporting_lab",
+        "reporting_month"
+      ],
+      "decoding": "utf-8-sig",
+      "discrepancies": [],
+      "exact_field_matches": 2,
+      "kind": "spurious",
+      "local_records": 2,
+      "month": "2026-04",
+      "normalization": "Unicode NFKC, HTML entities, case/whitespace, labeled spurious-cell prefixes/missing markers, and explicit first-of-month Excel timestamps to month precision; no fuzzy identity or batch matching",
+      "official_records": 2,
+      "official_records_not_represented": 0,
+      "response_sha256": "4738ea49a5b632ddba59b714d63c87de1ec74ad5479557384a72865803e06dad",
+      "retrieved_at": "2026-10-18T00:47:25.586660+00:00",
+      "unmatched_local_record_ids": [],
+      "url": "https://cdscoonline.gov.in/CDSCO/filteredSpuriousDrugTable?month=APR-2026&source=All&tab=spurious"
+    },
+    {
+      "compared_fields": [
+        "product",
+        "batch_no",
+        "manufacture_date_raw",
+        "expiry_date_raw",
+        "manufacturer_raw",
+        "failure_type",
+        "reporting_source_raw",
+        "reporting_lab",
+        "reporting_month"
+      ],
+      "decoding": "utf-8-sig",
+      "discrepancies": [
+        {
+          "exact_identity_candidates": 1,
+          "field_differences": {
+            "manufacturer_raw": {
+              "local": "Apple Formulations Pvt. Ltd., Plot No. 208, Kishanpur, Roorkee ? 247667 (U.K.)",
+              "official": "Apple Formulations Pvt. Ltd., Plot No. 208, Kishanpur, Roorkee \u2013 247667 (U.K.)"
+            }
+          },
+          "record_id": "2026-05:0140"
+        },
+        {
+          "exact_identity_candidates": 1,
+          "field_differences": {
+            "manufacturer_raw": {
+              "local": "Sun Pharmaceuticals Ind. Ltd., Acme Plaza, Andheri ? Kurla Road, Andheri (E) , Mumbai ? 400059.At: Plot no. 16, Vardhman Industrial Estate, Vill. Bahadurpur Saini, NH-58, Haridwar (Uttarakhand) ? 247667. Mfg.Lic.No. : 36/UA/LL/SC/P - 2024",
+              "official": "Sun Pharmaceuticals Ind. Ltd., Acme Plaza, Andheri \u2013 Kurla Road, Andheri (E) , Mumbai \u2013 400059.At: Plot no. 16, Vardhman Industrial Estate, Vill. Bahadurpur Saini, NH-58, Haridwar (Uttarakhand) \u2013 247667.\nMfg.Lic.No. : 36/UA/LL/SC/P - 2024"
+            }
+          },
+          "record_id": "2026-05:0142"
+        },
+        {
+          "exact_identity_candidates": 0,
+          "record_id": "2026-05:0155"
+        }
+      ],
+      "exact_field_matches": 159,
+      "kind": "nsq",
+      "local_records": 162,
+      "month": "2026-05",
+      "normalization": "Unicode NFKC, HTML entities, case/whitespace, labeled spurious-cell prefixes/missing markers, and explicit first-of-month Excel timestamps to month precision; no fuzzy identity or batch matching",
+      "official_records": 162,
+      "official_records_not_represented": 3,
+      "response_sha256": "a9fe52d091b789e2dbef03169f8768b10aaeccfafd240eca0bad43ddb238fcd8",
+      "retrieved_at": "2026-10-18T00:47:25.954986+00:00",
+      "unmatched_local_record_ids": [
+        "2026-05:0140",
+        "2026-05:0142",
+        "2026-05:0155"
+      ],
+      "url": "https://cdscoonline.gov.in/CDSCO/filteredNsqDrugTable?month=MAY-2026&source=All&tab=nsq"
+    },
+    {
+      "compared_fields": [
+        "product",
+        "batch_no",
+        "manufacture_date_raw",
+        "expiry_date_raw",
+        "manufacturer_name_raw",
+        "manufactured_by_raw",
+        "nsq_remark",
+        "firm_reply",
+        "reporting_source_raw",
+        "reporting_lab",
+        "reporting_month"
+      ],
+      "decoding": "utf-8-sig",
+      "discrepancies": [],
+      "exact_field_matches": 2,
+      "kind": "spurious",
+      "local_records": 2,
+      "month": "2026-05",
+      "normalization": "Unicode NFKC, HTML entities, case/whitespace, labeled spurious-cell prefixes/missing markers, and explicit first-of-month Excel timestamps to month precision; no fuzzy identity or batch matching",
+      "official_records": 2,
+      "official_records_not_represented": 0,
+      "response_sha256": "b5627587202d5bc7d9792dcbabb60fdbde87c5b7dee60ec12374f1a76cab9715",
+      "retrieved_at": "2026-10-18T00:47:26.217461+00:00",
+      "unmatched_local_record_ids": [],
+      "url": "https://cdscoonline.gov.in/CDSCO/filteredSpuriousDrugTable?month=MAY-2026&source=All&tab=spurious"
+    },
+    {
+      "compared_fields": [
+        "product",
+        "batch_no",
+        "manufacture_date_raw",
+        "expiry_date_raw",
+        "manufacturer_raw",
+        "failure_type",
+        "reporting_source_raw",
+        "reporting_lab",
+        "reporting_month"
+      ],
+      "decoding": "utf-8-sig",
+      "discrepancies": [
+        {
+          "exact_identity_candidates": 0,
+          "record_id": "2026-06:0018"
+        },
+        {
+          "exact_identity_candidates": 1,
+          "field_differences": {
+            "manufacturer_raw": {
+              "local": "Digital Vision, 176, Mauza Ogli, Nahan Road, KalaAmb, Distt.: Sirmour (?.?.)- 173030",
+              "official": "Digital Vision,\n176, Mauza\nOgli, Nahan\nRoad, KalaAmb, Distt.:\nSirmour (\u041d.\u0420.)-\n173030"
+            }
+          },
+          "record_id": "2026-06:0095"
+        },
+        {
+          "exact_identity_candidates": 1,
+          "field_differences": {
+            "manufacturer_raw": {
+              "local": "Sresan Pharmaceutical Manufacturer No. 787. Bangalore Highways, Sunguvarchathra m(Mathu??), Kancheepuram, Dist-602106",
+              "official": "Sresan\nPharmaceutical\nManufacturer\nNo. 787.\nBangalore\nHighways,\nSunguvarchathra\nm(Mathu\u0433\u0430),\nKancheepuram,\nDist-602106"
+            }
+          },
+          "record_id": "2026-06:0099"
+        },
+        {
+          "exact_identity_candidates": 1,
+          "field_differences": {
+            "manufacturer_raw": {
+              "local": "Healer?s Lab Unit II, Plot No. 33, H.P.S.I.D.C. Extn., Baddi, Distt-Solan (H.P.)",
+              "official": "Healer\u2019s Lab Unit II, Plot No. 33, H.P.S.I.D.C. Extn., Baddi, Distt-Solan (H.P.)"
+            }
+          },
+          "record_id": "2026-06:0118"
+        },
+        {
+          "exact_identity_candidates": 1,
+          "field_differences": {
+            "failure_type": {
+              "local": "Assay Of Montelukast Sodium I.P. ? Less than prescribed limit.",
+              "official": "Assay Of Montelukast Sodium I.P. \u2013 Less than prescribed limit."
+            }
+          },
+          "record_id": "2026-06:0138"
+        },
+        {
+          "exact_identity_candidates": 1,
+          "field_differences": {
+            "manufacturer_raw": {
+              "local": "Leeford Healthcare Ltd., At : Plot No.79A & 79B, EPIP, Phase II, Vill.Thana, Tehsil Baddi, Dist. Solan ? 173205 (H.P.).",
+              "official": "Leeford Healthcare Ltd., At : Plot No.79A & 79B, EPIP, Phase II, Vill.Thana, Tehsil Baddi, Dist. Solan \u2013 173205  (H.P.)."
+            }
+          },
+          "record_id": "2026-06:0143"
+        },
+        {
+          "exact_identity_candidates": 0,
+          "record_id": "2026-06:0153"
+        },
+        {
+          "exact_identity_candidates": 1,
+          "field_differences": {
+            "failure_type": {
+              "local": "The sample of cosmetics ? (C) Does not conform to the claims made on the label as to the nature and quality of the cosmetic with respect to Microbial Contamination.",
+              "official": "The sample of cosmetics \u2013\n(C) Does not conform to the claims made on the label as to the nature and quality of the cosmetic with respect to Microbial Contamination."
+            }
+          },
+          "record_id": "2026-06:0154"
+        },
+        {
+          "exact_identity_candidates": 1,
+          "field_differences": {
+            "failure_type": {
+              "local": "The sample of cosmetics ? (C) Does not conform to the claims made on the label as to the nature and quality of the cosmetic with respect to Microbial Contamination.",
+              "official": "The sample of cosmetics \u2013\n(C) Does not conform to the claims made on the label as to the nature and quality of the cosmetic with respect to Microbial Contamination."
+            }
+          },
+          "record_id": "2026-06:0155"
+        },
+        {
+          "exact_identity_candidates": 1,
+          "field_differences": {
+            "manufacturer_raw": {
+              "local": "Regent Ajanta Biotech, 86-87, Village Makhiyali Durdi, Peerpura Road, Roorkee ? 247667, Uttarakhand (India)",
+              "official": "Regent Ajanta Biotech, 86-87, Village Makhiyali Durdi, Peerpura Road, Roorkee \u2013 247667, Uttarakhand (India)"
+            }
+          },
+          "record_id": "2026-06:0190"
+        }
+      ],
+      "exact_field_matches": 182,
+      "kind": "nsq",
+      "local_records": 192,
+      "month": "2026-06",
+      "normalization": "Unicode NFKC, HTML entities, case/whitespace, labeled spurious-cell prefixes/missing markers, and explicit first-of-month Excel timestamps to month precision; no fuzzy identity or batch matching",
+      "official_records": 193,
+      "official_records_not_represented": 11,
+      "response_sha256": "3dd520369ac9bcd55675df783e53c9b518c35fd0db11a9f7cc87f50fc031e934",
+      "retrieved_at": "2026-10-18T00:47:26.662583+00:00",
+      "unmatched_local_record_ids": [
+        "2026-06:0018",
+        "2026-06:0095",
+        "2026-06:0099",
+        "2026-06:0118",
+        "2026-06:0138",
+        "2026-06:0143",
+        "2026-06:0153",
+        "2026-06:0154",
+        "2026-06:0155",
+        "2026-06:0190"
+      ],
+      "url": "https://cdscoonline.gov.in/CDSCO/filteredNsqDrugTable?month=JUN-2026&source=All&tab=nsq"
+    },
+    {
+      "compared_fields": [
+        "product",
+        "batch_no",
+        "manufacture_date_raw",
+        "expiry_date_raw",
+        "manufacturer_name_raw",
+        "manufactured_by_raw",
+        "nsq_remark",
+        "firm_reply",
+        "reporting_source_raw",
+        "reporting_lab",
+        "reporting_month"
+      ],
+      "decoding": "utf-8-sig",
+      "discrepancies": [],
+      "exact_field_matches": 0,
+      "kind": "spurious",
+      "local_records": 0,
+      "month": "2026-06",
+      "normalization": "Unicode NFKC, HTML entities, case/whitespace, labeled spurious-cell prefixes/missing markers, and explicit first-of-month Excel timestamps to month precision; no fuzzy identity or batch matching",
+      "official_records": 0,
+      "official_records_not_represented": 0,
+      "response_sha256": "a9f67cde5957249df261fd7cfa0bcd9d6a1821aaa2a94f807da39b016f0b3854",
+      "retrieved_at": "2026-10-18T00:47:26.919766+00:00",
+      "unmatched_local_record_ids": [],
+      "url": "https://cdscoonline.gov.in/CDSCO/filteredSpuriousDrugTable?month=JUN-2026&source=All&tab=spurious"
+    },
+    {
+      "compared_fields": [
+        "product",
+        "batch_no",
+        "manufacture_date_raw",
+        "expiry_date_raw",
+        "manufacturer_raw",
+        "failure_type",
+        "reporting_source_raw",
+        "reporting_lab",
+        "reporting_month"
+      ],
+      "decoding": "utf-8-sig",
+      "discrepancies": [
+        {
+          "exact_identity_candidates": 0,
+          "record_id": "2026-07:0040"
+        },
+        {
+          "exact_identity_candidates": 0,
+          "record_id": "2026-07:0092"
+        },
+        {
+          "exact_identity_candidates": 0,
+          "record_id": "2026-07:0096"
+        },
+        {
+          "exact_identity_candidates": 1,
+          "field_differences": {
+            "failure_type": {
+              "local": "The sample does not conform to standard quality in respect of the test for ?Description? performed.",
+              "official": "The sample does not conform to standard quality in respect of the test for \u201cDescription\u201d performed."
+            }
+          },
+          "record_id": "2026-07:0173"
+        },
+        {
+          "exact_identity_candidates": 1,
+          "field_differences": {
+            "failure_type": {
+              "local": "01.IDENTIFICATION TEST OF ORLISTAT U.S.P. ? Found to be negative. 02. ASSAY OF ORLISTAT U.S.P.: NIL.",
+              "official": "01.IDENTIFICATION TEST OF ORLISTAT U.S.P. \u2013 Found to be negative.                            02. ASSAY OF ORLISTAT U.S.P.: NIL."
+            }
+          },
+          "record_id": "2026-07:0223"
+        },
+        {
+          "exact_identity_candidates": 1,
+          "field_differences": {
+            "failure_type": {
+              "local": "01. IDENTIFICATION TEST OF ORLISTAT U.S.P. ? Found to be negative. 02. ASSAY OF ORLISTAT U.S.P.: NIL.",
+              "official": "01. IDENTIFICATION TEST OF ORLISTAT U.S.P. \u2013 Found to be negative.                            02. ASSAY OF ORLISTAT U.S.P.: NIL."
+            }
+          },
+          "record_id": "2026-07:0224"
+        },
+        {
+          "exact_identity_candidates": 1,
+          "field_differences": {
+            "failure_type": {
+              "local": "01. ASSAY OF PANTOPRAZOLE SODIUM I.P. & DOMPERIDONE I.P. ? Less than prescribed limit.",
+              "official": "01. ASSAY OF PANTOPRAZOLE SODIUM I.P. & DOMPERIDONE I.P. \u2013 Less than prescribed limit."
+            },
+            "manufacturer_raw": {
+              "local": "Athens Life Sciences Mauza Rampur Jattan, Nahan Road, Kala-Amb, Distt. Sirmour H.P. ? 173030",
+              "official": "Athens Life Sciences Mauza Rampur Jattan, Nahan Road, Kala-Amb, Distt. Sirmour H.P. \u2013 173030"
+            }
+          },
+          "record_id": "2026-07:0225"
+        },
+        {
+          "exact_identity_candidates": 1,
+          "field_differences": {
+            "failure_type": {
+              "local": "01. ASSAY OF AMLODIPINE I.P. ?Less than prescribed limit.",
+              "official": "01. ASSAY OF AMLODIPINE I.P.  \u2013Less than prescribed limit."
+            }
+          },
+          "record_id": "2026-07:0226"
+        },
+        {
+          "exact_identity_candidates": 1,
+          "field_differences": {
+            "failure_type": {
+              "local": "01. ASSAY OF TRAMADOL HCL I.P. & DICYCLOMINE HCL I.P. ?Less than prescribed limit.",
+              "official": "01. ASSAY OF TRAMADOL HCL I.P. & DICYCLOMINE HCL I.P.  \u2013Less than prescribed limit."
+            }
+          },
+          "record_id": "2026-07:0227"
+        },
+        {
+          "exact_identity_candidates": 1,
+          "field_differences": {
+            "failure_type": {
+              "local": "01. ASSAY OF ACECLOFENAC I.P. ?Less than prescribed limit.",
+              "official": "01. ASSAY OF ACECLOFENAC I.P. \u2013Less than prescribed limit."
+            }
+          },
+          "record_id": "2026-07:0228"
+        },
+        {
+          "exact_identity_candidates": 1,
+          "field_differences": {
+            "failure_type": {
+              "local": "01. ASSAY OF TERBUTALINE SULPHATE I.P. ?Less than prescribed limit.",
+              "official": "01. ASSAY OF TERBUTALINE SULPHATE I.P. \u2013Less than prescribed limit."
+            }
+          },
+          "record_id": "2026-07:0229"
+        },
+        {
+          "exact_identity_candidates": 1,
+          "field_differences": {
+            "failure_type": {
+              "local": "01. ASSAY OF CEFIXIME TRIHYDRATE I.P. ?Less than prescribed limit.",
+              "official": "01. ASSAY OF CEFIXIME TRIHYDRATE I.P.  \u2013Less than prescribed limit."
+            }
+          },
+          "record_id": "2026-07:0230"
+        },
+        {
+          "exact_identity_candidates": 1,
+          "field_differences": {
+            "failure_type": {
+              "local": "01. ASSAY OF FOLIC ACID I.P. ?Less than prescribed limit.",
+              "official": "01. ASSAY OF FOLIC ACID I.P.  \u2013Less than prescribed limit."
+            }
+          },
+          "record_id": "2026-07:0231"
+        },
+        {
+          "exact_identity_candidates": 1,
+          "field_differences": {
+            "manufacturer_raw": {
+              "local": "Jackson Laboratories Pvt. Ltd. 22-24, Majitha Road, Bye Pass, Amritsar ? 143 001 (India)",
+              "official": "Jackson Laboratories Pvt. Ltd. 22-24, Majitha Road, Bye Pass, Amritsar \u2013 143 001 (India)"
+            }
+          },
+          "record_id": "2026-07:0237"
+        }
+      ],
+      "exact_field_matches": 225,
+      "kind": "nsq",
+      "local_records": 239,
+      "month": "2026-07",
+      "normalization": "Unicode NFKC, HTML entities, case/whitespace, labeled spurious-cell prefixes/missing markers, and explicit first-of-month Excel timestamps to month precision; no fuzzy identity or batch matching",
+      "official_records": 239,
+      "official_records_not_represented": 14,
+      "response_sha256": "289283fbdcbc50ad57c68330df6a4f2a213169a11de7b1f1e6cb2864d1fa8ac6",
+      "retrieved_at": "2026-10-18T00:47:27.374355+00:00",
+      "unmatched_local_record_ids": [
+        "2026-07:0040",
+        "2026-07:0092",
+        "2026-07:0096",
+        "2026-07:0173",
+        "2026-07:0223",
+        "2026-07:0224",
+        "2026-07:0225",
+        "2026-07:0226",
+        "2026-07:0227",
+        "2026-07:0228",
+        "2026-07:0229",
+        "2026-07:0230",
+        "2026-07:0231",
+        "2026-07:0237"
+      ],
+      "url": "https://cdscoonline.gov.in/CDSCO/filteredNsqDrugTable?month=JUL-2026&source=All&tab=nsq"
+    },
+    {
+      "compared_fields": [
+        "product",
+        "batch_no",
+        "manufacture_date_raw",
+        "expiry_date_raw",
+        "manufacturer_name_raw",
+        "manufactured_by_raw",
+        "nsq_remark",
+        "firm_reply",
+        "reporting_source_raw",
+        "reporting_lab",
+        "reporting_month"
+      ],
+      "decoding": "utf-8-sig",
+      "discrepancies": [],
+      "exact_field_matches": 1,
+      "kind": "spurious",
+      "local_records": 1,
+      "month": "2026-07",
+      "normalization": "Unicode NFKC, HTML entities, case/whitespace, labeled spurious-cell prefixes/missing markers, and explicit first-of-month Excel timestamps to month precision; no fuzzy identity or batch matching",
+      "official_records": 1,
+      "official_records_not_represented": 0,
+      "response_sha256": "1edbf77fdf7ce91e239b0b1decf8abdf1d091218ce250108bf5d73fba4ee260d",
+      "retrieved_at": "2026-10-18T00:47:27.641604+00:00",
+      "unmatched_local_record_ids": [],
+      "url": "https://cdscoonline.gov.in/CDSCO/filteredSpuriousDrugTable?month=JUL-2026&source=All&tab=spurious"
+    },
+    {
+      "compared_fields": [
+        "product",
+        "batch_no",
+        "manufacture_date_raw",
+        "expiry_date_raw",
+        "manufacturer_raw",
+        "failure_type",
+        "reporting_source_raw",
+        "reporting_lab",
+        "reporting_month"
+      ],
+      "decoding": "utf-8-sig",
+      "discrepancies": [
+        {
+          "exact_identity_candidates": 0,
+          "record_id": "2026-08:0152"
+        },
+        {
+          "exact_identity_candidates": 0,
+          "record_id": "2026-08:0181"
+        }
+      ],
+      "exact_field_matches": 218,
+      "kind": "nsq",
+      "local_records": 220,
+      "month": "2026-08",
+      "normalization": "Unicode NFKC, HTML entities, case/whitespace, labeled spurious-cell prefixes/missing markers, and explicit first-of-month Excel timestamps to month precision; no fuzzy identity or batch matching",
+      "official_records": 220,
+      "official_records_not_represented": 2,
+      "response_sha256": "944a1fdd1c59737484c67dd4af12669ba302768b8769c0c48fefee767fd07188",
+      "retrieved_at": "2026-10-18T00:47:28.059496+00:00",
+      "unmatched_local_record_ids": [
+        "2026-08:0152",
+        "2026-08:0181"
+      ],
+      "url": "https://cdscoonline.gov.in/CDSCO/filteredNsqDrugTable?month=AUG-2026&source=All&tab=nsq"
+    },
+    {
+      "compared_fields": [
+        "product",
+        "batch_no",
+        "manufacture_date_raw",
+        "expiry_date_raw",
+        "manufacturer_name_raw",
+        "manufactured_by_raw",
+        "nsq_remark",
+        "firm_reply",
+        "reporting_source_raw",
+        "reporting_lab",
+        "reporting_month"
+      ],
+      "decoding": "utf-8-sig",
+      "discrepancies": [],
+      "exact_field_matches": 1,
+      "kind": "spurious",
+      "local_records": 1,
+      "month": "2026-08",
+      "normalization": "Unicode NFKC, HTML entities, case/whitespace, labeled spurious-cell prefixes/missing markers, and explicit first-of-month Excel timestamps to month precision; no fuzzy identity or batch matching",
+      "official_records": 1,
+      "official_records_not_represented": 0,
+      "response_sha256": "1ca195136fdeb608c1c4c368e3b47d9a4fa9c067d25c501781665b844cc005c8",
+      "retrieved_at": "2026-10-18T00:47:28.307290+00:00",
+      "unmatched_local_record_ids": [],
+      "url": "https://cdscoonline.gov.in/CDSCO/filteredSpuriousDrugTable?month=AUG-2026&source=All&tab=spurious"
+    }
+  ],
+  "exact_field_matches": 2451,
+  "limits": [
+    "Matching records confirm portal content at retrieval; no original release date is inferred.",
+    "Extra official rows can include documented duplicate exclusions or later source revisions.",
+    "Reporting month is not publication date. Response Date/Last-Modified headers are not record release dates.",
+    "Reported manufacturer text is not verified legal identity; these data contain no scan outcomes or tested/sold denominator."
+  ],
+  "official_manifest_sha256": "c8137aa45f80ef59cb6a9e9c75be15a20839ccfc974ada257eb64bdd8045744a",
+  "official_records_not_represented": 104,
+  "processed_manifest_sha256": "27b36a3555f44fd6debd05c18ad35e705127e660d1c1a1297a32c8084be7fdba",
+  "records": 2551,
+  "status": "live official-portal cross-check; supplied workbook download origin remains unverified",
+  "unmatched_local_records": 100
+}

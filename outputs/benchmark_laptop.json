@@ -1,0 +1,227 @@
+{
+  "backends": {
+    "sklearn": {
+      "events_per_second_median": 1290.784941970798,
+      "model_version": "layer-ab-sklearn-28ff11c97cdb",
+      "runs": [
+        {
+          "events": 8862,
+          "events_per_second_end_to_end": 1310.4310779449359,
+          "seconds": 6.762660127000117
+        },
+        {
+          "events": 8862,
+          "events_per_second_end_to_end": 1296.6766126620616,
+          "seconds": 6.834394878000012
+        },
+        {
+          "events": 8862,
+          "events_per_second_end_to_end": 1275.2682767282126,
+          "seconds": 6.9491260479999255
+        },
+        {
+          "events": 8862,
+          "events_per_second_end_to_end": 1261.0011093185556,
+          "seconds": 7.027749567000001
+        },
+        {
+          "events": 8862,
+          "events_per_second_end_to_end": 1290.784941970798,
+          "seconds": 6.865589853000074
+        }
+      ],
+      "stages_ms": {
+        "decision_context_build_ms": {
+          "count": 5,
+          "max": 4908.964546999869,
+          "mean": 4813.316241799976,
+          "p50": 4815.583660999891,
+          "p95": 4895.037443599904,
+          "p99": 4906.179126319876
+        },
+        "event_validation_total_ms": {
+          "count": 5,
+          "max": 64.53400400005194,
+          "mean": 63.813935000007405,
+          "p50": 64.22367999994094,
+          "p95": 64.51255100005255,
+          "p99": 64.52971340005206
+        },
+        "feature_extraction_ms": {
+          "count": 4480,
+          "max": 2.4548859998958505,
+          "mean": 0.3743264185273582,
+          "p50": 0.14063550008813763,
+          "p95": 1.5984965501047554,
+          "p99": 2.032123630094702
+        },
+        "per_scan_decision_ms": {
+          "count": 2035,
+          "max": 3.780114999926809,
+          "mean": 1.6431483307176373,
+          "p50": 1.5138159999423806,
+          "p95": 2.5462606000473897,
+          "p99": 3.1029702599289526
+        },
+        "queue_rebuild_with_cached_context_ms": {
+          "count": 5,
+          "max": 27.89895199998682,
+          "mean": 27.173569199976555,
+          "p50": 27.17980800002806,
+          "p95": 27.771232999975837,
+          "p99": 27.873408199984624
+        },
+        "scan_inference_batch_total_ms": {
+          "count": 5,
+          "max": 2.1861089999219985,
+          "mean": 2.027853799972945,
+          "p50": 1.996060999999827,
+          "p95": 2.1598509999421367,
+          "p99": 2.180857399926026
+        },
+        "scan_inference_single_ms": {
+          "count": 4480,
+          "max": 2.029183999866291,
+          "mean": 1.084942101784847,
+          "p50": 1.058845499983363,
+          "p95": 1.2429502499003322,
+          "p99": 1.5347978998988765
+        }
+      }
+    },
+    "snapml": {
+      "events_per_second_median": 1320.834683011267,
+      "model_version": "layer-ab-snapml-599ac257566e",
+      "runs": [
+        {
+          "events": 8862,
+          "events_per_second_end_to_end": 1287.2329309173192,
+          "seconds": 6.884534871000142
+        },
+        {
+          "events": 8862,
+          "events_per_second_end_to_end": 1320.5168810626772,
+          "seconds": 6.71100849000004
+        },
+        {
+          "events": 8862,
+          "events_per_second_end_to_end": 1320.834683011267,
+          "seconds": 6.7093937750000805
+        },
+        {
+          "events": 8862,
+          "events_per_second_end_to_end": 1339.7141083290928,
+          "seconds": 6.61484412599998
+        },
+        {
+          "events": 8862,
+          "events_per_second_end_to_end": 1338.8174618182172,
+          "seconds": 6.619274287000053
+        }
+      ],
+      "stages_ms": {
+        "decision_context_build_ms": {
+          "count": 5,
+          "max": 4939.432710999881,
+          "mean": 4774.7608623999895,
+          "p50": 4763.37946700005,
+          "p95": 4908.433915999922,
+          "p99": 4933.232951999889
+        },
+        "event_validation_total_ms": {
+          "count": 5,
+          "max": 66.32135500012737,
+          "mean": 64.44614339998225,
+          "p50": 64.29613299997072,
+          "p95": 65.92825240013553,
+          "p99": 66.242734480129
+        },
+        "feature_extraction_ms": {
+          "count": 4480,
+          "max": 2.7832430000671593,
+          "mean": 0.37306944017981686,
+          "p50": 0.1381960000799154,
+          "p95": 1.6026515998646573,
+          "p99": 2.042910319942166
+        },
+        "per_scan_decision_ms": {
+          "count": 2035,
+          "max": 45.16460999980154,
+          "mean": 1.5285538176900195,
+          "p50": 1.3793129999157827,
+          "p95": 2.3636248000002524,
+          "p99": 3.133227739976974
+        },
+        "queue_rebuild_with_cached_context_ms": {
+          "count": 5,
+          "max": 34.19994499995482,
+          "mean": 28.670377799971902,
+          "p50": 27.42623199992522,
+          "p95": 32.85600340000201,
+          "p99": 33.93115667996426
+        },
+        "scan_inference_batch_total_ms": {
+          "count": 5,
+          "max": 1.9828580000194052,
+          "mean": 1.9387715999982902,
+          "p50": 1.9414060000144673,
+          "p95": 1.9766618000176095,
+          "p99": 1.981618760019046
+        },
+        "scan_inference_single_ms": {
+          "count": 4480,
+          "max": 2.3125679999793647,
+          "mean": 0.9777816287931428,
+          "p50": 0.9530350000659382,
+          "p95": 1.152189249944513,
+          "p99": 1.3612607999698416
+        }
+      }
+    }
+  },
+  "created_at": "2026-10-17T10:39:05.019907+00:00",
+  "environment": {
+    "cpu": {
+      "affinity_cpus": 16,
+      "logical_cpus": 16,
+      "model name": "12th Gen Intel(R) Core(TM) i5-1240P",
+      "nnpa_facility_listed": false,
+      "vendor_id": "GenuineIntel"
+    },
+    "host": "laptop",
+    "machine": "x86_64",
+    "packages": {
+      "matplotlib": "3.11.2",
+      "numpy": "2.5.4",
+      "openpyxl": "3.1.5",
+      "pandas": "3.0.6",
+      "scikit-learn": "1.9.1",
+      "scipy": "1.18.1",
+      "snapml": "1.17.2"
+    },
+    "platform": "Linux-6.17.0-35-generic-x86_64-with-glibc2.39",
+    "python": "3.12.3",
+    "release": "6.17.0-35-generic",
+    "system": "Linux"
+  },
+  "host": "laptop",
+  "scope": "Single process, sequential, in memory, data preloaded. Excludes network, UI and persistence. No accelerator use is claimed.",
+  "window_sha256": "071b41cdf19a437071d08a19043cbe557b904cd3c08baaedb3bb83720da1d752",
+  "workload": {
+    "episodes": 896,
+    "events": 8862,
+    "repeats": 5,
+    "warmup": "one reduced pass excluded",
+    "window_events": 407,
+    "window_scenarios": [
+      "benign_repeat",
+      "clone_burst",
+      "clone_copy",
+      "delayed_sync",
+      "legitimate_distribution",
+      "legitimate_travel",
+      "slow_copy"
+    ]
+  },
+  "workload_sha256": "16d405ef57dedaa0313f7581419791405a3d7237877ef600efd92985070c15cf"
+}

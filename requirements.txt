@@ -1,0 +1,8 @@
+pandas>=2.1
+openpyxl>=3.1.5
+scikit-learn>=1.4
+matplotlib>=3.8
+# Optional second backend: pip install snapml   (IBM Snap ML 1.17.2 ships x86_64 and s390x wheels)
+# matplotlib only draws outputs/charts/*.png; everything else, including the dashboard, runs without it.
+# LinuxONE (s390x): numpy/scipy/pandas/scikit-learn have no PyPI s390x wheels; use the OS or preinstalled
+# environment, then: pip install "openpyxl>=3.1.5" && pip install --no-deps snapml

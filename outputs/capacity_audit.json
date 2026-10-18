@@ -1,0 +1,376 @@
+{
+  "backends": {
+    "sklearn": {
+      "model_version": "layer-ab-sklearn-d207ed70eb17",
+      "retrospective_months": [
+        {
+          "candidates": 177,
+          "legacy_weighted": {
+            "10": {
+              "candidates_selected": 10.0,
+              "clone_capture": 0.13513513513513514,
+              "recurrence_capture": 0.0
+            },
+            "100": {
+              "candidates_selected": 99.99999999999999,
+              "clone_capture": 0.8558558558558559,
+              "recurrence_capture": 1.0
+            },
+            "25": {
+              "candidates_selected": 25.0,
+              "clone_capture": 0.33783783783783783,
+              "recurrence_capture": 0.125
+            },
+            "50": {
+              "candidates_selected": 50.0,
+              "clone_capture": 0.6756756756756757,
+              "recurrence_capture": 0.25
+            }
+          },
+          "month": "2026-07",
+          "protected_history": {
+            "10": {
+              "candidates_selected": 10.0,
+              "clone_capture": 0.04054054054054054,
+              "recurrence_capture": 0.375
+            },
+            "100": {
+              "candidates_selected": 100.0,
+              "clone_capture": 0.7432432432432432,
+              "recurrence_capture": 1.0
+            },
+            "25": {
+              "candidates_selected": 25.0,
+              "clone_capture": 0.14864864864864866,
+              "recurrence_capture": 0.75
+            },
+            "50": {
+              "candidates_selected": 50.0,
+              "clone_capture": 0.32432432432432434,
+              "recurrence_capture": 0.75
+            }
+          },
+          "recurring_candidates": 8,
+          "simulated_clone_candidates": 74
+        },
+        {
+          "candidates": 197,
+          "legacy_weighted": {
+            "10": {
+              "candidates_selected": 10.0,
+              "clone_capture": 0.11764705882352941,
+              "recurrence_capture": 0.0
+            },
+            "100": {
+              "candidates_selected": 100.0,
+              "clone_capture": 0.8470588235294118,
+              "recurrence_capture": 0.5714285714285714
+            },
+            "25": {
+              "candidates_selected": 25.0,
+              "clone_capture": 0.29411764705882354,
+              "recurrence_capture": 0.0
+            },
+            "50": {
+              "candidates_selected": 50.0,
+              "clone_capture": 0.5882352941176471,
+              "recurrence_capture": 0.0
+            }
+          },
+          "month": "2026-08",
+          "protected_history": {
+            "10": {
+              "candidates_selected": 10.0,
+              "clone_capture": 0.03529411764705882,
+              "recurrence_capture": 0.2857142857142857
+            },
+            "100": {
+              "candidates_selected": 100.0,
+              "clone_capture": 0.6352941176470588,
+              "recurrence_capture": 0.8571428571428571
+            },
+            "25": {
+              "candidates_selected": 25.0,
+              "clone_capture": 0.1411764705882353,
+              "recurrence_capture": 0.42857142857142855
+            },
+            "50": {
+              "candidates_selected": 50.0,
+              "clone_capture": 0.32941176470588235,
+              "recurrence_capture": 0.5714285714285714
+            }
+          },
+          "recurring_candidates": 7,
+          "simulated_clone_candidates": 85
+        }
+      ],
+      "selected_history_share": 0.75,
+      "validation_candidates": {
+        "0.5": {
+          "10": {
+            "candidates_selected": 10.0,
+            "clone_capture": 0.14285714285714285,
+            "recurrence_capture": 0.0
+          },
+          "100": {
+            "candidates_selected": 100.0,
+            "clone_capture": 1.0,
+            "recurrence_capture": 1.0
+          },
+          "25": {
+            "candidates_selected": 25.0,
+            "clone_capture": 0.3469387755102041,
+            "recurrence_capture": 0.2
+          },
+          "50": {
+            "candidates_selected": 50.0,
+            "clone_capture": 0.6326530612244898,
+            "recurrence_capture": 0.4
+          }
+        },
+        "0.75": {
+          "10": {
+            "candidates_selected": 10.0,
+            "clone_capture": 0.14285714285714285,
+            "recurrence_capture": 0.2
+          },
+          "100": {
+            "candidates_selected": 100.0,
+            "clone_capture": 0.8979591836734694,
+            "recurrence_capture": 1.0
+          },
+          "25": {
+            "candidates_selected": 25.0,
+            "clone_capture": 0.24489795918367346,
+            "recurrence_capture": 0.2
+          },
+          "50": {
+            "candidates_selected": 50.0,
+            "clone_capture": 0.4489795918367347,
+            "recurrence_capture": 0.6
+          }
+        },
+        "1.0": {
+          "10": {
+            "candidates_selected": 10.0,
+            "clone_capture": 0.12244897959183673,
+            "recurrence_capture": 0.2
+          },
+          "100": {
+            "candidates_selected": 100.0,
+            "clone_capture": 0.6938775510204082,
+            "recurrence_capture": 1.0
+          },
+          "25": {
+            "candidates_selected": 25.0,
+            "clone_capture": 0.16326530612244897,
+            "recurrence_capture": 0.4
+          },
+          "50": {
+            "candidates_selected": 50.0,
+            "clone_capture": 0.32653061224489793,
+            "recurrence_capture": 1.0
+          }
+        }
+      },
+      "validation_objectives": {
+        "0.5": 0.1,
+        "0.75": 0.17142857142857143,
+        "1.0": 0.14285714285714285
+      }
+    },
+    "snapml": {
+      "model_version": "layer-ab-snapml-905036079a4a",
+      "retrospective_months": [
+        {
+          "candidates": 177,
+          "legacy_weighted": {
+            "10": {
+              "candidates_selected": 10.0,
+              "clone_capture": 0.13513513513513514,
+              "recurrence_capture": 0.0
+            },
+            "100": {
+              "candidates_selected": 99.99999999999999,
+              "clone_capture": 0.8558558558558559,
+              "recurrence_capture": 1.0
+            },
+            "25": {
+              "candidates_selected": 25.0,
+              "clone_capture": 0.33783783783783783,
+              "recurrence_capture": 0.125
+            },
+            "50": {
+              "candidates_selected": 50.0,
+              "clone_capture": 0.6756756756756757,
+              "recurrence_capture": 0.25
+            }
+          },
+          "month": "2026-07",
+          "protected_history": {
+            "10": {
+              "candidates_selected": 10.0,
+              "clone_capture": 0.04054054054054054,
+              "recurrence_capture": 0.375
+            },
+            "100": {
+              "candidates_selected": 100.0,
+              "clone_capture": 0.7567567567567568,
+              "recurrence_capture": 1.0
+            },
+            "25": {
+              "candidates_selected": 25.0,
+              "clone_capture": 0.14864864864864866,
+              "recurrence_capture": 0.75
+            },
+            "50": {
+              "candidates_selected": 50.0,
+              "clone_capture": 0.35135135135135137,
+              "recurrence_capture": 0.75
+            }
+          },
+          "recurring_candidates": 8,
+          "simulated_clone_candidates": 74
+        },
+        {
+          "candidates": 197,
+          "legacy_weighted": {
+            "10": {
+              "candidates_selected": 10.0,
+              "clone_capture": 0.11764705882352941,
+              "recurrence_capture": 0.0
+            },
+            "100": {
+              "candidates_selected": 100.0,
+              "clone_capture": 0.8470588235294118,
+              "recurrence_capture": 0.5714285714285714
+            },
+            "25": {
+              "candidates_selected": 25.0,
+              "clone_capture": 0.29411764705882354,
+              "recurrence_capture": 0.0
+            },
+            "50": {
+              "candidates_selected": 50.0,
+              "clone_capture": 0.5882352941176471,
+              "recurrence_capture": 0.0
+            }
+          },
+          "month": "2026-08",
+          "protected_history": {
+            "10": {
+              "candidates_selected": 10.0,
+              "clone_capture": 0.023529411764705882,
+              "recurrence_capture": 0.14285714285714285
+            },
+            "100": {
+              "candidates_selected": 100.0,
+              "clone_capture": 0.6352941176470588,
+              "recurrence_capture": 0.8571428571428571
+            },
+            "25": {
+              "candidates_selected": 25.0,
+              "clone_capture": 0.1411764705882353,
+              "recurrence_capture": 0.42857142857142855
+            },
+            "50": {
+              "candidates_selected": 50.0,
+              "clone_capture": 0.3176470588235294,
+              "recurrence_capture": 0.5714285714285714
+            }
+          },
+          "recurring_candidates": 7,
+          "simulated_clone_candidates": 85
+        }
+      ],
+      "selected_history_share": 0.75,
+      "validation_candidates": {
+        "0.5": {
+          "10": {
+            "candidates_selected": 10.0,
+            "clone_capture": 0.14285714285714285,
+            "recurrence_capture": 0.0
+          },
+          "100": {
+            "candidates_selected": 100.0,
+            "clone_capture": 1.0,
+            "recurrence_capture": 1.0
+          },
+          "25": {
+            "candidates_selected": 25.0,
+            "clone_capture": 0.3469387755102041,
+            "recurrence_capture": 0.2
+          },
+          "50": {
+            "candidates_selected": 50.0,
+            "clone_capture": 0.6530612244897959,
+            "recurrence_capture": 0.4
+          }
+        },
+        "0.75": {
+          "10": {
+            "candidates_selected": 10.0,
+            "clone_capture": 0.14285714285714285,
+            "recurrence_capture": 0.2
+          },
+          "100": {
+            "candidates_selected": 100.0,
+            "clone_capture": 0.8979591836734694,
+            "recurrence_capture": 1.0
+          },
+          "25": {
+            "candidates_selected": 25.0,
+            "clone_capture": 0.24489795918367346,
+            "recurrence_capture": 0.2
+          },
+          "50": {
+            "candidates_selected": 50.0,
+            "clone_capture": 0.42857142857142855,
+            "recurrence_capture": 0.6
+          }
+        },
+        "1.0": {
+          "10": {
+            "candidates_selected": 10.0,
+            "clone_capture": 0.12244897959183673,
+            "recurrence_capture": 0.2
+          },
+          "100": {
+            "candidates_selected": 100.0,
+            "clone_capture": 0.6938775510204082,
+            "recurrence_capture": 1.0
+          },
+          "25": {
+            "candidates_selected": 25.0,
+            "clone_capture": 0.1836734693877551,
+            "recurrence_capture": 0.4
+          },
+          "50": {
+            "candidates_selected": 50.0,
+            "clone_capture": 0.32653061224489793,
+            "recurrence_capture": 1.0
+          }
+        }
+      },
+      "validation_objectives": {
+        "0.5": 0.1,
+        "0.75": 0.17142857142857143,
+        "1.0": 0.15306122448979592
+      }
+    }
+  },
+  "evaluation_status": "retrospective: policy designed after legacy test results were known",
+  "limits": [
+    "Reservation is a policy preference, not an estimate of field inspection benefit.",
+    "Clone outcomes are synthetic; recurrence outcomes are published manufacturer-text reports.",
+    "History reservations need candidates with nonzero history; otherwise slots fall back to alerts or unknown coverage."
+  ],
+  "planner_sha256": "9c8e44215ce3d299ea43421a1c20b5218163d7994c330968c2917207eaac89b8",
+  "selection_budgets": [
+    10,
+    25
+  ],
+  "selection_objective": "mean minimum of historical-recurrence and simulated-clone capture",
+  "source_manifest_sha256": "27b36a3555f44fd6debd05c18ad35e705127e660d1c1a1297a32c8084be7fdba",
+  "validation_month": "2026-06"
+}

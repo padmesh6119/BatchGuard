@@ -1,0 +1,704 @@
+{
+  "backend": "sklearn",
+  "challenge_cases": 1100,
+  "challenge_dataset_sha256": "cdfd333d89bdfd7f0ec2743dac921f1511c12e7c8d17fadfd9b50493bb9207b5",
+  "fixed_test_episodes": 700,
+  "fixed_test_seed": 2127,
+  "processed_manifest_sha256": "f70bfd94d1a004c50191b2a58747e69b2c4d8279ea91a8339fbf88f59348ce9d",
+  "purpose": "learning curve for the existing synthetic generator; not field accuracy",
+  "results": [
+    {
+      "challenge": {
+        "model": {
+          "false_negatives": 200,
+          "false_positives": 300,
+          "precision": 0.4,
+          "recall": 0.5,
+          "true_negatives": 400,
+          "true_positives": 200
+        },
+        "rule": {
+          "false_negatives": 200,
+          "false_positives": 300,
+          "precision": 0.4,
+          "recall": 0.5,
+          "true_negatives": 400,
+          "true_positives": 200
+        },
+        "scenarios": {
+          "benign_handoff": {
+            "cases": 100,
+            "copied_id": false,
+            "model_alerts": 0,
+            "rule_alerts": 0
+          },
+          "benign_repeat": {
+            "cases": 100,
+            "copied_id": false,
+            "model_alerts": 0,
+            "rule_alerts": 0
+          },
+          "benign_rescan_burst": {
+            "cases": 100,
+            "copied_id": false,
+            "model_alerts": 100,
+            "rule_alerts": 100
+          },
+          "clock_skew": {
+            "cases": 100,
+            "copied_id": false,
+            "model_alerts": 100,
+            "rule_alerts": 100
+          },
+          "clone_burst": {
+            "cases": 100,
+            "copied_id": true,
+            "model_alerts": 100,
+            "rule_alerts": 100
+          },
+          "clone_fast": {
+            "cases": 100,
+            "copied_id": true,
+            "model_alerts": 100,
+            "rule_alerts": 100
+          },
+          "clone_same_location": {
+            "cases": 100,
+            "copied_id": true,
+            "model_alerts": 0,
+            "rule_alerts": 0
+          },
+          "clone_slow": {
+            "cases": 100,
+            "copied_id": true,
+            "model_alerts": 0,
+            "rule_alerts": 0
+          },
+          "legitimate_distribution": {
+            "cases": 100,
+            "copied_id": false,
+            "model_alerts": 0,
+            "rule_alerts": 0
+          },
+          "legitimate_travel": {
+            "cases": 100,
+            "copied_id": false,
+            "model_alerts": 0,
+            "rule_alerts": 0
+          },
+          "location_glitch": {
+            "cases": 100,
+            "copied_id": false,
+            "model_alerts": 100,
+            "rule_alerts": 100
+          }
+        }
+      },
+      "episodes_per_seen_scenario": 30,
+      "fixed_test": {
+        "families": [
+          {
+            "clone_label": 0,
+            "episodes": 100,
+            "held_out_family": false,
+            "model_alert_rate": 0.0,
+            "rule_alert_rate": 0.0,
+            "scenario": "benign_repeat"
+          },
+          {
+            "clone_label": 1,
+            "episodes": 100,
+            "held_out_family": false,
+            "model_alert_rate": 1.0,
+            "rule_alert_rate": 1.0,
+            "scenario": "clone_burst"
+          },
+          {
+            "clone_label": 1,
+            "episodes": 100,
+            "held_out_family": false,
+            "model_alert_rate": 0.95,
+            "rule_alert_rate": 1.0,
+            "scenario": "clone_copy"
+          },
+          {
+            "clone_label": 0,
+            "episodes": 100,
+            "held_out_family": true,
+            "model_alert_rate": 0.0,
+            "rule_alert_rate": 0.0,
+            "scenario": "delayed_sync"
+          },
+          {
+            "clone_label": 0,
+            "episodes": 100,
+            "held_out_family": false,
+            "model_alert_rate": 0.0,
+            "rule_alert_rate": 0.0,
+            "scenario": "legitimate_distribution"
+          },
+          {
+            "clone_label": 0,
+            "episodes": 100,
+            "held_out_family": false,
+            "model_alert_rate": 0.0,
+            "rule_alert_rate": 0.0,
+            "scenario": "legitimate_travel"
+          },
+          {
+            "clone_label": 1,
+            "episodes": 100,
+            "held_out_family": true,
+            "model_alert_rate": 0.0,
+            "rule_alert_rate": 0.42,
+            "scenario": "slow_copy"
+          }
+        ],
+        "model": {
+          "average_precision": 0.8284961995536817,
+          "false_negatives": 105,
+          "false_positives": 0,
+          "precision": 1.0,
+          "recall": 0.65,
+          "true_negatives": 400,
+          "true_positives": 195
+        },
+        "rule_baseline": {
+          "false_negatives": 58,
+          "false_positives": 0,
+          "precision": 1.0,
+          "recall": 0.8066666666666666,
+          "true_negatives": 400,
+          "true_positives": 242
+        },
+        "test_clones": 300,
+        "test_episodes": 700,
+        "unit": "simulated batch observation episode"
+      },
+      "selected_model": "logistic_c0.1",
+      "threshold": 0.4885540008544922,
+      "training_episodes": 150,
+      "validation_episodes": 50
+    },
+    {
+      "challenge": {
+        "model": {
+          "false_negatives": 100,
+          "false_positives": 400,
+          "precision": 0.42857142857142855,
+          "recall": 0.75,
+          "true_negatives": 300,
+          "true_positives": 300
+        },
+        "rule": {
+          "false_negatives": 200,
+          "false_positives": 300,
+          "precision": 0.4,
+          "recall": 0.5,
+          "true_negatives": 400,
+          "true_positives": 200
+        },
+        "scenarios": {
+          "benign_handoff": {
+            "cases": 100,
+            "copied_id": false,
+            "model_alerts": 100,
+            "rule_alerts": 0
+          },
+          "benign_repeat": {
+            "cases": 100,
+            "copied_id": false,
+            "model_alerts": 0,
+            "rule_alerts": 0
+          },
+          "benign_rescan_burst": {
+            "cases": 100,
+            "copied_id": false,
+            "model_alerts": 100,
+            "rule_alerts": 100
+          },
+          "clock_skew": {
+            "cases": 100,
+            "copied_id": false,
+            "model_alerts": 100,
+            "rule_alerts": 100
+          },
+          "clone_burst": {
+            "cases": 100,
+            "copied_id": true,
+            "model_alerts": 100,
+            "rule_alerts": 100
+          },
+          "clone_fast": {
+            "cases": 100,
+            "copied_id": true,
+            "model_alerts": 100,
+            "rule_alerts": 100
+          },
+          "clone_same_location": {
+            "cases": 100,
+            "copied_id": true,
+            "model_alerts": 100,
+            "rule_alerts": 0
+          },
+          "clone_slow": {
+            "cases": 100,
+            "copied_id": true,
+            "model_alerts": 0,
+            "rule_alerts": 0
+          },
+          "legitimate_distribution": {
+            "cases": 100,
+            "copied_id": false,
+            "model_alerts": 0,
+            "rule_alerts": 0
+          },
+          "legitimate_travel": {
+            "cases": 100,
+            "copied_id": false,
+            "model_alerts": 0,
+            "rule_alerts": 0
+          },
+          "location_glitch": {
+            "cases": 100,
+            "copied_id": false,
+            "model_alerts": 100,
+            "rule_alerts": 100
+          }
+        }
+      },
+      "episodes_per_seen_scenario": 100,
+      "fixed_test": {
+        "families": [
+          {
+            "clone_label": 0,
+            "episodes": 100,
+            "held_out_family": false,
+            "model_alert_rate": 0.03,
+            "rule_alert_rate": 0.0,
+            "scenario": "benign_repeat"
+          },
+          {
+            "clone_label": 1,
+            "episodes": 100,
+            "held_out_family": false,
+            "model_alert_rate": 1.0,
+            "rule_alert_rate": 1.0,
+            "scenario": "clone_burst"
+          },
+          {
+            "clone_label": 1,
+            "episodes": 100,
+            "held_out_family": false,
+            "model_alert_rate": 1.0,
+            "rule_alert_rate": 1.0,
+            "scenario": "clone_copy"
+          },
+          {
+            "clone_label": 0,
+            "episodes": 100,
+            "held_out_family": true,
+            "model_alert_rate": 0.0,
+            "rule_alert_rate": 0.0,
+            "scenario": "delayed_sync"
+          },
+          {
+            "clone_label": 0,
+            "episodes": 100,
+            "held_out_family": false,
+            "model_alert_rate": 0.0,
+            "rule_alert_rate": 0.0,
+            "scenario": "legitimate_distribution"
+          },
+          {
+            "clone_label": 0,
+            "episodes": 100,
+            "held_out_family": false,
+            "model_alert_rate": 0.01,
+            "rule_alert_rate": 0.0,
+            "scenario": "legitimate_travel"
+          },
+          {
+            "clone_label": 1,
+            "episodes": 100,
+            "held_out_family": true,
+            "model_alert_rate": 0.06,
+            "rule_alert_rate": 0.42,
+            "scenario": "slow_copy"
+          }
+        ],
+        "model": {
+          "average_precision": 0.8306169378025814,
+          "false_negatives": 94,
+          "false_positives": 4,
+          "precision": 0.9809523809523809,
+          "recall": 0.6866666666666666,
+          "true_negatives": 396,
+          "true_positives": 206
+        },
+        "rule_baseline": {
+          "false_negatives": 58,
+          "false_positives": 0,
+          "precision": 1.0,
+          "recall": 0.8066666666666666,
+          "true_negatives": 400,
+          "true_positives": 242
+        },
+        "test_clones": 300,
+        "test_episodes": 700,
+        "unit": "simulated batch observation episode"
+      },
+      "selected_model": "logistic_c0.1",
+      "threshold": 0.17191900312900543,
+      "training_episodes": 500,
+      "validation_episodes": 165
+    },
+    {
+      "challenge": {
+        "model": {
+          "false_negatives": 200,
+          "false_positives": 300,
+          "precision": 0.4,
+          "recall": 0.5,
+          "true_negatives": 400,
+          "true_positives": 200
+        },
+        "rule": {
+          "false_negatives": 200,
+          "false_positives": 300,
+          "precision": 0.4,
+          "recall": 0.5,
+          "true_negatives": 400,
+          "true_positives": 200
+        },
+        "scenarios": {
+          "benign_handoff": {
+            "cases": 100,
+            "copied_id": false,
+            "model_alerts": 0,
+            "rule_alerts": 0
+          },
+          "benign_repeat": {
+            "cases": 100,
+            "copied_id": false,
+            "model_alerts": 0,
+            "rule_alerts": 0
+          },
+          "benign_rescan_burst": {
+            "cases": 100,
+            "copied_id": false,
+            "model_alerts": 100,
+            "rule_alerts": 100
+          },
+          "clock_skew": {
+            "cases": 100,
+            "copied_id": false,
+            "model_alerts": 100,
+            "rule_alerts": 100
+          },
+          "clone_burst": {
+            "cases": 100,
+            "copied_id": true,
+            "model_alerts": 100,
+            "rule_alerts": 100
+          },
+          "clone_fast": {
+            "cases": 100,
+            "copied_id": true,
+            "model_alerts": 100,
+            "rule_alerts": 100
+          },
+          "clone_same_location": {
+            "cases": 100,
+            "copied_id": true,
+            "model_alerts": 0,
+            "rule_alerts": 0
+          },
+          "clone_slow": {
+            "cases": 100,
+            "copied_id": true,
+            "model_alerts": 0,
+            "rule_alerts": 0
+          },
+          "legitimate_distribution": {
+            "cases": 100,
+            "copied_id": false,
+            "model_alerts": 0,
+            "rule_alerts": 0
+          },
+          "legitimate_travel": {
+            "cases": 100,
+            "copied_id": false,
+            "model_alerts": 0,
+            "rule_alerts": 0
+          },
+          "location_glitch": {
+            "cases": 100,
+            "copied_id": false,
+            "model_alerts": 100,
+            "rule_alerts": 100
+          }
+        }
+      },
+      "episodes_per_seen_scenario": 300,
+      "fixed_test": {
+        "families": [
+          {
+            "clone_label": 0,
+            "episodes": 100,
+            "held_out_family": false,
+            "model_alert_rate": 0.0,
+            "rule_alert_rate": 0.0,
+            "scenario": "benign_repeat"
+          },
+          {
+            "clone_label": 1,
+            "episodes": 100,
+            "held_out_family": false,
+            "model_alert_rate": 1.0,
+            "rule_alert_rate": 1.0,
+            "scenario": "clone_burst"
+          },
+          {
+            "clone_label": 1,
+            "episodes": 100,
+            "held_out_family": false,
+            "model_alert_rate": 0.99,
+            "rule_alert_rate": 1.0,
+            "scenario": "clone_copy"
+          },
+          {
+            "clone_label": 0,
+            "episodes": 100,
+            "held_out_family": true,
+            "model_alert_rate": 0.0,
+            "rule_alert_rate": 0.0,
+            "scenario": "delayed_sync"
+          },
+          {
+            "clone_label": 0,
+            "episodes": 100,
+            "held_out_family": false,
+            "model_alert_rate": 0.0,
+            "rule_alert_rate": 0.0,
+            "scenario": "legitimate_distribution"
+          },
+          {
+            "clone_label": 0,
+            "episodes": 100,
+            "held_out_family": false,
+            "model_alert_rate": 0.0,
+            "rule_alert_rate": 0.0,
+            "scenario": "legitimate_travel"
+          },
+          {
+            "clone_label": 1,
+            "episodes": 100,
+            "held_out_family": true,
+            "model_alert_rate": 0.0,
+            "rule_alert_rate": 0.42,
+            "scenario": "slow_copy"
+          }
+        ],
+        "model": {
+          "average_precision": 0.8268583405620505,
+          "false_negatives": 101,
+          "false_positives": 0,
+          "precision": 1.0,
+          "recall": 0.6633333333333333,
+          "true_negatives": 400,
+          "true_positives": 199
+        },
+        "rule_baseline": {
+          "false_negatives": 58,
+          "false_positives": 0,
+          "precision": 1.0,
+          "recall": 0.8066666666666666,
+          "true_negatives": 400,
+          "true_positives": 242
+        },
+        "test_clones": 300,
+        "test_episodes": 700,
+        "unit": "simulated batch observation episode"
+      },
+      "selected_model": "logistic_c0.1",
+      "threshold": 0.7503020167350769,
+      "training_episodes": 1500,
+      "validation_episodes": 500
+    },
+    {
+      "challenge": {
+        "model": {
+          "false_negatives": 200,
+          "false_positives": 300,
+          "precision": 0.4,
+          "recall": 0.5,
+          "true_negatives": 400,
+          "true_positives": 200
+        },
+        "rule": {
+          "false_negatives": 200,
+          "false_positives": 300,
+          "precision": 0.4,
+          "recall": 0.5,
+          "true_negatives": 400,
+          "true_positives": 200
+        },
+        "scenarios": {
+          "benign_handoff": {
+            "cases": 100,
+            "copied_id": false,
+            "model_alerts": 0,
+            "rule_alerts": 0
+          },
+          "benign_repeat": {
+            "cases": 100,
+            "copied_id": false,
+            "model_alerts": 0,
+            "rule_alerts": 0
+          },
+          "benign_rescan_burst": {
+            "cases": 100,
+            "copied_id": false,
+            "model_alerts": 100,
+            "rule_alerts": 100
+          },
+          "clock_skew": {
+            "cases": 100,
+            "copied_id": false,
+            "model_alerts": 100,
+            "rule_alerts": 100
+          },
+          "clone_burst": {
+            "cases": 100,
+            "copied_id": true,
+            "model_alerts": 100,
+            "rule_alerts": 100
+          },
+          "clone_fast": {
+            "cases": 100,
+            "copied_id": true,
+            "model_alerts": 100,
+            "rule_alerts": 100
+          },
+          "clone_same_location": {
+            "cases": 100,
+            "copied_id": true,
+            "model_alerts": 0,
+            "rule_alerts": 0
+          },
+          "clone_slow": {
+            "cases": 100,
+            "copied_id": true,
+            "model_alerts": 0,
+            "rule_alerts": 0
+          },
+          "legitimate_distribution": {
+            "cases": 100,
+            "copied_id": false,
+            "model_alerts": 0,
+            "rule_alerts": 0
+          },
+          "legitimate_travel": {
+            "cases": 100,
+            "copied_id": false,
+            "model_alerts": 0,
+            "rule_alerts": 0
+          },
+          "location_glitch": {
+            "cases": 100,
+            "copied_id": false,
+            "model_alerts": 100,
+            "rule_alerts": 100
+          }
+        }
+      },
+      "episodes_per_seen_scenario": 900,
+      "fixed_test": {
+        "families": [
+          {
+            "clone_label": 0,
+            "episodes": 100,
+            "held_out_family": false,
+            "model_alert_rate": 0.0,
+            "rule_alert_rate": 0.0,
+            "scenario": "benign_repeat"
+          },
+          {
+            "clone_label": 1,
+            "episodes": 100,
+            "held_out_family": false,
+            "model_alert_rate": 1.0,
+            "rule_alert_rate": 1.0,
+            "scenario": "clone_burst"
+          },
+          {
+            "clone_label": 1,
+            "episodes": 100,
+            "held_out_family": false,
+            "model_alert_rate": 0.99,
+            "rule_alert_rate": 1.0,
+            "scenario": "clone_copy"
+          },
+          {
+            "clone_label": 0,
+            "episodes": 100,
+            "held_out_family": true,
+            "model_alert_rate": 0.0,
+            "rule_alert_rate": 0.0,
+            "scenario": "delayed_sync"
+          },
+          {
+            "clone_label": 0,
+            "episodes": 100,
+            "held_out_family": false,
+            "model_alert_rate": 0.0,
+            "rule_alert_rate": 0.0,
+            "scenario": "legitimate_distribution"
+          },
+          {
+            "clone_label": 0,
+            "episodes": 100,
+            "held_out_family": false,
+            "model_alert_rate": 0.0,
+            "rule_alert_rate": 0.0,
+            "scenario": "legitimate_travel"
+          },
+          {
+            "clone_label": 1,
+            "episodes": 100,
+            "held_out_family": true,
+            "model_alert_rate": 0.0,
+            "rule_alert_rate": 0.42,
+            "scenario": "slow_copy"
+          }
+        ],
+        "model": {
+          "average_precision": 0.8269844891560737,
+          "false_negatives": 101,
+          "false_positives": 0,
+          "precision": 1.0,
+          "recall": 0.6633333333333333,
+          "true_negatives": 400,
+          "true_positives": 199
+        },
+        "rule_baseline": {
+          "false_negatives": 58,
+          "false_positives": 0,
+          "precision": 1.0,
+          "recall": 0.8066666666666666,
+          "true_negatives": 400,
+          "true_positives": 242
+        },
+        "test_clones": 300,
+        "test_episodes": 700,
+        "unit": "simulated batch observation episode"
+      },
+      "selected_model": "logistic_c0.1",
+      "threshold": 0.8263909816741943,
+      "training_episodes": 4500,
+      "validation_episodes": 1500
+    }
+  ],
+  "training_seed": 2026
+}

@@ -1,0 +1,28 @@
+{
+  "audit_boundary": "SQLite persists all changes. Hash chaining detects changes against a separately retained head; it is not a signature or an immutable external log.",
+  "delivery": "research prototype with local durable decisions",
+  "external_evidence_still_needed": [
+    "A real LinuxONE run and comparable workload measurements",
+    "Independently adjudicated real scan outcomes",
+    "A domain expert's recorded workflow review and measured task times",
+    "Verified publication dates, legal manufacturer identity and representative testing denominators"
+  ],
+  "field_model_detail": "No adjudicated field model artifact",
+  "field_review_ready": false,
+  "linuxone_benchmark_recorded": false,
+  "official_source_crosscheck": {
+    "matched_records": 2451,
+    "official_records_not_represented": 104,
+    "unmatched_records": 100
+  },
+  "publication_dates_missing": 2551,
+  "publication_lag_sensitivity_report": true,
+  "records": 2551,
+  "retrospective_capacity_report": true,
+  "rolling_history_audit": true,
+  "service_boundary": "Loopback-only team demonstration; reviewer IDs are declared, not authenticated. Public deployment requires authenticated access and operational controls.",
+  "source_workbook_integrity": {
+    "mismatches": [],
+    "passed": true
+  }
+}

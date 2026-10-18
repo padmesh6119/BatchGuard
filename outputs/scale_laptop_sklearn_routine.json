@@ -1,0 +1,151 @@
+{
+  "arithmetic_capacity_only": [
+    {
+      "average_required_per_second": 11.574074074074074,
+      "headroom_vs_average": 57.522476549470156,
+      "headroom_vs_ten_x_peak": 5.752247654947015,
+      "scans_per_day": 1000000,
+      "ten_x_peak_required_per_second": 115.74074074074075
+    },
+    {
+      "average_required_per_second": 115.74074074074075,
+      "headroom_vs_average": 5.752247654947015,
+      "headroom_vs_ten_x_peak": 0.5752247654947016,
+      "scans_per_day": 10000000,
+      "ten_x_peak_required_per_second": 1157.4074074074074
+    },
+    {
+      "average_required_per_second": 1157.4074074074074,
+      "headroom_vs_average": 0.5752247654947016,
+      "headroom_vs_ten_x_peak": 0.05752247654947015,
+      "scans_per_day": 100000000,
+      "ten_x_peak_required_per_second": 11574.074074074075
+    }
+  ],
+  "backend": "sklearn",
+  "capacity": 10,
+  "decision_sha256": "6df12c609797aa6437edb8b0db0089be8cc11e5dd242d918f584018f1b316011",
+  "environment": {
+    "cpu": {
+      "affinity_cpus": 16,
+      "logical_cpus": 16,
+      "model name": "12th Gen Intel(R) Core(TM) i5-1240P",
+      "nnpa_facility_listed": false,
+      "vendor_id": "GenuineIntel"
+    },
+    "host": "laptop",
+    "machine": "x86_64",
+    "packages": {
+      "matplotlib": "3.11.2",
+      "numpy": "2.5.4",
+      "openpyxl": "3.1.5",
+      "pandas": "3.0.6",
+      "scikit-learn": "1.9.1",
+      "scipy": "1.18.1",
+      "snapml": "1.17.2"
+    },
+    "platform": "Linux-6.17.0-35-generic-x86_64-with-glibc2.39",
+    "python": "3.12.3",
+    "release": "6.17.0-35-generic",
+    "system": "Linux"
+  },
+  "events_per_second_median": 665.7694045077565,
+  "events_requested": 5000,
+  "hardware_acceleration_verified": false,
+  "host": "laptop",
+  "model_type": "Pipeline",
+  "model_version": "layer-ab-sklearn-28ff11c97cdb",
+  "processed_manifest_sha256": "f70bfd94d1a004c50191b2a58747e69b2c4d8279ea91a8339fbf88f59348ce9d",
+  "profile": "routine",
+  "profile_case_cycle": {
+    "burst": 1,
+    "conflict": 1,
+    "repeat": 4,
+    "single": 94
+  },
+  "profile_rates_are_assumptions": true,
+  "queue_every_events": 500,
+  "repeats": 2,
+  "runs": [
+    {
+      "active_candidates_at_end": 4172,
+      "alerts_on_arriving_events": 164,
+      "candidate_groups": 4172,
+      "context_build_seconds": 4.582279960000051,
+      "decision_sha256": "6df12c609797aa6437edb8b0db0089be8cc11e5dd242d918f584018f1b316011",
+      "events": 5000,
+      "events_per_second_wall": 663.3723031131847,
+      "pattern_cases": {
+        "burst": 41,
+        "conflict": 41,
+        "repeat": 168,
+        "single": 3922
+      },
+      "pattern_events": {
+        "burst": 492,
+        "conflict": 82,
+        "repeat": 504,
+        "single": 3922
+      },
+      "peak_rss_kib_process": 162200,
+      "per_event_decision_ms": {
+        "max": 2.8882020001219644,
+        "p50": 1.443032499992114,
+        "p95": 1.7284800498714505,
+        "p99": 2.025502749957014
+      },
+      "queue_snapshot_ms": {
+        "max": 38.88587999995252,
+        "p50": 1.7522844999575682,
+        "p95": 22.789508699941013,
+        "p99": 35.666605739950235
+      },
+      "snapshots": 10,
+      "stream_wall_seconds": 7.537245641000027,
+      "workload_sha256": "a2b832f6417101b0ed0380bd5bf5d4224d0e782624f4b816c63e4af54e10707b"
+    },
+    {
+      "active_candidates_at_end": 4172,
+      "alerts_on_arriving_events": 164,
+      "candidate_groups": 4172,
+      "context_build_seconds": 4.602240645999927,
+      "decision_sha256": "6df12c609797aa6437edb8b0db0089be8cc11e5dd242d918f584018f1b316011",
+      "events": 5000,
+      "events_per_second_wall": 668.1665059023281,
+      "pattern_cases": {
+        "burst": 41,
+        "conflict": 41,
+        "repeat": 168,
+        "single": 3922
+      },
+      "pattern_events": {
+        "burst": 492,
+        "conflict": 82,
+        "repeat": 504,
+        "single": 3922
+      },
+      "peak_rss_kib_process": 162456,
+      "per_event_decision_ms": {
+        "max": 2.394374000004973,
+        "p50": 1.4403310000261627,
+        "p95": 1.7255060500133368,
+        "p99": 2.0302944300351555
+      },
+      "queue_snapshot_ms": {
+        "max": 3.429446999916763,
+        "p50": 1.714966999884382,
+        "p95": 3.229966499907277,
+        "p99": 3.389550899914866
+      },
+      "snapshots": 10,
+      "stream_wall_seconds": 7.48316468400003,
+      "workload_sha256": "a2b832f6417101b0ed0380bd5bf5d4224d0e782624f4b816c63e4af54e10707b"
+    }
+  ],
+  "scan_model_selection": "logistic_c0.1",
+  "scan_model_threshold": 0.17191900312900543,
+  "scan_test_predictions_sha256": "86be866d58874e6e5b7117a338fc0333013cbd803a81f1a7b170e8c8573ac1a7",
+  "scope": "Synthetic in-memory event generation plus sequential decision processing; no network, disk ingest, concurrent clients, or sustained-run claim.",
+  "seed": 2026,
+  "workload_sha256": "a2b832f6417101b0ed0380bd5bf5d4224d0e782624f4b816c63e4af54e10707b"
+}

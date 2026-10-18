@@ -1,0 +1,185 @@
+{
+  "limits": [
+    "A two/three-month lag is an assumption, not proof that every report was available then.",
+    "This measures report recurrence, not unsafe batches, population prevalence or field scan accuracy."
+  ],
+  "model": "fixed existing logistic_c0.1 configuration; no lag chosen on test results",
+  "processed_manifest_sha256": "27b36a3555f44fd6debd05c18ad35e705127e660d1c1a1297a32c8084be7fdba",
+  "scenarios": [
+    {
+      "assumed_reporting_lag_months": 1,
+      "months": [
+        {
+          "all_report_records": 192,
+          "average_precision": 0.1389840645415809,
+          "candidate_manufacturer_texts": 1438,
+          "captured_report_records": {
+            "10": 2.0,
+            "25": 4.0
+          },
+          "feature_cutoff": "2026-05",
+          "legacy_captured_report_records": {
+            "10": 2.0,
+            "25": 5.0
+          },
+          "month": "2026-06",
+          "reachable_report_records": 22,
+          "split": "validation"
+        },
+        {
+          "all_report_records": 239,
+          "average_precision": 0.12370063167944774,
+          "candidate_manufacturer_texts": 1588,
+          "captured_report_records": {
+            "10": 3.0,
+            "25": 7.0
+          },
+          "feature_cutoff": "2026-06",
+          "legacy_captured_report_records": {
+            "10": 2.0,
+            "25": 5.0
+          },
+          "month": "2026-07",
+          "reachable_report_records": 28,
+          "split": "retrospective_test"
+        },
+        {
+          "all_report_records": 220,
+          "average_precision": 0.09283944548730035,
+          "candidate_manufacturer_texts": 1782,
+          "captured_report_records": {
+            "10": 8.0,
+            "25": 14.0
+          },
+          "feature_cutoff": "2026-07",
+          "legacy_captured_report_records": {
+            "10": 1.0,
+            "25": 4.5
+          },
+          "month": "2026-08",
+          "reachable_report_records": 48,
+          "split": "retrospective_test"
+        }
+      ],
+      "training_examples": 6760,
+      "training_through": "2026-05"
+    },
+    {
+      "assumed_reporting_lag_months": 2,
+      "months": [
+        {
+          "all_report_records": 192,
+          "average_precision": 0.15667197049870318,
+          "candidate_manufacturer_texts": 1309,
+          "captured_report_records": {
+            "10": 3.0,
+            "25": 5.0
+          },
+          "feature_cutoff": "2026-04",
+          "legacy_captured_report_records": {
+            "10": 2.0,
+            "25": 5.0
+          },
+          "month": "2026-06",
+          "reachable_report_records": 17,
+          "split": "validation"
+        },
+        {
+          "all_report_records": 239,
+          "average_precision": 0.15778325355074632,
+          "candidate_manufacturer_texts": 1438,
+          "captured_report_records": {
+            "10": 4.0,
+            "25": 6.0
+          },
+          "feature_cutoff": "2026-05",
+          "legacy_captured_report_records": {
+            "10": 3.0,
+            "25": 5.0
+          },
+          "month": "2026-07",
+          "reachable_report_records": 21,
+          "split": "retrospective_test"
+        },
+        {
+          "all_report_records": 220,
+          "average_precision": 0.08551446290255577,
+          "candidate_manufacturer_texts": 1588,
+          "captured_report_records": {
+            "10": 1.0,
+            "25": 7.0
+          },
+          "feature_cutoff": "2026-06",
+          "legacy_captured_report_records": {
+            "10": 1.5,
+            "25": 6.0
+          },
+          "month": "2026-08",
+          "reachable_report_records": 37,
+          "split": "retrospective_test"
+        }
+      ],
+      "training_examples": 5571,
+      "training_through": "2026-05"
+    },
+    {
+      "assumed_reporting_lag_months": 3,
+      "months": [
+        {
+          "all_report_records": 192,
+          "average_precision": 0.23358563262883386,
+          "candidate_manufacturer_texts": 1226,
+          "captured_report_records": {
+            "10": 3.0,
+            "25": 6.0
+          },
+          "feature_cutoff": "2026-03",
+          "legacy_captured_report_records": {
+            "10": 2.0,
+            "25": 6.0
+          },
+          "month": "2026-06",
+          "reachable_report_records": 16,
+          "split": "validation"
+        },
+        {
+          "all_report_records": 239,
+          "average_precision": 0.17629098048595956,
+          "candidate_manufacturer_texts": 1309,
+          "captured_report_records": {
+            "10": 4.0,
+            "25": 5.0
+          },
+          "feature_cutoff": "2026-04",
+          "legacy_captured_report_records": {
+            "10": 2.0,
+            "25": 5.0
+          },
+          "month": "2026-07",
+          "reachable_report_records": 17,
+          "split": "retrospective_test"
+        },
+        {
+          "all_report_records": 220,
+          "average_precision": 0.08059884676040278,
+          "candidate_manufacturer_texts": 1438,
+          "captured_report_records": {
+            "10": 2.0,
+            "25": 5.0
+          },
+          "feature_cutoff": "2026-05",
+          "legacy_captured_report_records": {
+            "10": 3.0,
+            "25": 3.0
+          },
+          "month": "2026-08",
+          "reachable_report_records": 33,
+          "split": "retrospective_test"
+        }
+      ],
+      "training_examples": 4345,
+      "training_through": "2026-05"
+    }
+  ],
+  "status": "retrospective sensitivity; all lag assumptions reported; publication dates unverified"
+}

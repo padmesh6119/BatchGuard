@@ -1,0 +1,1541 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>BatchGuard</title>
+<style>
+/*__BATCHGUARD_FONTS__*/
+:root {
+  color-scheme: light;
+  --page: #f9f9f7; --surface: #fcfcfb; --surface-2: #f3f2ee; --surface-3: #ebeae4;
+  --border: rgba(11,11,11,.10); --grid: #e1e0d9; --axis: #c3c2b7;
+  --ink: #0b0b0b; --ink-2: #52514e; --muted: #898781;
+  --real: #2a78d6; --sim: #eb6834; --qual: #1baf7a; --s4: #eda100; --violet: #6250d6; --neutral: #b5b3ab; --neutral-2: #d6d4cc;
+  --real-wash: rgba(42,120,214,.10); --sim-wash: rgba(235,104,52,.12);
+  --critical: #d03b3b; --critical-wash: rgba(208,59,59,.09); --good: #006300; --warning: #b07800;
+  --shadow: 0 1px 2px rgba(11,11,11,.06), 0 4px 16px rgba(11,11,11,.04);
+}
+input[type="text"], input[type="number"], input[type="search"], select {
+  font: inherit; color: var(--ink); background: var(--surface); border: 1px solid var(--border);
+  padding: 8px 10px; border-radius: 6px; max-width: 100%; margin: 4px 6px 4px 0;
+}
+details.tv summary { overflow-wrap: anywhere; line-height: 1.5; }
+@media (prefers-color-scheme: dark) {
+  :root:where(:not([data-theme="light"])) {
+    color-scheme: dark;
+    --page: #0d0d0d; --surface: #1a1a19; --surface-2: #222220; --surface-3: #2c2c2a;
+    --border: rgba(255,255,255,.10); --grid: #2c2c2a; --axis: #383835;
+    --ink: #f0efec; --ink-2: #c3c2b7; --muted: #898781;
+    --real: #3987e5; --sim: #d95926; --qual: #199e70; --s4: #c98500; --violet: #9085e9; --neutral: #5f5e5a; --neutral-2: #45443f;
+    --real-wash: rgba(57,135,229,.16); --sim-wash: rgba(217,89,38,.18);
+    --critical: #e66767; --critical-wash: rgba(230,103,103,.13); --good: #0ca30c; --warning: #fab219;
+    --shadow: 0 1px 2px rgba(0,0,0,.4);
+  }
+}
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --page: #0d0d0d; --surface: #1a1a19; --surface-2: #222220; --surface-3: #2c2c2a;
+  --border: rgba(255,255,255,.10); --grid: #2c2c2a; --axis: #383835;
+  --ink: #f0efec; --ink-2: #c3c2b7; --muted: #898781;
+  --real: #3987e5; --sim: #d95926; --qual: #199e70; --s4: #c98500; --violet: #9085e9; --neutral: #5f5e5a; --neutral-2: #45443f;
+  --real-wash: rgba(57,135,229,.16); --sim-wash: rgba(217,89,38,.18);
+  --critical: #e66767; --critical-wash: rgba(230,103,103,.13); --good: #0ca30c; --warning: #fab219;
+  --shadow: 0 1px 2px rgba(0,0,0,.4);
+}
+* { box-sizing: border-box; }
+html, body { margin: 0; }
+body { background: var(--page); color: var(--ink); font: 14px/1.45 system-ui, -apple-system, "Segoe UI", sans-serif; }
+button, input, textarea, select { font: inherit; color: inherit; }
+.num, td.n, .tnum { font-variant-numeric: tabular-nums; }
+a { color: var(--real); }
+
+/* banner + header */
+.banner { position: sticky; top: 0; z-index: 30; display: flex; flex-wrap: wrap; gap: 6px 18px; align-items: center;
+  padding: 8px 20px; background: var(--ink); color: var(--surface); font-size: 13px; }
+.banner .layer { display: inline-flex; align-items: center; gap: 7px; font-weight: 600; letter-spacing: .01em; }
+.banner .dot { width: 9px; height: 9px; border-radius: 50%; }
+.banner .note { opacity: .82; }
+header.top { display: flex; flex-wrap: wrap; align-items: center; gap: 12px 24px; padding: 16px 20px 0; max-width: 1480px; margin: 0 auto; }
+.brand { display: flex; align-items: center; gap: 10px; margin-right: auto; }
+.brand svg { flex: none; }
+.brand h1 { font-size: 20px; margin: 0; letter-spacing: -.01em; }
+.brand p { margin: 0; color: var(--ink-2); font-size: 13px; }
+.seg { display: inline-flex; background: var(--surface-2); border: 1px solid var(--border); border-radius: 8px; padding: 2px; }
+.seg button { border: 0; background: transparent; padding: 5px 12px; border-radius: 6px; cursor: pointer; color: var(--ink-2); }
+.seg button[aria-pressed="true"] { background: var(--surface); color: var(--ink); box-shadow: var(--shadow); font-weight: 600; }
+.meta { color: var(--ink-2); font-size: 13px; }
+.meta b { color: var(--ink); font-weight: 600; }
+.icon-btn { border: 1px solid var(--border); background: var(--surface); border-radius: 8px; padding: 5px 9px; cursor: pointer; }
+nav.tabs { display: flex; gap: 4px; padding: 12px 20px 0; max-width: 1480px; margin: 0 auto; border-bottom: 1px solid var(--border); }
+nav.tabs button { border: 0; background: none; padding: 9px 14px; cursor: pointer; color: var(--ink-2); border-bottom: 2px solid transparent; margin-bottom: -1px; font-weight: 500; }
+nav.tabs button[aria-selected="true"] { color: var(--ink); border-bottom-color: var(--ink); font-weight: 600; }
+main { max-width: 1480px; margin: 0 auto; padding: 16px 20px 40px; }
+section[hidden] { display: none; }
+
+/* cards */
+.card { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; box-shadow: var(--shadow); }
+.card > h2, .card-h { display: flex; align-items: baseline; gap: 10px; margin: 0; padding: 14px 16px 10px; font-size: 15px; }
+.card-h h2 { font-size: 15px; margin: 0; }
+.card-h .sub, .sub { color: var(--muted); font-size: 12.5px; font-weight: 400; }
+.card-b { padding: 0 16px 16px; }
+.grow { margin-left: auto; }
+h3 { font-size: 13px; margin: 18px 0 8px; color: var(--ink-2); text-transform: uppercase; letter-spacing: .05em; }
+.section-title { display: flex; align-items: center; gap: 10px; margin: 26px 0 12px; }
+.section-title h2 { margin: 0; font-size: 17px; }
+.tag { display: inline-flex; align-items: center; gap: 6px; font-size: 11.5px; font-weight: 600; padding: 2px 8px; border-radius: 999px; border: 1px solid var(--border); color: var(--ink-2); background: var(--surface-2); white-space: nowrap; }
+.tag .dot { width: 7px; height: 7px; border-radius: 50%; }
+.tag.real .dot { background: var(--real); } .tag.sim .dot { background: var(--sim); }
+.tag.crit { color: var(--critical); border-color: color-mix(in srgb, var(--critical) 40%, transparent); background: var(--critical-wash); }
+.muted { color: var(--muted); } .ink2 { color: var(--ink-2); }
+.callout { border-left: 3px solid var(--real); background: var(--real-wash); padding: 10px 14px; border-radius: 0 8px 8px 0; margin: 12px 0; }
+.callout.sim { border-color: var(--sim); background: var(--sim-wash); }
+.callout.plain { border-color: var(--axis); background: var(--surface-2); }
+
+/* controls */
+.controls { display: flex; flex-wrap: wrap; align-items: center; gap: 12px 22px; padding: 12px 16px; }
+.controls .group { display: flex; align-items: center; gap: 8px; }
+.controls label { color: var(--ink-2); font-size: 13px; }
+.ctrl { border: 1px solid var(--border); background: var(--surface-2); border-radius: 8px; height: 32px; min-width: 34px; padding: 0 10px; cursor: pointer; display: inline-flex; align-items: center; justify-content: center; gap: 6px; }
+.ctrl:hover { background: var(--surface-3); }
+.ctrl.primary { background: var(--ink); color: var(--surface); border-color: var(--ink); font-weight: 600; min-width: 92px; }
+input[type="range"] { accent-color: var(--ink); }
+#scanRange { width: min(340px, 42vw); }
+.stepper { display: inline-flex; align-items: center; border: 1px solid var(--border); border-radius: 8px; overflow: hidden; }
+.stepper button { border: 0; background: var(--surface-2); width: 30px; height: 32px; cursor: pointer; }
+.stepper output { min-width: 40px; text-align: center; font-weight: 700; font-size: 15px; }
+.clock { font-weight: 600; }
+
+/* KPIs */
+.kpis { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; margin: 12px 0; }
+.kpi { padding: 12px 16px; }
+.kpi .label { color: var(--ink-2); font-size: 12.5px; }
+.kpi .value { font-size: 26px; font-weight: 650; letter-spacing: -.01em; margin-top: 2px; display: flex; align-items: center; gap: 8px; }
+.kpi .value .small { font-size: 14px; font-weight: 500; color: var(--ink-2); }
+.kpi .foot { color: var(--muted); font-size: 12px; margin-top: 2px; }
+.kpi.alert .value { color: var(--critical); }
+.decision-notes { display: grid; grid-template-columns: minmax(0, 1.35fr) minmax(280px, 1fr); gap: 12px; margin: 0 0 12px; }
+.decision-note { padding: 14px 16px; border-left: 3px solid var(--real); }
+.decision-note.unknown { border-left-color: var(--s4); }
+.decision-note h2 { margin: 0 0 4px; font-size: 14px; }
+.decision-note p { margin: 3px 0 0; color: var(--ink-2); font-size: 12.5px; }
+.strategy-table { width: 100%; margin-top: 8px; font-size: 12.5px; }
+.strategy-table th { font-size: 10.5px; padding: 5px 6px; }
+.strategy-table td { padding: 5px 6px; }
+.strategy-table tr.current { background: var(--real-wash); font-weight: 650; }
+.decision-note .ctrl { margin-top: 9px; height: 30px; font-size: 12px; }
+
+/* decision grid */
+.grid { display: grid; grid-template-columns: minmax(0, 1.9fr) minmax(320px, 1fr); gap: 12px; align-items: start; }
+.side { display: grid; gap: 12px; }
+.scroll-x { overflow-x: auto; }
+table { border-collapse: collapse; width: 100%; }
+th { text-align: left; font-size: 11.5px; font-weight: 600; color: var(--muted); text-transform: uppercase; letter-spacing: .04em; padding: 8px 8px; border-bottom: 1px solid var(--grid); white-space: nowrap; }
+td { padding: 8px; border-bottom: 1px solid var(--grid); vertical-align: middle; }
+td.n, th.n { text-align: right; }
+.queue tbody tr.row { cursor: pointer; transition: background .15s; }
+.queue tbody tr.row:hover { background: var(--surface-2); }
+.queue tbody tr.row:focus-visible { outline: 2px solid var(--real); outline-offset: -2px; }
+.queue tr.row.selected { background: var(--real-wash); }
+.queue tr.row.alert td:first-child { box-shadow: inset 3px 0 0 var(--critical); }
+.queue tr.row.below { opacity: .55; }
+.queue tr.row.below:hover, .queue tr.row.below.selected { opacity: .9; }
+.queue tr.row.fresh { animation: fresh 1.4s ease-out; }
+@keyframes fresh { from { background: var(--sim-wash); } to { background: transparent; } }
+.rank { font-size: 17px; font-weight: 700; width: 44px; white-space: nowrap; }
+.delta { font-size: 11px; font-weight: 600; margin-left: 2px; }
+.delta.up { color: var(--good); } .delta.down { color: var(--muted); } .delta.new { color: var(--sim); }
+.bt { font-weight: 650; }
+.pd { color: var(--ink-2); font-size: 12.5px; max-width: 280px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.mf { color: var(--muted); font-size: 11.5px; max-width: 280px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.meter { display: flex; align-items: center; gap: 7px; min-width: 96px; }
+.meter .track { flex: 1; height: 6px; border-radius: 3px; background: var(--surface-3); overflow: hidden; min-width: 50px; }
+.meter .fill { height: 100%; border-radius: 0 3px 3px 0; }
+.meter .v { width: 24px; text-align: right; font-size: 12.5px; color: var(--ink-2); font-variant-numeric: tabular-nums; }
+.prio { font-weight: 700; font-size: 15px; text-align: right; font-variant-numeric: tabular-nums; }
+.chips { display: flex; flex-wrap: wrap; gap: 4px; margin-top: 5px; }
+td.who { min-width: 230px; max-width: 320px; }
+.chip { font-size: 11px; padding: 1px 7px; border-radius: 999px; background: var(--surface-2); border: 1px solid var(--border); color: var(--ink-2); white-space: nowrap; }
+.chip.crit { color: var(--critical); background: var(--critical-wash); border-color: transparent; font-weight: 600; }
+.chip.real { color: var(--ink-2); box-shadow: inset 2px 0 0 var(--real); }
+.status { font-size: 11.5px; padding: 2px 8px; border-radius: 999px; background: var(--surface-2); color: var(--muted); white-space: nowrap; }
+.status.s1 { background: var(--real-wash); color: var(--ink); } .status.s3 { background: var(--critical-wash); color: var(--critical); } .status.s2 { color: var(--ink-2); }
+tr.cap td { padding: 6px 8px; background: var(--surface-2); color: var(--ink-2); font-size: 12px; font-weight: 600; border-top: 2px dashed var(--axis); }
+
+/* map + feed */
+.map svg { width: 100%; max-width: 360px; height: auto; display: block; margin: 0 auto; }
+.map .land { fill: var(--surface-2); stroke: var(--axis); stroke-width: 1; }
+.map .grat { stroke: var(--grid); stroke-width: 1; fill: none; }
+.map .city text { font-size: 11px; fill: var(--ink-2); }
+.map .pulse { animation: pulse 1.6s ease-out infinite; transform-box: fill-box; transform-origin: center; }
+@keyframes pulse { from { opacity: .8; transform: scale(1); } to { opacity: 0; transform: scale(3.2); } }
+.feed { max-height: 420px; overflow-y: auto; }
+.feed ol { list-style: none; margin: 0; padding: 0 8px 8px; }
+.feed li { display: grid; grid-template-columns: 62px 1fr auto; gap: 2px 10px; padding: 7px 8px; border-radius: 8px; cursor: pointer; align-items: center; }
+.feed li:hover { background: var(--surface-2); }
+.feed li.latest { background: var(--sim-wash); }
+.feed li.retry { opacity: .6; }
+.feed .t { font-size: 12px; color: var(--ink-2); font-variant-numeric: tabular-nums; }
+.feed .w { font-size: 13px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.feed .w .p { color: var(--muted); font-size: 11.5px; }
+.legend { display: flex; flex-wrap: wrap; gap: 6px 14px; font-size: 12px; color: var(--ink-2); padding: 0 16px 12px; }
+.legend span { display: inline-flex; align-items: center; gap: 6px; }
+.key { width: 14px; height: 0; border-top: 2px solid; display: inline-block; }
+.sw { width: 10px; height: 10px; border-radius: 3px; display: inline-block; }
+
+/* evidence */
+.evidence { margin-top: 12px; }
+.ev-head { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 14px; padding: 16px; border-bottom: 1px solid var(--grid); }
+.ev-head .rk { font-size: 28px; font-weight: 750; color: var(--ink-2); }
+.ev-head .bt { font-size: 19px; }
+.ev-body { padding: 16px; display: grid; grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr); gap: 20px; }
+.signals { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; }
+.signal { border: 1px solid var(--border); border-radius: 10px; padding: 12px; position: relative; overflow: hidden; }
+.signal::before { content: ""; position: absolute; inset: 0 auto 0 0; width: 3px; background: var(--c); }
+.signal .k { font-size: 12px; color: var(--ink-2); display: flex; align-items: center; gap: 6px; }
+.signal .v { font-size: 26px; font-weight: 700; margin: 2px 0 4px; }
+.signal .why { font-size: 12.5px; color: var(--ink-2); }
+.formula { margin-top: 10px; padding: 10px 12px; background: var(--surface-2); border-radius: 8px; font-size: 13px; color: var(--ink-2); }
+.formula b { color: var(--ink); }
+.reasons { margin: 0; padding: 0; list-style: none; display: grid; gap: 6px; }
+.reasons li { display: grid; grid-template-columns: auto 1fr; gap: 10px; align-items: baseline; font-size: 13px; }
+.reasons code { font-size: 11px; background: var(--surface-2); padding: 1px 6px; border-radius: 4px; color: var(--ink-2); }
+.timeline { list-style: none; margin: 0; padding: 0 0 0 14px; border-left: 2px solid var(--grid); }
+.timeline li { position: relative; padding: 4px 0 8px 10px; font-size: 13px; }
+.timeline li::before { content: ""; position: absolute; left: -20px; top: 9px; width: 8px; height: 8px; border-radius: 50%; background: var(--sim); box-shadow: 0 0 0 2px var(--surface); }
+.timeline li.retry::before { background: var(--neutral); }
+.timeline .t { font-variant-numeric: tabular-nums; color: var(--ink-2); margin-right: 6px; }
+.tbl-wrap { max-height: 300px; overflow: auto; border: 1px solid var(--grid); border-radius: 8px; }
+.tbl-wrap table th { position: sticky; top: 0; background: var(--surface); }
+.small-tbl td, .small-tbl th { font-size: 12.5px; padding: 6px 8px; }
+.decide { display: flex; flex-wrap: wrap; gap: 6px; margin: 8px 0; }
+.decide button { border: 1px solid var(--border); background: var(--surface-2); border-radius: 8px; padding: 6px 12px; cursor: pointer; }
+.decide button[aria-pressed="true"] { background: var(--ink); color: var(--surface); border-color: var(--ink); }
+textarea { width: 100%; min-height: 54px; border: 1px solid var(--border); border-radius: 8px; padding: 8px; background: var(--surface); resize: vertical; }
+.saved { color: var(--good); font-size: 12.5px; margin-left: 8px; }
+
+/* charts */
+.charts2 { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+.charts3 { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; }
+.chart svg { width: 100%; height: auto; display: block; overflow: visible; }
+.chart .gridline { stroke: var(--grid); stroke-width: 1; }
+.chart .baseline { stroke: var(--axis); stroke-width: 1; }
+.chart text { fill: var(--muted); font-size: 11px; font-variant-numeric: tabular-nums; }
+.chart text.lbl { fill: var(--ink-2); font-size: 12px; }
+.chart text.val { fill: var(--ink); font-size: 12px; font-weight: 600; }
+.chart .mark { transition: opacity .12s; }
+.chart .mark:hover, .chart .mark:focus { opacity: .78; outline: none; }
+.chart .xhair { stroke: var(--axis); stroke-width: 1; }
+details.tv { margin-top: 8px; font-size: 12.5px; }
+details.tv summary { cursor: pointer; color: var(--ink-2); }
+#tip { position: fixed; z-index: 50; pointer-events: none; background: var(--surface); border: 1px solid var(--border); box-shadow: 0 6px 24px rgba(0,0,0,.14); border-radius: 8px; padding: 8px 10px; font-size: 12.5px; min-width: 120px; display: none; }
+#tip .h { color: var(--ink-2); margin-bottom: 4px; }
+#tip .r { display: flex; align-items: center; gap: 8px; }
+#tip .r b { margin-left: auto; padding-left: 12px; font-variant-numeric: tabular-nums; }
+.stats { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; }
+.hosts { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+.host dl { display: grid; grid-template-columns: auto 1fr; gap: 4px 14px; margin: 0; font-size: 13px; }
+.host dt { color: var(--muted); } .host dd { margin: 0; }
+.empty { padding: 24px 16px; color: var(--ink-2); text-align: center; }
+code.cmd { background: var(--surface-2); padding: 2px 6px; border-radius: 4px; font-size: 12.5px; }
+footer { max-width: 1480px; margin: 0 auto; padding: 0 20px 32px; color: var(--muted); font-size: 12px; }
+@media (max-width: 1100px) { .grid, .ev-body, .charts2, .charts3, .hosts, .decision-notes { grid-template-columns: minmax(0, 1fr); } .kpis, .stats { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 640px) { .signals { grid-template-columns: minmax(0, 1fr); } .kpis, .stats { grid-template-columns: minmax(0, 1fr); } header.top, nav.tabs, main { padding-left: 16px; padding-right: 16px; } }
+@media (prefers-reduced-motion: reduce) { * { animation: none !important; transition: none !important; } }
+
+/* Operations workspace */
+main > section,.grid > *,.side > *,.kpis > *,.live-console > * {min-width:0;}
+footer {overflow-wrap:anywhere;}
+.feed li {grid-template-columns:62px minmax(0,1fr) auto;}
+
+:root:not([data-theme="dark"]) { --page:#f0f4f8; --surface:#fff; --surface-2:#f5f8fb; --surface-3:#e7eef4; --ink:#142d42; --ink-2:#4b6275; --muted:#637d90; --real:#087e8b; --real-wash:rgba(8,126,139,.09); --border:rgba(31,64,88,.13); --shadow:0 3px 16px rgba(26,53,77,.035); }
+body { padding-left:210px; }
+nav.tabs { position:fixed; inset:0 auto 0 0; z-index:40; width:210px; max-width:none; padding:108px 14px 20px; display:flex; flex-direction:column; gap:9px; background:#0d2538; border:0; }
+nav.tabs::before { content:"B /  BATCHGUARD"; position:absolute; top:32px; left:24px; color:#fff; font-size:15px; font-weight:800; letter-spacing:.08em; }
+nav.tabs::after { content:"INSPECTION INTELLIGENCE\aEvidence → review → decision"; white-space:pre-wrap; position:absolute; bottom:28px; left:23px; right:18px; font-size:10px; line-height:2; color:#9bb1c1; letter-spacing:.04em; }
+nav.tabs button { text-align:left; padding:12px 16px; color:#b8cbd8; border:0; border-radius:8px; margin:0; }
+nav.tabs button[aria-selected="true"] { color:#fff; background:#21465b; box-shadow:inset 3px 0 #49d3bd; }
+.banner { position:relative; background:#e4edf3; color:#304e63; font-size:11px; padding:8px 28px; }
+header.top { padding:24px 28px 6px; } .brand h1 {font-size:25px;letter-spacing:-.04em;} .brand p {margin-top:3px;}
+main {padding:20px 28px 40px;} footer {padding-left:28px;}
+.card {border-radius:14px;} .kpi {padding:17px 18px;} .kpi .value {font-size:29px;flex-wrap:wrap;row-gap:0;}
+.ctrl.primary {background:#087e8b;color:#fff;border-color:#087e8b;} .ctrl {height:35px;} .controls {gap:10px 16px;}
+.queue th {font-size:10px;} .queue td {padding-top:13px;padding-bottom:13px;} .queue .card-h {flex-wrap:wrap;} .queue .card-h .sub {max-width:210px;overflow-wrap:anywhere;}
+.workspace-hero {display:flex;justify-content:space-between;align-items:end;gap:18px;margin:0 0 20px;} .workspace-hero h2 {font-size:32px;line-height:1.15;letter-spacing:-.04em;margin:7px 0;} .eyebrow {font-size:10px;font-weight:800;letter-spacing:.13em;text-transform:uppercase;color:var(--real);} .workspace-hero p {margin:0;color:var(--ink-2);max-width:580px;}
+.live-console {display:grid;grid-template-columns:minmax(0,1.6fr) minmax(240px,1fr);margin:0 0 14px;overflow:hidden;} .live-actions {padding:20px;} .live-actions h2 {font-size:18px;margin:4px 0 8px;} .live-actions p {font-size:12px;color:var(--ink-2);} .live-buttons {display:flex;flex-wrap:wrap;gap:7px;margin-top:12px;} .runtime-panel {background:#102f43;color:#fff;padding:20px;} .runtime-panel .sub {color:#b3cbd9;} .runtime-panel h2 {font-size:19px;margin:4px 0 8px;} .runtime-panel .ctrl {background:#21465b;color:#fff;border-color:#416074;} .runtime-panel a {color:#78dfd0;} .runtime-metrics {display:flex;gap:24px;margin:16px 0;} .runtime-metrics b {font-size:24px;display:block;} .runtime-metrics span {font-size:11px;color:#b3cbd9;} .live-status {font-size:12px;min-height:18px;margin-top:10px;overflow-wrap:anywhere;} .modebar {display:flex;align-items:center;flex-wrap:wrap;gap:10px;margin:0 0 15px;}
+.replay-only[hidden] {display:none;} .context-details {margin:12px 0;} .context-details>summary {cursor:pointer;font-size:12px;color:var(--ink-2);padding:9px 0;} .decision-notes {margin-top:8px;} .queue:empty {min-height:240px;}
+dialog.case-drawer {position:fixed;inset:0 0 0 auto;margin:0;width:min(1100px,94vw);max-width:94vw;height:100dvh;max-height:100dvh;border:0;border-left:1px solid var(--border);background:var(--page);color:var(--ink);padding:0 18px 24px;box-shadow:-20px 0 70px #061d3440;overflow:auto;} dialog::backdrop {background:rgba(6,25,42,.5);backdrop-filter:blur(3px);} .drawer-bar {position:sticky;top:0;z-index:5;display:flex;align-items:center;gap:12px;padding:14px 0;background:var(--page);} .drawer-bar strong {margin-right:auto;} .evidence {margin-top:0;box-shadow:none;} .ev-body {grid-template-columns:minmax(0,1fr);} .signal .v {font-size:24px;} .drawer-content {min-width:0;} .feed {max-height:300px;} .map svg {max-width:255px;}
+@media(max-width:1200px) { .grid {grid-template-columns:minmax(0,1fr);} .side {grid-template-columns:1fr 1fr;} .live-console {grid-template-columns:minmax(0,1fr) minmax(230px,.8fr);} }
+@media(max-width:800px) {body {padding-left:0;} nav.tabs {position:sticky;inset:auto;top:0;width:auto;padding:6px 10px;flex-direction:row;overflow:auto;} nav.tabs::before,nav.tabs::after {display:none;} nav.tabs button {white-space:nowrap;font-size:12px;padding:10px 12px;} header.top {padding:18px 16px 10px;} .banner {padding:8px 16px;} main {padding:18px 14px 32px;} .workspace-hero {align-items:start;flex-direction:column;} .workspace-hero h2 {font-size:28px;} .live-console,.side {grid-template-columns:minmax(0,1fr);} .kpis {grid-template-columns:repeat(2,minmax(0,1fr));} .kpi .value {font-size:24px;} .controls .group {flex-wrap:wrap;} .controls {padding:12px;} .runtime-panel {padding:16px 20px;} dialog.case-drawer {width:100vw;max-width:100vw;padding:0 10px 16px;} .signals {grid-template-columns:minmax(0,1fr);} }
+
+
+button:disabled {cursor:wait;opacity:.5;} .start-demo {min-width:156px!important;height:44px!important;font-size:15px;}
+.demo-result {padding:22px;margin:0 0 16px;border-color:#087e8b55;scroll-margin-top:55px;} .demo-result[hidden] {display:none;}
+.demo-result-head {display:flex;gap:12px;align-items:center;justify-content:space-between;flex-wrap:wrap;} .demo-result h2 {font-size:22px;margin:7px 0;letter-spacing:-.02em;} .result-badge {padding:6px 12px;border-radius:30px;background:#d9f3eb;color:#155c4d;font-size:12px;font-weight:700;}.result-badge.failed {background:#ffe5df;color:#9a302a;}
+.result-summary {display:flex;align-items:center;gap:22px;background:var(--surface-2);border-radius:12px;padding:18px;margin:14px 0;flex-wrap:wrap;}.result-summary>div {display:flex;flex-direction:column;gap:3px;}.result-summary b {font-size:36px;line-height:1.1;letter-spacing:-.05em;}.result-summary span {font-size:12px;color:var(--ink-2);}.result-summary .result-arrow {font-size:30px;color:var(--real);}.result-batch {margin-left:auto;max-width:320px;overflow-wrap:anywhere;}.result-checks {display:grid;grid-template-columns:1fr 1fr;gap:9px 20px;margin:18px 0;}.check {display:flex;gap:9px;font-size:12px;align-items:baseline;}.check>span {color:var(--real);font-weight:800;}.check.failed>span {color:var(--critical);}.route-view {padding:0 12px 12px;}.map .route-view svg {max-width:none;width:100%;}.route-caption {display:flex;align-items:center;justify-content:space-between;gap:8px;margin-top:12px;}.live-status:empty {display:none;}
+@media(max-width:640px) {.result-checks {grid-template-columns:minmax(0,1fr);}.demo-result {padding:16px;}.result-summary {gap:14px;}.result-batch {margin-left:0;width:100%;}.route-caption {flex-wrap:wrap;}}
+
+
+.csv-input {border:1px solid var(--border);border-radius:10px;margin:14px 0;padding:12px;background:var(--surface-2);}.csv-filebar {display:flex;align-items:center;gap:10px;flex-wrap:wrap;}.csv-filebar .ctrl {margin-left:auto;font-size:12px;}.file-icon {font-weight:800;font-size:10px;color:var(--real);padding:10px 6px;background:var(--real-wash);border-radius:6px;}.csv-input details {margin-top:10px;}.csv-input summary {cursor:pointer;font-size:12px;color:var(--ink-2);}.csv-input textarea {min-height:200px;font:11px/1.5 ui-monospace,monospace;white-space:pre;overflow:auto;margin:10px 0;}.authority-status {background:var(--real-wash);border-radius:10px;padding:12px 14px;margin:12px 0;}.authority-status strong {font-size:13px;}.authority-status p {font-size:12px;margin:5px 0;color:var(--ink-2);}
+
+
+/* Calm workspace: top navigation, short lists, and progressive disclosure. */
+:root[data-theme="dark"] {--page:#0c1117;--surface:#141b23;--surface-2:#19222c;--surface-3:#24303c;--ink:#e8edf3;--ink-2:#adbac9;--muted:#8090a2;--border:#ffffff12;--grid:#ffffff10;--axis:#425366;--real:#77d8c2;--real-wash:#77d8c20d;--shadow:none;--sim:#edaa7c;}
+:root:not([data-theme="dark"]) {--page:#f8faf9;--surface:#fff;--surface-2:#f4f7f6;--ink:#203b37;--ink-2:#5c706b;--muted:#7b8c86;--real:#167966;--border:#203b3714;--shadow:none;}
+body {padding-left:0;font-size:14px;} .banner {position:static;padding:8px 32px;font-size:11px;text-align:center;display:block;background:var(--real-wash);color:var(--ink-2);border-bottom:1px solid var(--border);}
+header.top {max-width:1180px;padding:22px 30px 20px;gap:18px;} .brand svg {width:27px;height:27px;}.brand h1 {font-size:23px;letter-spacing:-.05em;}.brand p {display:none;}.brand-point {color:var(--real);}.icon-btn {border:0;background:var(--surface-2);height:32px;width:32px;}
+nav.tabs {position:static;inset:auto;width:auto;max-width:1180px;padding:0 30px;flex-direction:row;gap:26px;border-bottom:1px solid var(--border);background:transparent;overflow:auto;z-index:auto;}
+nav.tabs::before,nav.tabs::after {display:none;}nav.tabs button {padding:12px 0;color:var(--muted);border-radius:0;font-size:13px;border-bottom:2px solid transparent;box-shadow:none!important;white-space:nowrap;}nav.tabs button[aria-selected="true"] {color:var(--ink);background:transparent;border-bottom-color:var(--real);}
+main {max-width:1180px;padding:42px 30px 64px;}footer {max-width:1180px;padding:0 30px 26px;font-size:10px;opacity:.65;} .card {border-radius:12px;box-shadow:none;}.card-h {padding:20px 22px 16px;}.ctrl {height:36px;font-size:12px;border-radius:7px;padding:0 13px;background:var(--surface);transition:background .16s,transform .16s,border-color .16s;}.ctrl.primary {background:var(--real);border-color:var(--real);color:#0c2923;}.ctrl:hover:not(:disabled) {border-color:var(--real);transform:translateY(-1px);}.ctrl:active:not(:disabled) {transform:translateY(0);} :root:not([data-theme="dark"]) .ctrl.primary {color:white;}.text-button {border:0;background:none;padding:8px 0;color:var(--ink-2);font-size:12px;cursor:pointer;}.text-button:hover {color:var(--real);}.eyebrow {font-size:10px;letter-spacing:.12em;color:var(--real);font-weight:600;}
+.overview-heading {max-width:660px;margin-bottom:32px;}.overview-heading h2 {font-size:40px;line-height:1.13;font-weight:600;letter-spacing:-.045em;margin:13px 0;}.overview-heading p {font-size:14px;line-height:1.85;color:var(--ink-2);max-width:570px;margin:0;}.welcome-case {position:relative;border:1px solid var(--border);background:var(--surface);border-radius:14px;display:grid;grid-template-columns:1.4fr 1fr;margin-bottom:34px;overflow:hidden;}.case-intro {padding:32px;}.section-kicker {color:var(--muted);font-size:10px;letter-spacing:.12em;}.case-intro h2 {font-size:24px;font-weight:550;letter-spacing:-.025em;line-height:1.4;margin:15px 0 12px;}.case-intro p {font-size:13px;color:var(--ink-2);line-height:1.8;max-width:470px;}.welcome-actions {display:flex;align-items:center;gap:22px;margin-top:24px;}.welcome-actions .primary {height:42px;padding:0 19px;gap:30px;font-size:13px;}.welcome-foot {font-size:10px;color:var(--muted);margin-top:18px;}.case-journey {padding:32px;display:grid;align-content:center;gap:26px;border-left:1px solid var(--border);background:var(--real-wash);}.journey-step {display:flex;gap:15px;align-items:flex-start;}.journey-number {font-size:10px;color:var(--real);border:1px solid var(--border);border-radius:50%;width:28px;height:28px;display:grid;place-items:center;flex:none;}.journey-step strong {font-size:12px;font-weight:550;}.journey-step p {font-size:11px;line-height:1.7;color:var(--muted);margin:5px 0 0;}.overview-section-label {font-size:11px;color:var(--muted);margin:0 0 12px;}.workspace-links {border:1px solid var(--border);border-radius:12px;overflow:hidden;background:var(--surface);}.workspace-link {display:flex;align-items:center;gap:22px;width:100%;text-align:left;padding:23px 26px;border:0;border-bottom:1px solid var(--border);background:transparent;cursor:pointer;transition:background .18s,padding .18s;}.workspace-link:last-child {border-bottom:0;}.workspace-link:hover {background:var(--real-wash);padding-left:30px;}.workspace-index {font-size:11px;color:var(--muted);}.workspace-link-text {display:grid;gap:7px;}.workspace-link-text strong {font-size:13px;font-weight:550;color:var(--ink);}.workspace-link-text>span {font-size:12px;line-height:1.6;color:var(--muted);}.workspace-arrow {margin-left:auto;color:var(--real);font-size:19px;}.overview-scope {font-size:11px;color:var(--muted);line-height:1.8;margin:24px 0 0;max-width:680px;}
+.view-heading {display:flex;justify-content:space-between;align-items:center;gap:15px;margin:0 0 26px;}.view-heading h2 {font-size:27px;letter-spacing:-.035em;font-weight:550;margin:0 0 10px;}.view-heading p {font-size:13px;color:var(--ink-2);margin:0;}.live-console {display:flex;align-items:center;justify-content:space-between;gap:14px;padding:16px 20px;margin-bottom:22px;overflow:visible;}.launch-file {display:flex;align-items:center;gap:12px;min-width:0;}.launch-file strong {font-size:12px;font-weight:500;overflow-wrap:anywhere;}.launch-file span:not(.launch-dot) {display:block;color:var(--muted);font-size:10px;margin-top:5px;}.launch-dot {width:7px;height:7px;border-radius:50%;background:var(--real);}.launch-actions {display:flex;align-items:center;gap:20px;flex:none;}.start-demo {height:36px!important;min-width:110px!important;font-size:12px!important;}
+.kpis {grid-template-columns:repeat(3,minmax(0,1fr));gap:0;border:1px solid var(--border);border-radius:12px;background:var(--surface);margin:0 0 24px;}.kpi {padding:19px 22px;border-right:1px solid var(--border);}.kpi:last-child {border:0;}.kpi .label {font-size:11px;color:var(--muted);}.kpi .value {font-size:27px;font-weight:500;margin-top:8px;}.kpi.alert .value {color:var(--sim);}
+.queue .metric-col {display:none;}.queue .card-h>.sub {display:none;}.queue .card-h {flex-wrap:wrap;gap:10px;padding:20px 22px 14px;}.queue .card-h .ctrl {font-size:10px;height:30px;}.queue th {font-size:10px;font-weight:500;text-transform:none;letter-spacing:0;padding:12px 22px;}.queue td {padding:20px 22px;}.queue .rank {font-size:13px;font-weight:500;width:54px;color:var(--muted);}.queue .bt {font-size:13px;font-weight:550;}.queue .pd {max-width:480px;font-size:12px;margin-top:5px;}.queue .mf,.queue .chips .chip {display:none;}.queue .chips:empty {display:none;}.queue td.who {width:auto;max-width:none;}.queue .chips {margin-top:7px;}.review-reason {display:block;font-size:11px;color:var(--ink-2);}.view-evidence {display:block;font-size:11px;color:var(--real);margin-top:7px;}.queue-action {text-align:right;width:210px;}.queue-action-heading {text-align:right;}.queue .delta {font-size:9px;}tr.cap td {font-size:10px;padding:10px 22px;}.queue .row:last-child td {border-bottom:0;}
+.advanced-tools,.activity-details,.context-details {border-top:1px solid var(--border);margin:22px 0 0;padding-top:16px;}.advanced-tools>summary,.activity-details>summary,.context-details>summary,.validation-details>summary,.export-menu>summary {font-size:12px;color:var(--ink-2);cursor:pointer;padding:5px 0;}.tools-body {padding-top:20px;}.model-settings {display:flex;align-items:center;flex-wrap:wrap;gap:15px;padding:12px 0;border-bottom:1px solid var(--border);margin-bottom:14px;}.model-settings .meta {font-size:11px;}.tool-content {padding:0;}.tools-body .live-actions {padding:0;}.runtime-details {margin:18px 0;}.runtime-details>summary {font-size:12px;color:var(--muted);cursor:pointer;margin-bottom:12px;}.runtime-panel {border-radius:10px;}.csv-input {margin-top:0;}.activity-details .charts2 {margin-top:16px;}.controls {border:0;border-top:1px solid var(--border);border-radius:0;margin-top:20px;padding:18px 0;}.decision-notes {grid-template-columns:1fr;}.demo-result {padding:24px;border-color:var(--real);margin:0 0 24px;}.demo-result .eyebrow {font-size:9px;}.demo-result h2 {font-size:21px;font-weight:500;}.result-summary b {font-weight:500;}.result-badge {font-size:10px;background:var(--real-wash);color:var(--real);border:1px solid var(--border);}.demo-result .authority-status {background:none;padding:12px 0;margin:0;border-top:1px solid var(--border);}.authority-status strong {font-size:11px;font-weight:500;color:var(--ink-2);}.authority-status p {font-size:11px;color:var(--muted);}.demo-result>.sub {font-size:10px;line-height:1.8;color:var(--muted);}.demo-result .live-buttons {align-items:center;}.export-menu {position:relative;}.export-options {position:absolute;right:0;z-index:9;top:30px;display:grid;min-width:200px;padding:10px;background:var(--surface);border:1px solid var(--border);border-radius:10px;gap:7px;box-shadow:0 12px 30px #0003;}.export-options .ctrl {justify-content:start;}
+.case-progress {grid-column:1/-1;position:relative;padding:14px 32px;color:var(--real);font-size:11px;border-top:1px solid var(--border);overflow:hidden;}.loading-line {position:absolute;top:0;left:0;width:35%;height:2px;background:var(--real);animation:working 1.5s ease-in-out infinite;}@keyframes working {from{transform:translateX(-110%)}to{transform:translateX(400%)}}.enter {animation:enter .35s ease-out both;}.workspace-links.enter {animation-delay:.09s;}@keyframes enter {from{opacity:0;transform:translateY(9px)}to{opacity:1;transform:translateY(0)}}dialog.case-drawer[open] {animation:drawer-in .22s ease-out;}@keyframes drawer-in {from{opacity:.5;transform:translateX(18px)}to{opacity:1;transform:translateX(0)}}button:focus-visible,summary:focus-visible {outline:2px solid var(--real);outline-offset:4px;}
+@media(max-width:750px) {header.top {padding:18px 20px;}nav.tabs {padding:0 20px;gap:23px;}main {padding:30px 20px 44px;}.banner {padding:8px 14px;font-size:9px;}.overview-heading h2 {font-size:32px;}.overview-heading p {font-size:13px;}.welcome-case {grid-template-columns:1fr;}.case-intro {padding:25px;}.case-intro h2 {font-size:21px;}.case-journey {padding:24px;gap:20px;border-left:0;border-top:1px solid var(--border);}.workspace-link {padding:20px 18px;gap:14px;}.workspace-link:hover {padding-left:20px;}.workspace-link-text>span {font-size:11px;}.live-console {padding:14px;flex-wrap:wrap;}.launch-actions {width:100%;justify-content:space-between;}.view-heading {align-items:start;flex-direction:column;}.view-heading h2 {font-size:25px;}.kpi {padding:15px 12px;}.kpi .label {font-size:10px;line-height:1.6;}.kpi .value {font-size:23px;}.queue th,.queue td {padding:16px 12px;}.queue td.who {min-width:0;max-width:210px;}.queue .pd {max-width:180px;white-space:normal;}.queue .queue-action,.queue-action-heading {width:100px;}.review-reason {font-size:10px;}.view-evidence {font-size:10px;}.queue .card-h {padding:17px 14px;}.queue .card-h h2 {width:100%;}.queue .card-h .grow {margin-left:0;}.demo-result {padding:18px;}.demo-result h2 {font-size:19px;}.result-summary {padding:14px;}.result-summary b {font-size:30px;}footer {padding:0 20px 25px;}.welcome-actions {gap:16px;}.welcome-actions .text-button {font-size:11px;}.export-options {left:0;right:auto;}.ev-head .bt {font-size:16px;}}
+@media(prefers-reduced-motion:reduce) {* {animation:none!important;transition:none!important;scroll-behavior:auto!important;}}
+
+.queue-count {font-size:10px;color:var(--muted);}.queue-more {border-top:1px solid var(--border);padding:10px 22px;text-align:center;}
+
+/* Geist: a neutral palette and one shared alignment grid. */
+:root:not([data-theme="dark"]) {color-scheme:light;--page:#fafafa;--surface:#fff;--surface-2:#f5f5f5;--surface-3:#eaeaea;--ink:#171717;--ink-2:#525252;--muted:#707070;--real:#171717;--real-wash:#17171704;--sim:#a16207;--sim-wash:#a162070a;--qual:#525252;--violet:#737373;--neutral:#a3a3a3;--neutral-2:#d4d4d4;--border:#e5e5e5;--grid:#ededed;--axis:#b3b3b3;--critical:#b42318;--critical-wash:#b4231808;--good:#31623d;--shadow:none;}
+:root[data-theme="dark"] {color-scheme:dark;--page:#0a0a0a;--surface:#111;--surface-2:#181818;--surface-3:#242424;--ink:#ededed;--ink-2:#aaa;--muted:#909090;--real:#ededed;--real-wash:#ffffff04;--sim:#d9ab66;--sim-wash:#d9ab6609;--qual:#a3a3a3;--violet:#a3a3a3;--neutral:#737373;--neutral-2:#404040;--border:#282828;--grid:#222;--axis:#666;--critical:#ef8d86;--critical-wash:#ef8d860a;--good:#8faa95;--shadow:none;}
+body {font-family:"Geist",Arial,sans-serif;font-weight:400;font-size:14px;line-height:1.5;-webkit-font-smoothing:antialiased;font-synthesis:none;}
+button,input,select,textarea {font-family:inherit;} code,pre,.csv-input textarea,.num,.tnum,.rank,.bt,.journey-number,.workspace-index,.eyebrow,.section-kicker,.overview-section-label,.file-icon,.tag {font-family:"Geist Mono",monospace;font-weight:400;}svg text {font-family:"Geist",Arial,sans-serif;}
+header.top,nav.tabs,main,footer {width:100%;max-width:1120px;margin-left:auto;margin-right:auto;padding-left:32px;padding-right:32px;}
+.banner {padding:9px 24px;font-size:10px;background:var(--surface);color:var(--muted);border-bottom:1px solid var(--border);}
+header.top {height:80px;padding-top:0;padding-bottom:0;align-items:center;}.brand {gap:10px;}.brand h1 {font-family:"Geist",sans-serif;font-size:23px;font-weight:600;letter-spacing:-.055em;line-height:1;}.brand-point {color:var(--ink);}.brand svg {width:25px;height:25px;}.icon-btn {background:transparent;border:1px solid var(--border);border-radius:6px;width:34px;height:34px;padding:0;display:grid;place-items:center;}
+nav.tabs {height:48px;gap:30px;align-items:stretch;}nav.tabs button {font-size:12px;padding:0;display:flex;align-items:center;}.seg {border-radius:6px;}.seg button {border-radius:4px;}
+main {padding-top:48px;padding-bottom:64px;}.overview-heading {max-width:780px;margin-bottom:36px;}.eyebrow {font-size:10px;letter-spacing:.06em;color:var(--muted);}.overview-heading h2 {font-size:clamp(35px,4.5vw,52px);font-weight:500;letter-spacing:-.06em;line-height:1.08;margin:18px 0;max-width:800px;}.overview-heading p {font-size:14px;line-height:1.8;max-width:590px;color:var(--ink-2);}
+.welcome-case {grid-template-columns:minmax(0,1.13fr) minmax(0,1fr);border-radius:8px;background:var(--surface);margin-bottom:32px;}.case-intro {padding:30px 32px;display:flex;flex-direction:column;align-items:flex-start;}.section-kicker {font-size:10px;letter-spacing:0;color:var(--muted);}.case-intro h2 {font-size:26px;font-weight:500;letter-spacing:-.045em;line-height:1.25;margin:20px 0 12px;}.case-intro p {font-size:13px;line-height:1.85;margin:0;max-width:420px;color:var(--ink-2);}.welcome-actions {width:100%;gap:22px;margin-top:24px;}.welcome-actions .primary {height:40px;font-size:12px;gap:24px;padding:0 16px;}.welcome-foot {font-size:10px;color:var(--muted);margin-top:18px;line-height:1.6;}
+.case-journey {background:var(--surface);padding:30px 32px;gap:24px;align-content:center;}.journey-step {display:grid;grid-template-columns:28px minmax(0,1fr);gap:14px;align-items:start;}.journey-number {border:0;border-radius:0;width:28px;height:auto;line-height:20px;display:block;font-size:11px;color:var(--muted);}.journey-step strong {font-size:12px;font-weight:500;line-height:20px;}.journey-step p {font-size:11px;line-height:1.7;margin:5px 0 0;color:var(--muted);}
+.overview-section-label {font-size:10px;text-transform:uppercase;letter-spacing:.02em;margin-bottom:12px;color:var(--muted);}.workspace-links {border-radius:8px;}.workspace-link {display:grid;grid-template-columns:28px minmax(0,1fr) 20px;align-items:center;gap:14px;min-height:88px;padding:20px 32px;}.workspace-link:hover {padding-left:32px;background:var(--surface-2);}.workspace-index {font-size:11px;color:var(--muted);}.workspace-link-text {gap:6px;}.workspace-link-text strong {font-size:13px;font-weight:500;}.workspace-link-text>span {font-size:12px;line-height:1.65;}.workspace-arrow {color:var(--muted);font-size:17px;justify-self:end;}.overview-scope {font-size:11px;max-width:720px;margin-top:22px;color:var(--muted);line-height:1.8;}
+.ctrl {border-radius:6px;border-color:var(--border);color:var(--ink);font-weight:400;height:36px;}.ctrl.primary,:root:not([data-theme="dark"]) .ctrl.primary {background:var(--ink);border-color:var(--ink);color:var(--page);font-weight:500;}.ctrl:hover:not(:disabled) {border-color:var(--axis);transform:translateY(-1px);}.text-button {font-size:12px;color:var(--ink-2);text-decoration:underline;text-decoration-color:var(--border);text-underline-offset:4px;}.text-button:hover {color:var(--ink);text-decoration-color:var(--ink);}.card {border-radius:8px;}
+.view-heading {align-items:start;margin-bottom:28px;}.view-heading h2 {font-size:30px;font-weight:500;letter-spacing:-.045em;}.view-heading p {font-size:13px;line-height:1.8;}.view-heading>.tag {margin-top:4px;}.tag {border-radius:4px;font-size:9px;letter-spacing:0;padding:4px 7px;background:var(--surface);}.live-console {padding:16px 22px;border-radius:8px;margin-bottom:24px;}.launch-file strong {font-family:"Geist Mono",monospace;font-size:11px;}.launch-dot {background:var(--ink);}.launch-actions {gap:24px;}.start-demo {font-size:12px!important;}.kpis {border-radius:8px;}.kpi {padding:20px 22px;}.kpi .value {font-family:"Geist Mono",monospace;font-size:25px;font-weight:400;}.kpi .label {font-size:11px;}.kpi.alert .value {color:var(--critical);}.queue .card-h {padding:20px 22px;gap:12px;}.queue .card-h h2 {font-size:14px;font-weight:500;}.queue-count {font-family:"Geist Mono",monospace;}.queue th {padding:12px 22px;color:var(--muted);font-size:10px;}.queue td {padding:19px 22px;}.queue .rank {font-size:11px;font-weight:400;width:55px;}.queue .bt {font-size:11px;font-weight:500;}.queue .pd {font-size:12px;color:var(--ink-2);}.queue .row.selected {background:var(--surface-2);}.queue .review-reason {font-size:11px;}.queue .view-evidence {font-size:11px;color:var(--ink);text-underline-offset:3px;text-decoration:underline;text-decoration-color:var(--border);}.queue .status {font-family:"Geist",sans-serif;font-size:10px;border-radius:4px;}.queue-action {width:200px;}.queue .card-h .ctrl {font-size:10px;}.queue-more {padding:12px 22px;}.queue-more .text-button {font-size:11px;}
+.runtime-panel {background:var(--surface-2);color:var(--ink);border:1px solid var(--border);border-radius:6px;}.runtime-panel .sub,.runtime-panel .runtime-metrics span {color:var(--muted);}.runtime-panel .eyebrow {color:var(--muted)!important;}.runtime-panel .ctrl {background:var(--surface);color:var(--ink);border-color:var(--border);}.runtime-metrics b {font-family:"Geist Mono",monospace;font-weight:400;}.csv-input {border-radius:6px;}.csv-filebar strong {font-family:"Geist Mono",monospace;font-size:11px;font-weight:400;}.file-icon {background:var(--surface);border:1px solid var(--border);color:var(--ink-2);border-radius:4px;}.case-progress {color:var(--ink-2);}.loading-line {background:var(--ink);}.demo-result {border-color:var(--axis);border-radius:8px;}.result-summary {background:var(--surface-2);border-radius:6px;}.result-summary b {font-family:"Geist Mono",monospace;font-weight:400;}.result-summary .result-arrow {color:var(--muted);}.result-badge {background:var(--surface-2);color:var(--ink);border-radius:4px;font-family:"Geist Mono",monospace;font-weight:400;}.result-badge.failed {background:var(--critical-wash);color:var(--critical);}.check>span {color:var(--good);}.signal {border-radius:6px;}.signal .v {font-family:"Geist Mono",monospace;font-weight:400;}.ev-head .bt {font-family:"Geist",sans-serif;}.ev-head .rk {font-family:"Geist Mono",monospace;font-size:23px;font-weight:400;}.reasons code {font-family:"Geist Mono",monospace;}.route-view svg {font-family:"Geist",sans-serif;}
+footer {padding-top:0;padding-bottom:28px;font-size:10px;opacity:1;color:var(--muted);}button:focus-visible,summary:focus-visible {outline:2px solid var(--ink);outline-offset:4px;}
+@media(max-width:750px) {header.top,nav.tabs,main,footer {padding-left:20px;padding-right:20px;}header.top {height:72px;}nav.tabs {height:44px;gap:25px;}nav.tabs button {font-size:11px;}main {padding-top:32px;padding-bottom:40px;}.overview-heading {margin-bottom:28px;}.overview-heading h2 {font-size:37px;line-height:1.06;letter-spacing:-.055em;margin:16px 0;}.overview-heading p {font-size:13px;line-height:1.85;}.welcome-case {grid-template-columns:minmax(0,1fr);margin-bottom:28px;}.case-intro,.case-journey {padding:24px;}.case-intro h2 {font-size:25px;letter-spacing:-.045em;margin:18px 0 12px;}.case-intro p {font-size:12px;}.welcome-actions {gap:18px;align-items:center;flex-wrap:wrap;}.welcome-actions .primary {height:40px;}.welcome-foot {font-size:9px;}.case-journey {gap:22px;}.workspace-link {padding:20px 24px;gap:12px;grid-template-columns:20px minmax(0,1fr) 14px;}.workspace-link:hover {padding-left:24px;}.workspace-link-text strong {font-size:12px;}.workspace-link-text>span {font-size:11px;}.overview-scope {font-size:10px;}.view-heading h2 {font-size:27px;}.view-heading p {font-size:12px;}.live-console {padding:16px;gap:18px;}.launch-actions {width:100%;justify-content:space-between;}.kpi {padding:16px 12px;}.kpi .value {font-size:22px;}.kpi .label {font-size:10px;}.queue .card-h {padding:18px 16px;}.queue th,.queue td {padding:16px 12px;}.queue .rank {width:35px;font-size:10px;}.queue .bt {font-size:10px;}.queue .pd {font-size:11px;}.queue-action {width:100px;}.queue .review-reason,.queue .view-evidence {font-size:10px;}.queue .queue-action-heading {font-size:9px;}.demo-result {padding:18px;}}
+
+
+/* Readable case evidence and real geographic context. */
+.overview-map,.geography-card {margin:0 0 28px;overflow:hidden;}.map-heading {display:flex;justify-content:space-between;align-items:center;gap:20px;padding:24px 28px;border-bottom:1px solid var(--border);}.map-heading h2 {font-size:17px;font-weight:500;letter-spacing:-.025em;margin:0 0 7px;}.map-heading p {font-size:13px;color:var(--ink-2);margin:0;line-height:1.7;}.map-heading .seg {flex:none;}.map-heading .seg button {font-size:12px;padding:7px 12px;}.geography-content {display:grid;grid-template-columns:minmax(0,1.45fr) minmax(250px,1fr);}.geography-plot {min-width:0;padding:16px 18px 12px;background:var(--surface-2);}.geography-plot svg,.map .geography-plot svg {display:block;width:100%;max-width:none;height:auto;max-height:500px;}.india-boundary {fill:var(--surface-3);stroke:var(--axis);stroke-width:1;stroke-linejoin:round;vector-effect:non-scaling-stroke;}.map-gridline {stroke:var(--border);stroke-width:.7;stroke-dasharray:3 6;}.map-connection {fill:none;stroke:var(--critical);stroke-width:2;stroke-dasharray:6 5;cursor:pointer;vector-effect:non-scaling-stroke;animation:route-flow 3s linear infinite;}@keyframes route-flow {to{stroke-dashoffset:-44;}}.map-marker {cursor:pointer;}.marker-dot {fill:var(--ink);stroke:var(--surface);stroke-width:2;}.marker-halo {fill:var(--ink);opacity:.09;}.map-marker.flagged .marker-dot,.map-marker.flagged .marker-halo {fill:var(--critical);}.map-marker:focus {outline:none;}.map-marker:focus .marker-halo,.map-marker:hover .marker-halo {opacity:.25;}.map-city-label {font-family:"Geist",Arial,sans-serif;font-size:12px;font-weight:500;fill:var(--ink);paint-order:stroke;stroke:var(--surface-2);stroke-width:4px;stroke-linejoin:round;}.geo-summary {padding:30px 28px;min-width:0;border-left:1px solid var(--border);}.map-data-label {font-family:"Geist Mono",monospace;font-size:9px;color:var(--muted);letter-spacing:.02em;}.geo-summary h3 {font-size:19px;font-weight:500;letter-spacing:-.025em;text-transform:none;color:var(--ink);margin:16px 0 10px;}.geo-summary>p {font-size:12px;line-height:1.8;color:var(--ink-2);}.map-location-list {display:grid;margin:22px 0;border-top:1px solid var(--border);}.map-location {display:flex;justify-content:space-between;align-items:center;text-align:left;border:0;border-bottom:1px solid var(--border);padding:13px 0;background:none;color:var(--ink);font-size:13px;cursor:pointer;}.map-location:hover {color:var(--critical);}.map-count {font-family:"Geist Mono",monospace;font-size:11px;color:var(--muted);}.map-alert-summary {padding:18px 0 0;}.map-alert-summary strong {font-size:14px;font-weight:500;}.map-alert-summary p,.map-empty {font-size:12px;line-height:1.9;color:var(--ink-2);}.map-alert-summary .text-button {font-size:12px;}.map-legend {display:flex;justify-content:center;flex-wrap:wrap;gap:14px;font-size:10px;color:var(--ink-2);margin:6px 0 14px;}.map-legend>span {display:flex;align-items:center;gap:6px;}.map-key {display:inline-block;width:7px;height:7px;border-radius:50%;background:var(--ink);}.alert-key {background:var(--critical);}.map-attribution {text-align:center;font-size:9px;color:var(--muted);}.map-attribution a {color:var(--muted);text-underline-offset:3px;}
+dialog.case-drawer {width:min(1040px,96vw);max-width:96vw;padding:0 32px 40px;background:var(--surface);}.drawer-bar {background:var(--surface);padding:20px 0;border-bottom:1px solid var(--border);}.drawer-bar strong {font-size:14px;font-weight:500;}.drawer-bar .ctrl {font-size:13px;height:38px;}.case-evidence {font-family:"Geist",Arial,sans-serif;font-size:15px;line-height:1.8;max-width:920px;margin:0 auto;color:var(--ink);}.case-heading {padding:30px 0 26px;}.case-heading-meta {display:flex;flex-wrap:wrap;gap:10px 24px;font-family:"Geist Mono",monospace;font-size:11px;color:var(--muted);letter-spacing:.01em;}.case-heading h2 {font-family:"Geist",Arial,sans-serif;font-size:26px;font-weight:500;letter-spacing:-.03em;line-height:1.4;margin:16px 0;max-width:780px;overflow-wrap:anywhere;}.manufacturer-detail summary {font-size:13px;color:var(--ink-2);cursor:pointer;}.manufacturer-detail p {font-size:13px;line-height:1.9;overflow-wrap:anywhere;margin:14px 0;max-width:740px;}.case-badges {display:flex;gap:10px;flex-wrap:wrap;margin-top:20px;}.case-badge {font-family:"Geist",Arial,sans-serif;font-size:12px;line-height:1.5;padding:6px 10px;border:1px solid var(--border);border-radius:5px;background:var(--surface-2);color:var(--ink-2);}.case-badge.warning {color:var(--critical);border-color:var(--critical);background:var(--critical-wash);}.case-tabs {display:flex;gap:28px;border-bottom:1px solid var(--border);margin-bottom:0;overflow-x:auto;position:sticky;top:79px;z-index:3;background:var(--surface);}.case-tabs button {border:0;border-bottom:2px solid transparent;background:none;color:var(--muted);padding:14px 0;font-size:14px;line-height:1.5;cursor:pointer;white-space:nowrap;}.case-tabs button[aria-selected="true"] {color:var(--ink);border-bottom-color:var(--ink);}.case-panel {padding:32px 0 8px;}.case-panel[hidden] {display:none!important;}.evidence-section-heading {margin-bottom:26px;max-width:740px;}.case-evidence .evidence-section-heading h3 {font-size:21px;font-family:"Geist",Arial,sans-serif;font-weight:500;letter-spacing:-.025em;text-transform:none;color:var(--ink);margin:0 0 14px;line-height:1.5;}.evidence-section-heading p {font-size:15px;line-height:1.9;color:var(--ink-2);margin:0;}.case-summary-metrics {display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:0;border:1px solid var(--border);border-radius:7px;margin:28px 0 32px;}.case-summary-metrics>div {padding:22px;border-right:1px solid var(--border);display:flex;flex-direction:column;justify-content:space-between;gap:14px;}.case-summary-metrics>div:last-child {border:0;}.case-summary-metrics span {font-size:12px;color:var(--ink-2);line-height:1.7;}.case-summary-metrics strong {font-family:"Geist",Arial,sans-serif;font-size:25px;font-weight:500;letter-spacing:-.025em;line-height:1.4;}.case-summary-metrics small {font-size:11px;line-height:1.7;color:var(--muted);}.alert-text {color:var(--critical);}.case-explanation {margin:28px 0;max-width:760px;}.case-evidence h4 {font-family:"Geist",Arial,sans-serif;font-size:16px;font-weight:500;letter-spacing:-.01em;line-height:1.65;margin:0 0 12px;}.case-explanation p {font-size:15px;line-height:1.95;color:var(--ink-2);margin:0;}.case-note {font-size:12px!important;line-height:1.9!important;color:var(--muted);margin:22px 0;max-width:760px;}.case-explanation+.case-note {padding:18px 20px;background:var(--surface-2);border:1px solid var(--border);border-radius:6px;}.evidence-actions {display:flex;align-items:center;flex-wrap:wrap;gap:14px;margin:28px 0;}.evidence-actions .ctrl {min-height:42px;font-size:13px;padding:0 17px;}.model-diagnostics,.related-evidence {border-top:1px solid var(--border);margin-top:30px;padding-top:20px;font-size:13px;}.model-diagnostics>summary,.related-evidence>summary {font-size:13px;color:var(--ink-2);cursor:pointer;}.model-diagnostics p {font-size:13px;line-height:1.9;color:var(--ink-2);margin:18px 0;}.diagnostic-list {display:grid;grid-template-columns:minmax(180px,.8fr) minmax(0,1.2fr);gap:14px 22px;margin:26px 0;}.diagnostic-list dt {color:var(--muted);font-size:12px;}.diagnostic-list dd {margin:0;overflow-wrap:anywhere;font-size:13px;}.diagnostic-reasons {list-style:none;padding:0;margin:24px 0;}.diagnostic-reasons li {display:grid;gap:8px;margin:20px 0;font-size:13px;color:var(--ink-2);}.diagnostic-reasons code {font-size:11px;overflow-wrap:anywhere;color:var(--muted);}.evidence-group {margin:30px 0 36px;}.source-cards {display:grid;gap:18px;}.source-record {padding:24px;border:1px solid var(--border);border-radius:8px;min-width:0;}.source-record-meta {display:flex;align-items:center;flex-wrap:wrap;gap:8px 16px;margin-bottom:18px;font-size:12px;color:var(--muted);}.source-record .tag {font-family:"Geist",Arial,sans-serif;font-size:11px;padding:3px 7px;}.source-record h4 {font-size:17px;line-height:1.65;margin:0 0 9px;}.source-batch {font-size:12px;color:var(--muted);margin-bottom:22px;}.source-batch code {font-size:12px;color:var(--ink);margin-left:5px;}.source-facts {display:grid;grid-template-columns:115px minmax(0,1fr);gap:14px 20px;margin:0 0 22px;}.source-facts dt {font-size:12px;color:var(--muted);line-height:1.9;}.source-facts dd {font-size:14px;line-height:1.9;color:var(--ink-2);margin:0;overflow-wrap:anywhere;}.source-reference {display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:14px;padding-top:20px;border-top:1px solid var(--border);}.source-reference>div {display:grid;gap:7px;}.source-reference strong {font-family:"Geist",Arial,sans-serif;font-size:12px;font-weight:500;}.source-reference span {font-size:11px;color:var(--muted);}.source-download {font-size:12px;color:var(--ink);text-underline-offset:4px;line-height:1.8;}.source-identity {margin-top:20px;font-size:12px;}.source-identity summary {cursor:pointer;color:var(--muted);}.source-identity p {font-size:12px;line-height:1.9;overflow-wrap:anywhere;color:var(--ink-2);margin:14px 0 0;}.evidence-empty {font-size:14px;color:var(--muted);padding:20px 0;}.timeline-heading {margin-top:34px!important;}.case-timeline {list-style:none;margin:0;padding:0;}.case-timeline>li {display:grid;grid-template-columns:100px minmax(0,1fr);gap:24px;padding:22px 0;border-bottom:1px solid var(--border);}.timeline-time {font-size:12px;color:var(--muted);padding-top:3px;}.case-timeline strong {font-size:15px;font-weight:500;}.case-timeline p {font-size:13px;color:var(--ink-2);margin:4px 0 12px;}.case-timeline details summary {font-size:12px;color:var(--muted);cursor:pointer;}.scan-identifiers {display:grid;grid-template-columns:55px minmax(0,1fr);gap:12px;font-size:12px;margin:18px 0;}.scan-identifiers dt {color:var(--muted);}.scan-identifiers dd {font-family:"Geist",Arial,sans-serif;margin:0;overflow-wrap:anywhere;line-height:1.9;}.decision-field {margin:28px 0;max-width:740px;}.decision-field>label {display:block;font-size:14px;font-weight:500;margin-bottom:12px;}.decision-field input[type="text"] {width:100%;height:46px;margin:0;border-radius:6px;padding:12px 14px;font-size:15px;}.decision-field textarea {min-height:150px;border-radius:6px;padding:14px;font-size:15px;line-height:1.85;font-family:"Geist",Arial,sans-serif;}.decision-field .decide {display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;}.decision-field .decide button {min-height:48px;font-size:14px;padding:12px 16px;border-radius:6px;text-align:left;background:var(--surface);}.decision-field .decide button[aria-pressed="true"] {background:var(--ink);color:var(--surface);border-color:var(--ink);}.case-panel .live-status {font-size:14px;color:var(--critical);line-height:1.8;}.geography-content.compact {grid-template-columns:minmax(0,1.2fr) minmax(230px,1fr);border:1px solid var(--border);border-radius:7px;overflow:hidden;}.compact .geography-plot {padding:12px;}.compact .geo-summary {padding:24px;}.compact .geo-summary h3 {font-size:17px;}.compact .map-location {font-size:13px;}
+@media(max-width:750px) {.map-heading {align-items:flex-start;flex-direction:column;gap:16px;padding:20px;}.map-heading h2 {font-size:17px;}.map-heading p {font-size:12px;}.geography-content,.geography-content.compact {grid-template-columns:minmax(0,1fr);}.geography-plot {padding:12px;}.geography-plot svg,.map .geography-plot svg {max-height:410px;}.geo-summary {padding:22px;border-left:0;border-top:1px solid var(--border);}.geo-summary h3 {font-size:18px;}.map-location-list {margin:18px 0;}.map-location {font-size:14px;min-height:46px;}.map-data-label {font-size:9px;}dialog.case-drawer {width:100vw;max-width:100vw;padding:0 20px 28px;}.drawer-bar {padding:16px 0;}.drawer-bar strong {font-size:13px;}.drawer-bar .ctrl {font-size:12px;}.case-heading {padding:26px 0 22px;}.case-heading-meta {font-size:10px;gap:9px 18px;}.case-heading h2 {font-size:22px;line-height:1.5;}.manufacturer-detail summary {font-size:12px;}.case-tabs {gap:22px;top:71px;}.case-tabs button {font-size:12px;padding:14px 0;}.case-panel {padding-top:26px;}.case-evidence .evidence-section-heading h3 {font-size:20px;}.evidence-section-heading p,.case-explanation p {font-size:14px;line-height:1.95;}.case-summary-metrics {grid-template-columns:minmax(0,1fr);}.case-summary-metrics>div {padding:18px 20px;border-right:0;border-bottom:1px solid var(--border);gap:10px;}.case-summary-metrics strong {font-size:23px;}.case-summary-metrics span {font-size:12px;}.case-summary-metrics small {font-size:12px;}.source-record {padding:20px;}.source-record h4 {font-size:16px;}.source-facts {grid-template-columns:minmax(0,1fr);gap:6px;}.source-facts dd {margin-bottom:12px;font-size:14px;}.case-note {font-size:12px!important;}.case-timeline>li {grid-template-columns:minmax(0,1fr);gap:10px;}.timeline-time {font-size:12px;}.decision-field .decide {grid-template-columns:minmax(0,1fr);}.diagnostic-list {grid-template-columns:minmax(0,1fr);gap:8px;}.diagnostic-list dd {margin-bottom:12px;}.evidence-actions {align-items:stretch;}.evidence-actions .ctrl {font-size:13px;}.map-connection {stroke-width:2;}}
+@media(prefers-reduced-motion:reduce) {.map-connection {animation:none;}}
+
+</style>
+</head>
+<body>
+<div class="banner" role="note" id="workspaceStatus">Demo workspace · Real medicine reports. Simulated scans. Human review required.</div>
+<header class="top">
+  <div class="brand">
+    <svg width="34" height="34" viewBox="0 0 34 34" aria-hidden="true"><path d="M17 2 L30 7 V16 C30 24 24 30 17 32 C10 30 4 24 4 16 V7 Z" fill="var(--ink)"/><path d="M11 17 l4 4 l8 -9" stroke="var(--surface)" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    <div><h1>BatchGuard<span class="brand-point">.</span></h1><p>Medicine inspection workspace</p></div>
+  </div>
+  <span class="meta" id="clockMeta"></span>
+  <span class="meta">Backend <span class="seg" id="backendSeg"></span></span>
+  <button class="ctrl" id="demoBtn">Guided demo</button>
+  <button class="icon-btn" id="themeBtn" title="Toggle light/dark">◐</button>
+</header>
+<nav class="tabs" role="tablist" aria-label="Workspace views">
+  <button role="tab" data-tab="overview" aria-selected="true">Overview</button>
+  <button role="tab" data-tab="decision" aria-selected="false">Inspect</button>
+  <button role="tab" data-tab="evaluation" aria-selected="false">Results</button>
+  <button role="tab" data-tab="platform" aria-selected="false">IBM Z</button>
+  <button role="tab" data-tab="data" aria-selected="false">Data</button>
+</nav>
+<main>
+  <section id="overview"></section>
+  <section id="decision" hidden></section>
+  <section id="evaluation" hidden></section>
+  <section id="platform" hidden></section>
+  <section id="data" hidden></section>
+</main>
+<footer id="foot"></footer>
+<div id="tip" role="tooltip"></div>
+<script id="bg-data" type="application/json">/*__BATCHGUARD_DATA__*/null</script>
+<script>
+"use strict";
+const D = JSON.parse(document.getElementById("bg-data").textContent);
+const NS = "http://www.w3.org/2000/svg";
+const STATUSES = [["unreviewed", "Unreviewed"], ["sample requested", "Sample requested"], ["reviewed - no sample", "Reviewed, no sample"], ["escalated to laboratory", "Escalated to lab"]];
+const REASONS = {
+  CLONE_PATTERN_TRAVEL_REVIEW: ["Impossible travel", "One pack seen at least 100 km apart faster than 900 km/h (scan locations are unverified).", "crit"],
+  REPEATED_PACK_BURST_REVIEW: ["Repeated-pack burst", "Ten or more scans of one pack within 5 minutes (scan locations are unverified).", "crit"],
+  SCAN_CAUSE_UNVERIFIED: ["Cause unverified", "A scan pattern can also result from GPS, clock, or repeated-scan errors. Verify the source and pack before drawing conclusions.", ""],
+  PRIOR_NSQ_RECORDS: ["prior NSQ", "Earlier NSQ records with this manufacturer text (real CDSCO lists).", "real"],
+  REPORTED_IN_LAST_3_MONTHS: ["in last 3 mo", "NSQ records in the three months before the decision (real).", "real"],
+  MANUFACTURER_HISTORY: ["Has history", "Manufacturer text appears in earlier CDSCO lists.", ""],
+  NO_EARLIER_MANUFACTURER_HISTORY: ["No history", "No earlier record for this manufacturer text. Absence of history is not evidence of quality.", ""],
+  BATCH_REPORT_REFERENCE: ["Batch reported before", "This exact product and batch appear in an earlier published report.", "real"],
+  SPURIOUS_REPORT_REFERENCE: ["Spurious report", "This exact batch appears in an earlier spurious-drug report.", "crit"],
+  REFERENCE_COVERAGE_UNKNOWN: ["No batch report", "No earlier published report of this exact batch.", ""],
+  FOLLOWUP_SAMPLE_STATUS_UNKNOWN: ["Sample status unknown", "Whether a follow-up sample was already drawn is not known.", ""],
+};
+const HIDDEN_CHIPS = new Set(["MANUFACTURER_HISTORY", "REFERENCE_COVERAGE_UNKNOWN", "FOLLOWUP_SAMPLE_STATUS_UNKNOWN"]);
+const RANKERS = { trained_model: "Trained model", legacy_60_25_15_index: "Legacy 60/25/15 index", most_past_records: "Most past records", most_recent_3_months: "Most records, last 3 months", random_expectation: "Random (expected)" };
+const POLICY = { fused: ["BatchGuard fused queue", "--ink"], history_only: ["History only", "--real"], scan_rule_only: ["Scan rule only", "--sim"], scan_model_only: ["Scan model only", "--qual"], random_expectation: ["Random (expected)", "--neutral"] };
+const STAGES = { per_scan_decision_ms: "Per-scan decision", queue_rebuild_with_cached_context_ms: "Queue rebuild (cached context)", scan_inference_single_ms: "Scan model, one row", scan_inference_batch_total_ms: "Scan model, all episodes", feature_extraction_ms: "Feature extraction, per episode", event_validation_total_ms: "Validate every event", decision_context_build_ms: "Decision context build (monthly)" };
+
+const store = {
+  get(key, fallback) { try { const v = localStorage.getItem("batchguard." + key); return v === null ? fallback : JSON.parse(v); } catch (e) { return fallback; } },
+  set(key, value) { try { localStorage.setItem("batchguard." + key, JSON.stringify(value)); } catch (e) { /* storage unavailable */ } },
+};
+const S = {
+  backend: D.backends.includes(store.get("backend")) ? store.get("backend") : D.backends[0],
+  k: D.feed.length, capacity: Math.min(30, Math.max(1, store.get("capacity", 10))), selected: null, timer: null, tab: "overview",
+  reviews: store.get("reviews", {}), lastSaved: null,
+  strategy: store.get("strategy", "protected_history"), identityReviews: {},
+  storage: location.protocol === "http:" || location.protocol === "https:" ? "connecting" : "browser",
+  reviewer: store.get("reviewer", ""), saveError: "", demoStep: null,
+  mode: "replay", stream: "demo", live: null, runtime: null, liveReviews: {}, livePrev: new Map(), liveBusy: false, liveMessage: "", evidenceOpen: false,
+  actionBusy: false, demoRunning: false, demoResult: null, fixturePreview: false, liveRequest: 0, advancedOpen:false, scanDetailsOpen:false, scanDraft:"", csvDraft:null, csvExpanded:false, inputName:"inspection_case.csv", centralApproval:null, showAllBatches:false, evidenceTab:"summary", caseDrafts:{}, mapFilter:"all",
+};
+
+async function api(path, body) {
+  const controller=new AbortController(), timeout=setTimeout(()=>controller.abort(),45000);
+  try {
+    const response = await fetch(path, {...(body ? { method:"POST", headers:{"Content-Type":"application/json"}, body:JSON.stringify(body)} : {}), signal:controller.signal});
+    const contentType=response.headers.get("content-type") || "";
+    if (!contentType.includes("application/json")) throw new Error("This page needs the BatchGuard service, not a static file server. Run python -m app.server and refresh.");
+    const value = await response.json();
+    if (!response.ok) throw new Error(value.error || `Request failed (${response.status})`);
+    return value;
+  } catch (error) {
+    if (error.name === "AbortError") throw new Error("The service took too long. Controls are unlocked; refresh the queue before retrying.");
+    throw error;
+  } finally { clearTimeout(timeout); }
+}
+
+const requestId = () => crypto.randomUUID ? crypto.randomUUID() : `${Date.now()}-${Math.random().toString(36).slice(2)}`;
+async function connectStorage() {
+  if (S.storage === "browser") return;
+  try {
+    await api("/api/health");
+    const [decisions, identities] = await Promise.all([api("/api/decisions"), api("/api/identity-reviews")]);
+    S.reviews = decisions; S.identityReviews = identities;
+    try { S.runtime = await api("/api/runtime"); } catch (error) { S.liveMessage = error.message; }
+    S.storage = "server";
+  } catch (error) { S.storage = "unavailable"; S.saveError = "Decision service unavailable. Start python -m app.server to save to SQLite."; }
+  renderAll();
+}
+async function exportAudit() {
+  try {
+    const audit = await api("/api/audit");
+    const url = URL.createObjectURL(new Blob([JSON.stringify(audit, null, 2)], { type: "application/json" }));
+    const a = el("a", { href: url, download: "batchguard-audit.json" }); a.click(); URL.revokeObjectURL(url);
+  } catch (error) { S.saveError = error.message; renderDecision(); }
+}
+
+
+function goTo(tab) { document.querySelector(`nav.tabs button[data-tab="${tab}"]`).click(); }
+function showInput() {
+  goTo("decision"); UI.tools.open=true; S.csvExpanded=true; renderLiveConsole();
+  document.querySelector('.csv-input').scrollIntoView({behavior:matchMedia("(prefers-reduced-motion: reduce)").matches?"auto":"smooth",block:"center"});
+}
+function renderOverview() {
+  const root=document.getElementById("overview"),busy=S.demoRunning || S.actionBusy;
+  root.replaceChildren(
+    el("div",{class:"overview-heading enter"},el("span",{class:"eyebrow",text:"INSPECTION INTELLIGENCE"}),
+      el("h2",{text:"Know what to inspect next."}),
+      el("p",{text:"Turn medicine reports and scan patterns into a short list of batches to review. See the evidence before you decide."})),
+    el("div",{class:"welcome-case enter"},
+      el("div",{class:"case-intro"},el("span",{class:"section-kicker",text:"01 / GUIDED CASE"}),
+        el("h2",{text:"A clearer inspection shortlist."}),
+        el("p",{text:"A pack appears in Chennai and Delhi four minutes apart. Watch BatchGuard flag the pattern and explain why that batch needs a closer look."}),
+        el("div",{class:"welcome-actions"},el("button",{class:"ctrl primary",id:"overviewStart",disabled:busy,onclick:startDemo},busy ? "Checking the case…" : "Start demo",el("span",{"aria-hidden":"true",text:"↗"})),
+          el("button",{class:"text-button",onclick:showInput},"View the input CSV")),
+        el("div",{class:"welcome-foot",text:"Simulated case · included CSV · no real inspection dispatched"})),
+      el("div",{class:"case-journey","aria-label":"How the case works"},
+        [["01","Read the input","12 batches and their scan observations"],["02","Find what needs attention","A location conflict changes the shortlist"],["03","Review the evidence","Original reports and a recorded demo decision"]].map(([n,title,description])=>el("div",{class:"journey-step"},el("span",{class:"journey-number",text:n}),el("div",{},el("strong",{text:title}),el("p",{text:description}))))),
+      busy ? el("div",{class:"case-progress",role:"status"},el("span",{class:"loading-line"}),"Checking the CSV and building the shortlist…") : null),
+    el("div",{class:"card geography-card overview-map"},mapHeader(),renderMap(stepRows())),
+    el("div",{class:"overview-section-label",text:"Your workspace"}),
+    el("div",{class:"workspace-links enter"},
+      [["decision","Review the inspection queue","See suggested batches, then open a batch to understand its position.","01"],
+       ["evaluation","Understand the results","See what was tested, what worked, and where the limits remain.","02"],
+       ["platform","Explore the IBM Z workspace","Check the execution host and the central approval requirement.","03"]].map(([tab,title,description,n])=>el("button",{class:"workspace-link",onclick:()=>goTo(tab)},el("span",{class:"workspace-index",text:n}),el("span",{class:"workspace-link-text"},el("strong",{text:title}),el("span",{text:description})),el("span",{class:"workspace-arrow","aria-hidden":"true",text:"↗"})))),
+    el("p",{class:"overview-scope",text:"BatchGuard helps choose what to review. A scan alert does not prove a medicine is counterfeit or unsafe."}));
+}
+
+/* Live inference uses the same ranker as the recorded experiment. */
+const currentFeed = () => S.mode === "live" ? (S.live?.events || []) : D.feed;
+const currentK = () => S.mode === "live" ? currentFeed().length : S.k;
+const currentCandidates = () => S.mode === "live" ? (S.live?.candidates || {}) : D.candidates;
+const currentReviews = () => S.mode === "live" ? S.liveReviews : S.reviews;
+const currentMonth = () => S.mode === "live" ? S.live?.decision_month : D.decision_month;
+const inputCSV=()=>S.csvDraft === null ? D.demo_input_csv : S.csvDraft;
+function downloadCSV() {
+  const url=URL.createObjectURL(new Blob([inputCSV()],{type:"text/csv;charset=utf-8"}));
+  const a=el("a",{href:url,download:S.inputName});a.click();URL.revokeObjectURL(url);
+}
+function downloadJSON(value, name) {
+  const url = URL.createObjectURL(new Blob([JSON.stringify(value, null, 2)], {type:"application/json"}));
+  const a = el("a", {href:url, download:name}); a.click(); URL.revokeObjectURL(url);
+}
+function applySnapshot(snapshot) {
+  S.livePrev = new Map((S.live?.queue || []).map(r => [r.candidate_id, r.rank]));
+  S.live = snapshot;
+}
+async function refreshLive() {
+  if (S.storage !== "server") { S.liveMessage = "Live intake needs the local service. Start demo works offline with a recorded case."; renderDecision(); return false; }
+  const request = ++S.liveRequest;
+  S.liveBusy = true; renderLiveConsole();
+  try {
+    const params = new URLSearchParams({backend:S.backend, strategy:S.strategy, capacity:S.capacity, stream:S.stream});
+    const [snapshot, runtime, reviews] = await Promise.all([api("/api/live?" + params), api("/api/runtime"), api("/api/live/decisions?stream=" + S.stream)]);
+    if (request !== S.liveRequest) return false;
+    applySnapshot(snapshot); S.runtime = runtime; S.liveReviews = reviews;
+    return true;
+  } catch (error) { if (request === S.liveRequest) S.liveMessage = error.message; return false; }
+  finally { if (request === S.liveRequest) {S.liveBusy = false; renderHeader(); renderDecision();} }
+}
+async function changeMode(mode) {
+  if (S.actionBusy) return;
+  pause(); S.mode = mode; S.fixturePreview = false; S.demoStep = null; S.selected = null; S.demoResult = null;
+  if (mode === "live") {
+    if (S.runtime && !S.runtime.models[S.backend]) S.backend = Object.keys(S.runtime.models)[0] || S.backend;
+    await refreshLive();
+  } else { ++S.liveRequest; S.liveBusy=false; renderHeader(); renderDecision(); }
+}
+async function sendScenario(name) {
+  if (S.actionBusy || S.demoRunning) return;
+  S.actionBusy = true; S.demoResult = null; S.fixturePreview = false;
+  S.liveMessage = "Sending observations to the running service…"; renderDecision();
+  try {
+    S.stream = "demo"; S.mode = "live";
+    const result = await api(name === "reset" ? "/api/demo/reset" : "/api/demo/scenario", name === "reset" ? {} : {scenario:name});
+    S.liveMessage = name === "reset" ? "Demo window cleared. Audit history retained." : `${result.scans_added} simulated scan(s) accepted. Queue recomputed by the service.`;
+    await refreshLive();
+  } catch (error) { S.liveMessage = error.message; }
+  finally { S.actionBusy=false; renderHeader(); renderDecision(); }
+}
+async function startDemo() {
+  if (S.demoRunning || S.actionBusy) return;
+  pause(); S.demoRunning=true; S.actionBusy=true; S.demoResult=null; S.centralApproval=null; S.demoStep=null; S.saveError="";
+  S.liveMessage="Running fixed case: routine scans → location conflict → shortlist → evidence → demo decision…";
+  renderDecision();
+  try {
+    if (S.storage === "connecting") await storageReady;
+    S.strategy="protected_history"; S.capacity=4; S.stream="demo"; S.mode="live";
+    const backend = S.runtime && !S.runtime.models[S.backend] ? Object.keys(S.runtime.models)[0] : S.backend;
+    S.backend=backend || S.backend;
+    if (S.storage === "server") {
+      S.fixturePreview=false;
+      const result=await api("/api/demo/run", {request_id:requestId(), backend:S.backend, csv:inputCSV()});
+      applySnapshot(result.snapshot); S.demoResult=result;
+      const [runtime,reviews] = await Promise.all([api("/api/runtime"),api("/api/live/decisions?stream=demo")]);
+      S.runtime=runtime; S.liveReviews=reviews;
+      if (runtime.approval_authority && result.passed) {
+        S.centralApproval=await api("/api/approvals",{request_id:requestId(),reviewer_id:"scripted-demo",
+          backend:S.backend,stream:"demo",revision:result.snapshot.revision,queue_sha256:result.snapshot.queue_sha256,capacity:4});
+      }
+    } else {
+      if (inputCSV() !== D.demo_input_csv) throw new Error("Edited CSV needs the running service. Start python -m app.server, then run the case there.");
+      const result=D.demo_cases?.[S.backend];
+      if (!result) throw new Error("This build has no recorded demo case. Rebuild with python -m app.dashboard.");
+      S.fixturePreview=true; applySnapshot(result.snapshot); S.demoResult=result; S.liveReviews=store.get("fixture_reviews",{});
+    }
+    S.selected=S.demoResult.candidate_id;
+    S.liveMessage=S.demoResult.passed ? `Case checked: rank ${S.demoResult.before_rank} → ${S.demoResult.after_rank}, inside ${S.capacity} inspection slots.` : "Case completed with failed checks. Review the validation details.";
+    document.querySelector('nav.tabs button[data-tab="decision"]').click();
+    renderHeader(); renderDecision();
+    UI.result.scrollIntoView({behavior:matchMedia("(prefers-reduced-motion: reduce)").matches?"auto":"smooth",block:"start"});
+    if (!matchMedia("(prefers-reduced-motion: reduce)").matches) UI.result.animate([{opacity:0,transform:"translateY(8px)"},{opacity:1,transform:"translateY(0)"}],{duration:260,easing:"ease-out"});
+  } catch (error) { S.liveMessage=error.message; }
+  finally { S.demoRunning=false; S.actionBusy=false; renderHeader(); renderDecision(); }
+}
+function renderDemoResult() {
+  const result=S.demoResult;
+  UI.result.hidden=!result;
+  if (!result) {UI.result.replaceChildren();return;}
+  const candidate=result.snapshot.candidates[result.candidate_id];
+  UI.result.replaceChildren(
+    el("div",{class:"demo-result-head"},el("div",{},el("div",{class:"eyebrow",text:"DEMO-TRAVEL-001 · simulated integration case"}),
+      el("h2",{text:result.passed ? "The case reached the inspection shortlist." : "The case needs attention."})),
+      el("span",{class:"result-badge"+(result.passed ? "" : " failed"),text:`${result.checks.filter(c=>c.passed).length}/${result.checks.length} checks passed`})),
+    el("div",{class:"result-summary"},
+      el("div",{},el("span",{class:"sub",text:"Before the conflicting scan"}),el("b",{text:"#"+result.before_rank}),el("span",{text:"Outside capacity"})),
+      el("div",{class:"result-arrow",text:"→"}),
+      el("div",{},el("span",{class:"sub",text:"After the conflicting scan"}),el("b",{text:"#"+result.after_rank}),el("span",{text:"4 inspection slots"})),
+      el("div",{class:"result-batch"},el("strong",{text:candidate.batch}),el("span",{text:candidate.product}))),
+    el("div",{class:"authority-status"},el("strong",{text:S.centralApproval ? "IBM Z central approval recorded" : "IBM Z central approval pending"}),
+      el("p",{text:S.centralApproval ? "This simulated shortlist was approved by the central s390x service; no field inspection was dispatched." : "This preview can run the case and prepare evidence. Central approval is restricted to the IBM Z / LinuxONE authority service."})),
+    el("p",{class:"sub",text:S.fixturePreview ? "OFFLINE REPLAY: these checks ran at dashboard build time in a disposable database. No live decision was saved. Start the local service to run them again and persist a labelled demo decision." : "Computed by the running service. The saved action belongs to scripted-demo; no real inspection or laboratory dispatch was made."}),
+    el("details",{class:"validation-details"},el("summary",{text:"See the checks behind this result"}),el("div",{class:"result-checks"},result.checks.map(check=>el("div",{class:check.passed?"check passed":"check failed"},el("span",{text:check.passed?"✓":"!"}),check.label)))),
+    el("div",{class:"live-buttons"},
+      el("button",{class:"ctrl primary",onclick:()=>select(result.candidate_id)},"Open case evidence"),
+      el("details",{class:"export-menu"},el("summary",{text:"Export case"}),el("div",{class:"export-options"},el("button",{class:"ctrl",onclick:()=>downloadJSON(result,"batchguard-demo-validation.json")},"Download validation"),
+      el("button",{class:"ctrl",onclick:()=>downloadJSON({input_csv:result.input_csv,input_csv_sha256:result.input_csv_sha256,
+        backend:result.snapshot.backend,fixture_id:result.fixture_id,required_authority:"s390x",queue_sha256:result.snapshot.queue_sha256,
+        model_version:result.snapshot.model_version,approval:S.centralApproval,simulated:true},"batchguard-ibmz-handoff.json")},"Download IBM Z handoff"),
+      S.storage==="server" ? el("button",{class:"ctrl",onclick:exportAudit},"Download case audit") : null))));
+}
+function exampleScan() {
+  const c=currentCandidates()[S.selected] || Object.values(currentCandidates())[0] || Object.values(D.candidates)[0];
+  return JSON.stringify({event_id:requestId(),pack_id:"DEMO-MANUAL-PACK",product:c.product,batch_no:c.batch,
+    manufacturer_key:c.manufacturer,event_time:new Date().toISOString(),source_id:"DEMO-MANUAL-READER",
+    latitude:13.08,longitude:80.27,simulated:true},null,2);
+}
+function renderLiveConsole() {
+  const busy=S.actionBusy || S.liveBusy;
+  const host = S.runtime, measurements = host?.queue_measurements;
+  UI.modebar.replaceChildren(el("div", {class:"seg"},
+    el("button", {"aria-pressed":String(S.mode === "replay"), disabled:busy, onclick:()=>changeMode("replay")}, "Recorded replay"),
+    el("button", {"aria-pressed":String(S.mode === "live"), disabled:S.storage !== "server" || busy, title:S.storage !== "server" ? "Run python -m app.server for live intake; Start demo works offline" : "Use the current six-hour observation window", onclick:()=>changeMode("live")}, "Live operations")),
+    el("span", {class:"sub", text:S.fixturePreview ? "Fixed case · recorded offline preview" : S.mode === "live" ? "Current six-hour window · server inference" : "September 2026 replay · simulated observations"}));
+  UI.live.replaceChildren(el("div", {class:"live-actions"},
+    el("div", {class:"eyebrow", text:"Incoming signal → explained action"}),
+    el("h2", {text:"One click. One case. The complete decision."}),
+    el("p", {text:"Start the fixed Chennai–Delhi case. Twelve routine batches, one location conflict, four inspection slots, and checked evidence behind the result."}),
+    el("div",{class:"csv-input"},
+      el("div",{class:"csv-filebar"},el("span",{class:"file-icon",text:"CSV"}),el("div",{},el("strong",{text:S.inputName}),el("div",{class:"sub",text:"15 deliveries · 12 reference batches · simulated relative times"})),
+        el("button",{class:"ctrl",onclick:downloadCSV},"Download input CSV")),
+      el("details",{open:S.csvExpanded,ontoggle:e=>{if(e.target.isConnected)S.csvExpanded=e.target.open;}},el("summary",{text:"View or edit the input"}),
+        el("textarea",{"aria-label":"Input CSV",spellcheck:"false",oninput:e=>{S.csvDraft=e.target.value;}},inputCSV()),
+        el("label",{class:"sub"},"Replace CSV ",el("input",{type:"file",accept:".csv,text/csv","aria-label":"Upload input CSV",disabled:busy,onchange:async e=>{
+          const file=e.target.files[0];if(!file)return;
+          if(file.size>24000){S.liveMessage="Input CSV must be at most 24000 bytes.";renderDecision();return;}
+          S.csvDraft=await file.text();S.inputName=file.name;S.liveMessage="CSV loaded. Start demo will validate and process these rows.";renderDecision();}})),
+        el("button",{class:"ctrl",onclick:()=>{S.csvDraft=null;S.inputName="inspection_case.csv";renderDecision();}},"Restore included CSV"))),
+    el("div", {class:"live-buttons"}, el("button",{class:"ctrl primary start-demo",id:"startDemo",disabled:busy,onclick:startDemo},S.demoRunning ? "Running case…" : "▶ Start demo"),
+      el("span",{class:"sub",text:S.storage === "server" ? "Runs real inference · resets demo queue only" : "Works offline · recorded integration case"})),
+    S.storage === "server" ? el("details",{class:"tv advanced-scenarios",open:S.advancedOpen,ontoggle:e=>{if(e.target.isConnected)S.advancedOpen=e.target.open;}},el("summary",{text:"Individual scan controls"}),
+      el("div",{class:"live-buttons"},[["seed","Load demo"],["routine","Routine scan"],["travel","Location conflict"],["burst","Repeated-pack burst"]].map(([key,label])=>el("button",{class:"ctrl",disabled:busy,onclick:()=>sendScenario(key)},label)))) : null,
+    el("div", {class:"live-status", role:"status", text:S.liveMessage || (S.storage === "server" ? "Service connected. Demo and submitted observations use separate queues." : "Start python -m app.server to activate live intake and durable decisions.")}),
+    S.mode === "live" && !S.fixturePreview ? el("div", {class:"live-buttons"},
+      el("select", {"aria-label":"Observation stream", disabled:busy, onchange:e=>{S.stream=e.target.value;S.live=null;refreshLive();}},
+        el("option", {value:"demo",selected:S.stream === "demo",text:"Demo · simulated"}),
+        el("option", {value:"submitted",selected:S.stream === "submitted",text:"Submitted · unverified"})),
+      el("button", {class:"ctrl",disabled:busy,onclick:refreshLive},"Refresh queue"),
+      el("button", {class:"ctrl",disabled:busy,onclick:()=>sendScenario("reset")},"Reset demo")) : null,
+    S.storage === "server" ? el("details", {class:"tv",open:S.scanDetailsOpen,ontoggle:e=>{if(e.target.isConnected)S.scanDetailsOpen=e.target.open;}},el("summary",{text:"Submit an observation"}),
+      el("p",{text:"Paste one ScanEvent JSON object. Use simulated:false for submitted observations. This records an unverified report, never a quality verdict."}),
+      el("textarea", {id:"scanJSON","aria-label":"ScanEvent JSON",oninput:e=>{S.scanDraft=e.target.value;}},S.scanDraft || exampleScan()),
+      el("button", {class:"ctrl",disabled:busy,onclick:async()=>{try {const result=await api("/api/scans",{event:JSON.parse(document.getElementById("scanJSON").value)});S.mode="live";S.fixturePreview=false;S.demoResult=null;S.stream=result.stream;S.liveMessage=result.duplicate?"Delivery retry: no duplicate scan added.":"Observation accepted.";await refreshLive();}catch(error){S.liveMessage=error.message;renderDecision();}}},"Submit scan")) : null),
+    el("div", {class:"runtime-panel"},
+      el("div", {class:"eyebrow",style:"color:#78dfd0",text:"Execution host"}),
+      el("h2", {text:S.fixturePreview ? "Recorded case · offline" : host ? (host.running_on_s390x ? "IBM Z / LinuxONE · s390x" : `${host.environment.machine} · local execution`) : "LinuxONE deployment ready"}),
+      el("p", {class:"sub",text:host ? `${S.backend === "snapml" ? "IBM Snap ML" : "scikit-learn"} · ${host.approval_authority ? "central approval authority" : "preview node; central approval requires IBM Z"}` : "Deploy the package on an s390x VM, then connect through an SSH tunnel."}),
+      el("div", {class:"runtime-metrics"},
+        el("div",{},el("b",{text:host && !S.fixturePreview && S.live?.queue_compute_ms != null ? fmt(S.live.queue_compute_ms,1)+" ms" : "—"}),el("span",{text:"latest queue compute"})),
+        el("div",{},el("b",{text:host ? fmt(host.accepted_scans_this_process) : "—"}),el("span",{text:"accepted this process"}))),
+      el("p", {class:"sub",text:`Measured on this host; excludes HTTP and evidence rendering. ${S.live?.includes_cold_context ? "Includes cold monthly context." : "Monthly context cached after first queue."} Full latency samples are in the receipt.`}),
+      host ? el("button",{class:"ctrl",onclick:async()=>{try{downloadJSON(await api("/api/runtime"),"batchguard-runtime-receipt.json");}catch(error){S.liveMessage=error.message;renderDecision();}}},"Download runtime receipt") : null));
+  const technical=UI.live.firstElementChild, runtime=UI.live.lastElementChild;
+  const start=technical.querySelector("#startDemo");
+  technical.querySelector(".eyebrow")?.remove(); technical.querySelector("h2")?.remove(); technical.querySelector("p")?.remove();
+  const action= start.parentElement; action.remove();
+  UI.toolsBody.replaceChildren(UI.modebar, UI.settings, technical,
+    el("details",{class:"runtime-details"},el("summary",{text:"Execution details"}),runtime));
+  UI.live.replaceChildren(el("div",{class:"launch-file"},el("span",{class:"launch-dot"}),el("div",{},el("strong",{text:S.inputName}),el("span",{text:"Included demo input"}))),
+    el("div",{class:"launch-actions"},el("button",{class:"text-button",onclick:showInput},"View input"),start));
+  renderOverview();
+}
+
+/* ---------- helpers ---------- */
+function el(tag, attrs, ...kids) {
+  const node = document.createElement(tag);
+  for (const [k, v] of Object.entries(attrs || {})) {
+    if (v === null || v === undefined || v === false) continue;
+    if (k === "class") node.className = v;
+    else if (k === "text") node.textContent = v;
+    else if (k === "style") node.style.cssText = v;
+    else if (k.startsWith("on")) node.addEventListener(k.slice(2), v);
+    else node.setAttribute(k, v === true ? "" : v);
+  }
+  for (const kid of kids.flat()) if (kid !== null && kid !== undefined && kid !== false) node.append(kid instanceof Node ? kid : document.createTextNode(String(kid)));
+  return node;
+}
+function sv(tag, attrs, ...kids) {
+  const node = document.createElementNS(NS, tag);
+  for (const [k, v] of Object.entries(attrs || {})) {
+    if (v === null || v === undefined) continue;
+    if (k === "text") node.textContent = v; else if (k.startsWith("on")) node.addEventListener(k.slice(2), v); else node.setAttribute(k, v);
+  }
+  for (const kid of kids.flat()) if (kid) node.append(kid);
+  return node;
+}
+const css = name => getComputedStyle(document.documentElement).getPropertyValue(name).trim();
+const fmt = (v, d = 0) => v === null || v === undefined ? "–" : Number(v).toLocaleString("en-IN", { minimumFractionDigits: d, maximumFractionDigits: d });
+const pct = (v, d = 0) => v === null || v === undefined ? "–" : fmt(100 * v, d) + "%";
+const time = iso => iso.slice(11, 19);
+const MONTHS = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+const monthName = m => `${MONTHS[+m.slice(5, 7) - 1]} ’${m.slice(2, 4)}`;
+const monthLong = m => `${MONTHS[+m.slice(5, 7) - 1]} ${m.slice(0, 4)}`;
+function niceStep(max, n = 4) { const raw = max / n || 1, p = 10 ** Math.floor(Math.log10(raw)), f = raw / p; return (f <= 1 ? 1 : f <= 2 ? 2 : f <= 2.5 ? 2.5 : f <= 5 ? 5 : 10) * p; }
+function chartWidth(half) {
+  const main = Math.min(1480, document.documentElement.clientWidth) - 40, full = main - 34;
+  return Math.max(300, half && innerWidth > 1100 ? (main - 12) / 2 - 34 : full);
+}
+function km(a, b) {
+  const r = Math.PI / 180, la = a.lat * r, lb = b.lat * r;
+  const h = Math.sin((lb - la) / 2) ** 2 + Math.cos(la) * Math.cos(lb) * Math.sin((b.lon - a.lon) * r / 2) ** 2;
+  return 6371 * 2 * Math.asin(Math.min(1, Math.sqrt(h)));
+}
+function reasonParts(code) { const [base, n] = code.split("="); return { base, n }; }
+function chipFor(code) {
+  const { base, n } = reasonParts(code), meta = REASONS[base] || [base, base, ""];
+  const label = n !== undefined ? `${n} ${meta[0]}` : meta[0];
+  return el("span", { class: "chip " + meta[2], title: meta[1] }, meta[2] === "crit" ? "⚠ " + label : label);
+}
+const tip = document.getElementById("tip");
+function showTip(event, head, rows) {
+  tip.replaceChildren(el("div", { class: "h", text: head }), ...rows.map(([name, value, color]) =>
+    el("div", { class: "r" }, color ? el("span", { class: "key", style: `border-color:${color}` }) : null, el("span", { text: name }), el("b", { text: value }))));
+  tip.style.display = "block";
+  const box = tip.getBoundingClientRect(), r = event.target.getBoundingClientRect ? event.target.getBoundingClientRect() : null;
+  const x = event.clientX || (r ? r.right : 0), y = event.clientY || (r ? r.top : 0);
+  tip.style.left = Math.min(window.innerWidth - box.width - 8, x + 14) + "px";
+  tip.style.top = Math.max(8, y - box.height - 10) + "px";
+}
+function hideTip() { tip.style.display = "none"; }
+function hoverable(node, head, rows) {
+  node.setAttribute("tabindex", "0");
+  node.classList.add("mark");
+  node.addEventListener("pointermove", e => showTip(e, head, rows()));
+  node.addEventListener("focus", e => showTip(e, head, rows()));
+  node.addEventListener("pointerleave", hideTip);
+  node.addEventListener("blur", hideTip);
+  return node;
+}
+function tableView(headers, rows, summary = "Table view") {
+  return el("details", { class: "tv" }, el("summary", { text: summary }),
+    el("div", { class: "scroll-x" }, el("table", { class: "small-tbl" },
+      el("thead", {}, el("tr", {}, headers.map((h, i) => el("th", { class: i ? "n" : "", text: h })))),
+      el("tbody", {}, rows.map(r => el("tr", {}, r.map((c, i) => el("td", { class: i ? "n" : "", text: c }))))))));
+}
+function card(title, sub, ...body) {
+  return el("div", { class: "card" }, el("div", { class: "card-h" }, el("h2", { text: title }), sub ? el("span", { class: "sub", text: sub }) : null), el("div", { class: "card-b" }, ...body));
+}
+
+/* ---------- derived scan facts (same rules as src/detector.py) ---------- */
+function feedTags() {
+  const ids = new Set(), packs = new Set();
+  return currentFeed().map(e => { const pk = e.cand + "|" + e.pack;
+    const tag = ids.has(e.id) ? "retry" : packs.has(pk) ? "repeat" : "new";
+    ids.add(e.id); packs.add(pk); return tag; });
+}
+function scanFacts(cid, k) {
+  const unique = new Map(); let deliveries = 0;
+  for (let i = 0; i < k; i++) { const e = currentFeed()[i]; if (!e || e.cand !== cid) continue; deliveries++; unique.set(e.id, e); }
+  const events = [...unique.values()].sort((a, b) => a.time < b.time ? -1 : a.time > b.time ? 1 : a.id < b.id ? -1 : 1);
+  const packs = new Map();
+  for (const e of events) { if (!packs.has(e.pack)) packs.set(e.pack, []); packs.get(e.pack).push(e); }
+  let maxKm = 0, maxKmh = 0, max5 = 0, maxSources = 0, travel = null, burst = null;
+  const packRows = [];
+  for (const [pack, list] of packs) {
+    const sources = new Set(list.map(e => e.source)), cities = new Set(list.map(e => `${e.city}, ${e.state}`));
+    maxSources = Math.max(maxSources, sources.size);
+    let packMax5 = 0;
+    list.forEach((e, i) => {
+      const t = Date.parse(e.time);
+      const recent = list.slice(0, i + 1).filter(p => t - Date.parse(p.time) <= 300000).length;
+      packMax5 = Math.max(packMax5, recent);
+      for (const p of list.slice(0, i)) {
+        const d = km(e, p), s = (t - Date.parse(p.time)) / 1000, v = s > 0 ? Math.min(100000, d * 3600 / s) : (d ? 100000 : 0);
+        maxKm = Math.max(maxKm, d); maxKmh = Math.max(maxKmh, v);
+        if (d >= 100 && (!travel || v > travel.kmh)) travel = { pack, from: p, to: e, km: d, kmh: v, minutes: s / 60 };
+      }
+    });
+    if (packMax5 > max5) { max5 = packMax5; burst = { pack, count: packMax5 }; }
+    packRows.push({ pack, scans: list.length, sources: sources.size, cities: [...cities].join(" / ") });
+  }
+  return { events, deliveries, retries: deliveries - events.length, packs: packRows, maxSources, travelHit: maxKm >= 100 && maxKmh > 900, travel, burstHit: max5 >= 10, burst };
+}
+function stepRows(k = currentK(), backend = S.backend) {
+  if (S.mode === "live") return (S.live?.queue || []).map(r => ({cid:r.candidate_id,priority:r.priority_score,hist:r.historical_risk,scan:r.scan_anomaly,qual:r.evidence_quality,sp:r.scan_probability,hp:r.history_probability,reasons:r.reason_codes,lane:r.selection_lane,rank:r.rank}));
+  const snapshots = S.strategy === "protected_history" ? D.protected_steps : D.steps;
+  return snapshots[backend][k - 1].map((r, i) => ({ cid: r[0], priority: r[1], hist: r[2], scan: r[3], qual: r[4], sp: r[5], hp: r[6], reasons: r[7].map(x => D.codes[x]), lane: r[8], rank: i + 1 }));
+}
+function walkthrough(step = 0) {
+  pause(); S.mode = "replay"; S.fixturePreview=false; S.demoResult=null; S.strategy = "protected_history"; S.capacity = 10; S.k = D.feed.length; S.demoStep = step;
+  document.querySelector('nav.tabs button[data-tab="decision"]').click();
+  const ranked = stepRows();
+  const chosen = step === 1 ? ranked.find(r => r.scan > 0) : ranked.find(r => r.hist > 0);
+  if (chosen) S.selected = chosen.cid;
+  renderAll();
+  if (step >= 2 && S.selected) select(S.selected);
+}
+document.getElementById("demoBtn").addEventListener("click", () => walkthrough());
+
+/* ---------- header / tabs / theme ---------- */
+function renderHeader() {
+  const e = currentFeed()[currentK() - 1], d = new Date(e ? e.time : Date.now());
+  document.getElementById("clockMeta").replaceChildren("Decision time ", el("b", { text: d.toLocaleString("en-GB", { day: "numeric", month: "short", year: "numeric", hour: "2-digit", minute: "2-digit", timeZone: "UTC" }) + " UTC" }));
+  const seg = document.getElementById("backendSeg");
+  seg.replaceChildren(...D.backends.map(b => el("button", { "aria-pressed": String(b === S.backend), disabled:S.mode === "live" && S.runtime && !S.runtime.models[b], text: b === "snapml" ? "IBM Snap ML" : b === "sklearn" ? "scikit-learn" : b,
+    onclick: () => { S.backend = b; store.set("backend", b); if (S.fixturePreview) startDemo(); else if (S.mode === "live") refreshLive(); else renderAll(); } })));
+}
+document.querySelectorAll("nav.tabs button").forEach(b => b.addEventListener("click", () => {
+  S.tab = b.dataset.tab;
+  document.querySelectorAll("nav.tabs button").forEach(x => x.setAttribute("aria-selected", String(x === b)));
+  document.querySelectorAll("main > section").forEach(s => { s.hidden = s.id !== S.tab; });
+  if (S.tab !== "decision") pause();
+  window.scrollTo(0,0);
+  const view=document.getElementById(S.tab);
+  if (!matchMedia("(prefers-reduced-motion: reduce)").matches) view.animate([{opacity:0,transform:"translateY(6px)"},{opacity:1,transform:"translateY(0)"}],{duration:220,easing:"ease-out"});
+}));
+document.getElementById("themeBtn").addEventListener("click", () => {
+  const dark = document.documentElement.dataset.theme ? document.documentElement.dataset.theme === "dark" : matchMedia("(prefers-color-scheme: dark)").matches;
+  document.documentElement.dataset.theme = dark ? "light" : "dark";
+  store.set("theme", document.documentElement.dataset.theme);
+  renderAll();
+});
+document.documentElement.dataset.theme = store.get("theme", "light");
+
+/* ---------- playback ---------- */
+function setK(k) { S.k = Math.max(1, Math.min(D.feed.length, k)); renderHeader(); renderDecision(); }
+function pause() { if (S.timer) { clearInterval(S.timer); S.timer = null; } const b = document.getElementById("playBtn"); if (b) b.textContent = "▶ Play"; }
+function play() {
+  if (S.timer) return pause();
+  if (S.k >= D.feed.length) setK(1);
+  S.timer = setInterval(() => { if (S.k >= D.feed.length) return pause(); setK(S.k + 1); }, 650);
+  document.getElementById("playBtn").textContent = "❚❚ Pause";
+}
+document.addEventListener("keydown", e => {
+  const tag = document.activeElement.tagName;
+  if (S.tab !== "decision" || S.mode === "live" || UI?.evidence.open || /INPUT|TEXTAREA|SELECT/.test(tag)) return;
+  if (e.key === " ") { if (tag === "BUTTON") return; e.preventDefault(); play(); }
+  else if (e.key === "ArrowRight") setK(S.k + 1);
+  else if (e.key === "ArrowLeft") setK(S.k - 1);
+  else if (e.key === "Home") setK(1);
+  else if (e.key === "End") setK(D.feed.length);
+});
+
+/* ---------- decision view ---------- */
+function measuredAt(n) {
+  const ev = D.evaluation[S.backend];
+  if (!ev) return null;
+  const budgets = Object.keys(ev.fusion.test_by_budget).map(Number);
+  const b = budgets.reduce((a, x) => Math.abs(x - n) < Math.abs(a - n) ? x : a, budgets[0]);
+  const row = ev.fusion.test_by_budget[b];
+  let fused = row["fused_" + ev.fusion.selected_on_validation];
+  if (S.strategy === "protected_history") {
+    const audit = D.capacity_audit && D.capacity_audit.backends[S.backend];
+    if (!audit || !audit.retrospective_months.length) return null;
+    const values = audit.retrospective_months.map(m => m.protected_history[String(b)]);
+    fused = { clone: values.reduce((a, v) => a + v.clone_capture, 0) / values.length,
+              recurrence: values.reduce((a, v) => a + v.recurrence_capture, 0) / values.length };
+  }
+  return { b, fused, history: row.history_only, rule: row.scan_rule_only, random: row.random_expectation, policy: ev.fusion.selected_on_validation };
+}
+function meter(value, color, label) {
+  return el("div", { class: "meter", title: label + ": " + fmt(value) },
+    el("div", { class: "track" }, el("div", { class: "fill", style: `width:${Math.max(0, Math.min(100, value))}%;background:${color}` })),
+    el("span", { class: "v", text: fmt(value) }));
+}
+let UI = null;
+function buildDecision() {
+  UI = {
+    range: el("input", { type: "range", id: "scanRange", min: 1, max: D.feed.length, value: S.k, "aria-label": "Simulated scans received", oninput: e => { pause(); setK(+e.target.value); } }),
+    counter: el("span", { class: "num clock" }), clock: el("span", { class: "muted num" }), cap: el("output"),
+    play: el("button", { class: "ctrl primary", id: "playBtn", onclick: play }, "▶ Play"),
+    kpis: el("div", { class: "kpis" }), notes: el("div", { class: "decision-notes" }), queue: el("div", { class: "card queue" }), map: el("div", { class: "card geography-card map" }),
+    feed: el("div", { class: "card feed" }), evidence: el("dialog", {class:"case-drawer", "aria-label":"Batch evidence and review", onclose:()=>{S.evidenceOpen=false;}}),
+    settings:el("div",{class:"model-settings"}), toolsBody:el("div",{class:"tools-body"}),
+    tools:el("details",{class:"advanced-tools",id:"inspectionTools"}),
+    result: el("div",{class:"card demo-result",id:"demoResult",hidden:true}), notice:el("div",{class:"live-status",role:"alert"}),
+    live: el("div", {class:"card live-console"}), modebar: el("div", {class:"modebar"}),
+  };
+  const controls = el("div", { class: "card controls" },
+    el("div", { class: "group replay-only" },
+      el("button", { class: "ctrl", title: "Start of feed (Home)", onclick: () => { pause(); setK(1); } }, "⏮"),
+      UI.play,
+      el("button", { class: "ctrl", title: "Next scan (→)", onclick: () => setK(S.k + 1) }, "+1"),
+      el("button", { class: "ctrl", title: "Ten more scans", onclick: () => setK(S.k + 10) }, "+10"),
+      el("button", { class: "ctrl", title: "End of feed (End)", onclick: () => { pause(); setK(D.feed.length); } }, "⏭")),
+    el("div", { class: "group replay-only" }, el("label", { for: "scanRange", text: "Simulated scans received" }), UI.range, UI.counter, UI.clock),
+    el("div", { class: "group grow" },
+      el("label", { text: "This week's capacity" }),
+      el("span", { class: "stepper" },
+        el("button", { "aria-label": "Fewer", onclick: () => setCapacity(S.capacity - 1) }, "−"), UI.cap,
+        el("button", { "aria-label": "More", onclick: () => setCapacity(S.capacity + 1) }, "+")),
+      el("span", { class: "muted", text: "batches" })),
+    el("div", { class: "group" }, el("label", { for: "queueStrategy", text: "Queue allocation" }),
+      el("select", { id: "queueStrategy", onchange: e => { S.strategy = e.target.value; store.set("strategy", S.strategy); if (S.mode === "live") refreshLive(); else renderDecision(); } },
+        el("option", { value: "protected_history", selected: S.strategy === "protected_history", text: "Reserve history slots" }),
+        el("option", { value: "legacy", selected: S.strategy === "legacy", text: "Legacy blended score" }))));
+  const context = el("details", {class:"context-details"},el("summary",{text:"How this queue is ordered"}),UI.notes);
+  UI.settings.append(...document.querySelectorAll("header.top .meta,header.top #demoBtn"));
+  UI.tools.append(el("summary",{text:"Input & scan tools"}),UI.toolsBody,controls);
+  document.getElementById("decision").replaceChildren(
+    el("div",{class:"view-heading enter"},el("div",{},el("h2",{text:"Inspection queue"}),el("p",{text:"Start a demo, then choose a batch to see why it needs attention."})),el("span",{class:"tag",text:"Human review required"})),
+    UI.live, UI.notice, UI.result, UI.kpis, UI.map, UI.queue,
+    el("details",{class:"activity-details"},el("summary",{text:"Recent scan activity"}),UI.feed),
+    UI.tools,context,UI.evidence);
+
+}
+function renderDecision() {
+  if (!UI) buildDecision();
+  const scroll = UI.feed.querySelector("ol") ? UI.feed.scrollTop : 0;
+  renderLiveConsole(); renderDemoResult();
+  UI.notice.textContent=S.saveError || (S.liveMessage && !S.actionBusy && !S.demoResult ? S.liveMessage : "");
+  document.getElementById("workspaceStatus").textContent=S.mode === "live" && S.stream === "submitted" ? "Submitted observations · source and location unverified · human review required" : "Demo workspace · Real medicine reports. Simulated scans. Human review required.";
+  const locked=S.actionBusy || S.liveBusy;
+  document.querySelectorAll(".controls button,.controls input,.controls select,#demoBtn").forEach(node=>{node.disabled=locked || (S.fixturePreview && node.closest(".controls"));});
+  document.querySelectorAll("#backendSeg button").forEach((node,index)=>{node.disabled=locked || (S.mode === "live" && S.runtime && !S.runtime.models[D.backends[index]]);});
+  document.getElementById("queueStrategy").value=S.strategy;
+  if (S.demoStep !== null) {UI.notes.parentElement.open = true; UI.tools.open=true;}
+  document.querySelectorAll(".replay-only").forEach(node=>{node.hidden=S.mode === "live";});
+  const count = currentK(), feed = currentFeed(), tags = feedTags();
+  const rows = stepRows(), prev = S.mode === "live" ? S.livePrev : S.k > 1 ? new Map(stepRows(S.k - 1).map(r => [r.cid, r.rank])) : new Map();
+  const alerts = rows.filter(r => r.scan > 0).length;
+  if (!S.selected || !rows.some(r => r.cid === S.selected)) S.selected = rows[0] ? rows[0].cid : null;
+  const latest = feed[count - 1], m = measuredAt(S.capacity);
+  if (+UI.range.value !== S.k) UI.range.value = S.k;
+  UI.counter.textContent = `${S.k} / ${D.feed.length}`;
+  UI.clock.textContent = latest ? time(latest.time) + " UTC" : "Waiting for scans";
+  UI.cap.textContent = S.capacity;
+  UI.play.textContent = S.timer ? "❚❚ Pause" : "▶ Play";
+
+  UI.kpis.replaceChildren(
+    el("div",{class:"kpi"},el("div",{class:"label",text:"Batches in view"}),el("div",{class:"value",text:fmt(rows.length)})),
+    el("div",{class:"kpi"+(alerts ? " alert" : "")},el("div",{class:"label",text:"Scan alerts to review"}),el("div",{class:"value",text:fmt(alerts)})),
+    el("div",{class:"kpi"},el("div",{class:"label",text:"Available inspection slots"}),el("div",{class:"value",text:fmt(S.capacity)})));
+
+  const unknown = rows.filter(r => r.hp === null), unknownInCapacity = unknown.filter(r => r.rank <= S.capacity).length;
+  const nextUnknown = unknown.find(r => r.rank > S.capacity) || unknown[0];
+  const comparison = m ? el("div", { class: "card decision-note" },
+    el("h2", { text: `What a ${m.b}-batch test budget captures` }),
+    el("p", { text: S.strategy === "protected_history"
+      ? `Retrospective comparison on the July and August queues. The reservation was selected on June, but the policy was developed after legacy test results were known. Clone labels are simulated. This is not independent validation or today's inspection outcome.`
+      : `Average of the recorded July and August test queues. Clone labels are simulated; recurrence means a manufacturer text appeared in that month's NSQ list.` }),
+    el("table", { class: "strategy-table" },
+      el("thead", {}, el("tr", {}, el("th", { text: "Ranking" }), el("th", { class: "n", text: "Simulated clones" }), el("th", { class: "n", text: "Recurring names" }))),
+      el("tbody", {}, [
+        [S.strategy === "protected_history" ? "History reservation" : "Legacy combined policy", m.fused, true], ["Scan rule only", m.rule, false], ["History only", m.history, false], ["Random expectation", m.random, false],
+      ].map(([label, value, current]) => el("tr", { class: current ? "current" : "" }, el("td", { text: label }),
+        el("td", { class: "n", text: pct(value.clone, 1) }), el("td", { class: "n", text: pct(value.recurrence, 1) }))))),
+    m.fused.recurrence < m.history.recurrence
+      ? el("p", { text: `At N=${m.b}, the current policy captures fewer recurring names than history-only ranking. Scan alerts can take capacity before historical candidates.` })
+      : el("p", { text: "The two targets trade off as the budget changes; compare both columns before interpreting the priority score." }))
+    : el("div", { class: "card decision-note" }, el("h2", { text: "Evaluation pending" }),
+      el("p", { text: "Run the training and evaluation pipeline to compare this queue with its baselines." }));
+  UI.notes.replaceChildren(comparison,
+    el("div", { class: "card decision-note unknown" },
+      el("h2", { text: "Missing or unseen manufacturer history" }),
+      el("p", {}, el("b", { text: `${unknown.length} of ${rows.length}` }),
+        ` batches have unavailable manufacturer text or no earlier NSQ record for it; ${unknownInCapacity} are inside the current capacity line. Their history score is zero because evidence is absent, not because the medicine is safe.`),
+      nextUnknown ? el("button", { class: "ctrl", onclick: () => select(nextUnknown.cid) },
+        `Inspect a batch with no history · rank ${nextUnknown.rank}`) : null,
+      el("p", { text: S.strategy === "protected_history"
+        ? `History gets ${pct(D.models[S.backend].history_share)} of scheduled slots when nonzero history is available. Other slots review scan alerts; unused slots fall back. Rank follows this allocation, while the score column shows the legacy blend.`
+        : "Manufacturer spellings are unverified identities. Scan alerts can still raise an unfamiliar batch's priority." })),
+    el("div", { class: "callout plain", role: "status", text: S.saveError || (S.storage === "server"
+      ? "Decisions and name reviews are saved to the local SQLite service. Reviewer identities are self-declared."
+      : S.storage === "browser" ? "Offline preview: decisions stay in this browser. Run python -m app.server for durable shared storage."
+      : "Connecting to decision storage…") }),
+    S.demoStep !== null ? el("div", { class: "callout plain" },
+      el("b", { text: ["1. Ten slots: history has a reserved place in the queue.", "2. Inspect the scan alert: it is simulated and its cause is unverified.", "3. Open the real workbook and check the exact sheet and rows.", "4. Enter a reviewer ID, save a decision, then export the audit."][S.demoStep] }),
+      el("div", {}, ["History", "Scan review", "Source evidence", "Decision"].map((label, index) =>
+        el("button", { class: "ctrl", onclick: () => walkthrough(index), text: label }))),
+      el("button", { class: "ctrl", onclick: () => { S.demoStep = null; renderDecision(); } }, "End walkthrough")) : null);
+
+  const tbody = el("tbody");
+  const visibleRows=S.showAllBatches ? rows : rows.slice(0,S.capacity);
+  visibleRows.forEach(r => {
+    const c = currentCandidates()[r.cid], was = prev.get(r.cid), status = (currentReviews()[r.cid] || {}).status || "unreviewed";
+    const delta = S.k === 1 ? null : was === undefined ? el("span", { class: "delta new", text: "new" }) : was > r.rank ? el("span", { class: "delta up", text: "▲" + (was - r.rank) }) : was < r.rank ? el("span", { class: "delta down", text: "▼" + (r.rank - was) }) : null;
+    const si = STATUSES.findIndex(s => s[0] === status);
+    const tr = el("tr", { class: ["row", r.scan > 0 ? "alert" : "", r.rank > S.capacity ? "below" : "", r.cid === S.selected ? "selected" : "", was === undefined && S.k > 1 && S.timer ? "fresh" : ""].join(" "), tabindex: 0,
+      onclick: () => select(r.cid), onkeydown: e => { if (e.key === "Enter") select(r.cid); } },
+      el("td", { class: "rank" }, String(r.rank), delta),
+      el("td", { class: "who" }, el("div", { class: "bt", text: c.batch }), el("div", { class: "pd", text: c.product, title: c.product }), el("div", { class: "mf", text: c.manufacturer, title: c.manufacturer }),
+        el("div", { class: "chips" }, si > 0 ? el("span", { class: "status s" + si, text: "✓ " + STATUSES[si][1] }) : null,
+          r.lane ? el("span", { class: "chip real", text: r.lane + " slot" }) : null,
+          r.reasons.filter(x => !HIDDEN_CHIPS.has(reasonParts(x).base)).map(chipFor))),
+      el("td",{class:"queue-action"},el("span",{class:"review-reason",text:r.scan > 0 ? "Scan pattern to check" : r.hp === null ? "Limited earlier history" : "Earlier quality reports"}),el("span",{class:"view-evidence",text:"View evidence →"})),
+      el("td", {class:"metric-col"}, meter(r.hist, "var(--real)", "Historical risk")),
+      el("td", {class:"metric-col"}, meter(r.scan, "var(--sim)", "Scan anomaly")),
+      el("td", {class:"metric-col"}, meter(r.qual, "var(--qual)", "Evidence quality")),
+      el("td", { class: "prio metric-col", text: fmt(r.priority, 1) }));
+    tbody.append(tr);
+    if (r.rank === S.capacity && rows.length > S.capacity) tbody.append(el("tr", { class: "cap" }, el("td", { colspan: 7, text: `▲ Capacity: ${S.capacity} batches this week · ${rows.length - S.capacity} below wait for the next cycle` })));
+  });
+  UI.queue.replaceChildren(
+    el("div", { class: "card-h" }, el("h2", { text: "Suggested batches" }),el("span",{class:"queue-count",text:`${visibleRows.length} of ${rows.length}`}), el("span", { class: "sub", text: `${S.strategy === "protected_history" ? "history reservation" : D.models[S.backend].policy} · ${D.models[S.backend].version}` }),
+      el("button", { class: "ctrl grow", onclick: exportDecisions, title: "Export saved inspector decisions" }, "⤓ Export decisions"),
+      S.storage === "server" ? el("button", { class: "ctrl", onclick: exportAudit }, "Export audit") : null),
+    el("div", { class: "scroll-x" }, el("table", {},
+      el("thead", {}, el("tr", {}, el("th", { text: "#" }), el("th", { text: "Batch" }),el("th",{class:"queue-action-heading",text:"Why review it"}),
+        el("th", {class:"metric-col"}, el("span", { class: "tag real" }, el("span", { class: "dot" }), "Historical risk")),
+        el("th", {class:"metric-col"}, el("span", { class: "tag sim" }, el("span", { class: "dot" }), "Scan anomaly")),
+        el("th", {class:"metric-col", text: "Evidence quality" }), el("th", { class: "n metric-col", text: "Blend score" }))),
+      tbody)),
+    rows.length > S.capacity ? el("div",{class:"queue-more"},el("button",{class:"text-button",onclick:()=>{S.showAllBatches=!S.showAllBatches;renderDecision();}},S.showAllBatches ? "Show shortlist only" : `Show all ${rows.length} batches`)) : null);
+
+  const feedList = el("ol");
+  for (let i = count - 1; i >= Math.max(0, count - 60); i--) {
+    const e = feed[i], c = currentCandidates()[e.cand], tag = tags[i];
+    const alerted = rows.some(r => r.cid === e.cand && r.scan > 0);
+    feedList.append(el("li", { class: (i === count - 1 ? "latest " : "") + (tag === "retry" ? "retry" : ""), onclick: () => select(e.cand), title: c.product },
+      el("span", { class: "t", text: time(e.time) }),
+      el("span", { class: "w" }, el("b", { text: c.batch }), " · ", e.city, el("div", { class: "p", text: `${e.pack} · ${e.source}` })),
+      el("span", {}, alerted ? el("span", { class: "chip crit", text: "⚠ alert" }) : el("span", { class: "chip", text: tag === "retry" ? "↺ retry, ignored" : tag === "repeat" ? "same pack" : "new pack" }))));
+  }
+  UI.map.replaceChildren(mapHeader(),renderMap(rows));
+  UI.feed.replaceChildren(el("div", { class: "card-h" }, el("h2", { text: S.mode === "live" && S.stream === "submitted" ? "Submitted observations" : "Arriving simulated scans" }), el("span", { class: "sub", text: "newest first" })), feedList);
+  UI.feed.scrollTop = scroll;
+  UI.evidence.replaceChildren(el("div",{class:"drawer-bar"},el("strong",{text:"Evidence & decision"}),el("button",{class:"ctrl",onclick:()=>UI.evidence.close()},"Close evidence")),el("div",{class:"drawer-content"},renderEvidence(rows)));
+  if (S.evidenceOpen && !UI.evidence.open) UI.evidence.showModal();
+  if (!S.evidenceOpen && UI.evidence.open) UI.evidence.close();
+}
+function setCapacity(n) { S.capacity = Math.max(1, Math.min(30, n)); store.set("capacity", S.capacity); if (S.mode === "live") refreshLive(); else renderDecision(); }
+function select(cid) { pause(); S.evidenceTab="summary"; if ((stepRows().find(r=>r.cid===cid)?.rank || 0) > S.capacity) S.showAllBatches=true; S.selected = cid; S.lastSaved = null; S.evidenceOpen = true; renderDecision(); }
+
+/* ---------- map ---------- */
+function mapHeader() {
+  return el("div",{class:"map-heading"},el("div",{},el("h2",{text:"India scan activity"}),el("p",{text:"Where observations arrive and which patterns need review."})),
+    el("div",{class:"seg","aria-label":"Map view"},["all","alerts"].map(mode=>el("button",{"aria-pressed":String(S.mapFilter===mode),onclick:()=>{S.mapFilter=mode;renderDecision();}},mode === "all" ? "All scans" : "Alerts only"))));
+}
+function renderMap(rows, options={}) {
+  const geometry=D.india_map;
+  if (!geometry) return el("p",{class:"empty",text:"Map geometry is missing. Rebuild the dashboard."});
+  const width=540,height=500,padding=32;
+  const radians=value=>value*Math.PI/180,mercator=lat=>Math.log(Math.tan(Math.PI/4+radians(lat)/2));
+  const [west,south,east,north]=geometry.bounds;
+  const left=radians(west),right=radians(east),top=mercator(north),bottom=mercator(south);
+  const scale=Math.min((width-padding*2)/(right-left),(height-padding*2)/(top-bottom));
+  const offsetX=(width-(right-left)*scale)/2,offsetY=(height-(top-bottom)*scale)/2;
+  const project=(lon,lat)=>[offsetX+(radians(lon)-left)*scale,offsetY+(top-mercator(lat))*scale];
+  const openCase=cid=>{goTo("decision");select(cid);};
+  const svg=sv("svg",{viewBox:`0 0 ${width} ${height}`,role:"img","aria-label":"India map with scan locations and flagged same-pack connections","data-map-source":"Natural Earth"});
+  for (const lat of [10,20,30]) {const [,y]=project(west,lat);svg.append(sv("line",{x1:20,x2:width-20,y1:y,y2:y,class:"map-gridline"}));}
+  for (const lon of [70,80,90]) {const [x]=project(lon,north);svg.append(sv("line",{x1:x,x2:x,y1:20,y2:height-20,class:"map-gridline"}));}
+  const path=geometry.rings.map(ring=>"M"+ring.map(point=>project(...point).map(v=>v.toFixed(2)).join(",")).join("L")+"Z").join("");
+  svg.append(sv("path",{d:path,class:"india-boundary","fill-rule":"evenodd"}));
+  const alerts=new Set(rows.filter(r=>r.scan>0).map(r=>r.cid));
+  const events=[...new Map(currentFeed().slice(0,currentK()).map(e=>[e.id,e])).values()]
+    .filter(e=>(!options.candidateId || e.cand===options.candidateId) && (options.candidateId || S.mapFilter!=="alerts" || alerts.has(e.cand)));
+  const places=new Map();let outside=0;
+  for (const event of events) {
+    if(event.lon<west || event.lon>east || event.lat<south || event.lat>north){outside++;continue;}
+    const key=event.lat+":"+event.lon;
+    if(!places.has(key))places.set(key,{...event,events:[]});places.get(key).events.push(event);
+  }
+  const journeys=[];
+  for(const row of rows.filter(r=>alerts.has(r.cid) && (!options.candidateId || r.cid===options.candidateId))) {
+    const facts=scanFacts(row.cid,currentK()); if(!facts.travelHit || !facts.travel)continue;
+    const travel=facts.travel;
+    if([travel.from,travel.to].some(e=>e.lon<west||e.lon>east||e.lat<south||e.lat>north))continue;
+    journeys.push({row,travel});
+    const [x1,y1]=project(travel.from.lon,travel.from.lat),[x2,y2]=project(travel.to.lon,travel.to.lat);
+    const route=sv("path",{d:`M${x1},${y1} Q${(x1+x2)/2+65},${(y1+y2)/2-18} ${x2},${y2}`,class:"map-connection",tabindex:0,role:"button","aria-label":`Review flagged connection from ${travel.from.city} to ${travel.to.city}`,onclick:()=>openCase(row.cid),onkeydown:e=>{if(e.key==="Enter")openCase(row.cid);}});
+    svg.append(route);
+  }
+  for(const place of places.values()) {
+    const [x,y]=project(place.lon,place.lat),flagged=place.events.some(e=>alerts.has(e.cand)),radius=4+Math.min(6,Math.sqrt(place.events.length));
+    const candidate=place.events.find(e=>alerts.has(e.cand)) || place.events[0];
+    const group=sv("g",{class:"map-marker"+(flagged?" flagged":""),tabindex:0,role:"button","aria-label":`${place.city}: ${place.events.length} observations. Open batch evidence`,onclick:()=>openCase(candidate.cand),onkeydown:e=>{if(e.key==="Enter")openCase(candidate.cand);}});
+    group.append(sv("circle",{cx:x,cy:y,r:radius+6,class:"marker-halo"}),sv("circle",{cx:x,cy:y,r:radius,class:"marker-dot"}));
+    const onLeft=place.city==="Bengaluru"||place.city==="Coimbatore",dy=place.city==="Coimbatore"?18:place.city==="Bengaluru"?-9:-8;
+    group.append(sv("text",{x:x+(onLeft?-radius-9:radius+9),y:y+dy,"text-anchor":onLeft?"end":"start",class:"map-city-label",text:place.city}));
+    svg.append(group);
+  }
+  const simulated=options.candidateId ? events.every(e=>e.simulated!==false) : !(S.mode==="live" && S.stream==="submitted");
+  const summary=el("div",{class:"geo-summary"},
+    el("span",{class:"map-data-label",text:simulated?"SIMULATED OBSERVATIONS":"UNVERIFIED OBSERVATIONS"}),
+    el("h3",{text:options.candidateId?"This batch on the map":S.mapFilter==="alerts"?"Locations needing review":"Observations across India"}),
+    el("p",{text:`${events.length} unique observation${events.length===1?"":"s"} · ${places.size} mapped location${places.size===1?"":"s"}${outside?` · ${outside} outside this map extent`:""}`}),
+    el("div",{class:"map-location-list"},[...places.values()].sort((a,b)=>b.events.length-a.events.length).map(place=>el("button",{class:"map-location",onclick:()=>openCase((place.events.find(e=>alerts.has(e.cand))||place.events[0]).cand)},el("span",{text:place.city}),el("span",{class:"map-count",text:String(place.events.length)})))),
+    journeys.length ? el("div",{class:"map-alert-summary"},el("strong",{text:`${journeys[0].travel.from.city} → ${journeys[0].travel.to.city}`}),
+      el("p",{text:`${fmt(journeys[0].travel.km)} km apart in ${fmt(journeys[0].travel.minutes)} minutes. Check the location, clock and pack before drawing conclusions.`}),
+      el("button",{class:"text-button",onclick:()=>openCase(journeys[0].row.cid)},"Review this connection")) : el("p",{class:"map-empty",text:events.length?"No flagged location-conflict connection in this view.":"No observations in this view yet."}));
+  return el("div",{class:"geography-content"+(options.compact?" compact":"")},el("div",{class:"geography-plot"},svg,
+    el("div",{class:"map-legend"},el("span",{},el("i",{class:"map-key"}),"Scan location"),el("span",{},el("i",{class:"map-key alert-key"}),"Flagged connection")),
+    el("div",{class:"map-attribution"},el("a",{href:"https://www.naturalearthdata.com/downloads/10m-cultural-vectors/",target:"_blank",rel:"noreferrer",text:"Natural Earth · India POV"})," · map context")),summary);
+}
+
+/* ---------- evidence ---------- */
+function renderEvidence(rows) {
+  const r = rows.find(x => x.cid === S.selected);
+  if (!r) return el("div", { class: "card evidence empty", text: "No scans in the window yet." });
+  const c = currentCandidates()[r.cid], f = scanFacts(r.cid, currentK()), model = D.models[S.backend];
+  const prior = r.reasons.map(reasonParts).find(x => x.base === "PRIOR_NSQ_RECORDS");
+  const histWhy = r.hp === null ? "No earlier NSQ record for this manufacturer text. A zero means no history, not a safe medicine."
+    : `Recurrence model ${pct(r.hp, 1)} puts this text at percentile ${fmt(r.hist)} of ${fmt(S.mode === "live" ? S.live.history_universe : model.history_universe)} earlier manufacturer texts${prior ? `; ${prior.n} earlier NSQ record${prior.n === "1" ? "" : "s"}` : ""}.`;
+  const scanWhy = f.travelHit && f.travel ? `${f.travel.pack} scanned in ${f.travel.from.city}, then ${f.travel.to.city} ${fmt(f.travel.minutes)} min later: ${fmt(f.travel.km)} km, about ${fmt(f.travel.kmh)} km/h.`
+    : f.burstHit ? `${f.burst.pack} scanned ${f.burst.count} times within 5 minutes.` : `No rule pattern in ${f.events.length} unique scan${f.events.length === 1 ? "" : "s"} over the last 6 hours.`;
+  const modelWhy = r.sp === null ? "" : ` Synthetic model score ${pct(r.sp, 1)} (scripted validation threshold ${pct(model.threshold, 1)}); diagnostic only, not a counterfeit probability or alert.`;
+  const qualWhy = `${f.maxSources} asserted source${f.maxSources === 1 ? "" : "s"} on one pack. Independence is not verified.`;
+  const reviewedNames = new Set([c.manufacturer]);
+  let expanded = true;
+  while (expanded) {
+    expanded = false;
+    for (const link of Object.values(S.identityReviews)) {
+      if (link.decision !== "same_entity" || (!reviewedNames.has(link.left) && !reviewedNames.has(link.right))) continue;
+      for (const name of [link.left, link.right]) if (!reviewedNames.has(name)) { reviewedNames.add(name); expanded = true; }
+    }
+  }
+  const linkedEvidence = (D.identity_evidence || []).filter(x => reviewedNames.has(x.manufacturer_name_normalized) && x.manufacturer_name_normalized !== c.manufacturer);
+  const alert = r.scan > 0;
+  const formula = model.policy === "tiered"
+    ? (alert ? [`50 + scan/2 = 50 + ${fmt(r.scan)}/2`, `= ${fmt(r.priority, 1)}`] : [`history/2 = ${fmt(r.hist)}/2`, `= ${fmt(r.priority, 1)}`])
+    : [`0.50 × ${fmt(r.hist, 1)} + 0.35 × ${fmt(r.scan)} + 0.15 × ${fmt(r.qual)} × ${alert ? 1 : 0}`, `= ${fmt(r.priority, 1)}`];
+  const signal = (label, cls, color, value, why) => el("div", { class: "signal", style: `--c:${color}` },
+    el("div", { class: "k" }, cls ? el("span", { class: "tag " + cls }, el("span", { class: "dot" }), cls === "real" ? "real" : S.mode === "live" && S.stream === "submitted" ? "unverified" : "simulated") : null, label),
+    el("div", { class: "v", text: fmt(value) }), el("div", { class: "why", text: why }));
+
+  const review = currentReviews()[r.cid] || {};
+  const draft=S.caseDrafts[r.cid] || (S.caseDrafts[r.cid]={status:review.status || "unreviewed",note:review.note || ""});
+  let pending = draft.status;
+  const decideButtons = el("div", { class: "decide" }, STATUSES.map(([key, label]) => el("button", { "aria-pressed": String(key === pending), text: label,
+    onclick: e => { pending = key; draft.status=key; e.target.parentNode.querySelectorAll("button").forEach(b => b.setAttribute("aria-pressed", String(b === e.target))); } })));
+  const note = el("textarea", { placeholder: "Note for the record (optional)", onfocus: pause,oninput:e=>{draft.note=e.target.value;} }); note.value = draft.note;
+  const reviewer = el("input", { type: "text", placeholder: "Reviewer ID", "aria-label": "Reviewer ID", maxlength: 200,
+    oninput: e => { S.reviewer = e.target.value; store.set("reviewer", S.reviewer); } }); reviewer.value = S.reviewer;
+  const errorNotice = el("div", {class:"live-status",role:"alert"});
+  let saving = false;
+  const save = async () => {
+    if (saving) return;
+    S.saveError = ""; errorNotice.textContent = "";
+    if (!S.reviewer.trim()) { errorNotice.textContent = "Enter your reviewer ID before saving."; return; }
+    saving = true;
+    try {
+      if (S.storage === "server" && !S.fixturePreview) {
+        await api(S.mode === "live" ? "/api/live/decisions" : "/api/decisions", { request_id: requestId(), reviewer_id: S.reviewer, candidate_id: r.cid,
+          backend: S.backend, ...(S.mode === "live" ? {stream:S.stream,revision:S.live.revision} : {step:S.k}), capacity: S.capacity, strategy: S.strategy, status: pending, note: note.value });
+        if (S.mode === "live") S.liveReviews = await api("/api/live/decisions?stream=" + S.stream);
+        else S.reviews = await api("/api/decisions");
+      } else if (S.storage === "browser" || S.fixturePreview) {
+        const localReviews=S.fixturePreview ? S.liveReviews : S.reviews;
+        localReviews[r.cid] = { status: pending, note: note.value, reviewer_id: S.reviewer, batch: c.batch, product: c.product,
+          manufacturer: c.manufacturer, priority: r.priority, rank: r.rank, strategy: S.strategy,
+          model_version: model.version, saved_at: new Date().toISOString() };
+        store.set(S.fixturePreview ? "fixture_reviews" : "reviews", localReviews);
+      } else throw new Error("Decision service unavailable; the decision was not saved.");
+      S.lastSaved = r.cid;
+    } catch (error) { S.saveError = error.message; errorNotice.textContent = error.message; return; }
+    finally { saving = false; }
+    renderDecision();
+  };
+
+  const sourceDifferences = new Map((D.source_audit ? D.source_audit.comparisons : []).flatMap(c => c.discrepancies.map(d => [d.record_id, d])));
+  const sourceCheck = record => {
+    const discrepancy = sourceDifferences.get(record.build_record_id);
+    if (!D.source_audit) return el("span", { class: "muted", text: "Not checked" });
+    if (!discrepancy) return el("span", { class: "tag real", text: "Fields match" });
+    return el("details", {}, el("summary", { text: "⚠ Source needs review" }),
+      discrepancy.field_differences ? Object.entries(discrepancy.field_differences).map(([field, values]) =>
+        el("p", { text: `${field}: local “${values.local}”; captured official “${values.official}”` }))
+        : el("p", { text: "No unique exact product/batch counterpart. Check both sources manually; no fuzzy match was accepted." }));
+  };
+  const sourceCards = list => list.length ? el("div",{class:"source-cards"},list.map(x=>el("article",{class:"source-record"},
+    el("div",{class:"source-record-meta"},el("span",{text:monthLong(x.collection_month)}),el("span",{text:(x.source_category||"").replace("_nsq"," NSQ").replace("central","Central").replace("state","State")}),sourceCheck(x)),
+    el("h4",{text:x.product}),el("div",{class:"source-batch"},"Batch ",el("code",{text:x.batch_no})),
+    el("dl",{class:"source-facts"},el("dt",{text:"Reported issue"}),el("dd",{text:x.failure_type || "Not specified"}),el("dt",{text:"Reported by"}),el("dd",{text:x.reporting_state || x.reporting_lab || "Not specified"})),
+    el("div",{class:"source-reference"},el("div",{},el("strong",{text:x.source_file}),el("span",{text:`Sheet: ${x.source_sheet || "unavailable"} · Excel rows: ${x.source_excel_rows_json || "unavailable"}`})),
+      S.storage==="server" ? el("a",{href:"/sources/"+encodeURIComponent(x.source_file),class:"source-download",text:"Open original workbook ↗"}) : null),
+    el("details",{class:"source-identity"},el("summary",{text:"Manufacturer text as reported"}),el("p",{text:x.manufacturer_name_normalized || "Unavailable"}))))) : el("p",{class:"evidence-empty",text:"No earlier matching report is available."});
+  const exactIds=new Set(c.reports.map(record=>record.build_record_id));
+  const otherHistory=c.history.filter(record=>!exactIds.has(record.build_record_id));
+  const switchTab=tab=>{S.evidenceTab=tab;renderDecision();};
+  const heading=(title,description)=>el("div",{class:"evidence-section-heading"},el("h3",{text:title}),description?el("p",{text:description}):null);
+  const summary=el("section",{class:"case-panel",role:"tabpanel",id:"case-summary",hidden:S.evidenceTab!=="summary"},
+    heading("Why this batch is in the queue",alert?"An unusual scan pattern needs a closer look. This is a reason to review, not a counterfeit verdict.":c.history.length?"Earlier quality reports are linked to this manufacturer text. That history gives this batch a place in the review queue.":"There is limited earlier evidence for this manufacturer text. Missing history does not establish medicine quality."),
+    el("div",{class:"case-summary-metrics"},
+      el("div",{},el("span",{text:"Earlier manufacturer reports"}),el("strong",{text:String(c.history.length)})),
+      el("div",{},el("span",{text:"Scan pattern"}),el("strong",{class:alert?"alert-text":"",text:alert?"Needs review":"No alert"})),
+      el("div",{},el("span",{text:"Queue position"}),el("strong",{text:`#${r.rank}`}),el("small",{text:r.rank<=S.capacity?`Inside ${S.capacity} inspection slots`:`Outside ${S.capacity} inspection slots`}))),
+    el("div",{class:"case-explanation"},el("h4",{text:"What the scans show"}),el("p",{text:f.travelHit&&f.travel?`The same asserted pack was observed in ${f.travel.from.city} and ${f.travel.to.city}, ${fmt(f.travel.minutes)} minutes apart (${fmt(f.travel.km)} km). Verify the reader, time and pack.`:f.burstHit?`One asserted pack has ${f.burst.count} observations within five minutes. Check for duplicate reader activity or a copied identifier.`:`No travel or repeated-pack rule was triggered by ${f.events.length} unique observation${f.events.length===1?"":"s"}. This does not prove the medicine is safe.`})),
+    el("div",{class:"case-explanation"},el("h4",{text:"What the published reports show"}),el("p",{text:c.reports.length?`This exact product and batch appear in ${c.reports.length} earlier published report${c.reports.length===1?"":"s"}. Check the original source before acting.`:"No earlier published report was found for this exact product and batch."})),
+    el("div",{class:"case-note",text:"Manufacturer matches use normalized text, not a verified legal identity. Scan locations and source independence are unverified."}),
+    el("div",{class:"evidence-actions"},el("button",{class:"ctrl primary",onclick:()=>switchTab("sources")},"Review source reports"),el("button",{class:"ctrl",onclick:()=>switchTab("decision")},"Record a decision")),
+    el("details",{class:"model-diagnostics"},el("summary",{text:"Model and ranking details"}),
+      el("dl",{class:"diagnostic-list"},el("dt",{text:"Manufacturer history percentile"}),el("dd",{text:fmt(r.hist,1)+" / 100"}),el("dt",{text:"Recurrence model output"}),el("dd",{text:r.hp===null?"No earlier history":pct(r.hp,1)}),el("dt",{text:"Ranking strategy"}),el("dd",{text:S.strategy==="protected_history"?`Reserved history and scan slots · ${r.lane} slot`:model.policy}),el("dt",{text:"Legacy blend score"}),el("dd",{text:fmt(r.priority,1)}),el("dt",{text:"Model version"}),el("dd",{text:model.version})),
+      el("p",{text:histWhy}),el("p",{text:modelWhy}),el("p",{text:qualWhy}),el("p",{text:`Legacy formula: ${formula[0]} ${formula[1]}. Reserved-slot rank can differ from blend-score order.`}),
+      el("ul",{class:"diagnostic-reasons"},r.reasons.map(code=>el("li",{},el("code",{text:code}),el("span",{text:(REASONS[reasonParts(code).base]||[code,""])[1]}))))));
+  const sources=el("section",{class:"case-panel",role:"tabpanel",id:"case-sources",hidden:S.evidenceTab!=="sources"},
+    heading("Source reports","Read the finding first, then open the exact workbook, sheet and Excel rows."),
+    el("div",{class:"evidence-group"},el("h4",{text:`Reports for this exact batch · ${c.reports.length}`}),sourceCards(c.reports)),
+    el("div",{class:"evidence-group"},el("h4",{text:`Other earlier reports for this manufacturer text · ${otherHistory.length}`}),sourceCards(otherHistory)),
+    (linkedEvidence.length || c.product_context.total) ? el("details",{class:"related-evidence"},el("summary",{text:"Related products and reviewed name links"}),
+      linkedEvidence.length?sourceCards(linkedEvidence):null,c.product_context.total?sourceCards(c.product_context.records):null,
+      el("p",{class:"case-note",text:"Reviewed links are context, not a silent model merge. Product context matches exact text; ingredients and equivalence are not inferred."})) : null,
+    el("div",{class:"evidence-actions"},el("button",{class:"ctrl primary",onclick:()=>switchTab("decision")},"Record a decision")));
+  const scans=el("section",{class:"case-panel",role:"tabpanel",id:"case-scans",hidden:S.evidenceTab!=="scans"},
+    heading("Scan activity",`${f.events.length} unique observation${f.events.length===1?"":"s"}${f.retries?` · ${f.retries} delivery retries ignored`:""}. Demo locations are simulated; submitted locations remain unverified.`),
+    renderMap(rows,{candidateId:r.cid,compact:true}),
+    el("h4",{class:"timeline-heading",text:"Observation timeline"}),
+    el("ol",{class:"case-timeline"},f.events.map(e=>el("li",{},el("div",{class:"timeline-time",text:time(e.time)+" UTC"}),
+      el("div",{},el("strong",{text:e.city}),el("p",{text:e.state}),el("details",{},el("summary",{text:"Scan identifiers"}),el("dl",{class:"scan-identifiers"},el("dt",{text:"Pack"}),el("dd",{text:e.pack}),el("dt",{text:"Reader"}),el("dd",{text:e.source}),el("dt",{text:"Event"}),el("dd",{text:e.id}))))))));
+  const decision=el("section",{class:"case-panel",role:"tabpanel",id:"case-decision",hidden:S.evidenceTab!=="decision"},
+    heading("Record your decision","Choose the next review action and leave a note for the record. Nothing is dispatched automatically."),
+    el("div",{class:"decision-field"},el("label",{text:"Next action"}),decideButtons),
+    el("div",{class:"decision-field"},el("label",{for:"caseReviewer",text:"Reviewer ID"}),reviewer),
+    el("div",{class:"decision-field"},el("label",{for:"caseNote",text:"Note for the record"}),note),errorNotice,
+    el("div",{class:"evidence-actions"},el("button",{class:"ctrl primary",onclick:save},"Save decision"),S.lastSaved===r.cid?el("span",{class:"saved",text:S.storage==="server"?"✓ Saved to SQLite":"✓ Saved in this browser"}):null),
+    review.saved_at?el("p",{class:"case-note",text:`Last saved ${review.saved_at.replace("T"," ")} · ${review.reviewer_id || "reviewer unavailable"}`}):null,
+    el("p",{class:"case-note",text:S.storage==="server"?"Saves retain the reviewer, time, queue position and model context in the local audit history. Reviewer identities are self-declared.":"Offline preview: this decision stays in your browser. Export it to retain a separate copy."}));
+  reviewer.id="caseReviewer";note.id="caseNote";
+  return el("div",{class:"evidence case-evidence"},
+    el("div",{class:"case-heading"},el("div",{class:"case-heading-meta"},el("span",{text:`QUEUE #${r.rank}`}),el("span",{text:`BATCH ${c.batch}`})),
+      el("h2",{text:c.product}),el("details",{class:"manufacturer-detail"},el("summary",{text:"Manufacturer text and address"}),el("p",{text:c.manufacturer})),
+      el("div",{class:"case-badges"},el("span",{class:alert?"case-badge warning":"case-badge",text:alert?"Scan pattern needs review":"No scan alert"}),el("span",{class:"case-badge",text:r.rank<=S.capacity?"Within capacity":"Outside capacity"}))),
+    el("div",{class:"case-tabs",role:"tablist","aria-label":"Case evidence sections"},[["summary","Summary"],["sources","Source reports"],["scans","Scan activity"],["decision","Decision"]].map(([key,label])=>el("button",{role:"tab",id:"tab-"+key,"aria-controls":"case-"+key,"aria-selected":String(S.evidenceTab===key),onclick:()=>switchTab(key)},label))),summary,sources,scans,decision);
+}
+
+function exportDecisions() {
+  const cols = ["batch", "product", "manufacturer", "reviewer_id", "status", "note", "priority", "rank", "strategy", "model_version", "saved_at", "event_hash"];
+  const q = v => { let text = String(v === undefined || v === null ? "" : v); if (/^[=+@\-\t\r]/.test(text)) text = "'" + text; return `"${text.replace(/"/g, '""')}"`; };
+  const lines = [["candidate_id", ...cols].join(","), ...Object.entries(currentReviews()).map(([cid, r]) => [cid, ...cols.map(k => r[k])].map(q).join(","))];
+  const a = el("a", { href: URL.createObjectURL(new Blob(["﻿" + lines.join("\n")], { type: "text/csv" })), download: "batchguard_decisions.csv" });
+  document.body.append(a); a.click(); a.remove();
+}
+
+/* ---------- charts ---------- */
+function hBars(items, { max, format = v => fmt(v, 3), label = 190, width = chartWidth(true) } = {}) {
+  label = Math.min(label, width * .4);
+  const bar = 18, gap = 12, h = items.length * (bar + gap) + 8, x0 = label, x1 = width - 64;
+  const top = max || Math.max(...items.map(i => i.value)) || 1;
+  const svg = sv("svg", { viewBox: `0 0 ${width} ${h}`, role: "img" });
+  svg.append(sv("line", { class: "baseline", x1: x0, x2: x0, y1: 0, y2: h - 4 }));
+  items.forEach((it, i) => {
+    const y = 4 + i * (bar + gap), w = Math.max(0, (x1 - x0) * it.value / top), r = Math.min(4, w);
+    svg.append(sv("text", { class: "lbl", x: x0 - 10, y: y + bar / 2 + 4, "text-anchor": "end", text: it.label }));
+    const path = sv("path", { d: `M${x0},${y} H${x0 + w - r} Q${x0 + w},${y} ${x0 + w},${y + r} V${y + bar - r} Q${x0 + w},${y + bar} ${x0 + w - r},${y + bar} H${x0} Z`, fill: it.color });
+    svg.append(hoverable(path, it.label, () => [[it.metric || "Value", format(it.value)], ...(it.extra || [])]));
+    svg.append(sv("text", { class: "val", x: x0 + w + 6, y: y + bar / 2 + 4, text: format(it.value) }));
+  });
+  return el("div", { class: "chart" }, svg);
+}
+function lineChart({ xs, series, yMax = 1, yFormat = v => pct(v), xLabel, title, height = 250, width = chartWidth(true) }) {
+  const W = width, H = height, m = { l: 42, r: 14, t: 10, b: 34 };
+  const x = v => m.l + (W - m.l - m.r) * (v - xs[0]) / (xs[xs.length - 1] - xs[0]);
+  const y = v => H - m.b - (H - m.t - m.b) * v / yMax;
+  const svg = sv("svg", { viewBox: `0 0 ${W} ${H}`, role: "img", "aria-label": title });
+  for (let t = 0; t <= 4; t++) { const v = yMax * t / 4; svg.append(sv("line", { class: t ? "gridline" : "baseline", x1: m.l, x2: W - m.r, y1: y(v), y2: y(v) }), sv("text", { x: m.l - 6, y: y(v) + 4, "text-anchor": "end", text: yFormat(v) })); }
+  xs.forEach(v => svg.append(sv("text", { x: x(v), y: H - m.b + 16, "text-anchor": "middle", text: v })));
+  if (xLabel) svg.append(sv("text", { x: (m.l + W - m.r) / 2, y: H - 2, "text-anchor": "middle", text: xLabel }));
+  series.forEach(s => {
+    svg.append(sv("polyline", { points: s.values.map((v, i) => `${x(xs[i])},${y(v)}`).join(" "), fill: "none", stroke: s.color, "stroke-width": s.width || 2, "stroke-linejoin": "round", "stroke-linecap": "round", opacity: s.faint ? .8 : 1 }));
+    s.values.forEach((v, i) => svg.append(sv("circle", { cx: x(xs[i]), cy: y(v), r: 4, fill: s.color, stroke: "var(--surface)", "stroke-width": 2 })));
+  });
+  const hair = sv("line", { class: "xhair", y1: m.t, y2: H - m.b, x1: -10, x2: -10 });
+  svg.append(hair);
+  const overlay = sv("rect", { x: m.l, y: m.t, width: W - m.l - m.r, height: H - m.t - m.b, fill: "transparent", tabindex: 0 });
+  const nearest = e => {
+    const box = svg.getBoundingClientRect(), px = (e.clientX - box.left) * W / box.width;
+    return xs.reduce((best, v, i) => Math.abs(x(v) - px) < Math.abs(x(xs[best]) - px) ? i : best, 0);
+  };
+  overlay.addEventListener("pointermove", e => {
+    const i = nearest(e); hair.setAttribute("x1", x(xs[i])); hair.setAttribute("x2", x(xs[i]));
+    showTip(e, `${xLabel || "x"} ${xs[i]}`, [...series].sort((a, b) => b.values[i] - a.values[i]).map(s => [s.name, yFormat(s.values[i]), s.color]));
+  });
+  overlay.addEventListener("pointerleave", () => { hideTip(); hair.setAttribute("x1", -10); hair.setAttribute("x2", -10); });
+  svg.append(overlay);
+  return el("div", { class: "chart" }, svg);
+}
+function legend(items, line = true) {
+  return el("div", { class: "legend", style: "padding:4px 0 8px" }, items.map(([name, color]) => el("span", {}, line ? el("span", { class: "key", style: `border-color:${color}` }) : el("span", { class: "sw", style: `background:${color}` }), name)));
+}
+function groupedBars(groups, series, { format = v => pct(v), width = chartWidth(true), label = 200 } = {}) {
+  label = Math.min(label, width * .42);
+  const bar = 10, inner = 2, gap = 14, h = groups.length * (series.length * (bar + inner) + gap) + 6, x0 = label, x1 = width - 56;
+  const svg = sv("svg", { viewBox: `0 0 ${width} ${h}`, role: "img" });
+  svg.append(sv("line", { class: "baseline", x1: x0, x2: x0, y1: 0, y2: h - 4 }));
+  groups.forEach((g, gi) => {
+    const y0 = 4 + gi * (series.length * (bar + inner) + gap);
+    svg.append(sv("text", { class: "lbl", x: x0 - 10, y: y0 + series.length * (bar + inner) / 2 + 3, "text-anchor": "end", text: g.label }));
+    if (g.note) svg.append(sv("text", { x: x0 - 10, y: y0 + series.length * (bar + inner) / 2 + 16, "text-anchor": "end", text: g.note }));
+    series.forEach((s, si) => {
+      const v = g.values[si], w = Math.max(0, (x1 - x0) * v), r = Math.min(3, w), y = y0 + si * (bar + inner);
+      const p = sv("path", { d: `M${x0},${y} H${x0 + w - r} Q${x0 + w},${y} ${x0 + w},${y + r} V${y + bar - r} Q${x0 + w},${y + bar} ${x0 + w - r},${y + bar} H${x0} Z`, fill: s[1] });
+      svg.append(hoverable(p, g.label, () => series.map((t, ti) => [t[0], format(g.values[ti]), t[1]])));
+      svg.append(sv("text", { x: x0 + w + 5, y: y + bar - 1, text: format(v) }));
+    });
+  });
+  return el("div", { class: "chart" }, svg);
+}
+function stackedColumns(cols, series, { height = 260, width = chartWidth(false) } = {}) {
+  const m = { l: 36, r: 8, t: 10, b: 28 }, max = Math.max(...cols.map(c => c.values.reduce((a, b) => a + b, 0)));
+  const step = niceStep(max), top = Math.ceil(max / step) * step, band = (width - m.l - m.r) / cols.length, bw = Math.min(24, band * .62);
+  const y = v => height - m.b - (height - m.t - m.b) * v / top;
+  const svg = sv("svg", { viewBox: `0 0 ${width} ${height}`, role: "img" });
+  for (let v = 0; v <= top; v += step) svg.append(sv("line", { class: v ? "gridline" : "baseline", x1: m.l, x2: width - m.r, y1: y(v), y2: y(v) }), sv("text", { x: m.l - 6, y: y(v) + 4, "text-anchor": "end", text: fmt(v) }));
+  cols.forEach((c, i) => {
+    const cx = m.l + band * i + band / 2, g = sv("g");
+    let acc = 0;
+    const total = c.values.reduce((a, b) => a + b, 0), lastIndex = c.values.map(v => v > 0).lastIndexOf(true);
+    c.values.forEach((v, si) => {
+      if (!v) return;
+      const y1 = y(acc + v), y0 = y(acc), hgt = Math.max(0, y0 - y1 - (acc ? 2 : 0)), x = cx - bw / 2, r = si === lastIndex ? Math.min(4, hgt) : 0;
+      g.append(sv("path", { d: `M${x},${y1 + hgt} V${y1 + r} Q${x},${y1} ${x + r},${y1} H${x + bw - r} Q${x + bw},${y1} ${x + bw},${y1 + r} V${y1 + hgt} Z`, fill: series[si][1] }));
+      acc += v;
+    });
+    g.append(sv("rect", { x: cx - band / 2, y: m.t, width: band, height: height - m.t - m.b, fill: "transparent" }));
+    svg.append(hoverable(g, c.label, () => [...series.map((s, si) => [s[0], fmt(c.values[si]), s[1]]), ["Total", fmt(total)]]));
+    svg.append(sv("text", { x: cx, y: height - m.b + 15, "text-anchor": "middle", text: c.label }));
+  });
+  return el("div", { class: "chart" }, svg);
+}
+
+/* ---------- evaluation ---------- */
+function renderEvaluation() {
+  const root = document.getElementById("evaluation"), ev = D.evaluation[S.backend];
+  if (!ev) { root.replaceChildren(el("div", { class: "card empty", text: "No evaluation yet. Run python -m src.fusion run, then rebuild the dashboard." })); return; }
+  const A = ev.layer_a, B = ev.layer_b, F = ev.fusion, gain = A.ap_gain_vs_strongest_baseline, rec = D.recurrence;
+  const apItems = Object.entries(A.average_precision).sort((a, b) => b[1] - a[1]).map(([k, v]) => ({ label: RANKERS[k] || k, value: v, metric: "Average precision", color: k === "trained_model" ? "var(--real)" : "var(--neutral)" }));
+  const budgets = Object.keys(A.reports_captured_by_budget).map(Number).sort((a, b) => a - b);
+  const capture = budgets.map(b => {
+    const row = A.reports_captured_by_budget[b];
+    const best = Object.entries(row).filter(([k]) => k !== "trained_model" && k !== "random_expectation").sort((a, c) => c[1] - a[1])[0];
+    return { label: `Top ${b}`, values: [row.trained_model, best[1], row.random_expectation], note: `best baseline: ${RANKERS[best[0]].toLowerCase()}` };
+  });
+  const capMax = Math.max(...capture.flatMap(c => c.values));
+  const fusionBudgets = Object.keys(F.test_by_budget).map(Number).sort((a, b) => a - b);
+  const fusedKey = "fused_" + F.selected_on_validation;
+  const pol = Object.entries(POLICY).map(([k, [name, color]]) => ({ key: k === "fused" ? fusedKey : k, name: k === "fused" ? `${name} (${F.selected_on_validation})` : name, color: `var(${color})` }));
+  const fusionSeries = what => pol.map(p => ({ name: p.name, color: p.color, values: fusionBudgets.map(n => F.test_by_budget[n][p.key][what]), width: p.key === fusedKey ? 3 : 2 }));
+  const fams = ev.families.map(f => ({ label: f.scenario.replace(/_/g, " "), note: `${f.clone_label ? "clone" : "benign"}${f.held_out_family ? " · held out" : ""}`, values: [f.rule_alert_rate, f.model_alert_rate] }));
+  const conf = (name, v) => [name, pct(v.precision, 1), pct(v.recall, 1), fmt(v.true_positives), fmt(v.false_positives), fmt(v.false_negatives)];
+  const months = ev.fusion_months;
+
+  root.replaceChildren(
+    el("div", { class: "section-title" }, el("span", { class: "tag real" }, el("span", { class: "dot" }), "real data"), el("h2", { text: "Layer A · Will this manufacturer be reported again next month?" })),
+    el("p", { class: "ink2", text: `Held-out test months ${A.test_months.join(" and ")}: ${fmt(A.test_examples)} earlier manufacturer texts, ${A.test_positives} reported again. Model ${A.selected} was chosen on the June 2026 validation month; the test months were read once.` }),
+    el("div", { class: "charts2" },
+      card("Average precision on held-out months", "higher is better",
+        hBars(apItems, { format: v => fmt(v, 3) }),
+        el("div", { class: "callout" }, `AP gain over the strongest validation baseline (${(RANKERS[A.strongest_baseline] || "").toLowerCase()}): `, el("b", { text: `+${fmt(gain.mean, 3)}` }), `, bootstrap 95% CI ${fmt(gain.ci95[0], 3)} to ${fmt(gain.ci95[1], 3)} (${gain.rounds} resamples, ${pct(gain.share_above_zero, 1)} above zero).`),
+        tableView(["Ranker", "Average precision"], apItems.map(i => [i.label, fmt(i.value, 4)]))),
+      card("Later NSQ reports captured at equal budget", "Jul + Aug 2026, top-K manufacturers per month",
+        legend([["Trained model", "var(--real)"], ["Best baseline at that budget", "var(--neutral)"], ["Random (expected)", "var(--neutral-2)"]], false),
+        groupedBars(capture.map(c => ({ ...c, values: c.values.map(v => v / capMax) })), [["Trained model", "var(--real)"], ["Best baseline", "var(--neutral)"], ["Random", "var(--neutral-2)"]], { format: v => fmt(v * capMax, 1), label: 210 }),
+        el("p", { class: "sub", text: `${A.reachable_reports} of ${A.all_reports} test-month NSQ reports came from manufacturer texts seen earlier; new texts cannot be ranked from history.` }),
+        tableView(["Budget", ...Object.keys(RANKERS).map(k => RANKERS[k])], budgets.map(b => [`Top ${b}`, ...Object.keys(RANKERS).map(k => fmt(A.reports_captured_by_budget[b][k], 2))])))),
+    rec ? el("div", { class: "callout plain" }, el("b", { text: "Recurrence finding. " }), `With history through ${rec.history_through}, ${fmt(rec.previously_seen_pct, 1)}% (${fmt(rec.previously_seen_text_records)} of ${fmt(rec.later_records)}) of later NSQ records carried exact manufacturer text seen earlier. This is one measured split, not a prediction ceiling, and says nothing about scan detection.`) : null,
+
+    el("div", { class: "section-title" }, el("span", { class: "tag sim" }, el("span", { class: "dot" }), "simulated data"), el("h2", { text: "Layer B · Does a scan pattern look like a copied pack?" })),
+    el("div", { class: "charts2" },
+      card("Rule vs trained model on test episodes", `${B.model.true_positives + B.model.false_negatives} simulated clone episodes`,
+        el("table", { class: "small-tbl" }, el("thead", {}, el("tr", {}, ["Detector", "Precision", "Recall", "TP", "FP", "FN"].map((h, i) => el("th", { class: i ? "n" : "", text: h })))),
+          el("tbody", {}, [conf("Declared rule (drives alerts)", B.rule), conf(`Trained ${B.selected}`, B.model)].map(r => el("tr", {}, r.map((c, i) => el("td", { class: i ? "n" : "", text: c })))))),
+        el("div", { class: "callout sim" }, "The trained model did not beat the rule on families it never saw, and a separate nuisance challenge exposed many benign alerts. ", el("b", { text: "Only the declared rule drives scan review flags." }), " The model's synthetic score is diagnostic, not a counterfeit probability.")),
+      card("Alert rate by scenario family", "clone families should alert; benign ones should not",
+        legend([["Declared rule", "var(--sim)"], ["Trained model", "var(--qual)"]], false),
+        groupedBars(fams, [["Declared rule", "var(--sim)"], ["Trained model", "var(--qual)"]], { label: 190 }),
+        tableView(["Family", "Label", "Episodes", "Rule alert", "Model alert"], ev.families.map(f => [f.scenario, (f.clone_label ? "clone" : "benign") + (f.held_out_family ? ", held out" : ""), fmt(f.episodes), pct(f.rule_alert_rate, 1), pct(f.model_alert_rate, 1)])))),
+    D.scan_learning_curve ? card("Does more scripted training help?", `${D.scan_learning_curve.fixed_test_episodes} fixed scripted test episodes · ${D.scan_learning_curve.challenge_cases} stress cases`,
+      !D.scan_learning_curve.matches_current_dataset ? el("p", { class: "sub", text: "Historical generator audit from the earlier data manifest; retained as a diagnostic, not a fresh evaluation of the rebuilt artifacts." }) : null,
+      tableView(["Train episodes", "Fixed test AP", "Benign stress alerts", "Missed copied IDs"],
+        D.scan_learning_curve.rows.map(r => [fmt(r.training_episodes), fmt(r.fixed_test_ap, 3), fmt(r.challenge_fp), fmt(r.challenge_fn)])),
+      el("p", { class: "sub", text: "More examples of the same scripts did not resolve the stress cases. These are artificial mixtures, not field accuracy. The model does not add operational alerts." })) : null,
+    D.field_model ? card("Adjudicated field model", D.field_model.ready ? "Review gate passed for this recorded dataset" : "Research only · review gate failed",
+      D.field_model.validation && D.field_model.test ? tableView(["Holdout", "Cases", "Quality eligible", "Average precision", "False-alert rate", "Recall"],
+        [["Validation", D.field_model.validation], ["Test", D.field_model.test]].map(([name, m]) => [name, fmt(m.cases), `${fmt(m.quality_eligible_cases)} / ${fmt(m.cases)}`, fmt(m.average_precision, 3), pct(m.false_alert_rate, 1), pct(m.recall, 1)])) : null,
+      el("p", { class: "sub", text: (D.field_model.reasons.length ? D.field_model.reasons.join(" · ") : "All recorded gate checks passed. Confirm evidence integrity, site representativeness, and ongoing performance before using scores for review.") + " The field scorer is separate; this demo queue still replays simulated scans." }))
+      : card("Adjudicated field model", "No field training cases have been supplied",
+        el("p", { class: "sub", text: "The displayed scan scores come only from simulated training. Supply independently adjudicated physical-pack cases, then run src.field_model train. No field accuracy is claimed." })),
+
+    el("div", { class: "section-title" }, el("h2", { text: "Fusion · One queue, two risks" })),
+    el("p", { class: "ink2", text: `Held-out queues built through the live ranking code. Only batches published before each month enter its queue (${months.map(x => `${monthLong(x.month)}: ${x.candidates} batches, ${x.clones} simulated clones, ${x.recurring} real recurring-manufacturer batches`).join("; ")}). Policy ${F.selected_on_validation} was chosen on the ${ev.validation_month} validation queue.` }),
+    legend(pol.map(p => [p.name, p.color])),
+    el("div", { class: "charts2" },
+      card("Simulated clones captured", "share of clones inside the queue's top N", lineChart({ xs: fusionBudgets, series: fusionSeries("clone"), xLabel: "queue size N", title: "Clones captured" })),
+      card("Real recurring-manufacturer batches captured", "share inside the queue's top N", lineChart({ xs: fusionBudgets, series: fusionSeries("recurrence"), xLabel: "queue size N", title: "Recurring batches captured" }))),
+    tableView(["N", ...pol.flatMap(p => [`${p.name}: clones`, "recurring"])], fusionBudgets.map(n => [n, ...pol.flatMap(p => [pct(F.test_by_budget[n][p.key].clone, 1), pct(F.test_by_budget[n][p.key].recurrence, 1)])]), "Table view of both charts"),
+    el("div", { class: "callout plain" }, el("b", { text: "Read with care. " }), `Recurring batches per month are few (${months.map(x => x.recurring).join(" and ")}), so those shares move in large steps. At small budgets, scan alerts can consume every slot; the combined policy does not improve both targets at every N. Compare the selected policy with both single-signal baselines at the budget you can actually use.`),
+    D.limits.length ? el("ul", { class: "ink2" }, D.limits.map(l => el("li", { text: l }))) : null);
+}
+
+/* ---------- platform ---------- */
+function renderPlatform() {
+  const root = document.getElementById("platform"), B = D.benchmarks;
+  const hostCard = (key, title) => {
+    const b = B[key];
+    if (!b) return el("div", { class: "card host" }, el("div", { class: "card-h" }, el("h2", { text: title }), el("span", { class: "tag", text: "not measured yet" })),
+      el("div", { class: "card-b" }, el("p", { class: "ink2", text: "No run recorded on this host. On LinuxONE:" }),
+        el("p", {}, el("code", { class: "cmd", text: "python3 -m src.fusion run && python3 -m src.fusion benchmark" })),
+        el("p", { class: "sub", text: "Then commit outputs/benchmark_linuxone.json and rebuild this page with python -m app.dashboard." })));
+    return el("div", { class: "card host" }, el("div", { class: "card-h" }, el("h2", { text: title }), el("span", { class: "tag", text: b.machine })),
+      el("div", { class: "card-b" }, el("dl", {},
+        el("dt", { text: "CPU" }), el("dd", { text: `${b.cpu}${b.cpus ? ` · ${b.cpus} CPUs available` : ""}` }),
+        el("dt", { text: "NNPA facility listed" }), el("dd", { text: b.nnpa_listed ? "yes (listed only; no use is claimed)" : "no" }),
+        el("dt", { text: "Python" }), el("dd", { text: b.python }),
+        el("dt", { text: "Packages" }), el("dd", { text: Object.entries(b.packages).filter(([, v]) => v !== "not installed").map(([k, v]) => `${k} ${v}`).join(" · ") }),
+        el("dt", { text: "Workload" }), el("dd", { text: `${fmt(b.workload.events)} events, ${fmt(b.workload.episodes)} episodes, ${b.workload.repeats} repeats · sha ${b.workload_sha256}` }),
+        el("dt", { text: "Measured" }), el("dd", { text: b.created_at.slice(0, 16).replace("T", " ") + " UTC" }))));
+  };
+  const runs = [];
+  for (const host of ["laptop", "linuxone"]) if (B[host]) for (const [backend, v] of Object.entries(B[host].backends)) runs.push({ host, backend, v, color: host === "linuxone" ? "var(--violet)" : "var(--neutral)" });
+  const name = r => `${r.host === "linuxone" ? "LinuxONE" : "Laptop"} · ${r.backend === "snapml" ? "Snap ML" : "scikit-learn"}`;
+  const stageRows = Object.keys(STAGES).map(s => [STAGES[s], ...runs.map(r => r.v.stages[s] ? `${fmt(r.v.stages[s].p50, 2)} / ${fmt(r.v.stages[s].p99, 2)}` : "–")]);
+  root.replaceChildren(
+    el("div", { class: "section-title" }, el("h2", { text: "Same workload, measured on each machine" })),
+    el("p", { class: "ink2", text: B.laptop ? B.laptop.scope : "Single process, sequential, in memory, data preloaded." }),
+    Object.values(B).some(b => b && !b.matches_current_models) ? el("div", { class: "callout plain", text: "Historical benchmark: the recorded model version predates the current rebuild. These timings have not been remeasured for the current model version." }) : null,
+    el("div", { class: "hosts" }, hostCard("laptop", "Laptop"), hostCard("linuxone", "IBM LinuxONE")),
+    runs.length ? el("div", { class: "charts2", style: "margin-top:12px" },
+      card("Per-scan decision latency", "median (p50), milliseconds; lower is better",
+        hBars(runs.map(r => ({ label: name(r), value: r.v.stages.per_scan_decision_ms.p50, color: r.color, metric: "p50 ms", extra: [["p99 ms", fmt(r.v.stages.per_scan_decision_ms.p99, 2)]] })), { format: v => fmt(v, 2) + " ms", label: 170 })),
+      card("Throughput", "events per second, end to end; higher is better",
+        hBars(runs.map(r => ({ label: name(r), value: r.v.events_per_second, color: r.color, metric: "events/s" })), { format: v => fmt(v), label: 170 }))) : null,
+    runs.length ? card("Stage timings", "p50 / p99 milliseconds", el("div", { class: "scroll-x" }, el("table", { class: "small-tbl" },
+      el("thead", {}, el("tr", {}, el("th", { text: "Stage" }), runs.map(r => el("th", { class: "n", text: name(r) })))),
+      el("tbody", {}, stageRows.map(r => el("tr", {}, r.map((c, i) => el("td", { class: i ? "n" : "", text: c })))))))) : null,
+    el("div", { class: "callout plain", style: "margin-top:12px" }, "Queue rebuild uses a cached monthly history context; the first context build is measured separately above. Machines differ in allocation, so no speedup is claimed from these numbers alone. Hardware acceleration is claimed only from a separately configured and measured run."));
+}
+
+/* ---------- data ---------- */
+function identityPanel() {
+  const list = el("div");
+  const pairs = D.identity_candidates || [];
+  for (const pair of pairs) {
+    const review = S.identityReviews[pair.pair_id];
+    const choices = [["", "Choose a review outcome"], ["same_entity", "Same manufacturer, evidence reviewed"], ["different_entities", "Different manufacturers"], ["uncertain", "Insufficient evidence"]];
+    const select = el("select", { "aria-label": "Identity review outcome" }, choices.map(([value, label]) =>
+      el("option", { value, text: label, selected: review ? value === review.decision : value === "" })));
+    const reviewer = el("input", { "aria-label": "Name review reviewer ID", placeholder: "Reviewer ID", maxlength: 200 }); reviewer.value = S.reviewer;
+    const evidence = el("textarea", { "aria-label": "Name link evidence", placeholder: "Evidence reference and justification (required)" }); evidence.value = review ? review.evidence_ref : "";
+    const message = el("p", { role: "status", class: "sub" });
+    const save = async () => {
+      if (S.storage !== "server") { message.textContent = "Run python -m app.server to save reviewed links."; return; }
+      if (!reviewer.value.trim() || !select.value || !evidence.value.trim()) { message.textContent = "Enter reviewer, outcome and evidence reference."; return; }
+      try {
+        await api("/api/identity-reviews", { request_id: requestId(), reviewer_id: reviewer.value, pair_id: pair.pair_id, decision: select.value, evidence_ref: evidence.value });
+        S.identityReviews = await api("/api/identity-reviews"); S.reviewer = reviewer.value; store.set("reviewer", S.reviewer);
+        message.textContent = "Review saved to SQLite. This evidence link does not merge model identities."; renderDecision();
+      } catch (error) { message.textContent = error.message; }
+    };
+    list.append(el("details", { class: "tv" }, el("summary", { text: `${pair.left} ↔ ${pair.right} · ${review ? review.decision : "unreviewed"}` }),
+      el("p", { text: `${pair.records} records, ${pair.first_month} to ${pair.last_month}. Text similarity ${pct(pair.similarity, 1)} is only a review suggestion.` }),
+      el("p", { text: `Record IDs: ${pair.record_ids.join(", ")}` }),
+      el("div", {}, pair.source_files.map(name => S.storage === "server"
+        ? el("a", { href: "/sources/" + encodeURIComponent(name), style: "margin-right:12px", text: name }) : el("span", { text: name + " " }))),
+      review ? el("p", { class: "sub", text: `Saved by ${review.reviewer_id} at ${review.saved_at}` }) : null,
+      reviewer, select, evidence, el("button", { class: "ctrl", onclick: save }, "Save name review"), message));
+  }
+  const search = el("input", { type: "search", "aria-label": "Find a manufacturer-name suggestion", placeholder: "Filter manufacturer names", oninput: e => {
+    for (const child of list.children) child.hidden = !child.textContent.toLowerCase().includes(e.target.value.toLowerCase());
+  } });
+  return card("Manufacturer-name review", `${pairs.length} proposed links from earlier records`,
+    el("p", { text: "Review source evidence before linking names. Every saved decision retains the reviewer and justification. Links enrich the evidence view; existing model features and metrics are preserved." }),
+    search, list, S.storage === "server" ? el("button", { class: "ctrl", onclick: connectStorage }, "Reload saved reviews") : null);
+}
+function temporalPanel() {
+  const audit = D.temporal_audit;
+  if (!audit) return null;
+  return card("History stability across months", "Retrospective expanding-window audit",
+    el("p", { text: `Each fold trains only on earlier target months. The existing model configuration beats the legacy index in ${audit.model_beats_legacy_index_months} of ${audit.fold_count} months. Hyperparameters were already selected; this is a stability check, not new independent validation.` }),
+    tableView(["Month", "Model AP", "Legacy AP", "Model reports @25", "New / unavailable-name reports"],
+      audit.folds.map(f => [f.target_month, fmt(f.average_precision.trained_model, 3), fmt(f.average_precision.legacy_60_25_15_index, 3), fmt(f.captured_report_records["25"].trained_model, 1), fmt(f.new_or_unavailable_manufacturer_records)])),
+    el("p", { class: "sub", text: `${audit.missing_release_dates} of ${audit.records} records have no release date. Collection month is a proxy; publication-time availability and representative testing denominators remain unverified.` }));
+}
+function sourcePanel() {
+  const audit = D.source_audit;
+  if (!audit) return null;
+  return card("Official-source cross-check", "Captured directly from the public CDSCO portal",
+    el("p", { text: `${audit.exact_field_matches} of ${audit.records} local records match the captured official fields after explicit formatting normalization. ${audit.unmatched_local_records} need review; ${audit.official_records_not_represented} captured official rows are not represented, including possible documented duplicate exclusions and later changes.` }),
+    el("a", { href: "https://cdscoonline.gov.in/CDSCO/viewPublicNSQDrug", target: "_blank", rel: "noopener", text: "Open official CDSCO source" }),
+    tableView(["Month", "List", "Local", "Official", "Matched", "Need review"], audit.comparisons.map(c =>
+      [c.month, c.kind, c.local_records, c.official_records, c.exact_field_matches, c.unmatched_local_record_ids.length])),
+    el("p", { class: "sub", text: "Each response is retained with its URL, retrieval time and SHA-256. Current portal content does not prove original publication dates, workbook download origin or legal manufacturer identity. See outputs/source_audit.json for field-level discrepancies." }));
+}
+function availabilityPanel() {
+  const audit = D.availability_audit;
+  if (!audit) return null;
+  const totals = audit.scenarios.map(scenario => {
+    const months = scenario.months.filter(m => m.split === "retrospective_test");
+    return [scenario.assumed_reporting_lag_months, months.map(m => m.feature_cutoff).join(" / "),
+      fmt(months.reduce((n, m) => n + m.captured_report_records["25"], 0), 1),
+      fmt(months.reduce((n, m) => n + m.legacy_captured_report_records["25"], 0), 1)];
+  });
+  return card("What if reports arrive later?", "All assumptions shown; no winning lag selected",
+    el("p", { text: "Report capture at 25 manufacturer names per month across July/August. N=1 reproduces the original previous-month availability assumption. N=2/3 exclude one/two more recent reporting months. Actual release dates are still unavailable." }),
+    tableView(["Target minus N months", "Allowed cutoff, Jul / Aug", "Model report capture", "Legacy-index report capture"], totals),
+    el("p", { class: "sub", text: "Retrospective sensitivity, not verified event-time availability or unsafe-batch detection. Publication delays can reduce the apparent model benefit." }));
+}
+function workflowPanel() {
+  const reviewer = el("input", { placeholder: "Participant ID (use a pseudonym)", "aria-label": "Workflow participant ID", maxlength: 200 }); reviewer.value = S.reviewer;
+  const role = el("select", { "aria-label": "Declared participant role" },
+    [["inspector", "Drug inspector"], ["pharmacist", "Pharmacist"], ["researcher", "Researcher"], ["other", "Other / team member"]].map(([value, text]) => el("option", { value, text, selected: value === "other" })));
+  const taskArea = el("div"), results = el("p", { class: "sub", role: "status" });
+  const loadResults = async () => {
+    if (S.storage !== "server") { results.textContent = "Run python -m app.server to collect actual server-timed tasks and feedback."; return; }
+    try {
+      const report = await api("/api/workflow/results");
+      results.textContent = `${report.completed_tasks} completed tasks from ${report.participants} participants. ` +
+        Object.entries(report.methods).map(([method, value]) => `${method}: median ${fmt(value.median_seconds, 1)} s, ${value.correct_answers}/${value.tasks} correct`).join(" · ") +
+        " Exploratory pilot only; participant roles and adherence are self-declared.";
+    } catch (error) { results.textContent = error.message; }
+  };
+  const start = async () => {
+    if (S.storage !== "server") { results.textContent = "Start the local decision service to run a timed task."; return; }
+    try {
+      const session = await api("/api/workflow/start", { request_id: requestId(), reviewer_id: reviewer.value, role: role.value });
+      const task = session.task;
+      const answer = el("input", { type: "number", min: 0, step: 1, placeholder: "NSQ record count", "aria-label": "Workflow task answer" });
+      const feedback = el("textarea", { placeholder: "What helped, what confused you, and would this fit your workflow?", "aria-label": "Workflow task feedback" });
+      const finish = async () => {
+        if (answer.value === "" || !Number.isInteger(Number(answer.value))) { results.textContent = "Enter a whole-number count."; return; }
+        try {
+          const result = await api("/api/workflow/finish", { request_id: requestId(), reviewer_id: session.reviewer_id,
+            study_id: session.study_id, answer: Number(answer.value), feedback: feedback.value });
+          taskArea.replaceChildren(el("p", { text: `Task saved: ${fmt(result.elapsed_seconds, 1)} seconds · ${result.correct ? "correct" : "incorrect"} answer. Start another task to try the alternate method on a different manufacturer.` }));
+          await loadResults();
+        } catch (error) { results.textContent = error.message; }
+      };
+      taskArea.replaceChildren(el("h3", { text: `${session.method === "manual" ? "Manual workbook" : "BatchGuard"} task — timer running on server` }),
+        el("p", { text: task.question }), el("b", { text: task.manufacturer }),
+        session.method === "manual" ? el("div", {}, el("p", { text: "Use the workbooks for this task. Compare text with case and whitespace normalized. Do not use the dashboard counts." }),
+          task.source_files.map(name => el("a", { href: "/sources/" + encodeURIComponent(name), target: "_blank", rel: "noopener", style: "margin-right:12px", text: name })))
+          : el("button", { class: "ctrl", onclick: () => { document.querySelector('nav.tabs button[data-tab="decision"]').click(); pause(); S.mode = "replay"; S.k = D.feed.length; select(task.candidate_id); } }, "Open batch evidence; return to Data to submit"),
+        answer, feedback, el("button", { class: "ctrl primary", onclick: finish }, "Submit answer and stop timer"));
+      results.textContent = "Use the assigned method. Timing includes reading and interruptions; no speed or impact claim is assumed.";
+    } catch (error) { results.textContent = error.message; }
+  };
+  const panel = card("Timed workflow pilot", "Collect actual user feedback instead of assuming usefulness",
+    el("p", { text: "A participant alternates between manual workbooks and BatchGuard on different manufacturer tasks. Answers are checked against report counts; time is recorded by the server. Use pseudonyms, and invite a domain professional when available." }),
+    reviewer, role, el("button", { class: "ctrl", onclick: start }, "Start / resume task"), taskArea,
+    el("button", { class: "ctrl", onclick: loadResults }, "Refresh actual results"), results);
+  return panel;
+}
+function renderData() {
+  const root = document.getElementById("data"), d = D.data, s = d.summary || {}, cats = s.categories || {};
+  const months = d.monthly.map(r => r.collection_month);
+  const cols = d.monthly.map(r => ({ label: monthName(r.collection_month), values: [r.central_nsq || 0, r.state_nsq || 0, d.spurious_monthly[r.collection_month] || 0] }));
+  const series = [["Central NSQ", "var(--real)"], ["State NSQ", "var(--qual)"], ["Spurious", "var(--s4)"]];
+  const stat = (label, value, foot) => el("div", { class: "card kpi" }, el("div", { class: "label", text: label }), el("div", { class: "value", text: value }), foot ? el("div", { class: "foot", text: foot }) : null);
+  const avail = d.availability;
+  root.replaceChildren(
+    el("div", { class: "section-title" }, el("span", { class: "tag real" }, el("span", { class: "dot" }), "real data"), el("h2", { text: "CDSCO monthly lists" })),
+    el("div", { class: "stats" },
+      stat("Analytical records", fmt(s.analytical_records), months.length ? `${monthLong(months[0])} to ${monthLong(months[months.length - 1])}` : ""),
+      stat("Central NSQ", fmt(cats.central_nsq), "Not of Standard Quality, central list"),
+      stat("State NSQ", fmt(cats.state_nsq), "Not of Standard Quality, state lists"),
+      stat("Spurious-drug records", fmt(cats.spurious), "Allegations; manufacturer may deny")),
+    el("div", { style: "margin-top:12px" }, identityPanel()),
+    el("div", { style: "margin-top:12px" }, temporalPanel()),
+    el("div", { style: "margin-top:12px" }, sourcePanel()),
+    el("div", { style: "margin-top:12px" }, availabilityPanel()),
+    el("div", { style: "margin-top:12px" }, workflowPanel()),
+    el("div", { style: "margin-top:12px" }, card("Records per collection month", "stacked by list",
+      legend(series, false), stackedColumns(cols, series),
+      tableView(["Month", "Central NSQ", "State NSQ", "Spurious"], cols.map(c => [c.label, ...c.values.map(v => fmt(v))])))),
+    el("div", { class: "charts2", style: "margin-top:12px" },
+      card("Missing evidence", "share of records with an empty field",
+        hBars(d.missing.map(m => ({ label: m.field.replace(/_/g, " "), value: m.missing / m.records, color: "var(--neutral)", metric: "Missing", extra: [["Records", `${fmt(m.missing)} of ${fmt(m.records)}`]] })), { format: v => pct(v, 1), max: 1, label: 200 }),
+        el("p", { class: "sub", text: "Normalized manufacturer text is not a verified legal identity; variants are not merged without review." })),
+      card("Failure-type mapping", "how each failure text was classified",
+        hBars(d.mapping.map(m => ({ label: m.status.replace(/_/g, " "), value: m.records, color: "var(--neutral)", metric: "Records" })), { format: v => fmt(v), label: 200 }))),
+    avail.length ? el("div", { style: "margin-top:12px" }, card("Source availability", "one row per monthly workbook", el("div", { class: "scroll-x" }, el("table", { class: "small-tbl" },
+      el("thead", {}, el("tr", {}, Object.keys(avail[0]).map(k => el("th", { text: k.replace(/_/g, " ") })))),
+      el("tbody", {}, avail.map(r => el("tr", {}, Object.values(r).map(v => el("td", { text: v }))))))),
+      el("p", { class: "sub", text: "An absent spurious sheet means unavailable source data, not zero incidents." }))) : null,
+    el("p", { class: "sub", text: `Processed data manifest sha256 ${d.manifest_sha256.slice(0, 16)}… · every file is hash-checked when the pipeline loads it.` }));
+}
+
+function renderAll() {
+  renderHeader(); renderDecision(); renderOverview(); renderEvaluation(); renderPlatform(); renderData();
+  document.getElementById("foot").textContent = "BatchGuard · Evidence for human review · Real reports, simulated demo scans.";
+}
+let resizeTimer = null;
+addEventListener("resize", () => { clearTimeout(resizeTimer); resizeTimer = setTimeout(() => { renderEvaluation(); renderPlatform(); renderData(); }, 200); });
+renderAll();
+const storageReady=connectStorage();
+</script>
+</body>
+</html>

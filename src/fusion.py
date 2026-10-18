@@ -156,10 +156,11 @@ def rank_candidates(df, payloads, as_of=None, models=None, context=None):
         reasons += ["SPURIOUS_REPORT_REFERENCE"] if historical["spurious_report_match"] else []
         reasons += [] if historical["reference_match"] else ["REFERENCE_COVERAGE_UNKNOWN"]
         reasons.append("FOLLOWUP_SAMPLE_STATUS_UNKNOWN")
+        simulated = all(p["simulated"] for p in observations)
         states = sorted({SIMULATED_STATES.get((e.latitude, e.longitude), "Unmapped location") for _, e in groups[cid]})
         output.append({
             "candidate_id": cid, "batch_no": event.batch_no, "product": event.product,
-            "manufacturer": event.manufacturer_key or "Unavailable", "state": " / ".join(states) + " (simulated scans)",
+            "manufacturer": event.manufacturer_key or "Unavailable", "state": " / ".join(states) + (" (simulated scans)" if simulated else " (unverified scan locations)"),
             "historical_risk": history_score, "scan_anomaly": rule, "evidence_quality": quality,
             "asserted_sources": int(values["max_sources_per_pack"]),
             "history_probability": history_probability, "scan_probability": scan_probability,
@@ -174,11 +175,18 @@ def rank_candidates(df, payloads, as_of=None, models=None, context=None):
     return output
 
 
-def build_decision_queue(df, payloads, capacity=10, as_of=None, models=None, context=None):
+def build_decision_queue(df, payloads, capacity=10, as_of=None, models=None, context=None,
+                         strategy="legacy", history_share=0.5):
     """At most capacity unique candidates; capacity is a maximum, not an obligation to sample."""
     if isinstance(capacity, bool) or not isinstance(capacity, int) or capacity < 0:
         raise ValueError("capacity must be a nonnegative integer.")
-    return rank_candidates(df, payloads, as_of, models, context)[:capacity]
+    ranked = rank_candidates(df, payloads, as_of, models, context)
+    if strategy == "protected_history":
+        from src.planning import plan_candidates
+        ranked = plan_candidates(ranked, history_share)
+    elif strategy != "legacy":
+        raise ValueError("strategy must be legacy or protected_history")
+    return ranked[:capacity]
 
 
 def retime(episodes, end):
@@ -210,7 +218,7 @@ def queue_pool(df, episodes, split, month, history_model, scan_model, threshold)
                              version=f"evaluation-{split}")
     reported = set(layer_a.nsq_records(df).loc[lambda d: d["collection_month"].eq(month),
                                                 "manufacturer_name_normalized"].str.strip().str.casefold()) - {""}
-    return pd.DataFrame([{"clone": clone[c["candidate_id"]], "recurrence": int(c["manufacturer"].strip().casefold() in reported),
+    return pd.DataFrame([{"candidate_id": c["candidate_id"], "clone": clone[c["candidate_id"]], "recurrence": int(c["manufacturer"].strip().casefold() in reported),
                           "history": c["historical_risk"], "rule": c["scan_anomaly"], "scan": 100*c["scan_probability"],
                           "quality": c["evidence_quality"]}
                          for c in rank_candidates(df, retime(chosen, end), end.timestamp(), models)])
@@ -250,6 +258,7 @@ def evaluate_fusion(df, examples, episodes, history_model, scan_model, threshold
 def train_backend(df, examples, episodes, features, backend="sklearn", seed=SEED, output=MODELS):
     """Fit both layers, select on validation, evaluate the test split once, and save models with a card."""
     start = time.perf_counter()
+    dataset_sha256 = digest([df.to_dict("records"), episodes])
     history_model, history_selection = layer_a.train(examples, backend, seed)
     scan_model, scan_selection = detector.train(features, backend, seed)
     fit_seconds = time.perf_counter()-start
@@ -262,7 +271,8 @@ def train_backend(df, examples, episodes, features, backend="sklearn", seed=SEED
     (directory / "scan_model.pkl").write_bytes(pickle.dumps(scan_model))
     history.pop("test_predictions").to_csv(directory / "history_test_predictions.csv", index=False, float_format="%.9f")
     scan.pop("test_predictions").to_csv(directory / "scan_test_predictions.csv", index=False, float_format="%.9f")
-    card = {"model_version": f"layer-ab-{backend}-{digest([examples['example_id'].tolist(), features['example_id'].tolist(), seed, backend, FEATURE_CODE_SHA256])[:12]}",
+    card = {"model_version": f"layer-ab-{backend}-{digest([dataset_sha256, seed, backend, FEATURE_CODE_SHA256])[:12]}",
+            "dataset_sha256": dataset_sha256,
             "created_at": datetime.now(timezone.utc).isoformat(), "backend": backend, "seed": seed,
             "feature_code_sha256": FEATURE_CODE_SHA256, "fit_and_selection_seconds": fit_seconds,
             "history": {**history, "features": HISTORY_FEATURES}, "scan": {**scan, "features": SCAN_FEATURES},

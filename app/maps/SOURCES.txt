@@ -1,0 +1,17 @@
+# India map source
+
+The offline geometry in `india.json` is extracted from **Natural Earth 1:10m
+countries, India point-of-view, v5.1.1**. It is cartographic context rather than
+an authoritative legal or survey boundary. Islands are retained. Coastlines are
+simplified by 0.012 degrees for display; coordinates remain WGS84 longitude/latitude.
+
+- Source and India-POV description: https://www.naturalearthdata.com/downloads/10m-cultural-vectors/
+- Archive: https://naciscdn.org/naturalearth/10m/cultural/ne_10m_admin_0_countries_ind.zip
+- Public-domain terms: https://www.naturalearthdata.com/about/terms-of-use/
+- Rebuild: `python3 scripts/prepare_map.py downloaded-archive.zip`
+
+The source archive SHA-256 is recorded in `india.json`. No map tiles, API key or
+external requests are required by the generated dashboard. Marker coordinates
+come from the scan observations; demo coordinates are simulated city centroids.
+Neither the map nor its marker counts establishes medicine quality or a regional
+risk rate. Unmapped/out-of-extent coordinates remain available in the scan feed.

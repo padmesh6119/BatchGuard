@@ -99,7 +99,9 @@ def normalize_sheet(df, category, month, filename):
 def clean_spurious_sheet(input_path, month, sheet_name="spurious"):
     """Spurious sheets spread one record over rows; S.No starts a record and prefixes name its fields."""
     input_path = Path(input_path)
-    df = pd.read_excel(input_path, sheet_name=sheet_name)
+    # A batch code is an identifier. Numeric cells mixed with blank continuation
+    # rows must not be promoted to floats and acquire a spurious '.0' suffix.
+    df = pd.read_excel(input_path, sheet_name=sheet_name, converters={"Batch No": str})
     missing = {"S.No", "Name of Product", "Batch No", "Manufacturing Dates", "Manufacturer Details", "Remarks"} - set(df.columns)
     if missing:
         raise ValueError(f"Spurious sheet missing required headers: {sorted(missing)}")
@@ -170,8 +172,8 @@ def process_month(month):
     if missing_required:
         raise ValueError(f"Missing required sheets in {workbook_path.name}: {sorted(missing_required)}. Available: {sheet_names}")
     spurious_sheet_present = "spurious" in sheet_lookup
-    central_raw = pd.read_excel(workbook_path, sheet_name=sheet_lookup["central"])
-    state_raw = pd.read_excel(workbook_path, sheet_name=sheet_lookup["state"])
+    central_raw = pd.read_excel(workbook_path, sheet_name=sheet_lookup["central"], converters={"Batch No": str})
+    state_raw = pd.read_excel(workbook_path, sheet_name=sheet_lookup["state"], converters={"Batch No": str})
     provenance_rows = []
     for category, raw in [("central", central_raw), ("state", state_raw)]:
         for index, row in raw.iterrows():

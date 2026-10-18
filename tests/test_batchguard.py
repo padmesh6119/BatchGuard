@@ -75,6 +75,20 @@ class IngestTests(unittest.TestCase):
         self.assertNotIn("bacterial_endotoxins", ingest.classify_failure({"source_category": "central_nsq", "failure_type": "Assay of Betamethasone"})[0])
         self.assertIn("bacterial_endotoxins", ingest.classify_failure({"source_category": "central_nsq", "failure_type": "BET"})[0])
 
+    def test_batch_identifier_preserves_numeric_cells_and_literal_text(self):
+        rows = pd.DataFrame({"S.No": [1, None, 2, 3], "Name of Product": ["A", None, "B", "C"],
+                             "Batch No": [18230791, None, "00123", "12.0"],
+                             "Manufacturing Dates": ["Jan-2026", None, "Jan-2026", "Jan-2026"],
+                             "Manufacturer Details": ["Firm A", None, "Firm B", "Firm C"],
+                             "Remarks": ["Remark", None, "Remark", "Remark"]})
+        source = self.root / "identifier.xlsx"
+        rows.to_excel(source, sheet_name="spurious", index=False)
+        scratch = self.root / "scratch"
+        scratch.mkdir()
+        with patch.object(ingest, "PROCESSED", scratch):
+            parsed = ingest.clean_spurious_sheet(source, "2026-01")
+        self.assertEqual(parsed["Batch No"].tolist(), ["18230791", "00123", "12.0"])
+
 
 class LayerATests(unittest.TestCase):
     def test_future_records_do_not_change_earlier_features(self):
@@ -184,6 +198,14 @@ class EndToEndTests(unittest.TestCase):
         self.assertIn(self.card["fusion"]["selected_policy"], ("weighted", "tiered"))
         self.assertTrue(self.card["fusion"]["test"])
 
+    def test_model_version_changes_when_reference_data_changes_with_same_example_ids(self):
+        changed = self.df.copy()
+        changed.loc[changed.index[-1], "batch_no"] += "-CORRECTED"
+        card = train_backend(changed, self.examples, self.episodes, detector.featurize(self.episodes),
+                             "sklearn", output=self.root / "changed-reference")
+        self.assertNotEqual(card["dataset_sha256"], self.card["dataset_sha256"])
+        self.assertNotEqual(card["model_version"], self.card["model_version"])
+
     def test_backend_without_its_package_is_skipped(self):
         self.assertIsNotNone(load_models("sklearn", self.root))
         with patch("src.fusion.importlib.util.find_spec", return_value=None):
@@ -263,6 +285,12 @@ class DashboardTests(unittest.TestCase):
         self.assertTrue(all("NO_EARLIER_MANUFACTURER_HISTORY" in {data["codes"][i] for i in r[7]}
                             for r in no_history))
         self.assertTrue(any(data["candidates"][r[0]]["reports"] for r in no_history))
+        live = build_decision_queue(layer_a.load_dataset(), simulator.demo_feed(layer_a.load_dataset()),
+                                    capacity=10, models=load_models("sklearn"), strategy="protected_history",
+                                    history_share=data["models"]["sklearn"]["history_share"])
+        self.assertEqual([r["candidate_id"] for r in live], [r[0] for r in data["protected_steps"]["sklearn"][-1][:10]])
+        self.assertTrue(all(r["collection_month"] < data["decision_month"] for r in data["identity_evidence"]))
+        self.assertTrue(all(r["source_sheet"] and r["source_excel_rows_json"] for r in data["identity_evidence"]))
 
 
 if __name__ == "__main__":

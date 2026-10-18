@@ -26,3 +26,7 @@ data/.processed-previous/
 # large binaries
 *.gguf
 *.zip
+
+# Reproducible deployment bundles are built locally
+/outputs/BatchGuard-linuxone.tar.gz
+/outputs/BatchGuard-linuxone.tar.gz.sha256

@@ -214,7 +214,7 @@
         "selected": "logistic_c0.1",
         "threshold": 0.17191900312900543
       },
-      "model_version": "layer-ab-sklearn-28ff11c97cdb"
+      "model_version": "layer-ab-sklearn-d207ed70eb17"
     },
     "snapml": {
       "backend": "snapml",
@@ -430,7 +430,7 @@
         "selected": "snap_logistic_r0.1",
         "threshold": 0.966044
       },
-      "model_version": "layer-ab-snapml-599ac257566e"
+      "model_version": "layer-ab-snapml-905036079a4a"
     }
   },
   "banner": "Layer A: REAL CDSCO data. Layer B: SIMULATED scans. Scan anomalies are not proof of counterfeit.",
@@ -438,7 +438,7 @@
     "layer_a_capture.png",
     "fusion_tradeoff.png"
   ],
-  "created_at": "2026-10-17T10:39:03.113005+00:00",
+  "created_at": "2026-10-18T00:51:49.928457+00:00",
   "data": {
     "analytical_records": 2551,
     "categories": {
@@ -462,7 +462,7 @@
       "2026-07",
       "2026-08"
     ],
-    "processed_manifest_sha256": "f70bfd94d1a004c50191b2a58747e69b2c4d8279ea91a8339fbf88f59348ce9d"
+    "processed_manifest_sha256": "27b36a3555f44fd6debd05c18ad35e705127e660d1c1a1297a32c8084be7fdba"
   },
   "environment": {
     "cpu": {
@@ -489,7 +489,7 @@
     "system": "Linux"
   },
   "inspector_queue": {
-    "candidates": 24,
+    "candidates": 26,
     "capacity": 10,
     "scan_alerts": 2,
     "top": [
@@ -498,14 +498,14 @@
         "priority": 73.8,
         "product": "Lorazepam Tablets I.P. 2 mg",
         "rank": 1,
-        "reasons": "CLONE_PATTERN_TRAVEL_REVIEW; PRIOR_NSQ_RECORDS=1; MANUFACTURER_HISTORY; BATCH_REPORT_REFERENCE; FOLLOWUP_SAMPLE_STATUS_UNKNOWN"
+        "reasons": "CLONE_PATTERN_TRAVEL_REVIEW; PRIOR_NSQ_RECORDS=1; SCAN_CAUSE_UNVERIFIED; MANUFACTURER_HISTORY; BATCH_REPORT_REFERENCE; FOLLOWUP_SAMPLE_STATUS_UNKNOWN"
       },
       {
         "batch_no": "NPL-5105",
         "priority": 61.8,
         "product": "Paracetamol, Diclofenac Sodium & Chlorzoxazone Tablets IP",
         "rank": 2,
-        "reasons": "REPEATED_PACK_BURST_REVIEW; PRIOR_NSQ_RECORDS=1; MANUFACTURER_HISTORY; BATCH_REPORT_REFERENCE; FOLLOWUP_SAMPLE_STATUS_UNKNOWN"
+        "reasons": "REPEATED_PACK_BURST_REVIEW; PRIOR_NSQ_RECORDS=1; SCAN_CAUSE_UNVERIFIED; MANUFACTURER_HISTORY; BATCH_REPORT_REFERENCE; FOLLOWUP_SAMPLE_STATUS_UNKNOWN"
       },
       {
         "batch_no": "PAK-637",
@@ -519,7 +519,7 @@
         "priority": 49.95,
         "product": "Itraconazole Capsule IP 100mg",
         "rank": 4,
-        "reasons": "SCAN_MODEL_ALERT; PRIOR_NSQ_RECORDS=11; REPORTED_IN_LAST_3_MONTHS=1; MANUFACTURER_HISTORY; BATCH_REPORT_REFERENCE; FOLLOWUP_SAMPLE_STATUS_UNKNOWN"
+        "reasons": "PRIOR_NSQ_RECORDS=11; REPORTED_IN_LAST_3_MONTHS=1; MANUFACTURER_HISTORY; BATCH_REPORT_REFERENCE; FOLLOWUP_SAMPLE_STATUS_UNKNOWN"
       },
       {
         "batch_no": "MD24120",
@@ -540,7 +540,7 @@
         "priority": 49.4,
         "product": "Fentanyl Citrate Injection I.P.",
         "rank": 7,
-        "reasons": "SCAN_MODEL_ALERT; PRIOR_NSQ_RECORDS=4; REPORTED_IN_LAST_3_MONTHS=1; MANUFACTURER_HISTORY; BATCH_REPORT_REFERENCE; FOLLOWUP_SAMPLE_STATUS_UNKNOWN"
+        "reasons": "PRIOR_NSQ_RECORDS=4; REPORTED_IN_LAST_3_MONTHS=1; MANUFACTURER_HISTORY; BATCH_REPORT_REFERENCE; FOLLOWUP_SAMPLE_STATUS_UNKNOWN"
       },
       {
         "batch_no": "GTA1355",
@@ -561,7 +561,7 @@
         "priority": 47.85,
         "product": "Sucralate & Oxetacaine suspension",
         "rank": 10,
-        "reasons": "SCAN_MODEL_ALERT; PRIOR_NSQ_RECORDS=1; REPORTED_IN_LAST_3_MONTHS=1; MANUFACTURER_HISTORY; BATCH_REPORT_REFERENCE; FOLLOWUP_SAMPLE_STATUS_UNKNOWN"
+        "reasons": "PRIOR_NSQ_RECORDS=1; REPORTED_IN_LAST_3_MONTHS=1; MANUFACTURER_HISTORY; BATCH_REPORT_REFERENCE; FOLLOWUP_SAMPLE_STATUS_UNKNOWN"
       }
     ]
   },

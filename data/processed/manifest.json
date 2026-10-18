@@ -1,15 +1,15 @@
 {
-  "builder_sha256": "3e977895bc836b294bd69641c9e6438ba99f40e0e0dda991cc18b2da2cb567af",
-  "created_at": "2026-10-17T09:35:51.451493+00:00",
+  "builder_sha256": "73a225fe6ff9bb95947f7960eb76f227be79f475a6684d9d5e95c295f72c8e0a",
+  "created_at": "2026-10-18T00:50:09.420581+00:00",
   "limits": [
     "Local workbook hashes, not verified download origins.",
     "Manufacturer text is not verified legal identity.",
     "Collection months stand in for publication dates."
   ],
   "outputs": {
-    "all_months_analytical.csv": "50b2a8450f979a420f9ad3a0d0718c4d440653c48e5b2d9df3eba912b948f748",
-    "all_months_failure_normalized.csv": "1a21a9fb222a88614d063cdd3d1ce34b394bc52fdeae71b43c382159b0750c52",
-    "all_months_manufacturer_normalized.csv": "d6cf78309186f68ebae6f95c68cb93a93bd7b3c2dcf5095e01187a73f7582bfb",
+    "all_months_analytical.csv": "97e1760109f3c8f759fb335aeb8c09ab1b38e989874392c847114568207ee009",
+    "all_months_failure_normalized.csv": "fd9d5b5c8b8b67a52ae44e9e140bfb506284253131b2a721c2dada897ff6e813",
+    "all_months_manufacturer_normalized.csv": "408976d25c85409c8d6df3cb4c821d20a0689770e81132a23b274fd9e255435c",
     "all_months_provenance.csv": "16aa9fec02712ca56ed82f4720034618818ab863670b496e626e3272a62bf158",
     "review/all_months_dataset_summary.csv": "6c7c36d018957a0d21bd49204634fca7d4960b05b7a21cadaae8026108d1da2a",
     "review/all_months_manufacturer_normalization_review.csv": "de571d0ad62545a3befb490a4fb37cb51b017a6ee8013babf400cc4723a33277",

@@ -1,0 +1,426 @@
+{
+  "origin": "https://cdscoonline.gov.in",
+  "publication_date_status": "unavailable: response retrieval time is not original publication time",
+  "responses": [
+    {
+      "decoding": "utf-8-sig",
+      "http_headers": {
+        "Content-Type": "application/json;charset=UTF-8",
+        "Date": "Sun, 18 Oct 2026 00:47:19 GMT",
+        "Last-Modified": null
+      },
+      "kind": "nsq",
+      "month": "2025-07",
+      "path": "responses/cd5389bfa5b7f79ed53850aa4b6dde92c42368a274331e6ed52bc1a6f6cf09a3.json",
+      "retrieved_at": "2026-10-18T00:47:19.221369+00:00",
+      "rows": 143,
+      "sha256": "cd5389bfa5b7f79ed53850aa4b6dde92c42368a274331e6ed52bc1a6f6cf09a3",
+      "url": "https://cdscoonline.gov.in/CDSCO/filteredNsqDrugTable?month=JUL-2025&source=All&tab=nsq"
+    },
+    {
+      "decoding": "utf-8-sig",
+      "http_headers": {
+        "Content-Type": "application/json;charset=UTF-8",
+        "Date": "Sun, 18 Oct 2026 00:47:19 GMT",
+        "Last-Modified": null
+      },
+      "kind": "spurious",
+      "month": "2025-07",
+      "path": "responses/84fa279f234e63957f3b192a8c5d43aa86f59c268d56b30267799545ae789634.json",
+      "retrieved_at": "2026-10-18T00:47:19.476959+00:00",
+      "rows": 8,
+      "sha256": "84fa279f234e63957f3b192a8c5d43aa86f59c268d56b30267799545ae789634",
+      "url": "https://cdscoonline.gov.in/CDSCO/filteredSpuriousDrugTable?month=JUL-2025&source=All&tab=spurious"
+    },
+    {
+      "decoding": "utf-8-sig",
+      "http_headers": {
+        "Content-Type": "application/json;charset=UTF-8",
+        "Date": "Sun, 18 Oct 2026 00:47:20 GMT",
+        "Last-Modified": null
+      },
+      "kind": "nsq",
+      "month": "2025-08",
+      "path": "responses/3065dc901024ec1a58daf38e484bc94ba6dbde867b2f2a3283a806816e56167c.json",
+      "retrieved_at": "2026-10-18T00:47:19.846106+00:00",
+      "rows": 94,
+      "sha256": "3065dc901024ec1a58daf38e484bc94ba6dbde867b2f2a3283a806816e56167c",
+      "url": "https://cdscoonline.gov.in/CDSCO/filteredNsqDrugTable?month=AUG-2025&source=All&tab=nsq"
+    },
+    {
+      "decoding": "utf-8-sig",
+      "http_headers": {
+        "Content-Type": "application/json;charset=UTF-8",
+        "Date": "Sun, 18 Oct 2026 00:47:20 GMT",
+        "Last-Modified": null
+      },
+      "kind": "spurious",
+      "month": "2025-08",
+      "path": "responses/05cd70189e9362b5430e465f16a53b8d31ce22c895caa37a12e93e0eacb4b88c.json",
+      "retrieved_at": "2026-10-18T00:47:20.106611+00:00",
+      "rows": 3,
+      "sha256": "05cd70189e9362b5430e465f16a53b8d31ce22c895caa37a12e93e0eacb4b88c",
+      "url": "https://cdscoonline.gov.in/CDSCO/filteredSpuriousDrugTable?month=AUG-2025&source=All&tab=spurious"
+    },
+    {
+      "decoding": "utf-8-sig",
+      "http_headers": {
+        "Content-Type": "application/json;charset=UTF-8",
+        "Date": "Sun, 18 Oct 2026 00:47:20 GMT",
+        "Last-Modified": null
+      },
+      "kind": "nsq",
+      "month": "2025-09",
+      "path": "responses/acca71e94d5816922dd6b1b2e7c5b08384f08b6d88d92dd85b57dca386cc8cd9.json",
+      "retrieved_at": "2026-10-18T00:47:20.496597+00:00",
+      "rows": 112,
+      "sha256": "acca71e94d5816922dd6b1b2e7c5b08384f08b6d88d92dd85b57dca386cc8cd9",
+      "url": "https://cdscoonline.gov.in/CDSCO/filteredNsqDrugTable?month=SEP-2025&source=All&tab=nsq"
+    },
+    {
+      "decoding": "utf-8-sig",
+      "http_headers": {
+        "Content-Type": "application/json;charset=UTF-8",
+        "Date": "Sun, 18 Oct 2026 00:47:20 GMT",
+        "Last-Modified": null
+      },
+      "kind": "spurious",
+      "month": "2025-09",
+      "path": "responses/7399a791cf92f8d1de11aba13ad324ca84706267ee96bcc3b7586b009b3c2547.json",
+      "retrieved_at": "2026-10-18T00:47:20.746636+00:00",
+      "rows": 1,
+      "sha256": "7399a791cf92f8d1de11aba13ad324ca84706267ee96bcc3b7586b009b3c2547",
+      "url": "https://cdscoonline.gov.in/CDSCO/filteredSpuriousDrugTable?month=SEP-2025&source=All&tab=spurious"
+    },
+    {
+      "decoding": "utf-8-sig",
+      "http_headers": {
+        "Content-Type": "application/json;charset=UTF-8",
+        "Date": "Sun, 18 Oct 2026 00:47:21 GMT",
+        "Last-Modified": null
+      },
+      "kind": "nsq",
+      "month": "2025-10",
+      "path": "responses/0722ce175ad783c8f0fe00af3e9f65484252aeae88c796cff9a4d51a87fdf0eb.json",
+      "retrieved_at": "2026-10-18T00:47:21.150943+00:00",
+      "rows": 211,
+      "sha256": "0722ce175ad783c8f0fe00af3e9f65484252aeae88c796cff9a4d51a87fdf0eb",
+      "url": "https://cdscoonline.gov.in/CDSCO/filteredNsqDrugTable?month=OCT-2025&source=All&tab=nsq"
+    },
+    {
+      "decoding": "utf-8-sig",
+      "http_headers": {
+        "Content-Type": "application/json;charset=UTF-8",
+        "Date": "Sun, 18 Oct 2026 00:47:21 GMT",
+        "Last-Modified": null
+      },
+      "kind": "spurious",
+      "month": "2025-10",
+      "path": "responses/10a6da74dcce96e06b4245b234a7c99897f1a10137e7cc2d8bc40a663df649c3.json",
+      "retrieved_at": "2026-10-18T00:47:21.392620+00:00",
+      "rows": 5,
+      "sha256": "10a6da74dcce96e06b4245b234a7c99897f1a10137e7cc2d8bc40a663df649c3",
+      "url": "https://cdscoonline.gov.in/CDSCO/filteredSpuriousDrugTable?month=OCT-2025&source=All&tab=spurious"
+    },
+    {
+      "decoding": "utf-8-sig",
+      "http_headers": {
+        "Content-Type": "application/json;charset=UTF-8",
+        "Date": "Sun, 18 Oct 2026 00:47:21 GMT",
+        "Last-Modified": null
+      },
+      "kind": "nsq",
+      "month": "2025-11",
+      "path": "responses/3cff16cc33a3e8e6b700bed700347592e90f0e10412a3fa64ff21ed73d2bfdea.json",
+      "retrieved_at": "2026-10-18T00:47:21.843649+00:00",
+      "rows": 216,
+      "sha256": "3cff16cc33a3e8e6b700bed700347592e90f0e10412a3fa64ff21ed73d2bfdea",
+      "url": "https://cdscoonline.gov.in/CDSCO/filteredNsqDrugTable?month=NOV-2025&source=All&tab=nsq"
+    },
+    {
+      "decoding": "utf-8-sig",
+      "http_headers": {
+        "Content-Type": "application/json;charset=UTF-8",
+        "Date": "Sun, 18 Oct 2026 00:47:21 GMT",
+        "Last-Modified": null
+      },
+      "kind": "spurious",
+      "month": "2025-11",
+      "path": "responses/6f0f2cb510cf29890c8ff2d504eccd6d559e2ec95c93858ce9a0364e38e4ff8f.json",
+      "retrieved_at": "2026-10-18T00:47:22.086563+00:00",
+      "rows": 2,
+      "sha256": "6f0f2cb510cf29890c8ff2d504eccd6d559e2ec95c93858ce9a0364e38e4ff8f",
+      "url": "https://cdscoonline.gov.in/CDSCO/filteredSpuriousDrugTable?month=NOV-2025&source=All&tab=spurious"
+    },
+    {
+      "decoding": "utf-8-sig",
+      "http_headers": {
+        "Content-Type": "application/json;charset=UTF-8",
+        "Date": "Sun, 18 Oct 2026 00:47:23 GMT",
+        "Last-Modified": null
+      },
+      "kind": "nsq",
+      "month": "2025-12",
+      "path": "responses/abf1c0157a142085a186e7c275539f1a628653069f6184228d781cb20b83e30f.json",
+      "retrieved_at": "2026-10-18T00:47:22.506925+00:00",
+      "rows": 175,
+      "sha256": "abf1c0157a142085a186e7c275539f1a628653069f6184228d781cb20b83e30f",
+      "url": "https://cdscoonline.gov.in/CDSCO/filteredNsqDrugTable?month=DEC-2025&source=All&tab=nsq"
+    },
+    {
+      "decoding": "utf-8-sig",
+      "http_headers": {
+        "Content-Type": "application/json;charset=UTF-8",
+        "Date": "Sun, 18 Oct 2026 00:47:23 GMT",
+        "Last-Modified": null
+      },
+      "kind": "spurious",
+      "month": "2025-12",
+      "path": "responses/f409139bb552b2f8e2c31b1f7b60285e612aa8c1151a3ed9c327ba4bbcad2d28.json",
+      "retrieved_at": "2026-10-18T00:47:22.781184+00:00",
+      "rows": 10,
+      "sha256": "f409139bb552b2f8e2c31b1f7b60285e612aa8c1151a3ed9c327ba4bbcad2d28",
+      "url": "https://cdscoonline.gov.in/CDSCO/filteredSpuriousDrugTable?month=DEC-2025&source=All&tab=spurious"
+    },
+    {
+      "decoding": "utf-8-sig",
+      "http_headers": {
+        "Content-Type": "application/json;charset=UTF-8",
+        "Date": "Sun, 18 Oct 2026 00:47:23 GMT",
+        "Last-Modified": null
+      },
+      "kind": "nsq",
+      "month": "2026-01",
+      "path": "responses/1213888f26753ada6c20ecc58bba6c5c462ce1ab74b37b441fb820d14553512c.json",
+      "retrieved_at": "2026-10-18T00:47:23.272313+00:00",
+      "rows": 218,
+      "sha256": "1213888f26753ada6c20ecc58bba6c5c462ce1ab74b37b441fb820d14553512c",
+      "url": "https://cdscoonline.gov.in/CDSCO/filteredNsqDrugTable?month=JAN-2026&source=All&tab=nsq"
+    },
+    {
+      "decoding": "utf-8-sig",
+      "http_headers": {
+        "Content-Type": "application/json;charset=UTF-8",
+        "Date": "Sun, 18 Oct 2026 00:47:23 GMT",
+        "Last-Modified": null
+      },
+      "kind": "spurious",
+      "month": "2026-01",
+      "path": "responses/e3e353b11d0f184154daae507948c2da85530c59f0756806b38781f5e61401e5.json",
+      "retrieved_at": "2026-10-18T00:47:23.535163+00:00",
+      "rows": 4,
+      "sha256": "e3e353b11d0f184154daae507948c2da85530c59f0756806b38781f5e61401e5",
+      "url": "https://cdscoonline.gov.in/CDSCO/filteredSpuriousDrugTable?month=JAN-2026&source=All&tab=spurious"
+    },
+    {
+      "decoding": "utf-8-sig",
+      "http_headers": {
+        "Content-Type": "application/json;charset=UTF-8",
+        "Date": "Sun, 18 Oct 2026 00:47:24 GMT",
+        "Last-Modified": null
+      },
+      "kind": "nsq",
+      "month": "2026-02",
+      "path": "responses/fdca5d2ffdfffb3c6663bddc9048f5fe65124d1adbf668c9bd452e25c9cca885.json",
+      "retrieved_at": "2026-10-18T00:47:23.973999+00:00",
+      "rows": 217,
+      "sha256": "fdca5d2ffdfffb3c6663bddc9048f5fe65124d1adbf668c9bd452e25c9cca885",
+      "url": "https://cdscoonline.gov.in/CDSCO/filteredNsqDrugTable?month=FEB-2026&source=All&tab=nsq"
+    },
+    {
+      "decoding": "utf-8-sig",
+      "http_headers": {
+        "Content-Type": "application/json;charset=UTF-8",
+        "Date": "Sun, 18 Oct 2026 00:47:25 GMT",
+        "Last-Modified": null
+      },
+      "kind": "spurious",
+      "month": "2026-02",
+      "path": "responses/30af6f725d0709dcc954c528d6347d0cf0ac358f221a8f45e1f605f07a7bf9ac.json",
+      "retrieved_at": "2026-10-18T00:47:24.236826+00:00",
+      "rows": 4,
+      "sha256": "30af6f725d0709dcc954c528d6347d0cf0ac358f221a8f45e1f605f07a7bf9ac",
+      "url": "https://cdscoonline.gov.in/CDSCO/filteredSpuriousDrugTable?month=FEB-2026&source=All&tab=spurious"
+    },
+    {
+      "decoding": "utf-8-sig",
+      "http_headers": {
+        "Content-Type": "application/json;charset=UTF-8",
+        "Date": "Sun, 18 Oct 2026 00:47:24 GMT",
+        "Last-Modified": null
+      },
+      "kind": "nsq",
+      "month": "2026-03",
+      "path": "responses/01b83cbaf9affb7a8f008eb59f975a7131691d7a5bee5ee744718439eceff8ad.json",
+      "retrieved_at": "2026-10-18T00:47:24.647725+00:00",
+      "rows": 190,
+      "sha256": "01b83cbaf9affb7a8f008eb59f975a7131691d7a5bee5ee744718439eceff8ad",
+      "url": "https://cdscoonline.gov.in/CDSCO/filteredNsqDrugTable?month=MAR-2026&source=All&tab=nsq"
+    },
+    {
+      "decoding": "utf-8-sig",
+      "http_headers": {
+        "Content-Type": "application/json;charset=UTF-8",
+        "Date": "Sun, 18 Oct 2026 00:47:25 GMT",
+        "Last-Modified": null
+      },
+      "kind": "spurious",
+      "month": "2026-03",
+      "path": "responses/5c3ad8e9af70233d4e72be5b0192b308ac89a8baf55bdfc6a6a7cafd10b611c1.json",
+      "retrieved_at": "2026-10-18T00:47:24.906664+00:00",
+      "rows": 1,
+      "sha256": "5c3ad8e9af70233d4e72be5b0192b308ac89a8baf55bdfc6a6a7cafd10b611c1",
+      "url": "https://cdscoonline.gov.in/CDSCO/filteredSpuriousDrugTable?month=MAR-2026&source=All&tab=spurious"
+    },
+    {
+      "decoding": "utf-8-sig",
+      "http_headers": {
+        "Content-Type": "application/json;charset=UTF-8",
+        "Date": "Sun, 18 Oct 2026 00:47:25 GMT",
+        "Last-Modified": null
+      },
+      "kind": "nsq",
+      "month": "2026-04",
+      "path": "responses/889cfd3c2e319c9e31d7dcd1a0e41e9ee602476d1ad498eedf704693bc4d5902.json",
+      "retrieved_at": "2026-10-18T00:47:25.338473+00:00",
+      "rows": 121,
+      "sha256": "889cfd3c2e319c9e31d7dcd1a0e41e9ee602476d1ad498eedf704693bc4d5902",
+      "url": "https://cdscoonline.gov.in/CDSCO/filteredNsqDrugTable?month=APR-2026&source=All&tab=nsq"
+    },
+    {
+      "decoding": "utf-8-sig",
+      "http_headers": {
+        "Content-Type": "application/json;charset=UTF-8",
+        "Date": "Sun, 18 Oct 2026 00:47:26 GMT",
+        "Last-Modified": null
+      },
+      "kind": "spurious",
+      "month": "2026-04",
+      "path": "responses/4738ea49a5b632ddba59b714d63c87de1ec74ad5479557384a72865803e06dad.json",
+      "retrieved_at": "2026-10-18T00:47:25.586660+00:00",
+      "rows": 2,
+      "sha256": "4738ea49a5b632ddba59b714d63c87de1ec74ad5479557384a72865803e06dad",
+      "url": "https://cdscoonline.gov.in/CDSCO/filteredSpuriousDrugTable?month=APR-2026&source=All&tab=spurious"
+    },
+    {
+      "decoding": "utf-8-sig",
+      "http_headers": {
+        "Content-Type": "application/json;charset=UTF-8",
+        "Date": "Sun, 18 Oct 2026 00:47:26 GMT",
+        "Last-Modified": null
+      },
+      "kind": "nsq",
+      "month": "2026-05",
+      "path": "responses/a9fe52d091b789e2dbef03169f8768b10aaeccfafd240eca0bad43ddb238fcd8.json",
+      "retrieved_at": "2026-10-18T00:47:25.954986+00:00",
+      "rows": 162,
+      "sha256": "a9fe52d091b789e2dbef03169f8768b10aaeccfafd240eca0bad43ddb238fcd8",
+      "url": "https://cdscoonline.gov.in/CDSCO/filteredNsqDrugTable?month=MAY-2026&source=All&tab=nsq"
+    },
+    {
+      "decoding": "utf-8-sig",
+      "http_headers": {
+        "Content-Type": "application/json;charset=UTF-8",
+        "Date": "Sun, 18 Oct 2026 00:47:26 GMT",
+        "Last-Modified": null
+      },
+      "kind": "spurious",
+      "month": "2026-05",
+      "path": "responses/b5627587202d5bc7d9792dcbabb60fdbde87c5b7dee60ec12374f1a76cab9715.json",
+      "retrieved_at": "2026-10-18T00:47:26.217461+00:00",
+      "rows": 2,
+      "sha256": "b5627587202d5bc7d9792dcbabb60fdbde87c5b7dee60ec12374f1a76cab9715",
+      "url": "https://cdscoonline.gov.in/CDSCO/filteredSpuriousDrugTable?month=MAY-2026&source=All&tab=spurious"
+    },
+    {
+      "decoding": "utf-8-sig",
+      "http_headers": {
+        "Content-Type": "application/json;charset=UTF-8",
+        "Date": "Sun, 18 Oct 2026 00:47:26 GMT",
+        "Last-Modified": null
+      },
+      "kind": "nsq",
+      "month": "2026-06",
+      "path": "responses/3dd520369ac9bcd55675df783e53c9b518c35fd0db11a9f7cc87f50fc031e934.json",
+      "retrieved_at": "2026-10-18T00:47:26.662583+00:00",
+      "rows": 193,
+      "sha256": "3dd520369ac9bcd55675df783e53c9b518c35fd0db11a9f7cc87f50fc031e934",
+      "url": "https://cdscoonline.gov.in/CDSCO/filteredNsqDrugTable?month=JUN-2026&source=All&tab=nsq"
+    },
+    {
+      "decoding": "utf-8-sig",
+      "http_headers": {
+        "Content-Type": "application/json;charset=UTF-8",
+        "Date": "Sun, 18 Oct 2026 00:47:27 GMT",
+        "Last-Modified": null
+      },
+      "kind": "spurious",
+      "month": "2026-06",
+      "path": "responses/a9f67cde5957249df261fd7cfa0bcd9d6a1821aaa2a94f807da39b016f0b3854.json",
+      "retrieved_at": "2026-10-18T00:47:26.919766+00:00",
+      "rows": 0,
+      "sha256": "a9f67cde5957249df261fd7cfa0bcd9d6a1821aaa2a94f807da39b016f0b3854",
+      "url": "https://cdscoonline.gov.in/CDSCO/filteredSpuriousDrugTable?month=JUN-2026&source=All&tab=spurious"
+    },
+    {
+      "decoding": "utf-8-sig",
+      "http_headers": {
+        "Content-Type": "application/json;charset=UTF-8",
+        "Date": "Sun, 18 Oct 2026 00:47:28 GMT",
+        "Last-Modified": null
+      },
+      "kind": "nsq",
+      "month": "2026-07",
+      "path": "responses/289283fbdcbc50ad57c68330df6a4f2a213169a11de7b1f1e6cb2864d1fa8ac6.json",
+      "retrieved_at": "2026-10-18T00:47:27.374355+00:00",
+      "rows": 239,
+      "sha256": "289283fbdcbc50ad57c68330df6a4f2a213169a11de7b1f1e6cb2864d1fa8ac6",
+      "url": "https://cdscoonline.gov.in/CDSCO/filteredNsqDrugTable?month=JUL-2026&source=All&tab=nsq"
+    },
+    {
+      "decoding": "utf-8-sig",
+      "http_headers": {
+        "Content-Type": "application/json;charset=UTF-8",
+        "Date": "Sun, 18 Oct 2026 00:47:27 GMT",
+        "Last-Modified": null
+      },
+      "kind": "spurious",
+      "month": "2026-07",
+      "path": "responses/1edbf77fdf7ce91e239b0b1decf8abdf1d091218ce250108bf5d73fba4ee260d.json",
+      "retrieved_at": "2026-10-18T00:47:27.641604+00:00",
+      "rows": 1,
+      "sha256": "1edbf77fdf7ce91e239b0b1decf8abdf1d091218ce250108bf5d73fba4ee260d",
+      "url": "https://cdscoonline.gov.in/CDSCO/filteredSpuriousDrugTable?month=JUL-2026&source=All&tab=spurious"
+    },
+    {
+      "decoding": "utf-8-sig",
+      "http_headers": {
+        "Content-Type": "application/json;charset=UTF-8",
+        "Date": "Sun, 18 Oct 2026 00:47:28 GMT",
+        "Last-Modified": null
+      },
+      "kind": "nsq",
+      "month": "2026-08",
+      "path": "responses/944a1fdd1c59737484c67dd4af12669ba302768b8769c0c48fefee767fd07188.json",
+      "retrieved_at": "2026-10-18T00:47:28.059496+00:00",
+      "rows": 220,
+      "sha256": "944a1fdd1c59737484c67dd4af12669ba302768b8769c0c48fefee767fd07188",
+      "url": "https://cdscoonline.gov.in/CDSCO/filteredNsqDrugTable?month=AUG-2026&source=All&tab=nsq"
+    },
+    {
+      "decoding": "utf-8-sig",
+      "http_headers": {
+        "Content-Type": "application/json;charset=UTF-8",
+        "Date": "Sun, 18 Oct 2026 00:47:29 GMT",
+        "Last-Modified": null
+      },
+      "kind": "spurious",
+      "month": "2026-08",
+      "path": "responses/1ca195136fdeb608c1c4c368e3b47d9a4fa9c067d25c501781665b844cc005c8.json",
+      "retrieved_at": "2026-10-18T00:47:28.307290+00:00",
+      "rows": 1,
+      "sha256": "1ca195136fdeb608c1c4c368e3b47d9a4fa9c067d25c501781665b844cc005c8",
+      "url": "https://cdscoonline.gov.in/CDSCO/filteredSpuriousDrugTable?month=AUG-2026&source=All&tab=spurious"
+    }
+  ]
+}
